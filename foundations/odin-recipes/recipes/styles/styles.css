@@ -1,13 +1,13 @@
 body {
     font-family: 'Germania One', cursive;
-    color: rgb(72, 66, 66);
+    color: rgb(49, 42, 42);
     background-color: rgb(191, 186, 175);
 }
 
 h1 {
     text-align: center;
     font-size: 5rem;
-    border: thick double rgb(155, 35, 35);
+    border: thick double rgb(125, 66, 66);
     width: 30%;
     margin: 0 auto;
 }
@@ -15,17 +15,17 @@ h1 {
 h1,
 h2 {
     letter-spacing: 0.15rem;
-    -webkit-text-stroke: .040rem rgb(72, 66, 66);
+    -webkit-text-stroke: .040rem rgb(49, 42, 42);
 }
 
 h2 {
-    text-decoration: underline wavy rgb(255, 255, 255);
+    text-decoration: underline wavy ;
 }
 
 h1,
 h2,
 h3 {
-    color: rgb(125, 66, 66);
+    color: rgb(146, 2, 2);
 }
 
 img {
