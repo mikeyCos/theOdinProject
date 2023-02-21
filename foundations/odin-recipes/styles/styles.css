@@ -1,0 +1,40 @@
+body {
+    background-color: rgb(191, 186, 175);
+}
+
+h1 {
+    font-family: 'Germania One', cursive;
+    color: rgb(125, 66, 66);
+    text-align: center;
+    font-size: 5rem;
+    font-family: 'Germania One', cursive;
+    border: thick double rgb(155, 35, 35);
+    letter-spacing: 0.15rem;
+    -webkit-text-stroke: .040rem rgb(72, 66, 66);
+}
+
+img {
+    width: 20rem;
+    /* border used only for function check; delete when project completed */
+    border: 10px solid orange;
+}
+
+.container {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* border used only for function check; delete when project completed */
+    border: 10px solid red;
+}
+
+.github-profile {
+    width: 2rem;
+    float: right;
+}
+
+@media (min-width: 768px) {
+    img {
+        width: 40rem;
+    }
+}

@@ -1,0 +1,44 @@
+body {
+    font-family: 'Germania One', cursive;
+    color: rgb(72, 66, 66);
+    background-color: rgb(191, 186, 175);
+}
+
+h1 {
+    text-align: center;
+    font-size: 5rem;
+    border: thick double rgb(155, 35, 35);
+    width: 30%;
+    margin: 0 auto;
+}
+
+h1,
+h2 {
+    letter-spacing: 0.15rem;
+    -webkit-text-stroke: .040rem rgb(72, 66, 66);
+}
+
+h2 {
+    text-decoration: underline wavy rgb(255, 255, 255);
+}
+
+h1,
+h2,
+h3 {
+    color: rgb(125, 66, 66);
+}
+
+img {
+    display: block;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50vw;
+}
+
+/* If  screen size is 768px or less, do these*/
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 10vw;
+    }
+}

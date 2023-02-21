@@ -1,0 +1,10 @@
+
+***This is for brainstorming web applications***
+***Last update: 14 FEB 2023***
+
+
+    1. Lost Ark Engraving calculator
+    2. Lyrics website for a musician's album or multiple albums
+    3. Lost Ark build builder
+    4. Age calculator (leap/non-leap years)
+    5. 
