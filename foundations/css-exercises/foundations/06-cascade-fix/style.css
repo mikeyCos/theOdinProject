@@ -6,18 +6,22 @@ body{
 .small-para {
   color: hsl(0, 0%, 0%);
   font-weight: 800;
-}
-
-.small-para {
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.para {
   font-size: 22px;
 }
 
-.confirm {
+/* this is more specific than .small-para */
+.para.small-para {
+  font-size: 14px;
+  /* redundant, repeated on line 8 */
+  /* font-weight: 800; */
+}
+
+/* redundant, selector used on line 5 */
+/* .para {
+  font-size: 22px;
+} */
+
+#confirm-button {
   background: green;
   color: white;
   font-weight: bold;
@@ -29,7 +33,8 @@ body{
   font-size: 20px;
 }
 
-.child {
+/* can use a descendant or chain selector */
+.text.child {
   color: rgb(0, 0, 0);
   font-weight: 800;
   font-size: 14px;
