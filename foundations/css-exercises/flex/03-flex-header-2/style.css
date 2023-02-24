@@ -12,6 +12,11 @@ body {
   background: white;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 0 8px rgba(0,0,0,.1);
+  /* solution between comments */
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+  /* solution between comments */
 }
 
 .profile-image {
@@ -45,4 +50,20 @@ a {
 
 ul {
   list-style-type: none;
+  /* solution between comments */
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 16px;
+  /* solution between comments */
 }
+
+/* solution between comments */
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+/* solution between comments */
+

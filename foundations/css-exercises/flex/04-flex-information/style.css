@@ -1,5 +1,6 @@
 body {
   font-family: 'Courier New', Courier, monospace;
+  /* text-align: center; */
 }
 
 img {
@@ -10,6 +11,11 @@ img {
 .title {
   font-size: 36px;
   font-weight: 900;
+  /* solution between comments */
+  /* redundant since body selector will align all text to the center */
+  text-align: center;
+  margin-bottom: 32px;
+  /* solution between comments */
 }
 
 /* do not edit this footer */
@@ -24,3 +30,24 @@ img {
   justify-content: center;
   background: #eee;
 }
+
+/* solution between comments */
+.flex-container {
+  display: flex;
+  justify-content: center;
+  gap: 52px;
+}
+
+.flex-child {
+  /* lines 43 to 46 are not needed if text-align: center is used in body selector */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-self: flex-start;
+  /* I keep forgetting gap */
+  /* margin: 52px; */
+  width: 200px;
+  /* redundant since body selector will align all text to the center */
+  text-align: center;
+}
+/* solution between comments */
