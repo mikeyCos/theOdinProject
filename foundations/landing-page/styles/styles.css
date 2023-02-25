@@ -1,8 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+img {
+    max-width: 100%;
+}
+
+button {
+    border-radius: 0.25rem;
+    border-style: none;
+    padding: 5px 30px;
+    background-color: #3882F6;
+    color: #F9FAF8;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.navbar {
+    background-color: #1F2837;
+    height: 60px
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #E5E7EB;
+}
+
+.navbar a:hover {
+    color: #3d3de7;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    color: #F9FAF8;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar ul {
+    display: flex;
+}
+
+.navbar ul li {
+    margin-left: 1em;
+}
+
+.header {
+    background-color: #1F2837;
+    color: #F9FAF8;
+    min-height: 400px;
+}
+
+.header h1 {
+    font-size: 48px;
+    font-weight: bolder;
+}
+
+.header-img {
+    max-width: 400px;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 40px;
+    /* why can't I vertically center the entire container */
+}
+
+.information {
+    background-color: lightsalmon; /* for debugging */
+}
+
+.information h2 {
+    font-size: 36px;
+    font-weight: bolder;
+    color: #1F2937;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.information .container {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    padding: 50px;
+}
+
+.flex-item {
+    background-color: lightgreen; /* for debugging */
+    /* flex-shrink: 1; */
+}
+
+.flex-item img {
+    border: 10px solid #3882f6;
+    border-radius: 1rem;
+    max-width: 200px;
+    /* overflow */
+}
+
+.quote {
+    background-color: #E5E7EB;
+    font-size: 36px;
+}
+
+.quote-item {
+    font-weight: lighter;
+    font-style: italic;
+    text-align: left;
+}
+
+.quote .container {
     display: flex;
     flex-direction: column;
+    padding: 50px;
+}
+
+.quote-person {
+    align-self: flex-end;
+}
+
+.signup .container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #3882F6;
+    border-radius: 0.5rem;
+    color: #F9FAF8;
+    padding: 2em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.signup button {
+    border: 0.1rem solid #E5E7EB;
+}
+
+.text {
+    color: #E5E7EB;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: #1F2837;
+    color: #E5E7EB;
+    padding: 30px;
+}
+
+@media(max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .information .container {
+        display: block;
+    }
 }
