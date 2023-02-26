@@ -35,10 +35,12 @@ ul {
 .navbar a {
     text-decoration: none;
     color: #E5E7EB;
+    padding: 10px;
 }
 
 .navbar a:hover {
     color: #3d3de7;
+    background-color: #E5E7EB;
 }
 
 .navbar .logo {
@@ -121,6 +123,7 @@ ul {
 
 .quote {
     background-color: #E5E7EB;
+    background-color: lightskyblue; /* this is a test*/
     font-size: 36px;
 }
 
@@ -193,6 +196,7 @@ footer {
 
     .information .container {
         flex-wrap: wrap;
+        flex-shrink: 1;
     }
 
     .signup .container {
