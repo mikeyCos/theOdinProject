@@ -15,15 +15,6 @@ img {
     max-width: 100%;
 }
 
-/* button {
-    border-radius: 0.25rem;
-    border-style: none;
-    padding: 5px 30px;
-    background-color: #3882F6;
-    color: #F9FAF8;
-    font-weight: bold;
-} */
-
 ul {
     list-style: none;
 }
@@ -186,6 +177,9 @@ footer {
     background-color: #1F2837;
     color: #E5E7EB;
     padding: 30px;
+    /* position: fixed;
+    bottom: 0;
+    width: 100%; */
 }
 
 @media(max-width: 768px) {
