@@ -180,9 +180,6 @@ footer {
     background-color: #1F2837;
     color: #E5E7EB;
     padding: 30px;
-    /* position: fixed;
-    bottom: 0;
-    width: 100%; */
 }
 
 @media(max-width: 768px) {
