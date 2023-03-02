@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="./javascript.js"></script>
+        <link rel="stylesheet" href="./styles.css">
+        <title>Logical Operators</title>
+    </head>
+
+    <body>
+        <a href="https://javascript.info/logical-operators">https://javascript.info/logical-operators</a>
+
+        <h2>What's the result of OR?</h2>
+        <ol>
+            <li>What is the code below going to output?</li>
+            <ul>
+                <li>alert( null || 2 || undefined );</li>
+            </ul>
+        </ol>
+
+        <h2>What's the result of OR'ed alerts?</h2>
+        <ol>
+            <li>What will the code below output?</li>
+            <ul>
+                <li>alert( alert(1) || 2 || alert(3) );</li>
+            </ul>
+        </ol>
+
+        <h2>What is the result of AND?</h2>
+        <ol>
+            <li>What is this code going to show?</li>
+            <ul>
+                <li>alert( 1 && null && 2 );</li>
+            </ul>
+        </ol>
+
+        <h2>What is the result of AND'ed alerts?</h2>
+        <ol>
+            <li>What will this code show?</li>
+            <ul>
+                <li>alert( alert(1) && alert(2) );</li>
+            </ul>
+        </ol>
+
+        <h2>The result of OR AND OR</h2>
+        <ol>
+            <li>What will the result be?</li>
+            <ul>
+                <li>alert( null || 2 && 3 || 4 );</li>
+            </ul>
+        </ol>
+
+        <h2>Check the range between</h2>
+        <ol>
+            <li>Write an if condition to check that age is between 14 and 90 inclusively</li>
+            <li>“Inclusively” means that age can reach the edges 14 or 90.</li>
+        </ol>
+
+        <h2>Check the range outside</h2>
+        <ol>
+            <li>Write an if condition to check that age is NOT between 14 and 90 inclusively.</li>
+            <li>Create two variants: the first one using NOT !, the second one – without it.</li>
+        </ol>
+
+        <h2>A question about "if"</h2>
+        <ol>
+            <li>Which of these alerts are going to execute?</li>
+            <li>What will the results of the expressions be inside if(...)?</li>
+            <ul>
+                <li>if (-1 || 0) alert( 'first' );</li>
+                <li>if (-1 && 0) alert( 'second' );</li>
+                <li>if (null || -1 && 1) alert( 'third' );</li>
+            </ul>
+        </ol>
+
+        <h2>Check the login</h2>
+        <ol>
+            <li>Write the code which asks for a login with prompt.</li>
+            <li>If the visitor enters "Admin", then prompt for a password, if the input is an empty line or Esc – show “Canceled”, if it’s another string – then show “I don’t know you”.</li>
+            <li>The password is checked as follows:</li>
+            <ul>
+                <li>If it equals “TheMaster”, then show “Welcome!”,</li>
+                <li>Another string – show “Wrong password”,</li>
+                <li>For an empty string or cancelled input, show “Canceled”</li>
+            </ul>
+            <li>Please use nested if blocks. Mind the overall readability of the code.</li>
+            <li>Hint: passing an empty input to a prompt returns an empty string ''. Pressing ESC during a prompt returns null.</li>
+        </ol>
+        <img src="./schema.png">
+    </body>
+</html>
