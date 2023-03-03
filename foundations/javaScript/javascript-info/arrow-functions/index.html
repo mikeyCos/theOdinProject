@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="./javascript.js"></script>
+        <title>Arrow Functions</title>
+    </head>
+
+    <body>
+        <a href="https://javascript.info/arrow-functions-basics">https://javascript.info/arrow-functions-basics</a>
+
+        <h2>Rewrite with arrow functions</h2>
+        <ol>
+            <li>Replace Function Expressions with arrow functions in the code below:</li>
+            <pre>
+                <code>
+                function ask(question, yes, no) {
+                    if (confirm(question)) yes();
+                        else no();
+                    }
+                    
+                    ask(
+                        "Do you agree?",
+                        function() { alert("You agreed."); },
+                        function() { alert("You canceled the execution."); }
+                    );
+                </code>
+            </pre>
+        </ol>
+    </body>
+</html>

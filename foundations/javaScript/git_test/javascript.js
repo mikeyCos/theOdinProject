@@ -1,4 +1,30 @@
 
+// between this comment line is from TOP Fundamentals Part 3 JavaScript Assignment
+// 03 MAR 2023
+// https://www.theodinproject.com/lessons/foundations-fundamentals-part-3
+// let x = prompt('Enter a number');
+// let add7 = x => console.log(+x + 7);
+// add7(x);
+
+// let z = Number(prompt('Enter a number'));
+// let y = Number(prompt('Enter another number'));
+// let multiply = (z,y) => console.log(z * y);
+// multiply(z,y);
+
+let getWord = prompt('Enter a word');
+function capitalize(getWord) {
+    let letter = getWord.charAt(0);
+    console.log(letter.toUpperCase());
+}
+capitalize(getWord);
+
+let getString = prompt('Enter a string');
+let lastLetter = function(word) {
+    console.log(word);
+};
+lastLetter();
+// between this comment line is from TOP Fundamentals Part 3 JavaScript Assignment
+
 // between this comment line is from TOP Fundamentals Part 1 JavaScript Assignment
 // 27 FEB 2023
 console.log("23 + 97 = " + (23 + 97));
