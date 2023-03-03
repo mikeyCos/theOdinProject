@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-compatible" content="ie=edge">
+        <script src="./javascript.js>"></script>
+        <title>Functions</title>
+    </head>
+
+    <body>
+        <a href="https://javascript.info/function-basics">https://javascript.info/function-basics</a>
+
+        <h2>Is "else" required?</h2>
+        <ol>
+            <li>The following function returns true if the parameter age is greater than 18.</li>
+            <li>Otherwise it asks for a confirmation and returns its result:</li>
+            <pre>
+                <code>
+                function checkAge(age) {
+                    if (age > 18) {
+                        return true;
+                    } else {
+                        // ...
+                        return confirm('Did parents allow you?');
+                    }
+                }
+                </code>
+            </pre>
+            <li>Will the function work differently if else is removed?</li>
+            <pre>
+                <code>
+                function checkAge(age) {
+                    if (age > 18) {
+                        return true;
+                    }
+                    // ...
+                    return confirm('Did parents allow you?');
+                }    
+                </code>
+            </pre>
+            <li>Is there any difference in the behavior of these two variants?</li>
+        </ol>
+
+        <h2>Rewrite the function using '?' or '||'</h2>
+        <ol>
+            <li>The following function returns true if the parameter age is greater than 18.</li>
+            <li>Otherwise it asks for a confirmation and returns its result.</li>
+            <pre>
+                <code>
+                function checkAge(age) {
+                    if (age > 18) {
+                        return true;
+                    } else {
+                        return confirm('Did parents allow you?');
+                    }
+                }    
+                </code>
+            </pre>
+            <li>Rewrite it, to perform the same, but without if, in a single line.</li>
+            <li>Make two variants of checkAge:</li>
+            <ul>
+                <li>Using a question mark operator ?</li>
+                <li>Using OR ||</li>
+            </ul>
+        </ol>
+
+        <h2>Function min(a, b)</h2>
+        <ol>
+            <li>Write a function min(a,b) which returns the least of two numbers a and b.</li>
+            <li>For instance:</li>
+            <pre>
+                <code>
+                min(2, 5) == 2
+                min(3, -1) == -1
+                min(1, 1) == 1
+                </code>
+            </pre>
+        </ol>
+
+        <h2>Function pow(x,n)</h2>
+        <ol>
+            <li>Write a function pow(x,n) that returns x in power n. Or, in other words, multiplies x by itself n times and returns the result.</li>
+            <pre>
+                <code>
+                pow(3, 2) = 3 * 3 = 9
+                pow(3, 3) = 3 * 3 * 3 = 27
+                pow(1, 100) = 1 * 1 * ...* 1 = 1
+                </code>
+            </pre>
+            <li>Create a web-page that prompts for x and n, and then shows the result of pow(x,n).</li>
+            <li>P.S. In this task the function should support only natural values of n: integers up from 1.</li>
+        </ol>
+    </body>
+</html>
