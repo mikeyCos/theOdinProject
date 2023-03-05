@@ -20,9 +20,9 @@ capitalize(getWord);
 
 let getString = prompt('Enter a string');
 let lastLetter = function(word) {
-    console.log(word);
+    console.log(word.charAt(word.length - 1));
 };
-lastLetter();
+lastLetter(getString);
 // between this comment line is from TOP Fundamentals Part 3 JavaScript Assignment
 
 // between this comment line is from TOP Fundamentals Part 1 JavaScript Assignment
