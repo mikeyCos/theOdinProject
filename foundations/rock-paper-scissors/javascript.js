@@ -1,5 +1,11 @@
 let playerSelection;
 let computerSelection;
+
+let createDiv;
+let createText;
+let createHeader;
+
+
 console.log(playerSelection);
 
 function getComputerChoice() {
@@ -41,10 +47,20 @@ function playGame() {
             playerSelection = prompt("Type in either 'rock', 'paper', or 'scissors'.");
             playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1, playerSelection.length).toLowerCase();
         }
-
         computerSelection = getComputerChoice();
         console.log('This is round ' + i + '\n' + playRound(playerSelection, computerSelection));
+
+        createHeader = document.createElement("h2");
+        document.body.appendChild(createHeader);
+        createText = document.createTextNode(`This is round ${i}.`);
+        createHeader.appendChild(createText);
+
+        createDiv = document.createElement("div");
+        document.body.appendChild(createDiv);
+        createText = document.createTextNode(playRound(playerSelection, computerSelection));
+        createDiv.appendChild(createText);
         if (i === 5) {
+            alert(`Game completed!`)
             console.log('Game completed.');
         }
     }
