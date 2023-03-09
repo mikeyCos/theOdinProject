@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="./javascript.js" async></script>
+        <title>Loops: while and for</title>
+    </head>
+
+    <body>
+        <a href="https://javascript.info/while-for">https://javascript.info/while-for</a>
+        
+        <h2>Last loop value</h2>
+        <ol>
+            <li>What is the last value alerted by this code? Why?</li>
+            <pre>
+                <code>
+                let i = 3;
+
+                while (i) {
+                    alert( i-- );
+                }
+                </code>
+            </pre>
+        </ol>
+
+        <h2>Which values does the while loop show?</h2>
+        <ol>
+            <li>For every loop iteration, write down which value it outputs and then compare it with the solution.</li>
+            <li>Both loops alert the same values, or not?</li>
+            <ul>
+                <li>The prefix form ++i:</li>
+            </ul>
+            <pre>
+                <code>
+                let i = 0;
+                while (++i < 5) alert( i );
+                </code>
+            </pre>
+
+            <ul>
+                <li>The postfix form i++</li>
+            </ul>
+            <pre>
+                <code>
+                let i = 0;
+                while (i++ < 5) alert( i );
+                </code>
+            </pre>
+        </ol>
+        
+        <h2>Which values get shown by the "for" loop?</h2>
+        <ol>
+            <li>For each loop write down which values it is going to show. Then compare with the answer.</li>
+            <li>Both loops alert same values or not?</li>
+            <ul>
+                <li>The postfix form:</li>
+            </ul>
+            <pre>
+                <code>
+                for (let i = 0; i < 5; i++) alert( i );
+                </code>
+            </pre>
+
+            <ul>
+                <li>The prefix form:</li>
+            </ul>
+            <pre>
+                <code>
+                for (let i = 0; i < 5; ++i) alert( i );
+                </code>
+            </pre>
+        </ol>
+        
+        <h2>Output even numbers in the loop</h2>
+        <ol>
+            <li>Use the for loop to output even numbers from 2 to 10.</li>
+        </ol>
+
+        <h2>Replace "for" with "while"</h2>
+        <ol>
+            <li>Rewrite the code changing the for loop to while without altering its behavior (the output should stay same).</li>
+            <pre>
+                <code>
+                for (let i = 0; i < 3; i++) {
+                    alert( `number ${i}!` );
+                }
+                </code>
+            </pre>
+        </ol>
+
+        <h2>Repeat until the input is correct</h2>
+        <ol>
+            <li>Write a loop which prompts for a number greater than 100. If the visitor enters another number – ask them to input again.</li>
+            <li>The loop must ask for a number until either the visitor enters a number greater than 100 or cancels the input/enters an empty line.</li>
+            <li>Here we can assume that the visitor only inputs numbers. There’s no need to implement a special handling for a non-numeric input in this task.</li>
+        </ol>
+
+        <h2>Output prime numbers</h2>
+        <ol>
+            <li>An integer number greater than 1 is called a prime if it cannot be divided without a remainder by anything except 1 and itself.</li>
+            <li>In other words, n > 1 is a prime if it can’t be evenly divided by anything except 1 and n.</li>
+            <li>For example, 5 is a prime, because it cannot be divided without a remainder by 2, 3 and 4.</li>
+            <li>Write the code which outputs prime numbers in the interval from 2 to n.</li>
+            <li>For n = 10 the result will be 2,3,5,7.</li>
+            <li>P.S. The code should work for any n, not be hard-tuned for any fixed value.</li>
+        </ol>
+    </body>
+</html>
