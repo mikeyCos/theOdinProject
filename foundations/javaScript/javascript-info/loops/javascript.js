@@ -110,12 +110,32 @@
 // P.S. The code should work for any n, not be hard-tuned for any fixed value.
 
 // ANSWER
-let n = parseInt(prompt(`Enter a number.`));
+function returnPrimeNumbers(x) {
+    for (a = 2; a <= x; a++) {
+        let factorsCounter = 0;
+        for (b = 1; b <= x; b++) {
+            if(a % b == 0) factorsCounter++;
+        }
 
-for(i = 2; i <= n; i++) {
-    for(p = 2; p <= n; i++) {
-        
+        if (factorsCounter < 3) {
+            console.log(`${a} is a prime number.`);
+        }
     }
 }
+
+let num = parseInt(prompt(`Enter a number.`));
+returnPrimeNumbers(num);
+
+// OR
+// let n = 10;
+
+// nextPrime: for (let i = 2; i <= n; i++) {
+//     for (let j = 2; j < i; j++) {
+//         if (i % j == 0) continue nextPrime; // if i % j == 0, i is NOT a prime number
+//     }
+
+//   alert( i ); // a prime
+// }
+
 // ANSWER
 // ********************************************************************************************
