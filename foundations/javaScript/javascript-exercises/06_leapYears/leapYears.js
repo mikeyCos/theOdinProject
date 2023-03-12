@@ -10,9 +10,5 @@ const leapYears = function(year) {
         return false;
     }
 };
-
-
-leapYears(1992);    
-
 // Do not edit below this line
 module.exports = leapYears;
