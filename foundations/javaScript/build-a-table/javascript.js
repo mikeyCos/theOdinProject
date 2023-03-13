@@ -8,37 +8,35 @@ const MOUNTAINS = [
     {name: "Mont Blanc", height: 4808, place: "Italy/France"}
 ];
 
+let headerData = Object.keys(MOUNTAINS[0]);
 const container = document.querySelector('#mountains');
 const table = document.createElement('table');
 container.appendChild(table);
 
-for (i = 0; i < MOUNTAINS.length; i++) {
-    const row = document.createElement('tr');
-    table.appendChild(row);
-    for (j = 0; j < 3; j++) {
-        const cells = document.createElement('td');
-        row.appendChild(cells);
-        if (j == 0) {
-            cells.textContent = MOUNTAINS[i].name;
-        } else if (j == 1) {
-            cells.textContent = MOUNTAINS[i].height;
-            cells.setAttribute('style', 'text-align: right; width: 5em;');
-        } else if (j == 2) {
-            cells.textContent = MOUNTAINS[i].place;
-            cells.setAttribute('style', 'text-align: right; width: 10em;');
+function createTableHeader(table, headerData) {
+    let header = table.createTHead();
+    let row = header.insertRow();
+    for (let key of headerData) {
+        let headerTag = document.createElement('th');
+        let headerTagText = document.createTextNode(key);
+        headerTag.appendChild(headerTagText);
+        row.appendChild(headerTag);
+    }
+}
+
+function createTable(table, arr) {
+    for (let mountain of arr) {
+        let row = table.insertRow();
+        for (key in mountain) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(mountain[key]);
+            cell.appendChild(text);
+            if (typeof mountain[key] === typeof 1) {
+                cell.setAttribute('style','text-align: right; padding: 0 5em;');
+            }
         }
     }
 }
 
-
-// MOUNTAINS.forEach(element => {
-//     console.log(element.name);
-// });
-
-// MOUNTAINS.forEach(element => {
-//     console.log(element.height);
-// });
-
-// MOUNTAINS.forEach(element => {
-//     console.log(element.place);
-// });
+createTable(table, MOUNTAINS);
+createTableHeader(table, headerData);
