@@ -23,9 +23,7 @@ function getPlayerChoice(callBack) {
             console.log(playerChoice);
             getComputerChoice();
             callBack(playerChoice, computerChoice);
-            results.appendChild(resultsText);
-            computerScoreContainer.appendChild(computerDisplayScore);
-            playerScoreContainer.appendChild(playerDisplayScore);
+            checkWinner();
         });
     });
 }
@@ -56,10 +54,15 @@ function playRound(player, computer) {
             console.log(`Tie game`); // for debugging
             resultsText.nodeValue = 'Tie game';
         }
+        results.appendChild(resultsText);
+        computerScoreContainer.appendChild(computerDisplayScore);
+        playerScoreContainer.appendChild(playerDisplayScore);
 }
 
 function checkWinner() {
     if (playerScore == 5) {
+        console.log('You are the winner!')
+        removeEventListener('click', event, false);
         // 'You are the winner!'
         // removeEventListener
     } else if (computerScore == 5) {
