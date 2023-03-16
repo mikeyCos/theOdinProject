@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-.container {
+.btn-container {
     max-width: 90%;
     margin: 0 auto;
     padding: 0 10%;
@@ -18,7 +18,7 @@
     padding: 5% 0;
 }
 
-.selection .container {
+.selection .btn-container {
     display: flex;
     justify-content: center;
     gap: 2em;
