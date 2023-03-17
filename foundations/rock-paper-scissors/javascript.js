@@ -1,4 +1,5 @@
-// 06 MAR 2023
+// Started: 06 MAR 2023
+// Finished: 17 MAR 2023
 // This article helped me divide the addEventListener and a named function instead of using an anonymous function.
 // https://medium.com/@DavideRama/removeeventlistener-and-anonymous-functions-ab9dbabd3e7b
 
