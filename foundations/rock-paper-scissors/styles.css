@@ -11,20 +11,27 @@ body {
 }
 
 .github {
-    width: 2em;
     float: right;
+    width: 2em;
     margin: 0.5em;
 }
 
 h1 {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.results {
     text-align: center;
 }
 
 .feedback .container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 2% 0;
+    gap: 2em;
+    padding: 5% 5% 0;
 }
 
 .score {
@@ -33,22 +40,17 @@ h1 {
     justify-content: center;
     gap: 2em;
     margin-top: 2em;
-}
-
-.score h2 {
-    /* align-items: center; */
-    flex: 0 0 100%;
-    text-align: center;
-}
-
-.score div {
-    width: 10em;
+    max-width: 25em;
     border: 0.25em solid black;
-    padding: 2em 2em;
+    padding: 1em 1em;
+}
+
+.score .container {
+    gap: 5em;
 }
 
 #btn-container {
-    max-width: 90%;
+    max-width: 50%;
     margin: 0 auto;
     padding: 0 10%;
 }
@@ -58,40 +60,73 @@ h1 {
     cursor: pointer;
 }
 
+#btn-container button:hover {
+    background-color: lightyellow;
+    box-shadow: 0 2em 4em 0 rgba(0,0,0,0.24), 0 2em 6em 0 rgba(0,0,0,0.19);
+}
+
 .selection #btn-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 2em;
-    padding: 5% 5%;
+    padding: 2% 2%;
+}
+
+#btn-container button:active {
+    background-color: lightgreen;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 img {
-    width: 200px;
+    width: 45%;
 }
 
-.reset .reset-container {
+.input-reset .container {
     display: flex;
-    justify-content: center;
-    padding-bottom: 2em;
+    align-items: center;
+    flex-direction: column;
+    height: 5em;
+    gap: 2em;
+    margin-bottom: 5em;
 }
 
+#enter-rounds {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#enter-rounds,
 #btn-reset {
-    padding: 1em 4em;
+    width: 10em;
+}
+
+#btn-reset:hover {
+    background-color: lightcoral;
 }
 
 footer {
-        margin-top: auto;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: lightslategrey;
-        color: white;
-        text-align: center;
+    margin-top: auto;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: lightslategrey;
+    color: white;
+    text-align: center;
 }
 
 @media only screen and (min-width: 768px) {
+    #btn-container {
+        max-width: 90%;
+    }
+
     .selection #btn-container {
         flex-direction: row;
+    }
+
+    img {
+        width: 55%;
     }
 }
