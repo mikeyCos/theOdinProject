@@ -18,35 +18,34 @@ body {
 
 h1 {
     text-align: center;
-    margin-bottom: 2em;
+    padding: 1em;
+    background-color: lightgreen; /* for debugging */
 }
 
 .results {
     text-align: center;
-}
-
-.feedback .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2em;
-    padding: 5% 5% 0;
+    background-color: lightcoral; /* for debugging */
 }
 
 .score {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2em;
-    margin-top: 2em;
-    max-width: 25em;
-    border: 0.25em solid black;
-    padding: 1em 1em;
+    background-color: aquamarine; /* for debugging */
+}
+
+.selection {
+    background-color: lightgray; /* for debugging */
+}
+
+.input-reset {
+    background-color: bisque; /* for debugging */
 }
 
 .score .container {
-    gap: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 50%;
+    margin: 0 auto;
+    padding: 2% 10%;
 }
 
 #btn-container {
@@ -70,7 +69,7 @@ h1 {
     flex-direction: column;
     justify-content: center;
     gap: 2em;
-    padding: 2% 2%;
+    padding: 10% 2%;
 }
 
 #btn-container button:active {
@@ -87,9 +86,8 @@ img {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 5em;
     gap: 2em;
-    margin-bottom: 5em;
+    padding: 1.5em;
 }
 
 #enter-rounds {
@@ -108,16 +106,26 @@ img {
 }
 
 footer {
-    margin-top: auto;
-    left: 0;
-    bottom: 0;
-    width: 100%;
     background-color: lightslategrey;
-    color: white;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 0.5em;
 }
 
 @media only screen and (min-width: 768px) {
+    .score .container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5em;
+    }
+
+    .score .container h2 {
+        margin: 0 auto;
+        flex: 1 1 100%;
+        text-align: center;
+    }
+    
     #btn-container {
         max-width: 90%;
     }

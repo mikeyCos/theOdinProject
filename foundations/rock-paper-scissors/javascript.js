@@ -1,5 +1,5 @@
 // Started: 06 MAR 2023
-// Finished: 17 MAR 2023
+// Finished: 19 MAR 2023
 // This article helped me divide the addEventListener and a named function instead of using an anonymous function.
 // https://medium.com/@DavideRama/removeeventlistener-and-anonymous-functions-ab9dbabd3e7b
 
@@ -10,11 +10,10 @@ let computerScoreNode = document.querySelector('.computer');
 let results = document.querySelector('.results');
 let buttons = document.getElementById('btn-container');
 let resetButton = document.getElementById('btn-reset');
-resetButton.addEventListener('click', reset, true);
-
-// get user input
 let roundsForm = document.getElementById('enter-rounds');
 roundsForm.addEventListener('submit', getRounds);
+resetButton.addEventListener('click', reset, true);
+
 
 let roundsCounter = 0;
 let rounds = 0;
@@ -75,6 +74,7 @@ function checkScore() {
 function getRounds (e) {
     e.preventDefault();
     rounds = document.getElementById('rounds').value;
+    reset();
     checkScore();
     turnOn();
 }
