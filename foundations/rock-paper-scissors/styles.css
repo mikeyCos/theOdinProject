@@ -16,6 +16,10 @@ body {
     margin: 0.5em;
 }
 
+header {
+    background-color: lightpink
+}
+
 h1 {
     text-align: center;
     padding: 1em;
@@ -37,6 +41,7 @@ h1 {
 
 .input-reset {
     background-color: bisque; /* for debugging */
+    flex: 1;
 }
 
 .score .container {

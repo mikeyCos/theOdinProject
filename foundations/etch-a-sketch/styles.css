@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background-color: lightslategrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.squares {
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    padding: 2em;
+    background-color: lightpink;
+}
+
+#container {
+    display: flex;
+
+}
+
+.square {
+    background-color: lightblue;
+    width: 1em;
+    height: 1em;
+    border: 0.025em solid grey;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: lightseagreen;
+    width: 100%;
+}
