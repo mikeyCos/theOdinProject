@@ -6,37 +6,56 @@
 
 body {
     min-height: 100vh;
-    background-color: lightslategrey;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: lightslategrey;
+}
+
+header {
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
+    padding: 1em;
+    background-color: brown;
+}
+
+.button {
+    display: flex;
+    align-self: stretch;
+    justify-content: center;
+    background-color: rgb(164, 85, 85);
+}
+
+button {
+    margin: 1em;
+    padding: 0.25em;
 }
 
 .squares {
-    min-width: 0;
     display: flex;
+    width: 100vw;
+    flex: 1;
     justify-content: center;
     align-items: center;
-    flex: 1 1 auto;
-    padding: 2em;
-    background-color: lightpink;
 }
 
-#container {
+.squares #container {
+/* overflowing */
     display: flex;
-
+    min-width: 0;
 }
 
 .square {
-    background-color: lightblue;
-    width: 1em;
-    height: 1em;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem;
     border: 0.025em solid grey;
 }
 
 footer {
     display: flex;
     justify-content: center;
+    align-self: stretch;
     background-color: lightseagreen;
-    width: 100%;
+    padding: 0.5em;
 }
