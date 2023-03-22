@@ -6,38 +6,72 @@
 
 body {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 3em auto 3em;
     background-color: lightslategrey;
+    grid-template-areas:
+        "header header header header header header"
+        "button canvas canvas canvas canvas canvas"
+        "footer footer footer footer footer footer";
 }
 
 header {
-    display: flex;
-    align-self: stretch;
-    justify-content: center;
-    padding: 1em;
-    background-color: brown;
+    grid-area: header;
+    font-size: 2em;
 }
 
-.button {
-    display: flex;
-    align-self: stretch;
-    justify-content: center;
-    background-color: rgb(164, 85, 85);
-}
-
-button {
-    margin: 1em;
-    padding: 0.25em;
-}
-
-
-
+header,
 footer {
     display: flex;
     justify-content: center;
-    align-self: stretch;
-    background-color: lightseagreen;
-    padding: 0.5em;
+    align-items: center;
+    background-color: brown;
+}
+
+footer {
+    grid-area: footer;
+}
+
+.buttons {
+    grid-area: button;
+    padding: 1em;
+    background-color: lightsalmon;
+}
+
+.buttons .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+button {
+    padding: 0.25em;
+}
+
+.canvas-container {
+    grid-area: canvas;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    padding: 0 1em;
+    /* align-self: center; */
+    /* justify-self: center; */
+    background-color:rgb(255, 191, 118);
+}
+
+.grid-container {
+    max-width: inherit;
+    display: grid;
+    justify-content: center;
+    margin: 100px auto;
+}
+
+.grid-item {
+    padding: 0.25em;
+    background-color: rgb(255, 255, 255);
+    border: lightslategrey 0.025em solid;
 }

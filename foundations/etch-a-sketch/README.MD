@@ -1,2 +1,3 @@
+22 MAR 2023: Applied CSS grid styles, canvas no longer overflows, added extra buttons for different functions, and implemented event listeners for mouse move/down/up.  
 21 MAR 2023: Added getColor function that sets a background color if there is not background color, and if there is a background color then current values in RGB by 10%. Overflowing issue remains, flexwrap inside .squares #container selector wraps row vertically.  
 20 MAR 2023: Initial commit, implemented JavaScript logic, and canvas is overflowing on smaller screens.  
