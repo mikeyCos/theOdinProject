@@ -99,7 +99,7 @@ function addMouseUp() {
 function changeColor(e) {
     let currentElement = document.elementFromPoint(e.clientX, e.clientY);
     let color = window.getComputedStyle(currentElement).backgroundColor;
-
+    console.log(color);
     // change color based on tool selection
     if (toolChoice == 'btn-multicolor') {
         currentElement.style.backgroundColor = getColorful();
