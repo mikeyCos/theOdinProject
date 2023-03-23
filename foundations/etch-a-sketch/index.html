@@ -12,11 +12,19 @@
     <body>
         <header>Etch A Sketch</header>
         <div class="buttons">
-            <div class="container">
-                <button class="size-btn">Change canvas size</button>
-                <button class="multicolor-btn">Multicolor</button>
-                <button class="solid-btn">Solid Color</button>
-                <button class="eraser">Eraser</button>
+            <div class="buttons-container">
+                <button class="btn-size">Change canvas size</button>
+                <div class="canvas-color-container">
+                    <label for="canvas-color">Background</label>
+                    <input type="color" class="canvas-color" name="canvas-color">
+                </div>
+                <button class="btn-multicolor">Multicolor</button>
+                <div class="solid-color-container">
+                    <label for="solid-color">Pick color</label>
+                    <input type="color" class="solid-color" name="solid-color">
+                </div>
+                <button class="btn-eraser">Eraser</button>
+                <button class="btn-reset">Reset</button>
             </div>
         </div>
 

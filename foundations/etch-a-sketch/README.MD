@@ -1,3 +1,4 @@
+23 MAR 2023: Added color inputs for solid coloring and canvas color; default canvas color is null (transparent). User colors grid based on tool choice which is evaluated in the changeColor function, and the element's background color is changed depending where the cursor is currently moving and down. Mousedown handler will color and erase a single block.  
 22 MAR 2023: Applied CSS grid styles, canvas no longer overflows, added extra buttons for different functions, and implemented event listeners for mouse move/down/up.  
 21 MAR 2023: Added getColor function that sets a background color if there is not background color, and if there is a background color then current values in RGB by 10%. Overflowing issue remains, flexwrap inside .squares #container selector wraps row vertically.  
 20 MAR 2023: Initial commit, implemented JavaScript logic, and canvas is overflowing on smaller screens.  

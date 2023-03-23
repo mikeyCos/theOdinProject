@@ -39,7 +39,7 @@ footer {
     background-color: lightsalmon;
 }
 
-.buttons .container {
+.buttons .buttons-container {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -51,6 +51,16 @@ button {
     padding: 0.25em;
 }
 
+.solid-color-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input {
+    width: 100%;
+}
+
 .canvas-container {
     grid-area: canvas;
     display: flex;
@@ -58,8 +68,6 @@ button {
     align-items: center;
     max-width: 100%;
     padding: 0 1em;
-    /* align-self: center; */
-    /* justify-self: center; */
     background-color:rgb(255, 191, 118);
 }
 
@@ -72,6 +80,5 @@ button {
 
 .grid-item {
     padding: 0.25em;
-    background-color: rgb(255, 255, 255);
     border: lightslategrey 0.025em solid;
 }
