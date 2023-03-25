@@ -10,18 +10,22 @@
     </head>
 
     <body>
-        <header>Etch A Sketch</header>
+        <header>
+                <div>Etch A Sketch</div>
+                <a class="git-hub" href="#"><img src="../github-mark/github-mark.svg"></a>
+        </header>
         <div class="buttons">
             <div class="buttons-container">
                 <button class="btn-size">Change canvas size</button>
                 <div class="canvas-color-container">
                     <label for="canvas-color">Background</label>
-                    <input type="color" class="canvas-color" name="canvas-color">
+                    <input type="color" class="canvas-color" name="canvas-color" value="#FFFFFF">
                 </div>
                 <button class="btn-multicolor">Multicolor</button>
+                <!-- <button class="btn-shade">Shade</button> -->
                 <div class="solid-color-container">
                     <label for="solid-color">Pick color</label>
-                    <input type="color" class="solid-color" name="solid-color">
+                    <input type="color" class="solid-color" name="solid-color" value="#FF0000">
                 </div>
                 <button class="btn-eraser">Eraser</button>
                 <button class="btn-reset">Reset</button>

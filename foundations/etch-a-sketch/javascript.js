@@ -1,28 +1,26 @@
+let toolChoice;
+let isPainting = false;
 let canvas = document.querySelector('#canvas');
 let gridContainer = document.querySelector('.grid-container');
-let isPainting = false;
-let toolChoice;
-
 let sizeButton = document.querySelector('.btn-size');
-sizeButton.addEventListener('click', getCanvasSize);
-
 let buttons = document.querySelector('.buttons-container');
-buttons.addEventListener('click', getTool);
-
 let reset = document.querySelector('.btn-reset');
-
-let changeCanvasColor = document.querySelector('.canvas-color');
-changeCanvasColor.addEventListener('input', changeCanvas);
+let canvasColorButton = document.querySelector('.canvas-color');
+sizeButton.addEventListener('click', getCanvasSize);
+buttons.addEventListener('click', getTool);
+canvasColorButton.addEventListener('input', changeCanvasColor);
 
 reset.addEventListener('click', (e) => {
     let nodes = gridContainer.childNodes;
     for (i = 0; i < nodes.length; i++) {
         nodes[i].style.backgroundColor = null;
+        nodes[i].style.filter = null;
     }
     gridContainer.style.backgroundColor = null;
+    
 });
 
-function changeCanvas(event) {
+function changeCanvasColor(event) {
     gridContainer.style.backgroundColor = event.target.value;
 }
 
@@ -37,7 +35,6 @@ function getCanvasSize() {
     makeGrid(size);
 }
 
-// make grid
 function makeGrid(size) {
     gridContainer = document.createElement('div');
     gridContainer.className = 'grid-container';
@@ -53,13 +50,11 @@ function makeGrid(size) {
     addMouseUp();
 }
 
-// figure out which tool was selected by user
 function getTool(e) {
     toolChoice = e.target.className;
     console.log(toolChoice);
 }
 
-// randomizes rgb values and puts them into an array
 function getColorful() {
     let color;
     const rgb = [];
@@ -68,6 +63,18 @@ function getColorful() {
     }
     color = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
     return color;
+}
+
+function darkenElement(brightnessProperty) {
+    let brightnessValue;
+    if (brightnessProperty == '') {
+        brightnessProperty = `brightness(1.0)`;
+    } else if (brightnessValue > 0 || brightnessValue == null) {
+        brightnessValue = parseFloat(brightnessProperty.slice(11, brightnessProperty.indexOf(')')));
+        brightnessValue = brightnessValue - 0.1;
+        brightnessProperty = `brightness(${brightnessValue})`;
+    }
+    return brightnessProperty;
 }
 
 function addMouseMove() {
@@ -95,18 +102,20 @@ function addMouseUp() {
     })
 }
 
-// get the current element's color where the mouse is down on
 function changeColor(e) {
     let currentElement = document.elementFromPoint(e.clientX, e.clientY);
     let color = window.getComputedStyle(currentElement).backgroundColor;
-    console.log(color);
-    // change color based on tool selection
     if (toolChoice == 'btn-multicolor') {
-        currentElement.style.backgroundColor = getColorful();
+        if (currentElement.style.backgroundColor == '') {
+            currentElement.style.backgroundColor = getColorful();
+        } else {
+            currentElement.style.filter = darkenElement(currentElement.style.filter);
+        }
     } else if (toolChoice == 'btn-eraser') {
         currentElement.style.backgroundColor = null;
+        currentElement.style.filter = null;
     } else if (toolChoice == 'solid-color') {
         let colorPicker = document.querySelector('.solid-color');
         currentElement.style.backgroundColor = colorPicker.value;
-    }
+    } 
 }
