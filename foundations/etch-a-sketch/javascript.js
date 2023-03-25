@@ -1,3 +1,5 @@
+// test
+
 let toolChoice;
 let isPainting = false;
 let canvas = document.querySelector('#canvas');
