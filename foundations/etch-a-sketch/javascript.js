@@ -80,7 +80,7 @@ function darkenElement(brightnessProperty) {
 function addMouseMove() {
     gridContainer.addEventListener('mousemove', (e) => {
         if (isPainting) {
-            console.log(e.type);
+            console.log(e.type); //for debugging
             changeColor(e);
         }
     });
@@ -90,7 +90,7 @@ function addMouseDown() {
     gridContainer.addEventListener('mousedown', (e) => {
         isPainting = true;
         changeColor(e);
-        console.log(e.type);
+        console.log(e.type); //for debugging
     });
 }
 
