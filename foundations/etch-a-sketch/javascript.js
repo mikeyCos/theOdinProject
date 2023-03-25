@@ -68,7 +68,7 @@ function getColorful() {
 function darkenElement(brightnessProperty) {
     let brightnessValue;
     if (brightnessProperty == '') {
-        brightnessProperty = `brightness(1.0)`;
+        brightnessProperty = `brightness(1)`;
     } else if (brightnessValue > 0 || brightnessValue == null) {
         brightnessValue = parseFloat(brightnessProperty.slice(11, brightnessProperty.indexOf(')')));
         brightnessValue = brightnessValue - 0.1;
