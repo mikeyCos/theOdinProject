@@ -46,7 +46,7 @@ function makeGrid(size) {
         canvas.appendChild(gridItem);
     }
     addMouseDown();
-    addMouseMove();
+    addMouseOver();
     addMouseUp();
 }
 
@@ -77,8 +77,8 @@ function darkenElement(brightnessProperty) {
     return brightnessProperty;
 }
 
-function addMouseMove() {
-    canvas.addEventListener('mousemove', (e) => {
+function addMouseOver() {
+    canvas.addEventListener('mouseover', (e) => {
         if (isPainting) {
             console.log(e.type); //for debugging
             changeColor(e);
@@ -117,5 +117,6 @@ function changeColor(e) {
     } else if (toolChoice == 'solid-color') {
         let colorPicker = document.querySelector('.solid-color');
         currentElement.style.backgroundColor = colorPicker.value;
+        currentElement.style.filter = null;
     } 
 }
