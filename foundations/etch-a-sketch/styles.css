@@ -10,12 +10,14 @@ body {
     min-height: 100vh;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 3em auto 3em;
+    grid-template-rows: 3em auto auto auto 3em;
     background-color: lightslategrey;
     grid-template-areas:
-        "header header header header header header"
-        "button canvas canvas canvas canvas canvas"
-        "footer footer footer footer footer footer";
+    "header header header header header header"
+    "button canvas canvas canvas canvas canvas"
+    "button canvas canvas canvas canvas canvas"
+    "button canvas canvas canvas canvas canvas"
+    "footer footer footer footer footer footer";
     background-color: brown;
     gap: 0.2em;
 }
@@ -23,6 +25,8 @@ body {
 header {
     grid-area: header;
     font-size: 2em;
+    font-weight: bold;
+    word-spacing: 1em;
     width: 100%;
 }
 
@@ -57,7 +61,7 @@ footer {
     padding: 1em;
     background-color: lightsalmon;
     border-radius: 1em;
-    border: rgb(255, 255, 255) 0.5em solid;
+    border: brown 0.5em solid;
 }
 
 .buttons .buttons-container {
@@ -88,28 +92,18 @@ input {
     border-radius: 0.5em;
 }
 
-.canvas-container {
+#canvas {
     grid-area: canvas;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-    padding: 0 1em;
-    background-color:rgb(255, 191, 118);
-    border: rgb(255, 255, 255) 0.5em solid;
-    border-radius: 1em;
-}
-
-.grid-container {
-    max-width: inherit;
     display: grid;
-    justify-content: center;
-    margin: 100px auto;
+    max-width: 100%;
+    background-color:rgb(255, 191, 118);
+    border-radius: 1em;
+    border: brown 0.5em solid;
+    padding: 0.2em;
 }
 
 .grid-item {
-    padding: 0.25em;
-    border: lightslategrey 0.025em solid;
+    border: lightslategrey 0.005em solid;
 }
 
 .grid-item:hover {

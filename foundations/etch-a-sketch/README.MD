@@ -1,4 +1,5 @@
 View project at <https://mikeycos.github.io/theOdinProject/foundations/etch-a-sketch/index.html>  
+26 MAR 2023: Grid now takes up canvas space.
 25 MAR 2023: Applied darkenElement function to darken the elements each time the mouse events are triggered, hover over grid items, and applied rounded borders to elements.  
 23 MAR 2023: Added color inputs for solid coloring and canvas color; default canvas color is null (transparent). User colors grid based on tool choice which is evaluated in the changeColor function, and the element's background color is changed depending where the cursor is currently moving and down. Mousedown handler will color and erase a single block.  
 22 MAR 2023: Applied CSS grid styles, canvas no longer overflows, added extra buttons for different functions, and implemented event listeners for mouse move/down/up.  
