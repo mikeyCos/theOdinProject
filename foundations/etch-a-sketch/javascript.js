@@ -52,7 +52,6 @@ function makeGrid(size) {
 
 function getTool(e) {
     toolChoice = e.target.className;
-    console.log(toolChoice);
 }
 
 function getColorful() {
@@ -80,7 +79,6 @@ function darkenElement(brightnessProperty) {
 function addMouseOver() {
     canvas.addEventListener('mouseover', (e) => {
         if (isPainting) {
-            console.log(e.type); //for debugging
             changeColor(e);
         }
     });
@@ -90,7 +88,6 @@ function addMouseDown() {
     canvas.addEventListener('mousedown', (e) => {
         isPainting = true;
         changeColor(e);
-        console.log(e.type); //for debugging
     });
 }
 

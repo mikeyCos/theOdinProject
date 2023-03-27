@@ -1,4 +1,5 @@
 View project at <https://mikeycos.github.io/theOdinProject/foundations/etch-a-sketch/index.html>  
+27 MAR 2023: Applied basic responsive design; media query for screen min-width: 768px and above, design will be adjusted for laptop/desktop screens.  
 26 MAR 2023: Grid now takes up canvas space, replaced addMouseMove function with addMouseOver, and applied hover and active properties to buttons.  
 25 MAR 2023: Applied darkenElement function to darken the elements each time the mouse events are triggered, hover over grid items, and applied rounded borders to elements. The darkenElement function turns down brightness.  
 23 MAR 2023: Added color inputs for solid coloring and canvas color; default canvas color is null (transparent). User colors grid based on tool choice which is evaluated in the changeColor function, and the element's background color is changed depending where the cursor is currently moving and down. Mousedown handler will color and erase a single block.  
