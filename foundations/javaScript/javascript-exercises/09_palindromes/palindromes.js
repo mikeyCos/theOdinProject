@@ -17,7 +17,7 @@ const palindromes = function (x) {
 
         // OR
         // const processString = x.toLowerCase().replace(/[^a-z]/g,'');
-        // console.log(`x.toLowerCase().replace(/[^a-z]/g,'') = ${x}`);
+        // console.log(`x.toLowerCase().replace(/[a-z]/g,'') = ${x}`);
         // console.log(`processString = ${processString}`);
         // console.log(`processString.split('') = ${processString.split('')}`);
         // console.log(`processString.split('').reverse() = ${processString.split('').reverse()}`);

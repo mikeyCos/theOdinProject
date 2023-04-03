@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-width: 100vw;
+    background-color: bisque;
+    font-size: 2em;
+}
+
+button {
+    padding: 0.25em;
+    font-size: 2rem;
+    width: 2.5em;
+}
+
