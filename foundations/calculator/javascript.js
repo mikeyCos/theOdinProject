@@ -1,66 +1,89 @@
-console.log('hello world');
-
 const resultsWindow = document.querySelector('.results-window');
-const numbers = [];
-// let resultsWindow = document.querySelector('.results-window').textContent;
-// check if keydown is a number
-// number pressed is show in resultsWindow
+const numbers = [0];
+resultsWindow.textContent = numbers[0];
+let number = '';
+
 window.addEventListener('keydown', verifyKey);
+let operator = '';
+let index = 0;
 
 function verifyKey(e) {
-    // put entered numbers into an array
-    // important keys:
-        // 0-9, '/', '-', '=', '*', enter, backspace, delete
         switch (e.key) {
             case 'Enter':
             case '=':
-                console.log('entered');
+                operate(operator, numbers);
+                updateArray(numbers);
+                number = '';
                 break;
             case 'Backspace':
                 console.log('backspaced');
                 break;
             case 'Delete':
-                console.log('deleted');
-                break;
-            case '-':
+                index = 0;
+                number = '';
+                numbers.pop();
+                updateArray(0);
                 console.log('deleted');
                 break;
             case '+':
-                console.log('deleted');
+                index = 1;
+                operator = e.key;
+                number = '';
+                break;
+            case '-':
                 break;
             case '/':
-                console.log('deleted');
                 break;
             case '*':
-                console.log('deleted');
                 break;
             default:
                 if (isFinite(e.key)) {
-                    if (resultsWindow.textContent == 0) {
-                        resultsWindow.textContent = e.key;
-                    } else {
-                        resultsWindow.textContent += e.key;
-                    }
+                    number += e.key;
+                    updateArray(number);
                 }
         }
     console.log(`e.code = ${e.code}`);
     console.log(`e.key = ${e.key}`);
 }
 
-function divide() {
+function updateArray(num) {
+    numbers[index] = parseFloat(num);
+    updateDisplay(numbers);
+}
+
+function updateDisplay(array) {
+    resultsWindow.textContent = array[index];
+}
+
+function operate(operator, array) {
+    index = 0;
+    switch (operator) {
+        case 'equal':
+            // updateDisplay(array);
+            break;
+        case '+':
+            array[0] = add(array);
+            break;
+        default:
+            console.log('default');
+    }
+}
+
+function add(array) {
+    return array.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
+
+function subtract(array) {
+    return array.reduce((accumulator, currentValue) => accumulator - currentValue);
+}
+
+function multiply(array) {
+    return array.reduce((accumulator, currentValue) => accumulator * currentValue);
+}
+
+function divide(array) {
+    
     //divide stuff
-}
-
-function add() {
-    //add stuff
-}
-
-function subtract() {
-    //subtract stuff
-}
-
-function multiply() {
-    //multiply stuff
 }
 
 function square() {
