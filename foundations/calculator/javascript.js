@@ -8,47 +8,56 @@ let operator = '';
 let index = 0;
 
 function verifyKey(e) {
-        switch (e.key) {
-            case 'Enter':
-            case '=':
+    switch (e.key) {
+        case 'Enter':
+        case '=':
+            operate(operator, numbers);
+            number = '';
+            break;
+        case 'Backspace':
+            break;
+        case 'Delete':
+            number = '';
+            numbers.pop();
+            updateArray(0);
+            console.log('deleted');
+            break;
+        case '+':
+            // operator = e.key;
+            // operate(operator, numbers);
+            // index = 1;
+            // number = '';
+            // break;
+
+            operator = e.key;
+            if (number !== '') {
                 operate(operator, numbers);
-                updateArray(numbers);
-                number = '';
-                break;
-            case 'Backspace':
-                console.log('backspaced');
-                break;
-            case 'Delete':
-                index = 0;
-                number = '';
-                numbers.pop();
-                updateArray(0);
-                console.log('deleted');
-                break;
-            case '+':
-                index = 1;
-                operator = e.key;
-                number = '';
-                break;
-            case '-':
-                break;
-            case '/':
-                break;
-            case '*':
-                break;
-            default:
-                if (isFinite(e.key)) {
-                    number += e.key;
-                    updateArray(number);
-                }
-        }
-    console.log(`e.code = ${e.code}`);
-    console.log(`e.key = ${e.key}`);
+            } 
+            else if (number == '' && numbers.length !== 2) {
+                // numbers[1] = numbers[0];
+                // operate(operator, numbers);
+            }
+            index = 1;
+            number = '';
+            break;
+        case '-':
+            break;
+        case '/':
+            break;
+        case '*':
+            break;
+        default:
+            if (isFinite(e.key)) {
+                number += e.key;
+                updateArray(number);
+            } 
+    }
 }
 
 function updateArray(num) {
     numbers[index] = parseFloat(num);
     updateDisplay(numbers);
+    console.log(numbers);
 }
 
 function updateDisplay(array) {
@@ -57,13 +66,16 @@ function updateDisplay(array) {
 
 function operate(operator, array) {
     index = 0;
+    // debugger
     switch (operator) {
         case 'equal':
-            // updateDisplay(array);
+            updateDisplay(array);
             break;
         case '+':
-            array[0] = add(array);
+            updateArray(add(array));
             break;
+        case '-':
+            updateArray(subtract(array));
         default:
             console.log('default');
     }
