@@ -1,101 +1,118 @@
 const resultsWindow = document.querySelector('.results-window');
-const numbers = [0];
-resultsWindow.textContent = numbers[0];
-let number = '';
-
+resultsWindow.textContent = 0;
 window.addEventListener('keydown', verifyKey);
-let operator = '';
-let index = 0;
+let check = false;
+let num1 = 0;
+let num2 = '';
+let number = '';
+let operator;
 
 function verifyKey(e) {
     switch (e.key) {
-        case 'Enter':
-        case '=':
-            operate(operator, numbers);
+        case 'Delete':
+            num1 = 0;
+            num2 = '';
             number = '';
+            operator = '';
+            updateDisplay(num1);
             break;
         case 'Backspace':
-            break;
-        case 'Delete':
-            number = '';
-            numbers.pop();
-            updateArray(0);
-            console.log('deleted');
+            //should not delete last answer
+            number = Number(number.toString().slice(0, -1));
+            if (!check) {
+                num1 = number;
+            } else {
+                num2 = number;
+            }
+            updateDisplay(number);
             break;
         case '+':
-            // operator = e.key;
-            // operate(operator, numbers);
-            // index = 1;
+            // operator = 'add';
+            // if (number !== '' && num2 !== '') {
+            //     operate(operator, num1, num2);
+            //     number = '';
+            // }
+            // check = true;
             // number = '';
+            // operator = 'add';
             // break;
-
-            operator = e.key;
-            if (number !== '') {
-                operate(operator, numbers);
-            } 
-            else if (number == '' && numbers.length !== 2) {
-                // numbers[1] = numbers[0];
-                // operate(operator, numbers);
+        case '-':
+        case '*':
+        case '/':
+            console.log(e.key);
+            if (number !== '' && num2 !== '') {
+                operate(operator, num1, num2);
+                number = '';
             }
-            index = 1;
+            check = true;
             number = '';
+            operator = e.key;
+            break;
+        case '=':
+        case 'Enter':
+            if (number == '' && check) {
+                num2 = num1;
+            }
+            operate(operator, num1, num2);
+            number = '';
+            check = false;
+            console.log(`e.key: ${e.key}`);     //for debugging
+            break;
+        default:
+            if(isFinite(e.key)) {
+                console.log(`e.code: ${e.code}`);   //for debugging
+                console.log(`e.key: ${e.key}`);     //for debugging
+                number += e.key;
+                if(!check) {    
+                    num1 = number;
+                    num2 = '';
+                    updateDisplay(num1);
+                } else if (check) {
+                    num2 = number;
+                    updateDisplay(num2);
+                }
+            }
+    }
+}
+
+function updateDisplay(num) {
+    resultsWindow.textContent = num;
+}
+
+function operate(operator, a, b) {
+    switch (operator) {
+        case '+':
+            num1 = add(parseFloat(a), parseFloat(b));
             break;
         case '-':
-            break;
-        case '/':
+            num1 = subtract(parseFloat(a), parseFloat(b));
             break;
         case '*':
+            num1 = multiply(parseFloat(a), parseFloat(b));
+            break;
+        case '/':
+            num1 = divide(parseFloat(a), parseFloat(b));
             break;
         default:
-            if (isFinite(e.key)) {
-                number += e.key;
-                updateArray(number);
-            } 
+            console.log(`default`);
     }
+    updateDisplay(num1);
 }
 
-function updateArray(num) {
-    numbers[index] = parseFloat(num);
-    updateDisplay(numbers);
-    console.log(numbers);
+function add(a, b) {
+    return a += b;
 }
 
-function updateDisplay(array) {
-    resultsWindow.textContent = array[index];
+function subtract(a, b) {
+    return a -= b;
 }
 
-function operate(operator, array) {
-    index = 0;
-    // debugger
-    switch (operator) {
-        case 'equal':
-            updateDisplay(array);
-            break;
-        case '+':
-            updateArray(add(array));
-            break;
-        case '-':
-            updateArray(subtract(array));
-        default:
-            console.log('default');
-    }
+function multiply(a, b) {
+    return a *= b;
 }
 
-function add(array) {
-    return array.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-}
-
-function subtract(array) {
-    return array.reduce((accumulator, currentValue) => accumulator - currentValue);
-}
-
-function multiply(array) {
-    return array.reduce((accumulator, currentValue) => accumulator * currentValue);
-}
-
-function divide(array) {
-    
-    //divide stuff
+function divide(a, b) {
+    return a /= b;
 }
 
 function square() {
