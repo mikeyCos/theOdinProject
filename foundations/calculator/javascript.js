@@ -1,7 +1,6 @@
 const resultsWindow = document.querySelector('.results-window');
 const buttons = document.querySelector('.buttons');
-buttons.addEventListener('click', verifyButton);
-// buttons.addEventListener('click', verifyKey);
+buttons.addEventListener('click', verifyKey);
 resultsWindow.textContent = 0;
 window.addEventListener('keydown', verifyKey);
 
@@ -11,12 +10,16 @@ let num2 = 0;
 let number = '';
 let operator;
 
-function verifyButton(e) {
-    console.log(`Class name: ${e.target.className}`);
-    console.log(`Typeof e.target.className: ${typeof e.target.className}`);
-    console.log(`e.target.textContent: ${e.target.textContent}`);
-    console.log(`Typeof textContent: ${typeof e.target.textContent}`);
-    switch (e.target.textContent) {
+function verifyKey(e) {
+    let action;
+    if (e.key) {
+        action = e.key;
+    } else if (e.target.textContent) {
+        action = e.target.textContent;
+    }
+    console.log(action);
+    switch (action) {
+        case 'Delete':
         case 'c':
             num1 = 0;
             num2 = 0;
@@ -24,54 +27,8 @@ function verifyButton(e) {
             operator = '';
             updateDisplay(num1);
             break;
-        case 'backspace':
-            break;
-        case '.':
-            break;
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-            if (number !== '' && num2 !== '') {
-                operate(operator, num1, num2);
-                number = '';
-            }
-            check = true;
-            number = '';
-            operator = e.target.textContent;
-            break;
-        case '=':
-            if (number == '' && check) {
-                num2 = num1;
-            }
-            operate(operator, num1, num2);
-            number = '';
-            check = false;
-            break;
-        default:
-            if(isFinite(e.target.textContent)) {
-                number += e.target.textContent;
-                if(!check) {    
-                    num1 = number;
-                    num2 = '';
-                } else if (check) {
-                    num2 = number;
-                }
-                updateDisplay(number);
-            }
-    }
-}
-
-function verifyKey(e) {
-    switch (e.key) {
-        case 'Delete':
-            num1 = 0;
-            num2 = 0;
-            number = '';
-            operator = '';
-            updateDisplay(num1);
-            break;
         case 'Backspace':
+        case 'backspace':
             number = number.toString().slice(0, -1);
             if (number.length == 0) {
                 updateDisplay(0);
@@ -87,26 +44,28 @@ function verifyKey(e) {
             }
             break;
         case '+':
-            // operator = 'add';
-            // if (number !== '' && num2 !== '') {
-            //     operate(operator, num1, num2);
-            //     number = '';
-            // }
-            // check = true;
-            // number = '';
-            // operator = 'add';
-            // break;
         case '-':
         case '*':
+        case '×':
         case '/':
-            console.log(e.key);
+        case '÷':
             if (number !== '' && num2 !== '') {
                 operate(operator, num1, num2);
                 number = '';
             }
             check = true;
             number = '';
-            operator = e.key;
+            operator = action;
+            break;
+        case '𝑥²':
+            if(!check) {    
+                num1 = Math.pow(num1, 2);
+                updateDisplay(num1);
+            } else if (check) {
+                num2 = Math.pow(num2, 2);
+                updateDisplay(num2);
+            }
+            check = false;
             break;
         case '=':
         case 'Enter':
@@ -116,24 +75,20 @@ function verifyKey(e) {
             operate(operator, num1, num2);
             number = '';
             check = false;
-            console.log(`e.key: ${e.key}`);     //for debugging
             break;
         default:
-            if(isFinite(e.key)) {
-                console.log(`e.code: ${e.code}`);   //for debugging
-                console.log(`e.key: ${e.key}`);     //for debugging
-                number += e.key;
+            if(isFinite(action)) {
+                number += action;
                 if(!check) {    
                     num1 = number;
                     num2 = '';
-                    // updateDisplay(num1);
                 } else if (check) {
                     num2 = number;
-                    // updateDisplay(num2);
                 }
                 updateDisplay(number);
             }
     }
+    e.target.blur(); //removes button selection after click
 }
 
 function updateDisplay(num) {
@@ -153,11 +108,15 @@ function operate(operator, a, b) {
             num1 = subtract(parseFloat(a), parseFloat(b));
             break;
         case '*':
+        case '×':
             num1 = multiply(parseFloat(a), parseFloat(b));
             break;
         case '/':
+        case '÷':
             num1 = divide(parseFloat(a), parseFloat(b));
             break;
+        case 'x²':
+            return square(parseFloat(a));
         default:
             console.log(`default`);
     }
@@ -179,11 +138,6 @@ function multiply(a, b) {
 function divide(a, b) {
     return a /= b;
 }
-
-function square() {
-    // square stuff
-}
-// backspace
 
 // debugging in console
 // console.log(num1);
