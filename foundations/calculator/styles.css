@@ -4,37 +4,96 @@
     padding: 0;
 }
 
-body {   
+body {
+    font-family: Arial, Helvetica, sans-serif;
     min-width: 100vw;
     min-height: 100vh;
     background-color: bisque;
-    font-size: 2em;
+    font-size: 2rem;
     display: flex;
     flex-direction: column;
+}
+
+.github {
+    max-width: 2em;
+    float: right;
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
 }
 
 .calculator {
     align-self: center;
     max-width: 10em;
-    background-color: rgb(141, 73, 73);
-    padding: 1em;
+    flex: 1 1 0;
+}
+
+.calculator .container {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    min-height: 75%;
+    background-color: rgb(35, 68, 80);
+    border: 0.25rem solid rgb(51, 95, 111);
+    outline-style: inset;
+    outline-width: 0.5rem;
+    outline-color: rgb(0, 157, 255);
+    padding: 1rem;
     border-radius: 0.25em;
+}
+
+.results-window {
+    max-width: 100%;
+    background-color: grey;
+    border: 0.25rem solid rgb(240, 117, 17);
+    border-radius: 0.05em;
+    margin-bottom: 3rem;
+    padding: 0.25rem;
+    text-align: right;
 }
 
 .buttons {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 0.05em;
 }
 
 button {
-    padding: 0.25em;
+    padding: 0.25rem;
     font-size: 2rem;
-    width: 2.5em;
+    min-width: 2.0em;
+    border-radius: 0.25rem;
+}
+
+button:hover {
+    background-color: rgb(205, 205, 205);
+    border: 0.15rem solid black;
+}
+
+button:active {
+    background-color: rgb(121, 121, 121);
+    box-shadow: 0 0.01rem rgb(255, 255, 255);
 }
 
 footer {
     display: flex;
     justify-content: center;
     margin-top: auto;
+}
+
+@media only screen and (min-width: 310px) {
+    .calculator {
+        max-width: 12em;
+        
+    }
+
+    button {
+        padding: 0.25rem;
+        font-size: 2rem;
+        min-width: 2.5em;
+        border-radius: 0.25rem;
+    }
 }

@@ -20,7 +20,7 @@ function verifyKey(e) {
     console.log(action);
     switch (action) {
         case 'Delete':
-        case 'c':
+        case 'AC':
             num1 = 0;
             num2 = 0;
             number = '';
@@ -43,15 +43,30 @@ function verifyKey(e) {
                 updateDisplay(number);
             }
             break;
+        case '⁺/₋':
+            if (number[0] !== '-') {
+                number = -number;
+                updateDisplay(number);
+                if(!check) {    
+                    num1 = number;
+                    num2 = '';
+                } else if (check) {
+                    num2 = number;
+                }
+            } else {
+                number = +number;
+            }
+            break;
         case '+':
         case '-':
+        case '−':
         case '*':
         case '×':
         case '/':
         case '÷':
             if (number !== '' && num2 !== '') {
                 operate(operator, num1, num2);
-                number = '';
+                // number = '';
             }
             check = true;
             number = '';
@@ -61,11 +76,11 @@ function verifyKey(e) {
             if(!check) {    
                 num1 = Math.pow(num1, 2);
                 updateDisplay(num1);
-            } else if (check) {
+            } else {
                 num2 = Math.pow(num2, 2);
                 updateDisplay(num2);
             }
-            check = false;
+            number = num2;
             break;
         case '=':
         case 'Enter':
@@ -77,9 +92,10 @@ function verifyKey(e) {
             check = false;
             break;
         default:
+            console.log(`typeof action: ${typeof action}`);
             if(isFinite(action)) {
                 number += action;
-                if(!check) {    
+                if(!check) {
                     num1 = number;
                     num2 = '';
                 } else if (check) {
@@ -92,8 +108,11 @@ function verifyKey(e) {
 }
 
 function updateDisplay(num) {
+    console.log(`length of num: ${num.length}`);
     if (num === Infinity) {
-    resultsWindow.textContent = 'The answer is and will always be 42';
+    resultsWindow.textContent = 'You what mate?';
+    } else if (resultsWindow.textContent.length > 18) {
+        resultsWindow.textContent = 'OVERFLOW';
     } else {
         resultsWindow.textContent = num;
     }
@@ -105,6 +124,7 @@ function operate(operator, a, b) {
             num1 = add(parseFloat(a), parseFloat(b));
             break;
         case '-':
+        case '−':
             num1 = subtract(parseFloat(a), parseFloat(b));
             break;
         case '*':
