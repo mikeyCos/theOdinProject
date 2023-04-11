@@ -17,7 +17,7 @@ function verifyKey(e) {
     } else if (e.target.textContent) {
         action = e.target.textContent;
     }
-    console.log(action);
+    console.log(action); //for debugging
     switch (action) {
         case 'Delete':
         case 'AC':
@@ -37,24 +37,38 @@ function verifyKey(e) {
             }
             break;
         case '.':
-            if (number.indexOf('.') === -1) {
-                //if there is no decimal point
-                number += '.';
+            // debugger;
+            if (number.toString().indexOf('.') === -1) {
+                if (number === '') {
+                    number = '0.';
+                } else {
+                    number += '.';
+                }
                 updateDisplay(number);
             }
             break;
         case '⁺/₋':
-            if (number[0] !== '-') {
-                number = -number;
-                updateDisplay(number);
+            debugger
+            if (number !== '') {
+                if (number.toString().indexOf('-') === -1) {
+                    number = -number;
+                } else {
+                    number = Math.abs(number);
+                }
+
                 if(!check) {    
                     num1 = number;
-                    num2 = '';
                 } else if (check) {
                     num2 = number;
                 }
+            updateDisplay(number);
             } else {
-                number = +number;
+                if (num1.toString().indexOf('-') === -1) {
+                    num1 = -num1;
+                } else {
+                    num1 = Math.abs(num1);
+                }
+            updateDisplay(num1);
             }
             break;
         case '+':
@@ -73,9 +87,14 @@ function verifyKey(e) {
             operator = action;
             break;
         case '𝑥²':
+            debugger;
             if(!check) {    
                 num1 = Math.pow(num1, 2);
                 updateDisplay(num1);
+            } else if (check && number === '') {
+                num2 = num1;
+                num2 = Math.pow(num1, 2);
+                updateDisplay(num2);
             } else {
                 num2 = Math.pow(num2, 2);
                 updateDisplay(num2);
@@ -84,7 +103,8 @@ function verifyKey(e) {
             break;
         case '=':
         case 'Enter':
-            if (number == '' && check) {
+            // debugger
+            if (number === '' && check) {
                 num2 = num1;
             }
             operate(operator, num1, num2);
@@ -92,23 +112,27 @@ function verifyKey(e) {
             check = false;
             break;
         default:
-            console.log(`typeof action: ${typeof action}`);
+            console.log(`typeof action: ${typeof action}`); //for debugging
             if(isFinite(action)) {
                 number += action;
+                if (number.indexOf('.') === -1) {
+                    number = parseInt(number);
+                }
+
                 if(!check) {
                     num1 = number;
-                    num2 = '';
+                    num2 = '';  // why was this 0?
                 } else if (check) {
                     num2 = number;
                 }
                 updateDisplay(number);
-            }
+                }
     }
     e.target.blur(); //removes button selection after click
 }
 
 function updateDisplay(num) {
-    console.log(`length of num: ${num.length}`);
+    console.log(`length of num: ${num.length}`); //for debugging
     if (num === Infinity) {
     resultsWindow.textContent = 'You what mate?';
     } else if (resultsWindow.textContent.length > 18) {

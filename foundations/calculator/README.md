@@ -3,8 +3,10 @@ View project here: <https://mikeycos.github.io/theOdinProject/foundations/calcul
 Bugs:  
 1. If display is 0, and user presses '0', leading zeroes will be added to display.  
 2. String length does NOT work for integers with a decimal.  
+3. '2 + 𝑥²' should return 4.  
+4. '⁺/₋' does NOT make the answer and positive/negative integer.  
 ---
-10 APR 2023: Redesigned calculator asthetic, resolved 𝑥² functionality, added a '⁺/₋' button to make integers negative or positive, and set a character limit for the display.
+10 APR 2023: Redesigned calculator asthetic, resolved 𝑥² functionality, added a '⁺/₋' button to make integers negative or positive, and set a character limit for the display.  
   
 08 APR 2023: Implemented button functionality whilst mirroring some case for keydown keys, and added blur method to remove button focus after click. 𝑥² Button is implemented within verifyKey function so an operator (+,/,-,*) can be called before squaring (ie. 1 + 𝑥²). When user presses '1', then '+', then '2', then '𝑥²', 4 is displayed, and if user presses '=', 5 is returned.
   
