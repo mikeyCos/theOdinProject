@@ -6,6 +6,8 @@ Bugs:
 3. '2 + 𝑥²' should return 4.  
 4. '⁺/₋' does NOT make the answer and positive/negative integer.  
 ---
+12 APR 2023: Added data attributes to each button, updated a few if...else statements to ternary operators, and added styling attributes to header and footer.  
+
 11 APR 2023: Function findButton created to find button corresponding to what key has been pressed. The function has been repeatedly called in different cases. When key is pressed, active class is added to that key's class.  
 
 10 APR 2023: Redesigned calculator asthetic, resolved 𝑥² functionality, added a '⁺/₋' button to make integers negative or positive, and set a character limit for the display.  

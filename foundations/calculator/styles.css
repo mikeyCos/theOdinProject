@@ -8,7 +8,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     min-width: 100vw;
     min-height: 100vh;
-    background-color: bisque;
+    background-color: rgb(255, 228, 196);
     font-size: 2rem;
     display: flex;
     flex-direction: column;
@@ -21,22 +21,20 @@ body {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    padding-left: 2em;
 }
 
 .calculator {
     align-self: center;
     padding: 0;
     margin: auto;
-    /* background-color: red; */
-    /* max-width: 10em; */
 }
 
 .calculator .container {
     display: flex;
     flex-direction: column;
     min-width: 100%;
-    /* min-height: 75%; */
     background-color: rgb(35, 68, 80);
     border: 0.25rem solid rgb(51, 95, 111);
     outline-style: inset;
@@ -94,11 +92,6 @@ h1 {
     background-color: rgb(113, 61, 255);
 }
 
-span {
-    display: none;
-    
-}
-
 button {
     padding: 0.25rem;
     font-size: 1.25rem;
@@ -127,12 +120,20 @@ button:active {
 }
 
 footer {
+    background-color: rgb(54, 54, 54);
+    color: rgb(255, 228, 196);
+    padding: 0.25em;
+    font-size: 0.5em;
     display: flex;
     justify-content: center;
     margin-top: auto;
 }
 
 @media only screen and (min-width: 310px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
     .calculator {
         max-width: 12em;
         
