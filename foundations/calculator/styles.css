@@ -46,11 +46,12 @@ h1 {
 
 .results-window {
     max-width: 100%;
+    font-size: 2.5rem;
     background-color: grey;
     border: 0.25rem solid rgb(240, 117, 17);
     border-radius: 0.05em;
     margin-bottom: 3rem;
-    padding: 0.25rem;
+    padding: 0.5rem;
     text-align: right;
 }
 
