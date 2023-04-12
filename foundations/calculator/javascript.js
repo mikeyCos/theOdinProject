@@ -130,7 +130,7 @@ function findButton(key) {
             }
             element.classList.add('active');
             
-            setTimeout(() => element.classList.remove('active') , 2);
+            setTimeout(() => element.classList.remove('active') , 125);
         }
     });
 }

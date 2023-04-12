@@ -1,10 +1,10 @@
 View project here: <https://mikeycos.github.io/theOdinProject/foundations/calculator/index.html>
 ---
 Bugs:  
-1. If display is 0, and user presses '0', leading zeroes will be added to display.  
+1. ~~If display is 0, and user presses '0', leading zeroes will be added to display.~~  
 2. String length does NOT work for integers with a decimal.  
-3. '2 + 𝑥²' should return 4.  
-4. '⁺/₋' does NOT make the answer and positive/negative integer.  
+3. ~~'2 + 𝑥²' should return 4.~~  
+4. ~~'⁺/₋' does NOT make numbers and a positive/negative integer.~~  
 ---
 12 APR 2023: Added data attributes to each button, updated a few if...else statements to ternary operators, and added styling attributes to header and footer.  
 
