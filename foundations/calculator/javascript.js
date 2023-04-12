@@ -1,6 +1,6 @@
 const resultsWindow = document.querySelector('.results-window');
 const buttons = document.querySelector('.buttons');
-buttons.addEventListener('click', verifyKey);
+buttons.addEventListener('mouseup', verifyKey);
 resultsWindow.textContent = 0;
 window.addEventListener('keydown', verifyKey);
 
@@ -10,17 +10,22 @@ let num2 = 0;
 let number = '';
 let operator;
 
+// valid keys:
+    // delete, backspace, ., +, -, *, /, +, Enter, =, 0-9
 function verifyKey(e) {
     let action;
+    console.log(`e.key: ${e.key}`);
+    console.log(`e.code: ${e.code}`);
     if (e.key) {
         action = e.key;
+        // findButton(action);
     } else if (e.target.textContent) {
         action = e.target.textContent;
     }
-    console.log(action); //for debugging
     switch (action) {
         case 'Delete':
         case 'AC':
+            findButton(action);
             num1 = 0;
             num2 = 0;
             number = '';
@@ -29,6 +34,7 @@ function verifyKey(e) {
             break;
         case 'Backspace':
         case 'backspace':
+            findButton(action);
             number = number.toString().slice(0, -1);
             if (number.length == 0) {
                 updateDisplay(0);
@@ -37,13 +43,9 @@ function verifyKey(e) {
             }
             break;
         case '.':
-            // debugger;
+            findButton(action);
             if (number.toString().indexOf('.') === -1) {
-                if (number === '') {
-                    number = '0.';
-                } else {
-                    number += '.';
-                }
+                number === '' ? number = '0.' : number += '.';
                 updateDisplay(number);
             }
             break;
@@ -78,6 +80,7 @@ function verifyKey(e) {
         case '×':
         case '/':
         case '÷':
+            findButton(action);
             if (number !== '' && num2 !== '') {
                 operate(operator, num1, num2);
                 // number = '';
@@ -87,7 +90,6 @@ function verifyKey(e) {
             operator = action;
             break;
         case '𝑥²':
-            debugger;
             if(!check) {    
                 num1 = Math.pow(num1, 2);
                 updateDisplay(num1);
@@ -103,7 +105,7 @@ function verifyKey(e) {
             break;
         case '=':
         case 'Enter':
-            // debugger
+            findButton(action);
             if (number === '' && check) {
                 num2 = num1;
             }
@@ -112,8 +114,8 @@ function verifyKey(e) {
             check = false;
             break;
         default:
-            console.log(`typeof action: ${typeof action}`); //for debugging
             if(isFinite(action)) {
+                findButton(action);
                 number += action;
                 if (number.indexOf('.') === -1) {
                     number = parseInt(number);
@@ -131,12 +133,32 @@ function verifyKey(e) {
     e.target.blur(); //removes button selection after click
 }
 
+function findButton(key) {
+    const buttonsArray = Array.from(buttons.children);
+    buttonsArray.find(function(child) {
+        if (child.textContent.includes(key.toLowerCase()) || child.className.includes(key.toLowerCase())) {
+            let className;
+            var test;
+            if (child.className.includes(' ')) {
+                className = child.className.replace(/ /g, '.');
+                test = document.querySelector(`.${className}`);
+            } else {
+                test = document.querySelector(`.${child.className}`);
+            }
+            test.classList.add('active');
+            
+            setTimeout(() => test.classList.remove('active') , 2);
+        }
+    });
+}
+
 function updateDisplay(num) {
-    console.log(`length of num: ${num.length}`); //for debugging
+    // console.log(`length of num: ${num.length}`); //for debugging
     if (num === Infinity) {
     resultsWindow.textContent = 'You what mate?';
-    } else if (resultsWindow.textContent.length > 18) {
-        resultsWindow.textContent = 'OVERFLOW';
+    } else if (num.toString().length > 15) {
+        debugger;
+        resultsWindow.textContent = +num.toPrecision(10);
     } else {
         resultsWindow.textContent = num;
     }

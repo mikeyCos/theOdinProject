@@ -26,19 +26,21 @@ h1 {
 
 .calculator {
     align-self: center;
-    max-width: 10em;
-    flex: 1 1 0;
+    padding: 0;
+    margin: auto;
+    /* background-color: red; */
+    /* max-width: 10em; */
 }
 
 .calculator .container {
     display: flex;
     flex-direction: column;
     min-width: 100%;
-    min-height: 75%;
+    /* min-height: 75%; */
     background-color: rgb(35, 68, 80);
     border: 0.25rem solid rgb(51, 95, 111);
     outline-style: inset;
-    outline-width: 0.5rem;
+    outline-width: 0.25rem;
     outline-color: rgb(0, 157, 255);
     padding: 1rem;
     border-radius: 0.25em;
@@ -61,20 +63,66 @@ h1 {
     gap: 0.05em;
 }
 
+.buttons :nth-child(1) { order: 3;} /*backspace*/
+.buttons :nth-child(2) { order: 2;} /*square*/
+.buttons :nth-child(3) { order: 4;} /*divide*/
+.buttons :nth-child(4) { order: 8;} /*times*/
+.buttons :nth-child(5) { order: 12;} /*minus*/
+.buttons :nth-child(6) { order: 16;} /*add*/
+.buttons :nth-child(7) { order: 20;} /*equals*/
+.buttons :nth-child(8) { order: 1;} /*AC*/
+.buttons :nth-child(9) { order: 18;} /*0*/
+.buttons :nth-child(10) { order: 13;}
+.buttons :nth-child(11) { order: 14;}
+.buttons :nth-child(12) { order: 15;}
+.buttons :nth-child(13) { order: 9;}
+.buttons :nth-child(14) { order: 10;}
+.buttons :nth-child(15) { order: 11;}
+.buttons :nth-child(16) { order: 5;}
+.buttons :nth-child(17) { order: 6;} 
+.buttons :nth-child(18) { order: 7;} /*9*/ 
+.buttons :nth-child(19) { order: 19;}
+.buttons :nth-child(20) { order: 17;} 
+
+.buttons :nth-child(8),
+.buttons :nth-child(2),
+.buttons :nth-child(1) {
+    background-color: rgb(75, 194, 144);
+}
+
+.buttons :nth-child(n+3):nth-child(-n+7) {
+    background-color: rgb(113, 61, 255);
+}
+
+span {
+    display: none;
+    
+}
+
 button {
     padding: 0.25rem;
-    font-size: 2rem;
-    min-width: 2.0em;
+    font-size: 1.25rem;
+    min-width: 2.75rem;
     border-radius: 0.25rem;
+    background-color: rgb(90, 90, 90);
+    color: rgb(237, 237, 237);
 }
 
 button:hover {
-    background-color: rgb(205, 205, 205);
+    filter: brightness(125%);
     border: 0.15rem solid black;
 }
 
 button:active {
-    background-color: rgb(121, 121, 121);
+    border: 0.05rem solid white;
+    filter: brightness(50%);
+    box-shadow: 0 0.01rem rgb(255, 255, 255);
+}
+
+/* for js */
+.active {
+    border: 0.05rem solid white;
+    filter: brightness(50%);
     box-shadow: 0 0.01rem rgb(255, 255, 255);
 }
 
