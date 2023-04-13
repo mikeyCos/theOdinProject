@@ -3,6 +3,12 @@ View project here: <https://mikeycos.github.io/theOdinProject/foundations/calcul
 ---
 > Went beyond the scope of objectives listed on The Odin Project and attempted to replicate Microsoft Windows 10's calculator.
 ---
+## What can you do:
+1. Pressing **`2+=`** will display `4`, pressing `+=` again will display `8`, so on and so forth.  
+2. Pressing **`2+2=`** will display `4`, pressing `=` again will display `6`, so on and so forth.  
+3. Pressing `5+3𝑥²` will display `9`, pressing `𝑥²` again will display `81`, and pressing `=` will display `86`.  
+4. Pressing `9+4=` will display `13`, pressing `7=` will display `11`, pressing `=` will display `15`.  
+---
 ## Bugs:  
 1. ~~If display is 0, and user presses '0', leading zeroes will be added to display.~~  
 2. ~~String length does NOT work for integers with a decimal.~~  

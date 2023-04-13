@@ -46,7 +46,7 @@ h1 {
 
 .results-window {
     max-width: 100%;
-    font-size: 2.5rem;
+    font-size: 1rem;
     background-color: grey;
     border: 0.25rem solid rgb(240, 117, 17);
     border-radius: 0.05em;
@@ -95,7 +95,7 @@ h1 {
 
 button {
     padding: 0.25rem;
-    font-size: 1.25rem;
+    font-size: 0.75rem;
     min-width: 2.75rem;
     border-radius: 0.25rem;
     background-color: rgb(90, 90, 90);
@@ -108,15 +108,15 @@ button:hover {
 }
 
 button:active {
-    border: 0.05rem solid white;
     filter: brightness(50%);
+    border: 0.05rem solid white;
     box-shadow: 0 0.01rem rgb(255, 255, 255);
 }
 
 /* for js */
 .active {
-    border: 0.05rem solid white;
     filter: brightness(50%);
+    border: 0.05rem solid white;
     box-shadow: 0 0.01rem rgb(255, 255, 255);
 }
 
@@ -138,6 +138,10 @@ footer {
     .calculator {
         max-width: 12em;
         
+    }
+
+    .results-window {
+        font-size: 2.5rem;
     }
 
     button {
