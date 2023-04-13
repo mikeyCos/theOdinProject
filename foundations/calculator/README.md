@@ -1,13 +1,18 @@
-View project here: <https://mikeycos.github.io/theOdinProject/foundations/calculator/index.html>
+Live preview: <https://mikeycos.github.io/theOdinProject/foundations/calculator/index.html>
 
 ---
-> Went beyond the scope of objectives listed on The Odin Project and attempted to replicate Microsoft Windows 10's calculator.
+> I went beyond the scope of objectives listed on The Odin Project and attempted to replicate Microsoft Windows 10's calculator.
 ---
 ## What can you do:
-1. Pressing **`2+=`** will display `4`, pressing `+=` again will display `8`, so on and so forth.  
-2. Pressing **`2+2=`** will display `4`, pressing `=` again will display `6`, so on and so forth.  
-3. Pressing `5+3𝑥²` will display `9`, pressing `𝑥²` again will display `81`, and pressing `=` will display `86`.  
-4. Pressing `9+4=` will display `13`, pressing `7=` will display `11`, pressing `=` will display `15`.  
+1. Pressing `2+=` will display **4**, pressing `+=` again will display **8**, so on and so forth[^1].  
+2. Pressing `2+2=` will display **4**, pressing `=` again will display **6**, so on and so forth[^2].  
+3. Pressing `5+3𝑥²` will display **9**, pressing `𝑥²` again will display **81**, pressing `=` will display **86**, and pressing `=` again will display **167**[^3].  
+4. Pressing `9+4=` will display **13**, pressing `7=` will display **11**, pressing `=` will display **15**[^4].  
+
+[^1]: `2+` --> **num1:** `2`, **num2:** `0` --> `=` --> **num1:** `4`, **num2:** `2` --> `+` --> **num1:** `4`, **num2:** `2` --> `=` --> **num1:** `8`, **num2:** `4`.  
+[^2]: `2+2` --> **num1:** `2`, **num2:** `2` --> `=` --> **num1:** `4`, **num2:** `2` --> `=` --> **num1:** `8`, **num2:** `2`.  
+[^3]: `5+3` --> **num1:** `5`, **num2:** `3`, **operator:** `+` --> `𝑥²` --> **num1:** `5`, **num2:** `9`, **operator:** `+` --> `𝑥²` --> **num1:** `5`, **num2:** `81`, **operator:** `+` --> `=` --> **num1:** `86`, **num2:** `81`, **operator:** `+` --> `=` --> **num1:** `167`, **num2:** `81`, **operator:** `+`.  
+[^4]: `9+4` --> **num1:** `9`, **num2:** `4`, **operator:** `+` --> `=` --> **num1:** `13`, **num2:** `4` --> `7` --> **num1:** `7`, **num4:** `4` , **operator:** `+` --> `=` --> **num1:** `11`, **num2:** `4`, **operator:** `+` --> `=` --> **num1:** `15`, **num2:** `4`, **operator:** `+`.  
 ---
 ## Bugs:  
 1. ~~If display is 0, and user presses '0', leading zeroes will be added to display.~~  
