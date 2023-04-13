@@ -65,7 +65,6 @@ function verifyKey(e) {
         case '×':
         case '/':
         case '÷':
-            // debugger
             if (number !== '' && num2 !== '' && check) {
                 operate(operator, num1, num2);
             }
@@ -98,26 +97,26 @@ function verifyKey(e) {
             break;
         default:
             if(isFinite(action)) {
-                //number cannot exceed 15 characters
-                if (number.toString().length < 14) {
+                if (number.toString().length < 12) {
                     number += action;
-                }
-
-                // if (number.indexOf('.') === -1) {
-                //     number = parseInt(number);
-                // } else {
-                //     number = +number;
-                // }
-
-                if(!check) {
-                    num1 = +number;
-                    if (operator === '') {
-                        num2 = 0;
+                    if (!number.toString().includes('.')) {
+                        number = parseInt(number);
+                    } else if (number.toString().includes('.') && action == 0) {
+                        number = number.toString();
+                    } else {
+                        number = +number;
                     }
-                } else if (check) {
-                    num2 = +number;
-                }
-                updateDisplay(number);
+    
+                    if(!check) {
+                        num1 = number;
+                        if (operator === '') {
+                            num2 = 0;
+                        }
+                    } else if (check) {
+                        num2 = number;
+                    }
+                    updateDisplay(number);
+                    }
                 }
     }
     e.target.blur(); //removes button selection after click
@@ -136,31 +135,31 @@ function findButton(key) {
                 element = document.querySelector(`.${child.className}`);
             }
             element.classList.add('active');
-            
             setTimeout(() => element.classList.remove('active'), 125);
         }
     });
 }
 
 function updateDisplay(num) {
+    let displayText = num.toString();
     if (num === Infinity) {
-        resultsWindow.textContent = 'You what mate?';
-    } else if (num.toString().length > 14) {
-        let text = num.toString();
-        let exponent;
-        if(text.includes('e')) {
-            console.log(`there is an exponent`);
-            exponent = text.substring(text.indexOf('e'), text.length);
-            console.log(exponent);
-            resultsWindow.textContent = text.substring(0, 10) + exponent;
+        displayText = 'You what mate?';
+    } else if (num.toString().length > 13) {
+        if(displayText.includes('e')) {
+            let exponent;
+            exponent = displayText.substring(displayText.indexOf('e'), displayText.length);
+            displayText = displayText.substring(0, 10) + exponent;
+        } else if (!displayText.includes('.')) {
+            displayText = num.toExponential(6);
         } else {
-            resultsWindow.textContent = text.substring(0, 10);
+            displayText = displayText.substring(0, 10);
         }
-        
-        // resultsWindow.textContent = num.toExponential(10);
+    } else if (displayText.includes('.') || displayText.includes('e')) {
+        displayText = num;
     } else {
-        resultsWindow.textContent = num;
+        displayText = num.toLocaleString();
     }
+    resultsWindow.textContent = displayText;
 }
 
 function operate(operator, a, b) {
@@ -205,8 +204,8 @@ function divide(a, b) {
 }
 
 //for debugging in console
-console.log(`number: ${number}`);
-console.log(`num1: ${num1}`);
-console.log(`num2: ${num2}`);
-console.log(`operator: ${operator}`);
-console.log(`check: ${check}`);
+// console.log(`number: ${number}`);
+// console.log(`num1: ${num1}`);
+// console.log(`num2: ${num2}`);
+// console.log(`operator: ${operator}`);
+// console.log(`check: ${check}`);
