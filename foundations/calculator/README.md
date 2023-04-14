@@ -15,14 +15,18 @@ Live preview: <https://mikeycos.github.io/theOdinProject/foundations/calculator/
 [^4]: `9+4` --> **num1:** `9`, **num2:** `4`, **operator:** `+` --> `=` --> **num1:** `13`, **num2:** `4` --> `7` --> **num1:** `7`, **num4:** `4` , **operator:** `+` --> `=` --> **num1:** `11`, **num2:** `4`, **operator:** `+` --> `=` --> **num1:** `15`, **num2:** `4`, **operator:** `+`.  
 ---
 ## Bugs:  
-1. ~~If display is 0, and user presses '0', leading zeroes will be added to display.~~  
+1. ~~If display is 0, and user presses `0`, leading zeroes will be added to display.~~  
 2. ~~String length does NOT work for integers with a decimal.~~  
-3. ~~'2 + 𝑥²' should return 4.~~  
-4. ~~'⁺/₋' does NOT make numbers and a positive/negative integer.~~  
-5. ~~'7 + 3 =' returns 10, if user presses '2' and then 'enter/=' 2 is returned. Instead, 5 should have been returned.~~  
+3. ~~`2 + 𝑥²` should return 4.~~  
+4. ~~`⁺/₋` does NOT make numbers and a positive/negative integer.~~  
+5. ~~`7 + 3 =` returns 10, if user presses '2' and then 'enter/=' 2 is returned. Instead, 5 should have been returned.~~  
 6. ~~Use cannot enter zeroes after decimal.~~  
-7. User cannot put '-' for '0.' and pressing '.', then '⁺∕₋' will display '0'. If any number is pressed, it will be added to the decimal.  
+7. ~~User cannot put '-' for '0.' and pressing `.`, then `⁺∕₋` will display '0'. If any number is pressed, it will be added to the decimal.~~  
+8. ~~If user presses `2 + ⁺∕₋` does NOT return -2. If user presses `=` returns 0, pressing `=` again will return -2.~~  
+9. If user presses `. 0 ⁺∕₋ =` does NOT return 0.  
 ---
+14 APR 2023: Fixed the ability to negate after pressing an arthimetic symbol. For example, '2 + ⁺∕₋' will display '-2', pressing '=' will return '0', and pressing '=' again will return '-2'.  
+
 13 APR 2023: Zeroes can be inputted and recorded after entering a decimal point, and added conditional statements in updateDisplay function. Removed the ability to put '-' infront of zero, changed :active's attribute border to outline,   
 
 12 APR 2023: Added data attributes to each button, updated a few if...else statements to ternary operators, and added styling attributes to header and footer. User is now able to keep adding with previous addend/subtrahend/etc after entering a new starting number or they can add different numbers. For example: '9 + 5 =' returns 14, user presses '7' then 'enter/=' returns 12. Otherwise, '9 + 5 =' returns 14, user presses '7', then '+', then presses '20' and finally 'enter/=' will return 27. Numbers exceeding a string length of 14 will be displayed in exponential form.  

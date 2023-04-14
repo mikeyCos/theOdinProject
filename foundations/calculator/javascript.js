@@ -39,24 +39,31 @@ function verifyKey(e) {
             }
             break;
         case '⁺∕₋':
-            // debugger
-            if (number !== '' && number != 0) {
-                if (number.toString().indexOf('-') === -1) {
-                    number = -number;
+            debugger
+            let numberString = number.toString();
+            if(numberString.length != 0 && number !== 0) {
+                if (!numberString.includes('-')) {
+                    numberString = '-' + numberString;
+                    if (numberString.includes('.')) {
+                        number = numberString;
+                    } else {
+                        number = +numberString;
+                    }
                 } else {
-                    number = Math.abs(number);
+                    number = numberString.substring(1,numberString.length);
                 }
 
-            !check ? num1 = number : num2 = number;
-
-            updateDisplay(number);
+                !check ? num1 = number : num2 = number;
+                
+            } else if (number !== 0) {
+                num2 = -num1;
+                number = num2;
             } else {
-                if (!num1.toString().includes('-') && number != 0) {
-                    num1 = -num1;
-                } else {
-                    num1 = Math.abs(num1);
-                }
-            updateDisplay(num1);
+                number = num1;
+            }
+
+            if (number !== -0) {
+                updateDisplay(number);
             }
             break;
         case '+':
@@ -89,6 +96,7 @@ function verifyKey(e) {
             break;
         case '=':
         case 'Enter':
+            debugger
             if (number === '' && check) {
                 num2 = num1;
             } 
