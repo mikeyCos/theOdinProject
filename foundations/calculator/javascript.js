@@ -39,18 +39,19 @@ function verifyKey(e) {
             }
             break;
         case '⁺∕₋':
-            if (number !== '') {
+            // debugger
+            if (number !== '' && number != 0) {
                 if (number.toString().indexOf('-') === -1) {
                     number = -number;
                 } else {
                     number = Math.abs(number);
                 }
 
-                !check ? num1 = number : num2 = number;
+            !check ? num1 = number : num2 = number;
 
             updateDisplay(number);
             } else {
-                if (num1.toString().indexOf('-') === -1) {
+                if (!num1.toString().includes('-') && number != 0) {
                     num1 = -num1;
                 } else {
                     num1 = Math.abs(num1);
