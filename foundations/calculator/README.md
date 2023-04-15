@@ -17,7 +17,7 @@ Live preview: <https://mikeycos.github.io/theOdinProject/foundations/calculator/
 [^5]: `2` --> **num1:** `2`, **num2:** `0`, **number:** `2` --> `+` --> **num1:** `2`, **num2:** `0`, **number:** `''` --> `⁺∕₋` --> **num1:** `2`, **num2:** `-2`, **number:** `-2` --> `=` --> **num1:** `0`, **num2:** `-2`, **number:** `''` --> `=` --> **num1:** `-2`, **num2:** `-2`, **number:** `''`.
 ---
 ## Bugs:  
-1. [:heavy_check_mark:] If display is 0, and user presses `0`, leading zeroes will be added to display.  
+1. :heavy_check_mark: If display is 0, and user presses `0`, leading zeroes will be added to display.  
 2. :heavy_check_mark: String length does NOT work for integers with a decimal.  
 3. :heavy_check_mark: `2 + 𝑥²` should return 4.  
 4. :heavy_check_mark: `⁺/₋` does NOT make numbers and a positive/negative integer.  
