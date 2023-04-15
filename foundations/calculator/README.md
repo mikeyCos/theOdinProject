@@ -17,15 +17,16 @@ Live preview: <https://mikeycos.github.io/theOdinProject/foundations/calculator/
 [^5]: `2` --> **num1:** `2`, **num2:** `0`, **number:** `2` --> `+` --> **num1:** `2`, **num2:** `0`, **number:** `''` --> `⁺∕₋` --> **num1:** `2`, **num2:** `-2`, **number:** `-2` --> `=` --> **num1:** `0`, **num2:** `-2`, **number:** `''` --> `=` --> **num1:** `-2`, **num2:** `-2`, **number:** `''`.
 ---
 ## Bugs:  
-1. ~~If display is 0, and user presses `0`, leading zeroes will be added to display.~~  
-2. ~~String length does NOT work for integers with a decimal.~~  
-3. ~~`2 + 𝑥²` should return 4.~~  
-4. ~~`⁺/₋` does NOT make numbers and a positive/negative integer.~~  
-5. ~~`7 + 3 =` returns 10, if user presses '2' and then 'enter/=' 2 is returned. Instead, 5 should have been returned.~~  
-6. ~~Use cannot enter zeroes after decimal.~~  
-7. ~~User cannot put '-' for '0.' and pressing `.`, then `⁺∕₋` will display '0'. If any number is pressed, it will be added to the decimal.~~  
-8. ~~If user presses `2 + ⁺∕₋` does NOT return -2. If user presses `=` returns 0, pressing `=` again will return -2.~~  
-9. ~~If user presses `. 0 ⁺∕₋ =` does NOT return 0.~~  
+1. [:heavy_check_mark:] If display is 0, and user presses `0`, leading zeroes will be added to display.  
+2. :heavy_check_mark: String length does NOT work for integers with a decimal.  
+3. :heavy_check_mark: `2 + 𝑥²` should return 4.  
+4. :heavy_check_mark: `⁺/₋` does NOT make numbers and a positive/negative integer.  
+5. :heavy_check_mark: `7 + 3 =` returns 10, if user presses '2' and then 'enter/=' 2 is returned. Instead, 5 should have been returned.  
+6. :heavy_check_mark: User cannot enter zeroes after decimal.  
+7. :heavy_check_mark: User cannot put '-' for '0.' and pressing `.`, then `⁺∕₋` will display '0'. If any number is pressed, it will be added to the decimal.  
+8. :heavy_check_mark: If user presses `2 + ⁺∕₋` does NOT return -2. If user presses `=` returns 0, pressing `=` again will return -2.  
+9. :heavy_check_mark: If user presses `. 0 ⁺∕₋ =` does NOT return 0.  
+10. :x: If user presses `1234` is displayed as 1,234, if user presses `.`, 1234. is displayed. Now, if user press `1` (or any number greater than 0), 1,234.1 is displayed, and if user presses `0`, 1234.10 is displayed.  
 ---
 14 APR 2023: Fixed the ability to negate after pressing an arthimetic symbol. For example, '2 + ⁺∕₋' will display '-2', pressing '=' will return '0', and pressing '=' again will return '-2'.  
 
