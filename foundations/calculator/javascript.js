@@ -39,7 +39,6 @@ function verifyKey(e) {
             }
             break;
         case '⁺∕₋':
-            debugger
             let numberString = number.toString();
             if(numberString.length != 0 && number !== 0) {
                 if (!numberString.includes('-')) {
@@ -53,7 +52,12 @@ function verifyKey(e) {
                     number = numberString.substring(1,numberString.length);
                 }
 
-                !check ? num1 = number : num2 = number;
+                if (!check) {
+                    num1 = number;
+                } else {
+                    num2 = number;
+                }
+                // !check ? num1 = number : num2 = number;
                 
             } else if (number !== 0) {
                 num2 = -num1;
@@ -96,7 +100,6 @@ function verifyKey(e) {
             break;
         case '=':
         case 'Enter':
-            debugger
             if (number === '' && check) {
                 num2 = num1;
             } 
@@ -163,7 +166,7 @@ function updateDisplay(num) {
         } else {
             displayText = displayText.substring(0, 10);
         }
-    } else if (displayText.includes('.') || displayText.includes('e')) {
+    } else if (displayText.includes('e')) {
         displayText = num;
     } else {
         displayText = num.toLocaleString();

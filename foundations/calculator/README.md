@@ -8,11 +8,13 @@ Live preview: <https://mikeycos.github.io/theOdinProject/foundations/calculator/
 2. Pressing `2+2=` will display **4**, pressing `=` again will display **6**, so on and so forth[^2].  
 3. Pressing `5+3𝑥²` will display **9**, pressing `𝑥²` again will display **81**, pressing `=` will display **86**, and pressing `=` again will display **167**[^3].  
 4. Pressing `9+4=` will display **13**, pressing `7=` will display **11**, pressing `=` will display **15**[^4].  
+5. Pressing `2+⁺∕₋`  will display **-2**, pressing `=` will display **0**, pressing `=` again will display **-2**[^5].  
 
 [^1]: `2+` --> **num1:** `2`, **num2:** `0` --> `=` --> **num1:** `4`, **num2:** `2` --> `+` --> **num1:** `4`, **num2:** `2` --> `=` --> **num1:** `8`, **num2:** `4`.  
 [^2]: `2+2` --> **num1:** `2`, **num2:** `2` --> `=` --> **num1:** `4`, **num2:** `2` --> `=` --> **num1:** `8`, **num2:** `2`.  
 [^3]: `5+3` --> **num1:** `5`, **num2:** `3`, **operator:** `+` --> `𝑥²` --> **num1:** `5`, **num2:** `9`, **operator:** `+` --> `𝑥²` --> **num1:** `5`, **num2:** `81`, **operator:** `+` --> `=` --> **num1:** `86`, **num2:** `81`, **operator:** `+` --> `=` --> **num1:** `167`, **num2:** `81`, **operator:** `+`.  
 [^4]: `9+4` --> **num1:** `9`, **num2:** `4`, **operator:** `+` --> `=` --> **num1:** `13`, **num2:** `4` --> `7` --> **num1:** `7`, **num4:** `4` , **operator:** `+` --> `=` --> **num1:** `11`, **num2:** `4`, **operator:** `+` --> `=` --> **num1:** `15`, **num2:** `4`, **operator:** `+`.  
+[^5]: `2` --> **num1:** `2`, **num2:** `0`, **number:** `2` --> `+` --> **num1:** `2`, **num2:** `0`, **number:** `''` --> `⁺∕₋` --> **num1:** `2`, **num2:** `-2`, **number:** `-2` --> `=` --> **num1:** `0`, **num2:** `-2`, **number:** `''` --> `=` --> **num1:** `-2`, **num2:** `-2`, **number:** `''`.
 ---
 ## Bugs:  
 1. ~~If display is 0, and user presses `0`, leading zeroes will be added to display.~~  
@@ -23,7 +25,7 @@ Live preview: <https://mikeycos.github.io/theOdinProject/foundations/calculator/
 6. ~~Use cannot enter zeroes after decimal.~~  
 7. ~~User cannot put '-' for '0.' and pressing `.`, then `⁺∕₋` will display '0'. If any number is pressed, it will be added to the decimal.~~  
 8. ~~If user presses `2 + ⁺∕₋` does NOT return -2. If user presses `=` returns 0, pressing `=` again will return -2.~~  
-9. If user presses `. 0 ⁺∕₋ =` does NOT return 0.  
+9. ~~If user presses `. 0 ⁺∕₋ =` does NOT return 0.~~  
 ---
 14 APR 2023: Fixed the ability to negate after pressing an arthimetic symbol. For example, '2 + ⁺∕₋' will display '-2', pressing '=' will return '0', and pressing '=' again will return '-2'.  
 
