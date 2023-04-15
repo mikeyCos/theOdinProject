@@ -51,14 +51,7 @@ function verifyKey(e) {
                 } else {
                     number = numberString.substring(1,numberString.length);
                 }
-
-                if (!check) {
-                    num1 = number;
-                } else {
-                    num2 = number;
-                }
-                // !check ? num1 = number : num2 = number;
-                
+                !check ? num1 = number : num2 = number;
             } else if (number !== 0) {
                 num2 = -num1;
                 number = num2;
@@ -102,7 +95,11 @@ function verifyKey(e) {
         case 'Enter':
             if (number === '' && check) {
                 num2 = num1;
-            } 
+            }
+
+            if (Math.abs(num1) === 0) {
+                num1 = Math.abs(num1);
+            }
             operate(operator, num1, num2);
             number = '';
             check = false;
