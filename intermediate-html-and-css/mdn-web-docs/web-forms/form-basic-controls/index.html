@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Basic Controls</title>
+</head>
+<body>
+    <a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Test_your_skills:_Basic_controls">Form Basic Controls</a>
+    <form method="post" action="">
+        <h2>Basic controls 1</h2>
+        <fieldset>
+            <legend>User login</legend>
+            <ul>
+                <li>
+                    <label for="userid">User ID: </label>
+                    <input id="userid" type="text" name="userid">
+                </li>
+                <li>
+                    <label for="password">Password: </label>
+                    <input id="password" type="text" name="password">
+                </li>
+                <li>
+                    <button type="submit">Log in</button>
+                </li>
+            </ul>
+        </fieldset>
+    </form>
+
+    <form>
+        <h2>Basic controls 2</h2>
+        <fieldset>
+            <legend>Who is your favorite pony?</legend>
+            <ul>
+                <li>
+                    <input id="pinkie" type="radio" name="pony" value="pinkie" checked>
+                    <label for="pinkie">Pinkie Pie</label>
+                </li>
+                <li>
+                    <input type="radio" id="rainbow" name="pony" value="rainbow">
+                    <label for="rainbow">Rainbow Dash</label>
+                </li>
+                <li>
+                    <input type="radio" id="twilight" name="pony" value="twilight">
+                    <label for="twilight">Twilight Sparkle</label>
+                </li>
+            </ul>
+        </fieldset>
+
+        <fieldset>
+            <legend>Hotdog preferences</legend>
+            <ul>
+                <li>
+                    <input type="checkbox" id="vegan" name="vegan">
+                    <label for="vegan">Vegan</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="onions" name="onions">
+                    <label for="onions">Onions</label>
+                </li>
+            </ul>
+        </fieldset>
+        <button>Submit</button>
+    </form>
+
+    <form action="post">
+        <h2>Basic controls 3</h2>
+        <fieldset>
+            <legend>Upload gallery of images</legend>
+            <ul>
+                <li>
+                    <label for="gallery-img">Choose gallery images to upload</label>
+                    <input type="file" name="file" id="file" accept=".jpg,.png" multiple="multiple">
+                </li>
+            </ul>
+        </fieldset>
+        <button>Submit</button>
+    </form>
+</body>
+</html>
