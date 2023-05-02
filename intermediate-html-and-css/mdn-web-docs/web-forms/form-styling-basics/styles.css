@@ -1,0 +1,81 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0; 
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+    color: #333;
+    font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+    padding: 1em;
+    min-height: 100vh;
+}
+
+a {
+    align-self: flex-start;
+    margin-left: 10%;
+}
+
+form {
+    max-width: 500px;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    border: 2px solid black;
+    border-radius: 2%;
+    margin-top: 5%;
+}
+
+ul li {
+    list-style: none;
+    display: flex;
+    gap: 2em;
+    margin: 1em;
+}
+
+ul li > label {
+    flex-basis: 40%;
+    font-weight: 700;
+}
+
+ul li > input,
+select {
+    flex-basis: 60%;
+}
+
+input {
+    padding: 0.5em;
+}
+
+input:focus,
+select:focus,
+ul > li:last-child button:hover {
+    background-color: rgb(0, 183, 255);
+}
+
+select {
+    text-align: center;
+}
+
+ul > li:last-child button {
+    border-radius: 1em;
+    margin-left: auto;
+    padding: 0.75em;
+    background-color: rgb(199, 199, 199);
+    border-style: none;
+    font-weight: 700;
+}
+
+ul > li:last-child button:hover {
+    cursor: pointer;
+    color:rgb(255, 255, 255)
+}
