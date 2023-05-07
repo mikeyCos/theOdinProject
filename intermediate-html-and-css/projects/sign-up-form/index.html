@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./styles/styles.css">
+        <script src="./javascript.js" defer></script>
         <title>Sign-Up Form</title>
     </head>
     <body>
@@ -27,29 +28,51 @@
 
                         <div class="form-items">
                             <h2>Let's do this!</h2>
+
+                            <!-- check validity after user leaves input -->
+                            <!-- if invalid, check validity after pattern is checked -->
                             <div class="form-item">
-                                <label for="">First name</label>
-                                <input type="text">
+                                <label for="firstname">First name</label>
+                                <input id="firstname" type="text" name="first_name" required>
                             </div>
+
                             <div class="form-item">
-                                <label for="">Last name</label>
-                                <input type="text">
+                                <label for="lastname">Last name</label>
+                                <input id="lastname" type="text" name="last_name" required>
                             </div>
+
                             <div class="form-item">
-                                <label for="">Email</label>
-                                <input type="email">
+                                <label for="email">Email</label>
+                                <input id="email" type="email" name="email" required>
                             </div>
+
+                            <!-- pattern should work for all the below -->
+                            <!-- 
+                                1234567890
+                                123-456-7890
+                                123.456.7890
+                                (123) 456-7890
+                                (123)456-7890
+                                123 456 7890
+                                1 2324542890
+                                +1(234) 567-5890
+                                +1(234)-567-8901
+                                1(234) 567 8901
+                                1 (234)-567-8901
+                            -->
                             <div class="form-item">
-                                <label for="">Phone number</label>
-                                <input type="tel">
+                                <label for="phone">Phone number</label>
+                                <input id="phone" type="tel" name="phone" pattern="" required>
                             </div>
+
                             <div class="form-item">
                                 <label for="">Password</label>
-                                <input type="password">
+                                <input id="password" class="error" type="password" name="password" required>
                             </div>
+
                             <div class="form-item">
                                 <label for="">Confirm password</label>
-                                <input type="password">
+                                <input id="password-verify" class="error" type="password" name="password_verify" required>
                             </div>
                         </div>
 
