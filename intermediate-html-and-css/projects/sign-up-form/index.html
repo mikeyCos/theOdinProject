@@ -33,17 +33,20 @@
                             <!-- if invalid, check validity after pattern is checked -->
                             <div class="form-item">
                                 <label for="firstname">First name</label>
-                                <input id="firstname" type="text" name="first_name" required>
+                                <input id="firstname" type="text" name="first_name" aria-describedby="first-name-validation" required>
+                                <span id="first-name-validation"></span>
                             </div>
 
                             <div class="form-item">
                                 <label for="lastname">Last name</label>
-                                <input id="lastname" type="text" name="last_name" required>
+                                <input id="lastname" type="text" name="last_name" aria-describedby="last-name-validation" required>
+                                <span id="last-name-validation"></span>
                             </div>
 
                             <div class="form-item">
                                 <label for="email">Email</label>
-                                <input id="email" type="email" name="email" required>
+                                <input id="email" type="email" name="email" aria-describedby="email-validation" required>
+                                <span id="email-validation"></span>
                             </div>
 
                             <!-- pattern should work for all the below -->
@@ -62,12 +65,15 @@
                             -->
                             <div class="form-item">
                                 <label for="phone">Phone number</label>
-                                <input id="phone" type="tel" name="phone" pattern="" required>
+                                <input id="phone" type="tel" name="phone" pattern="" aria-describedby="phone-validation" required>
+                                <span id="phone-validation"></span>
                             </div>
 
+                            <!-- must be at least 8 characters long consisting with at least 1 capital letter, 1 lowercase letter, 1 number and 1 symbol -->
                             <div class="form-item">
                                 <label for="">Password</label>
-                                <input id="password" class="error" type="password" name="password" required>
+                                <input id="password" class="error" type="password" name="password" aria-describedby="password-validation" required>
+                                <span id="password-validation"></span>
                             </div>
 
                             <div class="form-item">
