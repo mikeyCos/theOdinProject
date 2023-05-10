@@ -33,52 +33,39 @@
                             <!-- if invalid, check validity after pattern is checked -->
                             <div class="form-item">
                                 <label for="firstname">First name</label>
-                                <input id="firstname" type="text" name="first_name" aria-describedby="first-name-validation" required>
+                                <input id="firstname" type="text" name="first_name" aria-describedby="first-name-validation" pattern="^[A-Za-z]{1,50}$" required>
                                 <span id="first-name-validation"></span>
                             </div>
 
                             <div class="form-item">
                                 <label for="lastname">Last name</label>
-                                <input id="lastname" type="text" name="last_name" aria-describedby="last-name-validation" required>
+                                <input id="lastname" type="text" name="last_name" aria-describedby="last-name-validation" pattern="^[A-Za-z]{1,50}$" required>
                                 <span id="last-name-validation"></span>
                             </div>
 
                             <div class="form-item">
                                 <label for="email">Email</label>
-                                <input id="email" type="email" name="email" aria-describedby="email-validation" required>
+                                <input id="email" type="email" name="email" aria-describedby="email-validation" pattern="^([A-Za-z0-9!#$%&'*+-/=?^_`{|}~]+\.?[A-Za-z0-9]+)@([A-Za-z0-9!#$%&'*+-/=?^_`{|}~]+).([A-Za-z]+$)" required>
                                 <span id="email-validation"></span>
                             </div>
 
-                            <!-- pattern should work for all the below -->
-                            <!-- 
-                                1234567890
-                                123-456-7890
-                                123.456.7890
-                                (123) 456-7890
-                                (123)456-7890
-                                123 456 7890
-                                1 2324542890
-                                +1(234) 567-5890
-                                +1(234)-567-8901
-                                1(234) 567 8901
-                                1 (234)-567-8901
-                            -->
                             <div class="form-item">
                                 <label for="phone">Phone number</label>
-                                <input id="phone" type="tel" name="phone" pattern="" aria-describedby="phone-validation" required>
+                                <input id="phone" type="tel" name="phone" aria-describedby="phone-validation" pattern="^(\+?1)?[\(\-]?(\d{3})[\)\-\s]{0,2}(\d{3})[\-\s]?(\d{4})" required>
                                 <span id="phone-validation"></span>
                             </div>
 
                             <!-- must be at least 8 characters long consisting with at least 1 capital letter, 1 lowercase letter, 1 number and 1 symbol -->
                             <div class="form-item">
                                 <label for="">Password</label>
-                                <input id="password" class="error" type="password" name="password" aria-describedby="password-validation" required>
+                                <input id="password" class="error" type="password" name="password" aria-describedby="password-validation" pattern="^(?![.-])(?=[A-Za-z0-9!()-?[\]_`~;:!@#$%^&*\+=]*?[A-Z])(?=[^\s]*?[a-z])(?=[^\s]*?[0-9])(?=[^\s]*?[!()-.?[\]_`~;:!@#$%^&*\+=]).{8,}$" required>
                                 <span id="password-validation"></span>
                             </div>
 
                             <div class="form-item">
                                 <label for="">Confirm password</label>
-                                <input id="password-verify" class="error" type="password" name="password_verify" required>
+                                <input id="password-confirm" class="error" type="password" name="confirm" aria-describedby="password-confirmation" required>
+                                <span id="password-confirmation"></span>
                             </div>
                         </div>
 
