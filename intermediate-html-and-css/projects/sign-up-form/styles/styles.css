@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
 
 *,
 *::before,
@@ -9,7 +11,9 @@
 }
 
 :root {
-    --text-secondary-color: rgb(236, 236, 236);
+    --text-font-primary: 'Roboto', Arial;
+    --text-color-secondary: rgb(236, 236, 236);
+    --text-color-primary: rgb(50, 50, 50);
 }
 
 body {
@@ -40,7 +44,22 @@ body {
     padding: 0.5em 0;
     position: absolute;
     top: 10%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+#hero .hero-text > img {
+    min-width: 20%;
+}
+
+#hero .hero-text > h1 {
+    font-size: clamp(2rem, 5vw, 8rem);
+    font-family: 'Cinzel', Arial, sans-serif;
+    letter-spacing: 0.25em;
+}
+
+#hero .hero-text > h1,
+.image-source * {
+    color: var(--text-color-secondary);
 }
 
 .image-source {
@@ -48,6 +67,8 @@ body {
     text-align: center;
     position: absolute;
     bottom: 5%;
+    font-size: clamp(0.6rem, 2vw, 1rem);
+    font-family: var(--text-font-primary);
 }
 
 #form-content {
@@ -55,6 +76,27 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 1.5em;
+}
+
+#form-content {
+    font-family: var(--text-font-primary);
+    color: var(--text-color-primary);
+}
+
+#form-content p:nth-child(-n+2) {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 700;
+}
+
+#form-content p:nth-child(2) {
+    font-family: 'Shadows Into Light', Arial;
+    padding-bottom: 1.5em;
+}
+
+#form-content p > span {
+    font-size: 1.25em;
+    font-style: italic;
 }
 
 #form-content p,
@@ -64,7 +106,7 @@ body {
 
 #form-content p,
 .form-items,
-.form-button {
+.form-item-button {
     padding: 1em;
 }
 
@@ -74,11 +116,24 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1em;
+    padding-top: 2em;
+    padding-bottom: 2em;
 }
 
 .form-items > * {
     display: flex;
     flex-direction: column;
+}
+
+.form-items >:first-child {
+    padding-bottom: 1em;
+}
+
+.form-item > label {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
 }
 
 .form-item > input {
@@ -96,27 +151,51 @@ body {
     border: 1px solid #3953eb;
 }
 
+.form-item > span {
+    color: #FF0000;
+}
+
 .form-item > input {
     /* border: 2px solid #cc3932; */
 }
 
-.form-button > button {
+#form-button {
     border-radius: 5px;
-    color: var(--text-secondary-color);
-    padding: 1em 2em;
+    color: var(--text-color-secondary);
+    text-transform: capitalize;
+    font-weight: bolder;
+    padding: 1em 4em;
     border: none;
     background-color: #596D48;
+    margin-top: 1.5em;
+    font-size: 1rem;
+    box-shadow: 0 2px 2px black;
+}
+
+#form-button:hover {
+    cursor: pointer;
+}
+
+#form-content p:last-child a{
+    font-weight: 900;
+    text-decoration: none;
+    color: #596D48;
 }
 
 @media screen and (min-width: 768px) {
     #content {
-        height: 100vh;
-        width: 100vw;
+        min-height: 100vh;
+        height: 100%;
+        width: 100%;
         flex-direction: row;
     }
 
     #hero {
-        width: 30%;
+        min-width: 30%;
+    }
+
+    #form-content {
+        padding-top: 5em;
     }
 
     #form-content .form-items {
@@ -135,7 +214,8 @@ body {
 
     #form-content p,
     .form-items,
-    .form-button {
+    .form-item-button {
+        padding-left: 5%;
         padding-right: 25%;
     }
 }
