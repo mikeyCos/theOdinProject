@@ -1,0 +1,71 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  display: grid;
+  grid-gap: 15px;
+  justify-content: center;
+  grid-template-columns: 400px 1200px;
+  grid-template-rows: 100px 100px 500px 100px;
+  
+  /* grid-template-areas and grid-area used below */
+  /* grid-template-columns: repeat(6, 1fr); */  
+  /* grid-template-areas:
+  "header header header header header header"
+  "sidebar sidebar nav nav nav nav"
+  "sidebar sidebar article article article article"
+  "sidebar sidebar article article article article"
+  "footer footer footer footer footer footer"; */
+}
+
+.container div {
+  padding: 15px;
+  font-size: 32px;
+  font-family: Helvetica;
+  font-weight: bold;
+  color: white;
+  border-radius: 15px;
+}
+
+.header {
+  background-color: #FFDE22;
+  /* grid-area: header; */
+  grid-column: 1 / span 2;
+}
+
+.sidebar {
+  background-color: #FF7755;
+  /* grid-area: sidebar; */
+  grid-column: 1 / 1;
+  grid-row: 2 / span 2;
+}
+
+.nav {
+  background-color: #00DDFF;
+  /* grid-area: nav; */
+  /* grid-column: 2 / span 1; */
+}
+
+.article {
+  background-color: #bccbde;
+  /* grid-area: article; */
+}
+
+.article p {
+  font-size: 18px;
+  font-family: sans-serif;
+  color: white;
+  text-align: left;
+}
+
+.footer {
+  background-color: #393f4d;
+  /* grid-area: footer; */
+  grid-column: 1 / span 2;
+}
