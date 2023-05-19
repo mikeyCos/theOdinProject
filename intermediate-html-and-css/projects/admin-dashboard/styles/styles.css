@@ -1,0 +1,32 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: rgb(228, 228, 228);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(10px, 1fr));
+    min-height: 100vh;
+}
+
+header {
+    background-color: rgb(255, 255, 255);
+    grid-area: 1 / 2 / 1 / span 5;
+    display: grid;
+}
+
+#sidebar {
+    background-color: rgb(7, 135, 255);
+    grid-area: 1 / 1 / span 4 / 1;
+    height: 100%;
+}
+
+#main-content {
+    grid-area: 2 / 2 / auto / auto;
+    height: 100%;
+    display: grid;
+}
