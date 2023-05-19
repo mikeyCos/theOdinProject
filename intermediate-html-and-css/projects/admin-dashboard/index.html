@@ -11,48 +11,137 @@
 <body>
     <header>
         <!-- 1st row includes: searchbar, notifcation icon, profile icon, username -->
-        <div>
-            <input type="text">
-        </div>
+        <!-- <div class="container"> -->
+            <div class="item">
+                <img class="icon magnify" src="./assets/magnify.svg" alt="">
+                <input type="text">
+            </div>
+            <div class="item">
+                <img class="icon bell" src="./assets/bell-ring-outline.svg">
+                <img class="avatar" src="./assets/undraw_cat_epte.svg" alt="">
+                <h3>Reyna Thorn</h3>
+            </div>
+        <!-- </div> -->
 
         <!-- 2nd row includes: profile icon, username, "new/upload/share" buttons -->
-        <div>
-            <button>New</button>
-            <button>Upload</button>
-            <button>Share</button>
-        </div>
+        <!-- <div class="container"> -->
+            <div class="item">
+                <img class="avatar" src="./assets/undraw_cat_epte.svg" alt="">
+                <h3>Hi there,</h3>
+                <h1>Reyna Thorn (@reyna)</h1>
+            </div>
+            <div class="item">
+                <button>New</button>
+                <button>Upload</button>
+                <button>Share</button>
+            </div>
+        <!-- </div> -->
     </header>
 
     <div id="sidebar">
-        <h2>Dashboard</h2>
+        <img class="icon menu" src="./assets/menu.svg" alt="menu">
         
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Messages</a></li>
-            <li><a href="#">History</a></li>
-            <li><a href="#">Tasks</a></li>
-            <li><a href="#">Communities</a></li>
-        </ul>
-
-        <ul>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Support</a></li>
-            <li><a href="#">Privacy</a></li>
-        </ul>
+        <div class="container">
+            <ul>
+                <li><img class="icon" src="./assets/view-dashboard.svg" alt=""><a href="#">Dashboard</a></li>
+                <li><img class="icon" src="./assets/home.svg" alt=""><a href="#">Home</a></li>
+                <li><img class="icon" src="./assets/card-account-details-outline.svg" alt=""><a href="#">Profile</a></li>
+                <li><img class="icon" src="./assets/message-reply.svg" alt=""><a href="#">Messages</a></li>
+                <li><img class="icon" src="./assets/history.svg" alt=""><a href="#">History</a></li>
+                <li><img class="icon" src="./assets/file-multiple.svg" alt=""><a href="#">Tasks</a></li>
+                <li><img class="icon" src="./assets/account-group.svg" alt=""><a href="#">Communities</a></li>
+                <li><img class="icon" src="./assets/cog.svg" alt=""><a href="#">Settings</a></li>
+                <li><img class="icon" src="./assets/help-box.svg" alt=""><a href="#">Support</a></li>
+                <li><img class="icon" src="./assets/shield-edit.svg" alt=""><a href="#">Privacy</a></li>
+            </ul>
+        </div>
     </div>
 
     <div id="main-content">
         <div class="projects">
             <h3>Your Projects</h3>
+            <div class="project-item">
+                <h3>Super Cool Project</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat minus incidunt saepe, optio quisquam quas natus adipisci expedita distinctio.</p>
+                <button><img class="icon favorite" src="./assets/star-plus-outline.svg" alt="Add to favorites"></button>
+                <button><img class="icon watchlist" src="./assets/eye-plus-outline.svg" alt="Add to watchlist"></button>
+                <button><img class="icon share" src="./assets/arrow-decision-outline.svg" alt="Share"></button>
+            </div>
+            <div class="project-item">
+                <h3>Super Cool Project</h3>
+                <p>Reiciendis ipsam enim rem nisi! Commodi cupiditate quisquam dicta alias sit quis provident molestias! Libero neque ut possimus fugiat quasi ipsa? Consequatur expedita ea voluptatibus excepturi!</p>
+                <button><img class="icon favorite" src="./assets/star-plus-outline.svg" alt="Add to favorites"></button>
+                <button><img class="icon watchlist" src="./assets/eye-plus-outline.svg" alt="Add to watchlist"></button>
+                <button><img class="icon share" src="./assets/arrow-decision-outline.svg" alt="Share"></button>
+            </div>
+            <div class="project-item">
+                <h3>Super Cool Project</h3>
+                <p>Pemporibus voluptatum nihil? Quibusdam nulla vero cumque repellendus!</p>
+                <button><img class="icon favorite" src="./assets/star-plus-outline.svg" alt="Add to favorites"></button>
+                <button><img class="icon watchlist" src="./assets/eye-plus-outline.svg" alt="Add to watchlist"></button>
+                <button><img class="icon share" src="./assets/arrow-decision-outline.svg" alt="Share"></button>
+            </div>
+            <div class="project-item">
+                <h3>Super Cool Project</h3>
+                <p>Quisquam ad magni eveniet, incidunt explicabo mollitia. Architecto consectetur nulla cumque ducimus unde quaerat perspiciatis pariatur!</p>
+                <button><img class="icon favorite" src="./assets/star-plus-outline.svg" alt="Add to favorites"></button>
+                <button><img class="icon watchlist" src="./assets/eye-plus-outline.svg" alt="Add to watchlist"></button>
+                <button><img class="icon share" src="./assets/arrow-decision-outline.svg" alt="Share"></button>
+            </div>
+            <div class="project-item">
+                <h3>Super Cool Project</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus amet voluptas debitis est. Ducimus, non eum mollitia omnis sed quo, animi accusamus iste quaerat consectetur odio corporis accusantium et assumenda!</p>
+                <button><img class="icon favorite" src="./assets/star-plus-outline.svg" alt="Add to favorites"></button>
+                <button><img class="icon watchlist" src="./assets/eye-plus-outline.svg" alt="Add to watchlist"></button>
+                <button><img class="icon share" src="./assets/arrow-decision-outline.svg" alt="Share"></button>
+            </div>
+            <div class="project-item">
+                <h3>Super Cool Project</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At consequuntur necessitatibus temporibus repellendus asperiores adipisci.</p>
+                <button><img class="icon favorite" src="./assets/star-plus-outline.svg" alt="Add to favorites"></button>
+                <button><img class="icon watchlist" src="./assets/eye-plus-outline.svg" alt="Add to watchlist"></button>
+                <button><img class="icon share" src="./assets/arrow-decision-outline.svg" alt="Share"></button>
+            </div>
         </div>
 
         <div class="announcements">
-            <h3>Announcenments</h3>
+            <h3>Announcements</h3>
+            <div class="announcements-item">
+                <h4>Site Maintenance</h4>
+                <p>Veritatis eum impedit consequuntur aut magni eos ipsam! Minus dolorum animi, dignissimos inventore, sunt modi fuga magni...</p>
+            </div>
+            <div class="announcements-item">
+                <h4>Community Share Day</h4>
+                <p>Illo est facere corrupti adipisci voluptates natus iure. Corporis nulla sit vero consequatur! Fugiat aut expedita doloremque commodi...</p>
+            </div>
+            <div class="announcements-item">
+                <h4>Updated Privacy Policy</h4>
+                <p>Eligendi nulla accusamus porro provident qui sit ipsam. Magnam non incidunt sed doloribus dolorem cupiditate mollitia...</p>
+            </div>
         </div>
 
         <div class="trending">
             <h3>Trending</h3>
+            <div class="treanding-item">
+                <a href="#"><img class="avatar" src="./assets/undraw_cat_epte.svg" alt=""></a>
+                <a href="#">@something</a>
+                <a href="#">World Peace Builder</a>
+            </div>
+            <div class="treanding-item">
+                <a href="#"><img class="avatar" src="./assets/undraw_cat_epte.svg" alt=""></a>
+                <a href="#">@something</a>
+                <a href="#">Super Cool Project</a>
+            </div>
+            <div class="treanding-item">
+                <a href="#"><img class="avatar" src="./assets/undraw_cat_epte.svg" alt=""></a>
+                <a href="#">@something</a>
+                <a href="#">Life Changing App</a>
+            </div>
+            <div class="treanding-item">
+                <a href="#"><img class="avatar" src="./assets/undraw_cat_epte.svg" alt=""></a>
+                <a href="#">@something</a>
+                <a href="#">No Traffic Maker</a>
+            </div>
         </div>
     </div>
 </body>
