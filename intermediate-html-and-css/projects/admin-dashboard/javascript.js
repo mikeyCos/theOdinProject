@@ -1,9 +1,9 @@
-let sidebar = document.getElementById('sidebar');
-let dashboard = sidebar.querySelector('.dashboard-menu');
+const sidebar = document.getElementById('sidebar');
+const dashboard = sidebar.querySelector('.dashboard-menu');
 
 dashboard.addEventListener('click', (e) => {
-    let dashboardItems = sidebar.querySelector('.container');
-    
+    const dashboardItems = sidebar.querySelector('.container');
+    e.preventDefault();
     if (dashboardItems.style.display === 'block') {
         dashboardItems.style.display = 'none';
     } else {
