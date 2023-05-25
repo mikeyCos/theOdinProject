@@ -16,7 +16,6 @@ body {
     min-height: 100vh;
     background-color: rgb(228, 228, 228);
     display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); */
     grid-template-columns: repeat(auto-fit, minmax(min-content, 100%));
 }
 
@@ -25,7 +24,8 @@ body {
 }
 
 .avatar-container {
-
+    display: grid;
+    align-content: center;
 }
 
 .avatar {
@@ -33,6 +33,10 @@ body {
     height: 64px;
     border-radius: 50%;
     background-color: red;
+}
+
+ul {
+    list-style: none;
 }
 
 a {
@@ -43,12 +47,12 @@ header {
     background-color: rgb(255, 255, 255);
     display: grid;
     /* grid-template-columns: repeat(auto-fit, minmax(min-content, 50%)); */
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 50%));
+    grid-template-columns: 1fr min-content;
 }
 
 /* for debugging grid space */
 header .item {
-    border: 2px solid brown;
+    border: 2px dashed brown;
 }
 /* for debugging grid space */
 
@@ -58,7 +62,7 @@ header .item:first-child {
 }
 
 header .item:nth-child(2) {
-
+    /* justify-self: end; */
 }
 
 header .item:nth-child(2) > *:not(.icon.bell) {
@@ -66,28 +70,37 @@ header .item:nth-child(2) > *:not(.icon.bell) {
 }
 
 header .item:nth-child(3) {
+    grid-area: 2 / 1 / 3 / 3;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 5%));
-    justify-items: center;
+    grid-template-columns: min-content 1fr;
+    place-self: center;
+    align-items: center;
+    gap: 0 1rem;
+}
+
+header .item:nth-child(3) > .avatar-container {
+    grid-area: 1 / 1 / 3 / 2;
 }
 
 header .item:nth-child(3) > h3 {
-
+    font-size: clamp(0.75rem, 2vw, 1rem);
 }
 
 header .item:nth-child(3) > h1 {
-    font-size: clamp(1rem, 5vw, 3rem);
-}
-
-header .item:nth-child(3) div > .avatar {
-
+    font-size: clamp(1rem, 2.25vw, 2rem);
+    grid-area: 2 / 2 / 3 / -1;
 }
 
 header .item:last-child {
+    grid-area: 3 / 1 / 4 / 3;
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 0 1em;
 }
 
 header .item:last-child > button {
+    display: grid;
+    justify-content: center;
     /* font-size: clamp(1rem, 1.25vw, 20rem); */
     min-width: 100%;
     padding: .5rem 2rem;
@@ -107,7 +120,9 @@ header .item:last-child > button {
 }
 
 #main-content {
-
+    /* for debugging grid space */
+    border: 2px solid brown;
+    /* for debugging grid space */
 }
 
 #main-content .projects {
@@ -123,27 +138,71 @@ header .item:last-child > button {
 @media screen and (min-width: 768px) {
     header {
         grid-area: 1 / 2 / 2 / span 4;
+        grid-template-columns: 2fr 1fr;
+        align-items: center;
+    }
+
+    header .item:first-child {
+        display: grid;
     }
 
     header .item:nth-child(2) > *:not(.icon.bell) {
         display: initial;
     }
 
-    header .item:nth-child(2),
+    header .item:nth-child(2) {
+        display: grid;
+        grid-template-columns: repeat(3, max-content);
+        justify-content: center;
+        align-items: center;
+        gap: 0 1rem;
+    }
+
+    header .item:nth-child(3) {
+        grid-area: unset;
+        place-self: unset;
+        align-items: center;
+        gap: 0 1rem;
+    }
+
     header .item:last-child {
         display: grid;
-        /* grid-template-columns: repeat(auto-fit, minmax(min-content, 20%)); */
-        grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+        /* grid-template-columns: repeat(auto-fit, minmax(10px, 1fr)); */
+        gap: 1rem;
+        grid-template-columns: repeat(3, min-content);
         justify-content: center;
-        justify-items: center;
-        align-items: center;
+        justify-items: unset;
+        align-items: unset;
+    }
+
+    header .item:last-child {
+        grid-area: 2 / 2;
     }
 
     #sidebar {
         grid-area: 1 / 1 / span 3 / 2;
     }
 
+    #sidebar > .container {
+        display: grid;
+    }
+
+    #sidebar > .container > ul {
+        display: grid;
+        /* for debugging grid space */
+        border: 2px solid lightgreen;
+        /* for debugging grid space */
+    }
+
+    #sidebar > .container > ul li {
+        /* for debugging grid space */
+        border: 2px solid lightsalmon;
+        /* for debugging grid space */
+    }
+
     #main-content {
         grid-area: 2 / 2 / auto / span 4;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min-content, 50%));
     }
 }
