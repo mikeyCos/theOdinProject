@@ -1,3 +1,5 @@
+
+
 *,
 *::after,
 *::before {
@@ -16,7 +18,6 @@ body {
     min-height: 100vh;
     background-color: rgb(228, 228, 228);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min-content, 100%));
 }
 
 .icon {
@@ -61,10 +62,6 @@ header .item:first-child {
     grid-template-columns: min-content 1fr;
 }
 
-header .item:nth-child(2) {
-    /* justify-self: end; */
-}
-
 header .item:nth-child(2) > *:not(.icon.bell) {
     display: none;
 }
@@ -101,7 +98,6 @@ header .item:last-child {
 header .item:last-child > button {
     display: grid;
     justify-content: center;
-    /* font-size: clamp(1rem, 1.25vw, 20rem); */
     min-width: 100%;
     padding: .5rem 2rem;
     border-radius: 2rem;
@@ -115,24 +111,179 @@ header .item:last-child > button {
     top: 0;
 }
 
-#sidebar .container {
+#sidebar > ul > li {
+    margin: 0.5em;
+    padding: 0em 1.25em;
+}
+
+#sidebar > ul > li:nth-child(2),
+#sidebar > ul > li:nth-child(8) {
+    margin-top: 2em;
+}
+
+#sidebar > ul > li:not(li:first-child){
     display: none;
 }
+
+#sidebar > ul > li > a > img {
+    filter:
+        invert(100%)
+        sepia(26%)
+        saturate(62%)
+        hue-rotate(78deg)
+        brightness(102%)
+        contrast(102%);
+}
+
+#sidebar > ul > li > a {
+    color: white;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+#sidebar > ul > li:first-child > a {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+}
+
+#sidebar > ul > li > a > img {
+    width: clamp(1rem, 5vw, 2rem);
+}
+
+#sidebar > ul > li:first-child > a > img {
+    width: clamp(1rem, 8vw, 3rem);
+}
+
+#sidebar > ul {
+    display: grid;
+    /* for debugging grid space */
+    border: 2px solid lightgreen;
+    /* for debugging grid space */
+}
+
+#sidebar > ul li {
+    /* for debugging grid space */
+    border: 2px solid lightsalmon;
+    /* for debugging grid space */
+}
+
 
 #main-content {
     /* for debugging grid space */
     border: 2px solid brown;
     /* for debugging grid space */
+    display: grid;
+    padding: 1.25em;
+    gap: 1.25em;
 }
 
-#main-content .projects {
+#main-content > .projects {
+    border: 2px solid orange;
+}
 
+#main-content > .projects > .container {
+    display: grid;
+    gap: 1.25em;
+}
+
+#main-content > .projects > .container > .project-item {
+    border: 2px solid blue;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.75em;
+    padding: 1.25em;
+    display: grid;
+    grid-auto-rows: min-content min-content 1fr;
+}
+
+#main-content > .projects > .container > .project-item {
+    display: grid;
+    grid-auto-rows: min-content min-content 1fr;
+}
+
+#main-content > .projects > .container > .project-item > div {
+    justify-self: end;
+    align-self: end;
 }
 
 .project-item > div > * {
     width: 24px;
     background-color: transparent;
     border: none;
+}
+
+#main-content > .announcements {
+    border: 2px solid orange;
+    display: grid;
+    grid-auto-rows: min-content 1fr;
+}
+
+#main-content > .announcements > .container {
+    display: grid;
+    gap: 1.25em;
+}
+
+#main-content > .announcements > .container > * {
+    border: 2px solid blue;
+    border-radius: 0.75em;
+    padding: 1.25em 2em;
+    position: relative;
+}
+
+#main-content > .announcements > .container > .announcements-item:nth-child(2)::before,
+#main-content > .announcements > .container > .announcements-item:nth-child(2)::after {
+    height: 0.25rem;
+    background-color: red;
+    content: ' ';
+    display: block;
+    position:absolute;
+    left: 0;
+    right: 0;
+}
+
+#main-content > .announcements > .container > .announcements-item:nth-child(2)::before {
+    top: -14px;
+}
+
+#main-content > .announcements > .container > .announcements-item:nth-child(2)::after {
+    bottom: -14px;
+}
+
+#main-content > .trending {
+    border: 2px solid orange;
+    display: grid;
+    grid-auto-rows: min-content 1fr;
+}
+
+#main-content > .trending > .container {
+    display: grid;
+    gap: 1.25em;
+}
+
+#main-content > .trending > .container > * {
+    border: 2px solid blue;
+    border-radius: 0.75em;
+    padding: 0.5em 1.25em;
+    display: grid;
+    align-content: center;
+    align-items: center;
+    justify-content: start;
+    gap: 0 1.5em;
+}
+
+#main-content > .trending > .container > .trending-item > a:first-child {
+    grid-area: 1 / 1 / 3 / 2;
+}
+
+#main-content > .trending > .container > .trending-item > a:nth-child(2) {
+    grid-area: 1 / span 3;
+    align-self: end;
+}
+
+#main-content > .trending > .container > .trending-item > a:last-child {
+    grid-area: 2 / span 3;
+    align-self: start;
 }
 
 @media screen and (min-width: 768px) {
@@ -167,7 +318,6 @@ header .item:last-child > button {
 
     header .item:last-child {
         display: grid;
-        /* grid-template-columns: repeat(auto-fit, minmax(10px, 1fr)); */
         gap: 1rem;
         grid-template-columns: repeat(3, min-content);
         justify-content: center;
@@ -187,27 +337,9 @@ header .item:last-child > button {
         display: grid;
     }
 
-    #sidebar > .container > ul {
-        display: grid;
-        /* for debugging grid space */
-        border: 2px solid lightgreen;
-        /* for debugging grid space */
-    }
-
-    #sidebar > .container > ul li {
-        /* for debugging grid space */
-        border: 2px solid lightsalmon;
-        /* for debugging grid space */
-    }
-
     #main-content {
         grid-area: 2 / 2 / 4 / span 4;
-        display: grid;
-        /* grid-template-columns: repeat(auto-fit, minmax(min-content, 25%)); */
-        /* grid-template-columns: repeat(auto-fit, minmax(min-content, 300px)); */
         grid-template-columns: repeat(3, 1fr);
-        padding: 1.25em;
-        gap: 1.25em;
     }
 
     #main-content > .projects {
@@ -215,7 +347,6 @@ header .item:last-child > button {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-auto-rows: min-content 1fr;
-        border: 2px solid orange;
     }
 
     #main-content > .projects > h3 {
@@ -224,86 +355,7 @@ header .item:last-child > button {
 
     #main-content > .projects > .container {
         grid-area: 2 / 1 / 2 / 3;
-        display: grid;
-        /* grid-template-columns: repeat(2, 1fr); */
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         grid-auto-rows: 1fr;
-        /* grid-auto-rows: 250px; */
-        gap: 1.25em;
-    }
-
-    #main-content > .projects > .container > .project-item {
-        border: 2px solid blue;
-        background-color: rgb(255, 255, 255);
-        border-radius: 0.75em;
-        display: grid;
-        grid-auto-rows: min-content min-content 1fr;
-        /* display: flex; */
-        /* flex-direction: column; */
-        padding: 1.25em;
-    }
-
-    #main-content > .projects > .container > .project-item > p {
-        /* justify-self: end; */
-        /* align-self: start; */
-    }
-
-    #main-content > .projects > .container > .project-item > div {
-        justify-self: end;
-        align-self: end;
-    }
-
-    #main-content > .announcements {
-        border: 2px solid orange;
-        display: grid;
-        grid-auto-rows: min-content 1fr;
-    }
-
-    #main-content > .announcements > .container {
-        display: grid;
-        gap: 1.25em;
-    }
-
-    #main-content > .announcements > .container > * {
-        border: 2px solid blue;
-        border-radius: 0.75em;
-        padding: 1.25em;
-    }
-
-    #main-content > .trending {
-        border: 2px solid orange;
-        display: grid;
-        grid-auto-rows: min-content 1fr;
-    }
-
-    #main-content > .trending > .container {
-        display: grid;
-        gap: 1.25em;
-    }
-
-    #main-content > .trending > .container > * {
-        border: 2px solid blue;
-        border-radius: 0.75em;
-        padding: 0.5em 1.25em;
-        display: grid;
-        align-content: center;
-        align-items: center;
-        justify-content: start;
-        gap: 0 1.5em;
-        /* grid-template-columns: repeat(auto-fit, minmax(min-content, 10%)); */
-    }
-
-    #main-content > .trending > .container > .trending-item > a:first-child {
-        grid-area: 1 / 1 / 3 / 2;
-    }
-
-    #main-content > .trending > .container > .trending-item > a:nth-child(2) {
-        grid-area: 1 / span 3;
-        align-self: end;
-    }
-
-    #main-content > .trending > .container > .trending-item > a:last-child {
-        grid-area: 2 / span 3;
-        align-self: start;
     }
 }
