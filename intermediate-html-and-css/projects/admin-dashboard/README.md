@@ -3,6 +3,7 @@ Live preview: https://mikeycos.github.io/theOdinProject/intermediate-html-and-cs
 ##Ideas:
 1. (desktop) View dashboard based on cursor location and (mobile) view dashboard with swipe right from left side of viewport.  
 ---
+29 MAY 2023 : Declared custom ```main-content-item-...``` CSS variables in root, removed border styles for grid debugging purposes, imported Google Fonts (Instrument Sans and Red Hat Display), implemented simple CSS animation when page loads, connected Github repository as a dashboard item, and assigned an animate class to each dashboard item with an animation-delay difference of 50ms.  
 27 MAY 2023 : Horizontally aligned dashboard icons to their center, applied CSS function clamp to a variety font-sizes for text elements, and experimenting with header button alignment and spacing.  
 26 MAY 2023 : Restructured sidebar content by moving dashboard icon and anchor inside unordered list, removed grid-template-columns from body, sidebar anchor elements display set to grid with align-items center, and discovered alignment issues with dashboard icons.  
 25 MAY 2023 : Misplaced and found README file for this project, wrapped buttons inside each project-item with a container, and applied display grid for announcements and trending sections.  
