@@ -89,3 +89,16 @@ studentThree.sayName();
 
 const studentFour = new EighthGrader('Mary');
 studentFour.sayName();
+
+function Book(title, author, pages, read) {
+    this.title,
+    this.author,
+    this.pages,
+    this.read,
+    this.info = function() {
+        return(`${title} by ${author}, ${pages} pages, ${read}`)
+    };
+}
+
+const book1 = new Book('Nineteen Eighty-Four', 'George Orwell', 328, 'not read yet');
+console.log(book1.info());

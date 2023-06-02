@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./javascript.js" defer></script>
+    <title>Prototypal inheritance</title>
+</head>
+<body>
+    <a href="https://javascript.info/prototype-inheritance">Prototypal Inheritance</a>
+
+    <div class="item">
+        <div class="text">
+            <h2>Working with prototype</h2>
+            <p>Here’s the code that creates a pair of objects, then modifies them.</p>
+            <p>Which values are shown in the process?</p>
+        </div>
+
+        <pre>
+            <code>
+                let animal = {
+                    jumps: null
+                };
+                
+                let rabbit = {
+                    __proto__: animal,
+                    jumps: true
+                };
+                
+                alert(rabbit.jumps); // ? (1) true
+                
+                delete rabbit.jumps;
+                
+                alert(rabbit.jumps); // ? (2) null
+                
+                delete animal.jumps;
+                
+                alert(rabbit.jumps); // ? (3) undefined
+            </code>
+        </pre>
+    </div>
+    <div class="item">
+        <div class="text">
+            <h2>Searching algorithm</h2>
+            <p>The task has two parts.</p>
+            <p>Given the following objects:</p>
+        </div>
+
+        <pre>
+            <code>
+                let head = {
+                    glasses: 1
+                };
+                
+                let table = {
+                    pen: 3
+                };
+                
+                let bed = {
+                    sheet: 1,
+                    pillow: 2
+                };
+                
+                let pockets = {
+                    money: 2000
+                };
+            </code>
+        </pre>
+
+        <div class="text">
+            <ol>
+                <li>Use __proto__ to assign prototypes in a way that any property lookup will follow the path: pockets → bed → table → head. For instance, pockets.pen should be 3 (found in table), and bed.glasses should be 1 (found in head).</li>
+                <li>Answer the question: is it faster to get glasses as pockets.glasses or head.glasses? Benchmark if needed.</li>
+            </ol>
+        </div>
+    </div>
+    <div class="item">
+        <div class="text">
+            <h2>Where does it write?</h2>
+            <p>We have rabbit inheriting from animal.</p>
+            <p>If we call rabbit.eat(), which object receives the full property: animal or rabbit?</p>
+        </div>
+
+        <pre>
+            <code>
+                let animal = {
+                    eat() {
+                        this.full = true;
+                    }
+                };
+                
+                let rabbit = {
+                    __proto__: animal
+                };
+                
+                rabbit.eat();
+            </code>
+        </pre>
+    </div>
+    <div class="item">
+        <div class="text">
+            <h2>Why are both hamsters full?</h2>
+            <p>We have two hamsters: speedy and lazy inheriting from the general hamster object.</p>
+            <p>When we feed one of them, the other one is also full. Why? How can we fix it?</p>
+        </div>
+
+        <pre>
+            <code>
+                let hamster = {
+                    stomach: [],
+                
+                    eat(food) {
+                        this.stomach.push(food);
+                    }
+                };
+                
+                let speedy = {
+                    __proto__: hamster
+                };
+                
+                let lazy = {
+                    __proto__: hamster
+                };
+                
+                // This one found the food
+                speedy.eat("apple");
+                alert( speedy.stomach ); // apple
+                
+                // This one also has it, why? fix please.
+                alert( lazy.stomach ); // apple
+            </code>
+        </pre>
+    </div>
+</body>
+</html>
