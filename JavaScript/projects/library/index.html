@@ -10,26 +10,31 @@
 </head>
 <body>
     <div id="main-content">
-        <button>Add book</button>
+        <div id="library">
+            <button class="add-book">Add book</button>
+        </div>
+
         <dialog>
-            <form action="">
+            <form id="form" action="">
                 <div class="form-item">
-                    <label for=""></label>
-                    <input type="text">
+                    <label for="title">Title</label>
+                    <input id="title" name="title" type="text" placeholder="Book title">
                 </div>
                 <div class="form-item">
-                    <label for=""></label>
-                    <input type="text">
+                    <label for="author">Author</label>
+                    <input id="author" name="author" type="text" placeholder="Author">
                 </div>
                 <div class="form-item">
-                    <label for=""></label>
-                    <input type="text">
+                    <label for="pages">Pages</label>
+                    <input id="pages" name="pages" type="text" placeholder="Number of pages">
                 </div>
                 <div class="form-item">
-                    <label for=""></label>
-                    <input type="text">
+                    <label for="isbn">ISBN</label>
+                    <input id="isbn" name="isbn" type="text" placeholder="ISBN">
                 </div>
-                <button type="submit">Add</button>
+                <button class="" type="submit">Add</button>
+                <button class="cancel" type="button">Cancel</button>
+                <button class="" type="button">Reset</button>
             </form>
         </dialog>
     </div>
