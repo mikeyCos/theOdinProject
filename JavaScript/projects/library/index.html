@@ -11,14 +11,16 @@
 <body>
     <div id="main-content">
         <div id="library">
-            <button class="add-book">Add book</button>
+            <div>
+                <button class="add-book">Add book</button>
+            </div>
         </div>
 
         <dialog>
-            <form id="form" action="">
+            <form id="form" action="get">
                 <div class="form-item">
                     <label for="title">Title</label>
-                    <input id="title" name="title" type="text" placeholder="Book title">
+                    <input id="title" name="title" type="text" placeholder="Book title" required>
                 </div>
                 <div class="form-item">
                     <label for="author">Author</label>
@@ -26,15 +28,15 @@
                 </div>
                 <div class="form-item">
                     <label for="pages">Pages</label>
-                    <input id="pages" name="pages" type="text" placeholder="Number of pages">
+                    <input id="pages" name="pages" type="number" placeholder="Number of pages">
                 </div>
                 <div class="form-item">
                     <label for="isbn">ISBN</label>
                     <input id="isbn" name="isbn" type="text" placeholder="ISBN">
                 </div>
-                <button class="" type="submit">Add</button>
+                <button class="add" type="submit">Add</button>
                 <button class="cancel" type="button">Cancel</button>
-                <button class="" type="button">Reset</button>
+                <button class="reset" type="button">Reset</button>
             </form>
         </dialog>
     </div>
