@@ -100,11 +100,12 @@ function displayBook() {
         book.appendChild(bookContainer);
         
         const list = document.createElement('ul');
-
+        let newText;
         for (let key in myLibrary[i]) {
             if (key === 'title') {
                 const title = document.createElement('h2');
-                title.textContent = myLibrary[i][key];
+                newText = document.createTextNode(myLibrary[i][key])
+                title.appendChild(newText);
                 bookContainer.appendChild(title);
 
                 bookContainer.appendChild(list);
@@ -113,18 +114,21 @@ function displayBook() {
                 list.appendChild(listItem);
 
                 const bookInfo = document.createElement('p');
-                bookInfo.textContent = key;
+                newText = document.createTextNode(key);
+                bookInfo.appendChild(newText);
                 listItem.appendChild(bookInfo);
 
                 const bookInfoValue = document.createElement('p');
                 if (key === 'read') {
                     if (myLibrary[i][key] === true) {
-                        bookInfoValue.textContent = '✔';
+                        newText = document.createTextNode('✔');
                     } else {
-                        bookInfoValue.textContent = '✘';
+                        newText = document.createTextNode('✘');
                     }
+                    bookInfoValue.appendChild(newText);
                 } else {
-                    bookInfoValue.textContent = myLibrary[i][key];
+                    newText = document.createTextNode(myLibrary[i][key]);
+                    bookInfoValue.appendChild(newText);
                 }
                 listItem.appendChild(bookInfoValue);
             }
@@ -132,12 +136,14 @@ function displayBook() {
         }
 
         const buttonRemoveBook = document.createElement('button');
-        buttonRemoveBook.textContent = 'Remove';
+        newText = document.createTextNode('Remove');
+        buttonRemoveBook.appendChild(newText);
         bookContainer.appendChild(buttonRemoveBook)
         buttonRemoveBook.addEventListener('click', removeBook);
 
         const buttonReadStatus = document.createElement('button');
-        buttonReadStatus.textContent = 'Read';
+        newText = document.createTextNode('Read');
+        buttonReadStatus.appendChild(newText);
         bookContainer.appendChild(buttonReadStatus);
         buttonReadStatus.addEventListener('click', toggleReadStatus);
     }
@@ -162,22 +168,28 @@ function updateDataIndex() {
 }
 
 function toggleReadStatus() {
-
-    console.log(this);
-    console.log(this.parentElement);
-    console.log(typeof this.parentElement.parentElement.dataset.index);
     console.log(myLibrary[Number(this.parentElement.parentElement.dataset.index)].read);
+    let readStatusNode = this.parentElement.children[1].children[3].children[1]
     let readStatus = myLibrary[Number(this.parentElement.parentElement.dataset.index)].read;
     if (readStatus) {
         myLibrary[Number(this.parentElement.parentElement.dataset.index)].read = false;
-        
+        readStatusNode.textContent = '✘';
     } else {
         myLibrary[Number(this.parentElement.parentElement.dataset.index)].read = true;
+        readStatusNode.textContent = '✔';
     }
+}
+
+formOne.forEach((input) => {
+    console.log(input)
+    input.addEventListener('blur', validate)
+})
+
+function validate(e) {
+    console.log(e.target);
+    console.log(e.target.validity.valid);
 }
 
 // testing manual input
 const bookOne = new Book(`1984`, `George Orwell`, 328, 9780451524935, true);
 const bookTwo = new Book (`The Hitchhiker's Guide to the Galaxy`, `Douglas Adams`, 224, 9780345391803, false);
-
-// displayBook();
