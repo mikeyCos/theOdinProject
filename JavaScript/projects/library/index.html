@@ -20,19 +20,23 @@
             <form id="form" action="get">
                 <div class="form-item">
                     <label for="title">Title</label>
-                    <input id="title" name="title" type="text" placeholder="Book title" required>
+                    <input id="title" name="title" type="text" placeholder="Book title" minlength="1" maxlength="200" required>
+                    <span class="error"></span>
                 </div>
                 <div class="form-item">
                     <label for="author">Author</label>
-                    <input id="author" name="author" type="text" placeholder="Author" required>
+                    <input id="author" name="author" type="text" placeholder="Author" maxlength="70" required>
+                    <span class="error"></span>
                 </div>
                 <div class="form-item">
                     <label for="pages">Pages</label>
-                    <input id="pages" name="pages" type="number" placeholder="Number of pages" required>
+                    <input id="pages" name="pages" type="number" placeholder="Number of pages" maxlength="21450" required>
+                    <span class="error"></span>
                 </div>
                 <div class="form-item">
                     <label for="isbn">ISBN</label>
                     <input id="isbn" name="isbn" type="text" placeholder="ISBN" required>
+                    <span class="error"></span>
                 </div>
                 <div class="form-item">
                     <label for="read">Have you read this book?</label>

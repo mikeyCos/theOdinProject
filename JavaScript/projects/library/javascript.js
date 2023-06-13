@@ -1,14 +1,10 @@
 const buttonAddNewBook = document.querySelector('.add-book');
 
 const dialog = document.querySelector('dialog');
-const buttonAddBook = document.querySelector('.add');
 const buttonCancel = document.querySelector('.cancel');
 const buttonReset = document.querySelector('.reset');
 
-const formOne = document.querySelectorAll('#form input');
-
-buttonCancel.addEventListener('click', clearInput);
-buttonReset.addEventListener('click', clearInput);
+const formInputs = document.querySelectorAll('#form input');
 
 const library = document.querySelector('#library');
 let books = library.children;
@@ -18,7 +14,77 @@ buttonAddNewBook.addEventListener('click', () => {
     dialog.addEventListener('click', closeDialog); 
 })
 
-buttonAddBook.addEventListener('click', addBookToLibrary);
+const validateForm = formSelector => {
+    const formElement = document.querySelector(formSelector);
+
+    const validationRules = [
+        {
+            attribute: 'required',
+            isValid: (input) => {
+                return input.value.trim() !== '';
+            },
+            errorMessage: (input, label) => {
+                return `${label.textContent} is required`;
+            }
+        }
+    ];
+
+    const validateInput = formItem => {
+        const label = formItem.querySelector('label');
+        const input = formItem.querySelector('input');
+        const errorContainer = formItem.querySelector('.error');
+        let inputError = false;
+
+        for(const rule of validationRules) {
+            if(input.hasAttribute(rule.attribute) && !rule.isValid(input)) {
+                errorContainer.textContent = rule.errorMessage(input, label);
+                inputError = true;
+            }
+        }
+
+        if(!inputError && errorContainer) {
+            errorContainer.textContent = '';
+        }
+
+        return !inputError;
+    }
+
+    formElement.setAttribute('novalidate', '');
+
+    Array.from(formElement.elements).forEach(element => {
+        element.addEventListener('blur', e => {
+            validateInput(e.srcElement.parentElement);
+        });
+    });
+
+    formElement.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        const formValidity = validateAllFormItems(formElement);
+
+        if(formValidity) {
+            addBookToLibrary();
+        }
+    });
+
+    const validateAllFormItems = formToValidate => {
+        const formItems = Array.from(formToValidate.querySelectorAll('.form-item'));
+
+        formItems.forEach(formItem => {
+            validateInput(formItem);
+        })
+
+        return formItems.every(formItem => validateInput(formItem));
+    }
+
+    buttonReset.addEventListener('click', () => {
+        Array.from(formElement.elements).forEach(element => {
+            element.value = '';
+        })
+    });
+}
+
+validateForm('#form');
 
 function closeDialog(e) {
     if(e.target.tagName === 'DIALOG') {
@@ -30,14 +96,6 @@ function closeDialog(e) {
 buttonCancel.addEventListener('click', () => {
     dialog.close();
 })
-
-function clearInput() {
-    formOne.forEach((element) => {
-        if(element.value !== '') {
-            element.value = '';
-        }
-    })
-}
 
 let myLibrary = []
 
@@ -52,10 +110,9 @@ function Book(title, author, pages, isbn, read) {
 
 //need to validate input values
 //if input is invalid, do NOT close dialog
-function addBookToLibrary(e) {
-    e.preventDefault();
+function addBookToLibrary() {
     const book = new Book()
-    formOne.forEach((input) => {
+    formInputs.forEach((input) => {
         switch (input.name) {
             case 'title':
                 book.title = input.value;
@@ -180,15 +237,18 @@ function toggleReadStatus() {
     }
 }
 
-formOne.forEach((input) => {
-    console.log(input)
-    input.addEventListener('blur', validate)
-})
+// buttonCancel.addEventListener('click', clearInput);
+// buttonReset.addEventListener('click', clearInput);
 
-function validate(e) {
-    console.log(e.target);
-    console.log(e.target.validity.valid);
-}
+// function clearInput() {
+//     // const errorContainer = document.querySelectorAll('.error');
+//     // formInputs.forEach((element) => {
+//     //     if(element.value !== '') {
+//     //         element.value = '';
+//     //         errorContainer.textContent = '';
+//     //     }
+//     // });
+// }
 
 // testing manual input
 const bookOne = new Book(`1984`, `George Orwell`, 328, 9780451524935, true);

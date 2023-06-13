@@ -3,6 +3,7 @@
 Live preview: (https://mikeycos.github.io/theOdinProject/JavaScript/projects/library/)
 ---
 ### Changelog
+12 JUN 2023 : Created `validateInput` to perform a validity check for each input except the checkbox, `Add` (Submit) button does not validate all form inputs (`Array.prototype.every()` method immediately terminates at a falsy value), and `Reset` button needs to clear error messages.  
 10 JUN 2023 : Read button changes text content and read property of Book, initial text created on nodes with `textContent` changed to `createTextNode`, and preparing validity check for required inputs.  
 9 JUN 2023 : Possibly resolved myLibrary and books data-set check inside `displayBook()` function, remove button will now remove book object from array, and in the process implementing read status button to toggle if book has been read or not.  
 8 JUN 2023 : Implemented cancel/reset buttons and messing around with `displayBook()` function to check if a book is already being displayed.  

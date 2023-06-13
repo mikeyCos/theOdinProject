@@ -19,3 +19,8 @@ dialog {
 dialog::backdrop {
     background: linear-gradient(45deg, rgba(255, 100, 20, 0.4), rgba(50, 60, 100, 0.4));
 }
+
+
+.form-item > .error {
+    /* display: none; */
+}
