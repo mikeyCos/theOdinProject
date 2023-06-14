@@ -4,14 +4,13 @@ const dialog = document.querySelector('dialog');
 const buttonCancel = document.querySelector('.cancel');
 const buttonReset = document.querySelector('.reset');
 
-const formInputs = document.querySelectorAll('#form input');
-
 const library = document.querySelector('#library');
 let books = library.children;
 
 buttonAddNewBook.addEventListener('click', () => {
     dialog.showModal();
-    dialog.addEventListener('click', closeDialog); 
+    dialog.addEventListener('click', closeDialog);
+    dialog.focus()
 })
 
 const validateForm = formSelector => {
@@ -35,14 +34,14 @@ const validateForm = formSelector => {
         const errorContainer = formItem.querySelector('.error');
         let inputError = false;
 
-        for(const rule of validationRules) {
+        for (const rule of validationRules) {
             if(input.hasAttribute(rule.attribute) && !rule.isValid(input)) {
                 errorContainer.textContent = rule.errorMessage(input, label);
                 inputError = true;
             }
         }
 
-        if(!inputError && errorContainer) {
+        if (!inputError && errorContainer) {
             errorContainer.textContent = '';
         }
 
@@ -52,14 +51,18 @@ const validateForm = formSelector => {
     formElement.setAttribute('novalidate', '');
 
     Array.from(formElement.elements).forEach(element => {
-        element.addEventListener('blur', e => {
-            validateInput(e.srcElement.parentElement);
+        element.addEventListener('click', e => {
+            if(document.activeElement === e.srcElement) {
+                element.addEventListener('blur', e => {
+                    validateInput(e.srcElement.parentElement);
+                });
+            }
         });
     });
 
     formElement.addEventListener('submit', e => {
         e.preventDefault();
-        
+
         const formValidity = validateAllFormItems(formElement);
 
         if(formValidity) {
@@ -72,22 +75,16 @@ const validateForm = formSelector => {
 
         formItems.forEach(formItem => {
             validateInput(formItem);
-        })
+        });
 
         return formItems.every(formItem => validateInput(formItem));
     }
-
-    buttonReset.addEventListener('click', () => {
-        Array.from(formElement.elements).forEach(element => {
-            element.value = '';
-        })
-    });
 }
 
 validateForm('#form');
 
 function closeDialog(e) {
-    if(e.target.tagName === 'DIALOG') {
+    if (e.target.tagName === 'DIALOG') {
         dialog.close();
         dialog.removeEventListener('click', closeDialog);
     }
@@ -95,7 +92,7 @@ function closeDialog(e) {
 
 buttonCancel.addEventListener('click', () => {
     dialog.close();
-})
+});
 
 let myLibrary = []
 
@@ -111,6 +108,8 @@ function Book(title, author, pages, isbn, read) {
 //need to validate input values
 //if input is invalid, do NOT close dialog
 function addBookToLibrary() {
+    const formInputs = document.querySelectorAll('#form input');
+    console.log(formInputs);
     const book = new Book()
     formInputs.forEach((input) => {
         switch (input.name) {
@@ -141,73 +140,88 @@ function addBookToLibrary() {
 }
 
 function displayBook() {
-    outer: for(let i = 0; i < myLibrary.length; i++) {
-        for(let j = 1; j < books.length; j++) {
-            if(books[j].dataset.index == i) {
+    outer: for (let i = 0; i < myLibrary.length; i++) {
+        for (let j = 1; j < books.length; j++) {
+            //check if a book in myLibrary[] currently exists on the DOM
+            if (books[j].dataset.index == i) {
                 continue outer;
             }
         }
-        const book = document.createElement('div');
-        book.className = `book`;
-        book.setAttribute('data-index', i)
-        library.appendChild(book);
-
-        const bookContainer = document.createElement('div');
-        bookContainer.className = `container`;
-        book.appendChild(bookContainer);
-        
+        const bookContainer = createBookContainer(i);
         const list = document.createElement('ul');
         let newText;
         for (let key in myLibrary[i]) {
             if (key === 'title') {
-                const title = document.createElement('h2');
-                newText = document.createTextNode(myLibrary[i][key])
-                title.appendChild(newText);
-                bookContainer.appendChild(title);
-
+                createBookHeader(newText, myLibrary[i][key], bookContainer);
                 bookContainer.appendChild(list);
             } else {
-                const listItem = document.createElement('li');
-                list.appendChild(listItem);
-
-                const bookInfo = document.createElement('p');
-                newText = document.createTextNode(key);
-                bookInfo.appendChild(newText);
-                listItem.appendChild(bookInfo);
-
-                const bookInfoValue = document.createElement('p');
-                if (key === 'read') {
-                    if (myLibrary[i][key] === true) {
-                        newText = document.createTextNode('✔');
-                    } else {
-                        newText = document.createTextNode('✘');
-                    }
-                    bookInfoValue.appendChild(newText);
-                } else {
-                    newText = document.createTextNode(myLibrary[i][key]);
-                    bookInfoValue.appendChild(newText);
-                }
-                listItem.appendChild(bookInfoValue);
+                createBookInfo(newText, key, list, i);
             }
-            console.log(key + ' : ' + myLibrary[i][key]);
+            console.log(key + ' : ' + myLibrary[i][key]); //for debugging
         }
-
-        const buttonRemoveBook = document.createElement('button');
-        newText = document.createTextNode('Remove');
-        buttonRemoveBook.appendChild(newText);
-        bookContainer.appendChild(buttonRemoveBook)
-        buttonRemoveBook.addEventListener('click', removeBook);
-
-        const buttonReadStatus = document.createElement('button');
-        newText = document.createTextNode('Read');
-        buttonReadStatus.appendChild(newText);
-        bookContainer.appendChild(buttonReadStatus);
-        buttonReadStatus.addEventListener('click', toggleReadStatus);
+        createFormButtons(newText, bookContainer);
     }
 }
 
+function createBookContainer(index) {
+    const bookElement = document.createElement('div');
+    bookElement.className = `book`;
+    bookElement.setAttribute('data-index', index);
+    library.appendChild(bookElement)
+
+    const bookContainer = document.createElement('div');
+    bookContainer.className = `container`;
+    return bookElement.appendChild(bookContainer);
+}
+
+function createBookHeader(text, title, bookContainer) {
+    const titleElement = document.createElement('h2');
+    newText = document.createTextNode(title)
+    titleElement.appendChild(newText);
+    bookContainer.appendChild(titleElement);
+}
+
+function createBookInfo(text, key, list, index) {
+    const listItem = document.createElement('li');
+    list.appendChild(listItem);
+
+    const bookInfo = document.createElement('p');
+    newText = document.createTextNode(key);
+    bookInfo.appendChild(newText);
+    listItem.appendChild(bookInfo);
+
+    const bookInfoValue = document.createElement('p');
+
+    if (key === 'read') {
+        if (myLibrary[index][key] === true) {
+            newText = document.createTextNode('✔');
+        } else {
+            newText = document.createTextNode('✘');
+        }
+        bookInfoValue.appendChild(newText);
+    } else {
+        newText = document.createTextNode(myLibrary[index][key]);
+        bookInfoValue.appendChild(newText);
+    }
+    listItem.appendChild(bookInfoValue);
+}
+
+function createFormButtons(text, bookContainer) {
+    const buttonRemoveBook = document.createElement('button');
+    text = document.createTextNode('Remove');
+    buttonRemoveBook.appendChild(text);
+    bookContainer.appendChild(buttonRemoveBook)
+    buttonRemoveBook.addEventListener('click', removeBook);
+
+    const buttonReadStatus = document.createElement('button');
+    text = document.createTextNode('Read');
+    buttonReadStatus.appendChild(text);
+    bookContainer.appendChild(buttonReadStatus);
+    buttonReadStatus.addEventListener('click', toggleReadStatus);
+}
+
 function removeBook() {
-    for(let i = 0; i < myLibrary.length; i++) {
+    for (let i = 0; i < myLibrary.length; i++) {
         if (this.parentElement.parentElement.dataset.index == i) {
             myLibrary.splice(i, 1);
             this.parentElement.parentElement.remove()
@@ -219,36 +233,36 @@ function removeBook() {
 // updates books' attributes class and data-index
 function updateDataIndex() {
     let newIndex = 0;
-    for(let j = 1; j < books.length; j++) {
+    for (let j = 1; j < books.length; j++) {
         books[j].dataset.index = newIndex++;
     }
 }
 
 function toggleReadStatus() {
-    console.log(myLibrary[Number(this.parentElement.parentElement.dataset.index)].read);
-    let readStatusNode = this.parentElement.children[1].children[3].children[1]
+    console.log(myLibrary[Number(this.parentElement.parentElement.dataset.index)].read); //for debugging
+    let readStatusElement = this.parentElement.children[1].children[3].children[1]
     let readStatus = myLibrary[Number(this.parentElement.parentElement.dataset.index)].read;
     if (readStatus) {
         myLibrary[Number(this.parentElement.parentElement.dataset.index)].read = false;
-        readStatusNode.textContent = '✘';
+        readStatusElement.textContent = '✘';
     } else {
         myLibrary[Number(this.parentElement.parentElement.dataset.index)].read = true;
-        readStatusNode.textContent = '✔';
+        readStatusElement.textContent = '✔';
     }
 }
 
-// buttonCancel.addEventListener('click', clearInput);
-// buttonReset.addEventListener('click', clearInput);
+buttonCancel.addEventListener('click', clearInput);
+buttonReset.addEventListener('click', clearInput);
 
-// function clearInput() {
-//     // const errorContainer = document.querySelectorAll('.error');
-//     // formInputs.forEach((element) => {
-//     //     if(element.value !== '') {
-//     //         element.value = '';
-//     //         errorContainer.textContent = '';
-//     //     }
-//     // });
-// }
+function clearInput() {
+    const formElement = document.querySelector('#form')
+    Array.from(formElement.querySelectorAll('.form-item')).forEach(formItem => {
+        formItem.querySelector('input').value = '';
+        if (formItem.querySelector('.error')) {
+            formItem.querySelector('.error').textContent = '';
+        }
+    });
+}
 
 // testing manual input
 const bookOne = new Book(`1984`, `George Orwell`, 328, 9780451524935, true);
