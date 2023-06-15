@@ -1,6 +1,6 @@
 const buttonAddNewBook = document.querySelector('.add-book');
 
-const dialog = document.querySelector('dialog');
+const modal = document.querySelector('#modal');
 const buttonCancel = document.querySelector('.cancel');
 const buttonReset = document.querySelector('.reset');
 
@@ -8,9 +8,9 @@ const library = document.querySelector('#library');
 let books = library.children;
 
 buttonAddNewBook.addEventListener('click', () => {
-    dialog.showModal();
-    dialog.addEventListener('click', closeDialog);
-    dialog.focus()
+    modal.showModal();
+    modal.focus()
+    validateForm('#form');
 })
 
 const validateForm = formSelector => {
@@ -51,13 +51,9 @@ const validateForm = formSelector => {
     formElement.setAttribute('novalidate', '');
 
     Array.from(formElement.elements).forEach(element => {
-        element.addEventListener('click', e => {
-            if(document.activeElement === e.srcElement) {
-                element.addEventListener('blur', e => {
-                    validateInput(e.srcElement.parentElement);
-                });
-            }
-        });
+        if (element.tagName !== 'BUTTON') {
+            element.addEventListener('blur', validateOnBlur)
+        }
     });
 
     formElement.addEventListener('submit', e => {
@@ -65,8 +61,10 @@ const validateForm = formSelector => {
 
         const formValidity = validateAllFormItems(formElement);
 
-        if(formValidity) {
+        if (formValidity) {
+            removeBlurEvents();
             addBookToLibrary();
+            clearInput();
         }
     });
 
@@ -79,20 +77,37 @@ const validateForm = formSelector => {
 
         return formItems.every(formItem => validateInput(formItem));
     }
-}
 
-validateForm('#form');
+    function validateOnBlur(e) {
+        validateInput(e.target.parentElement);
+        if(!validateInput(e.srcElement.parentElement)) {
+            e.srcElement.addEventListener('input', validateOnInput);
+        }
+    }
 
-function closeDialog(e) {
-    if (e.target.tagName === 'DIALOG') {
-        dialog.close();
-        dialog.removeEventListener('click', closeDialog);
+    function validateOnInput(e) {
+        console.log(e.srcElement);
+        validateInput(e.srcElement.parentElement);
+    }
+
+    buttonCancel.addEventListener('click', () => {
+        clearInput();
+        removeBlurEvents()
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target.tagName === 'DIALOG') {
+            removeBlurEvents();
+        }
+    });
+
+    function removeBlurEvents() {
+        Array.from(formElement.elements).forEach(element => {
+            element.removeEventListener('blur', validateOnBlur);
+            modal.close()
+        });
     }
 }
-
-buttonCancel.addEventListener('click', () => {
-    dialog.close();
-});
 
 let myLibrary = []
 
@@ -105,8 +120,11 @@ function Book(title, author, pages, isbn, read) {
     myLibrary.push(this);
 }
 
-//need to validate input values
-//if input is invalid, do NOT close dialog
+Book.prototype.toggleReadStatus = function(readStatus) {
+    this.read = readStatus;
+    console.log(this)
+}
+
 function addBookToLibrary() {
     const formInputs = document.querySelectorAll('#form input');
     console.log(formInputs);
@@ -134,19 +152,19 @@ function addBookToLibrary() {
                 break;
         }
     })
-    dialog.close();
-    displayBook();
+    displayBook(book);
     clearInput();
 }
 
-function displayBook() {
+function displayBook(book) {
     outer: for (let i = 0; i < myLibrary.length; i++) {
         for (let j = 1; j < books.length; j++) {
-            //check if a book in myLibrary[] currently exists on the DOM
+            //checks if a book in myLibrary[] currently exists on the DOM
             if (books[j].dataset.index == i) {
                 continue outer;
             }
         }
+
         const bookContainer = createBookContainer(i);
         const list = document.createElement('ul');
         let newText;
@@ -155,11 +173,13 @@ function displayBook() {
                 createBookHeader(newText, myLibrary[i][key], bookContainer);
                 bookContainer.appendChild(list);
             } else {
-                createBookInfo(newText, key, list, i);
+                if(myLibrary[i].hasOwnProperty(key)) {
+                    createBookInfo(newText, key, list, i);
+                }
             }
             console.log(key + ' : ' + myLibrary[i][key]); //for debugging
         }
-        createFormButtons(newText, bookContainer);
+        createFormButtons(newText, bookContainer, i);
     }
 }
 
@@ -206,7 +226,7 @@ function createBookInfo(text, key, list, index) {
     listItem.appendChild(bookInfoValue);
 }
 
-function createFormButtons(text, bookContainer) {
+function createFormButtons(text, bookContainer, index) {
     const buttonRemoveBook = document.createElement('button');
     text = document.createTextNode('Remove');
     buttonRemoveBook.appendChild(text);
@@ -230,7 +250,7 @@ function removeBook() {
     }
 }
 
-// updates books' attributes class and data-index
+// updates books' attributes data-index
 function updateDataIndex() {
     let newIndex = 0;
     for (let j = 1; j < books.length; j++) {
@@ -239,23 +259,27 @@ function updateDataIndex() {
 }
 
 function toggleReadStatus() {
-    console.log(myLibrary[Number(this.parentElement.parentElement.dataset.index)].read); //for debugging
     let readStatusElement = this.parentElement.children[1].children[3].children[1]
-    let readStatus = myLibrary[Number(this.parentElement.parentElement.dataset.index)].read;
-    if (readStatus) {
-        myLibrary[Number(this.parentElement.parentElement.dataset.index)].read = false;
-        readStatusElement.textContent = '✘';
-    } else {
-        myLibrary[Number(this.parentElement.parentElement.dataset.index)].read = true;
-        readStatusElement.textContent = '✔';
+
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (this.parentElement.parentElement.dataset.index == i) {
+            let readStatus;
+            if (myLibrary[i].read) {
+                readStatus = false;
+                readStatusElement.textContent = '✘';
+            } else {
+                readStatusElement.textContent = '✔';
+                readStatus = true;
+            }
+            myLibrary[i].toggleReadStatus(readStatus);
+        }
     }
 }
 
-buttonCancel.addEventListener('click', clearInput);
 buttonReset.addEventListener('click', clearInput);
 
 function clearInput() {
-    const formElement = document.querySelector('#form')
+    const formElement = document.querySelector('#form');
     Array.from(formElement.querySelectorAll('.form-item')).forEach(formItem => {
         formItem.querySelector('input').value = '';
         if (formItem.querySelector('.error')) {
@@ -267,3 +291,5 @@ function clearInput() {
 // testing manual input
 const bookOne = new Book(`1984`, `George Orwell`, 328, 9780451524935, true);
 const bookTwo = new Book (`The Hitchhiker's Guide to the Galaxy`, `Douglas Adams`, 224, 9780345391803, false);
+
+console.log(document.activeElement);

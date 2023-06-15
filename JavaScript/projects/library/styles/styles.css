@@ -4,23 +4,60 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* custom css properties */
+}
+
 body {
+    min-height: 100vh;
     background-color: lightblue;
+    display: grid;
 }
 
 #main-content {
-    /* position: relative; */
+
 }
 
 dialog {
     margin: auto;
+    min-width: 50vw;
+    min-height: 50vw
 }
 
 dialog::backdrop {
     background: linear-gradient(45deg, rgba(255, 100, 20, 0.4), rgba(50, 60, 100, 0.4));
 }
 
+dialog > #form {
+    min-width: inherit;
+    min-height: inherit;
+    display: grid;
+}
 
-.form-item > .error {
-    /* display: none; */
+#library {
+    border: 2px solid rgb(14, 105, 14); /*for debugging*/
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
+}
+
+#library > .book {
+    border: 2px dashed rgb(75, 9, 113); /*for debugging*/
+}
+
+#library > .book > .container {
+    
+}
+
+#library > .book > .container > ul > li {
+    border: 2px dashed rgb(180, 147, 56); /*for debugging*/
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#library > .book > .container > ul > li > p {
+    border: 2px dashed rgb(64, 56, 180); /*for debugging*/
+}
+
+@media screen and (min-width: 768px) {
+
 }
