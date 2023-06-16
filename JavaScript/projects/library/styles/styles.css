@@ -6,38 +6,76 @@
 
 :root {
     /* custom css properties */
+    --text-clor-primary: rgb(44, 44, 44);
+    --background-color-books: rgb(229, 235, 157);
 }
 
 body {
     min-height: 100vh;
     background-color: lightblue;
     display: grid;
+    grid-template-rows: min-content 1fr min-content;
+}
+
+header {
+    background-color: lightseagreen;
+    display: grid;
+    justify-content: center;
+    padding: 1.25rem;
 }
 
 #main-content {
-
+    display: grid;
+    border: 2px solid rgb(32, 100, 217); /*for debugging*/
 }
 
-dialog {
+#modal {
     margin: auto;
     min-width: 50vw;
     min-height: 50vw
 }
 
-dialog::backdrop {
+#modal::backdrop {
     background: linear-gradient(45deg, rgba(255, 100, 20, 0.4), rgba(50, 60, 100, 0.4));
 }
 
-dialog > #form {
+#modal > #form {
     min-width: inherit;
     min-height: inherit;
     display: grid;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+#modal > #form > .form-item {
+    display: grid;
+}
+
+#modal > #form > .form-item:last-of-type {
+    grid-template-columns: repeat(2, max-content);
+
+}
+
+#modal > #form > .form-item > input {
+    padding: 0.25rem;
+}
+
+#modal > #form > .form-item > input:focus {
+    padding: 0.5rem;
 }
 
 #library {
     border: 2px solid rgb(14, 105, 14); /*for debugging*/
     display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
+}
+
+#library > .button-add-book {
+    justify-self: center;
+    align-self: center;
+}
+
+#library > .button-add-book > .add-book {
+    padding: 0.5rem;
 }
 
 #library > .book {
@@ -45,7 +83,8 @@ dialog > #form {
 }
 
 #library > .book > .container {
-    
+    min-height: 100%;
+    background-color: var(--background-color-books);
 }
 
 #library > .book > .container > ul > li {
@@ -56,6 +95,13 @@ dialog > #form {
 
 #library > .book > .container > ul > li > p {
     border: 2px dashed rgb(64, 56, 180); /*for debugging*/
+}
+
+footer {
+    background-color: lightcoral;
+    display: grid;
+    justify-items: center;
+    padding: 0.50rem;
 }
 
 @media screen and (min-width: 768px) {

@@ -122,36 +122,28 @@ function Book(title, author, pages, isbn, read) {
 
 Book.prototype.toggleReadStatus = function(readStatus) {
     this.read = readStatus;
-    console.log(this)
+    console.log(this) //for debugging
 }
 
 function addBookToLibrary() {
     const formInputs = document.querySelectorAll('#form input');
-    console.log(formInputs);
     const book = new Book()
-    formInputs.forEach((input) => {
-        switch (input.name) {
-            case 'title':
-                book.title = input.value;
-                break;
-            case 'author':
-                book.author = input.value;
-                break;
-            case 'pages':
-                book.pages = input.value;
-                break;
-            case 'isbn':
-                book.isbn = input.value;
-                break;
-            case 'read':
-                if(input.checked) {
-                    book.read = true;
-                } else {
-                    book.read = false;
+    for (let input of formInputs) {
+        for (let prop in book) {
+            if (input.getAttribute('id') === prop) {
+                if (input.getAttribute('type') !== 'checkbox') {
+                    book[prop] = input.value
+                } else if (input.getAttribute('type') === 'checkbox') {
+                    if (input.checked) {
+                        book[prop] = true;
+                    } else {
+                        book[prop] = false;
+                    }
                 }
-                break;
+            }
         }
-    })
+    }
+
     displayBook(book);
     clearInput();
 }
@@ -177,9 +169,9 @@ function displayBook(book) {
                     createBookInfo(newText, key, list, i);
                 }
             }
-            console.log(key + ' : ' + myLibrary[i][key]); //for debugging
+            // console.log(key + ' : ' + myLibrary[i][key]); //for debugging
         }
-        createFormButtons(newText, bookContainer, i);
+        createBookButtons(newText, bookContainer);
     }
 }
 
@@ -226,25 +218,32 @@ function createBookInfo(text, key, list, index) {
     listItem.appendChild(bookInfoValue);
 }
 
-function createFormButtons(text, bookContainer, index) {
-    const buttonRemoveBook = document.createElement('button');
-    text = document.createTextNode('Remove');
-    buttonRemoveBook.appendChild(text);
-    bookContainer.appendChild(buttonRemoveBook)
-    buttonRemoveBook.addEventListener('click', removeBook);
-
-    const buttonReadStatus = document.createElement('button');
-    text = document.createTextNode('Read');
-    buttonReadStatus.appendChild(text);
-    bookContainer.appendChild(buttonReadStatus);
-    buttonReadStatus.addEventListener('click', toggleReadStatus);
+function createBookButtons(text, bookContainer) {
+    const textValues = ['Remove', 'Read']
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'button-container';
+    bookContainer.appendChild(buttonContainer);
+    for (i = 0; i < textValues.length; i++) {
+        const buttonWrapper = document.createElement('div');
+        const button = document.createElement('button');
+        text = document.createTextNode(textValues[i]);
+        button.appendChild(text);
+        buttonContainer.appendChild(buttonWrapper);
+        buttonWrapper.appendChild(button);
+        if (textValues[i] === 'Remove') {
+            button.addEventListener('click', removeBook);
+        } else {
+            button.addEventListener('click', toggleReadStatus);
+        }
+    }
 }
 
 function removeBook() {
+    console.log(this.parentElement.parentElement.parentElement)
     for (let i = 0; i < myLibrary.length; i++) {
-        if (this.parentElement.parentElement.dataset.index == i) {
+        if (this.parentElement.parentElement.parentElement.parentElement.dataset.index == i) {
             myLibrary.splice(i, 1);
-            this.parentElement.parentElement.remove()
+            this.parentElement.parentElement.parentElement.parentElement.remove()
             updateDataIndex();
         }
     }
@@ -259,10 +258,17 @@ function updateDataIndex() {
 }
 
 function toggleReadStatus() {
-    let readStatusElement = this.parentElement.children[1].children[3].children[1]
+    console.log(this.parentElement)
+    console.log(this.parentElement.parentElement)
+    console.log(this.parentElement.parentElement.parentElement)
+    console.log(this.parentElement.parentElement.parentElement.children[1])
+    console.log(this.parentElement.parentElement.parentElement.children[1].children[3])
+    console.log(this.parentElement.parentElement.parentElement.children[1].children[3].children[1])
+    
+    let readStatusElement = this.parentElement.parentElement.parentElement.children[1].children[3].children[1];
 
     for (let i = 0; i < myLibrary.length; i++) {
-        if (this.parentElement.parentElement.dataset.index == i) {
+        if (this.parentElement.parentElement.parentElement.parentElement.dataset.index == i) {
             let readStatus;
             if (myLibrary[i].read) {
                 readStatus = false;

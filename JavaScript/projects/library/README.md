@@ -3,6 +3,7 @@ Library
 Live preview: (https://mikeycos.github.io/theOdinProject/JavaScript/projects/library/)
 ---
 ### Changelog
+15 JUN 2023 : Refactored `addBookToLibrary()` function, `createBookButtons` now utilizes a for loop to create the buttons, buttons on each book container is wrapped in their own div containers that are both inside a div container, and experimenting with CSS properties.  
 14 JUN 2023 : Validation happens after modal is opened, `Cancel` and when the modal is closed event listeners on input elements are removed, and the `toggleReadStatus()` function now references `Book.prototype.toggleReadStatus` and changes the read status for that book the button is assigned to.  
 13 JUN 2023 : Refactored `displayBook()` function by dividing subsequent functions for each book's container creation, added a blur event to each form input, clicking on the reset button then clicking anywhere on the form will validate the first input element, tabbing when the form first appears will not activate the `blur` event listener.  
 12 JUN 2023 : Created `validateInput` to perform a validity check for each input except the checkbox, `Add` (Submit) button does not validate all form inputs (`Array.prototype.every()` method immediately terminates at a falsy value), and `Reset` button needs to clear error messages.  
