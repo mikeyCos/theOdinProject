@@ -5,20 +5,23 @@
 }
 
 :root {
-    /* custom css properties */
-    --text-clor-primary: rgb(44, 44, 44);
-    --background-color-books: rgb(229, 235, 157);
+    --text-clor-primary: rgb(25, 31, 20);
+    --background-color-primary: #FDEEDE;
+    --background-color-secondary: #fcc3bb;
+    --background-color-accent-primary: #FB7B79;
+    --background-color-books-default: #FCBE59;
+    --background-color-books-read: #3E5BC;
 }
 
 body {
     min-height: 100vh;
-    background-color: lightblue;
+    background-color: var(--background-color-primary);
     display: grid;
     grid-template-rows: min-content 1fr min-content;
 }
 
 header {
-    background-color: lightseagreen;
+    background-color: var(--background-color-secondary);
     display: grid;
     justify-content: center;
     padding: 1.25rem;
@@ -26,13 +29,17 @@ header {
 
 #main-content {
     display: grid;
+    padding: 0.5rem;
     border: 2px solid rgb(32, 100, 217); /*for debugging*/
 }
 
 #modal {
     margin: auto;
     min-width: 50vw;
-    min-height: 50vw
+    min-height: 50vh;
+    box-shadow: 0px 2px 8px 1px rgb(0, 0, 0);
+    border: none;
+    border-radius: 0.75rem;
 }
 
 #modal::backdrop {
@@ -40,28 +47,61 @@ header {
 }
 
 #modal > #form {
+    position: relative;
     min-width: inherit;
     min-height: inherit;
     display: grid;
     padding: 1rem;
     gap: 1rem;
+    background-color: var(--background-color-primary);
 }
 
 #modal > #form > .form-item {
     display: grid;
 }
 
-#modal > #form > .form-item:last-of-type {
+#modal > #form > .form-item:nth-child(6) {
     grid-template-columns: repeat(2, max-content);
-
+    gap: 1rem;
+    justify-content: center;
 }
 
 #modal > #form > .form-item > input {
     padding: 0.25rem;
+    padding-left: 0.5rem;
+    background-color: rgba(198, 198, 198, 0.25);
+    border-radius: 0.30rem;
+    border: none;
+    border-bottom: 2px solid var(--text-clor-primary);
 }
 
 #modal > #form > .form-item > input:focus {
     padding: 0.5rem;
+    padding-left: 1rem;
+    outline: none;
+}
+
+#modal > #form > .form-item > .error {
+    color: red;
+}
+
+#modal > #form > .button-container > button {
+    background: none;
+    border: none;
+}
+
+#modal > #form > .button-container ~ .button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#modal > #form > .button-container:not(.button-container ~ .button-container) {
+    position: absolute;
+    right: 0;
+}
+
+#modal > #form > .button-container > button > img:hover {
+    cursor: pointer;
 }
 
 #library {
@@ -72,10 +112,19 @@ header {
 #library > .button-add-book {
     justify-self: center;
     align-self: center;
+    padding: 1rem;
 }
 
 #library > .button-add-book > .add-book {
     padding: 0.5rem;
+    background: transparent;
+    background-color: var(--background-color-accent-primary);
+    border: none;
+    border-radius: 3rem;
+}
+
+#library > .button-add-book > .add-book:hover {
+    cursor: pointer;
 }
 
 #library > .book {
@@ -84,7 +133,7 @@ header {
 
 #library > .book > .container {
     min-height: 100%;
-    background-color: var(--background-color-books);
+    background-color: var(--background-color-books-default);
 }
 
 #library > .book > .container > ul > li {
@@ -97,8 +146,17 @@ header {
     border: 2px dashed rgb(64, 56, 180); /*for debugging*/
 }
 
+#library > .book > .container > .button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#library > .book > .container > .button-container > * > * {
+    width: 100%;
+}
+
 footer {
-    background-color: lightcoral;
+    background-color: var(--background-color-secondary);
     display: grid;
     justify-items: center;
     padding: 0.50rem;
