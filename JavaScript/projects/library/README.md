@@ -1,8 +1,15 @@
 Library
 ---
+# Ideas
+1. Clicking book title expands book info
+2. Expand all button
+---
 Live preview: (https://mikeycos.github.io/theOdinProject/JavaScript/projects/library/)
 ---
 ### Changelog
+19 JUN 2023 : Removed borders for debugging, library children elements max size is 300px on mobile and 25% on screen sizes equal/above 768px wide, book elements now append before the `button-add-book` node, and added `fill` attribute for each validity icon in their respective svg fill.  
+18 JUN 2023 : `createBookButtons` function now creates and appends an image tag, input validity styles are now altered by assigning a class name, and increased column size for books at media query breakpoint.  
+17 JUN 2023 : Wrapped input elements inside a container, implemented a span element with class name `validity` that changes icon based on validity check, and updated querySelectors for validity event listeners.  
 16 JUN 2023 : Applied CSS styles, researched and changed color schemes, replaced form button text with images, and rearranged form buttons.  
 15 JUN 2023 : Refactored `addBookToLibrary()` function, `createBookButtons` now utilizes a for loop to create the buttons, buttons on each book container is wrapped in their own div containers that are both inside a div container, and experimenting with CSS properties.  
 14 JUN 2023 : Validation happens after modal is opened, `Cancel` and when the modal is closed event listeners on input elements are removed, and the `toggleReadStatus()` function now references `Book.prototype.toggleReadStatus` and changes the read status for that book the button is assigned to.  

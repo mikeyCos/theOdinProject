@@ -1,4 +1,4 @@
-const buttonAddNewBook = document.querySelector('.add-book');
+const buttonAddNewBook = document.querySelector('.button-add-book');
 
 const modal = document.querySelector('#modal');
 const buttonCancel = document.querySelector('.cancel');
@@ -29,22 +29,32 @@ const validateForm = formSelector => {
     ];
 
     const validateInput = formItem => {
-        const label = formItem.querySelector('label');
-        const input = formItem.querySelector('input');
-        const errorContainer = formItem.querySelector('.error');
+        const validity = formItem.querySelector('.validity');
         let inputError = false;
+        // check if an element with class named validity exists
+        if (validity) {
+            const label = formItem.querySelector('label');
+            const input = formItem.querySelector('input');
+            const errorContainer = formItem.querySelector('.error');
+            const validityIcon = validity.querySelector('img');  
 
-        for (const rule of validationRules) {
-            if(input.hasAttribute(rule.attribute) && !rule.isValid(input)) {
-                errorContainer.textContent = rule.errorMessage(input, label);
-                inputError = true;
+            for (const rule of validationRules) {
+                if(input.hasAttribute(rule.attribute) && !rule.isValid(input)) {
+                    errorContainer.textContent = rule.errorMessage(input, label);
+                    inputError = true;
+                    validityIcon.setAttribute('src', './assets/invalid_close_FILL0_wght400_GRAD0_opsz48.svg');
+                    validity.style.display = 'grid';
+                    input.className = 'invalid';
+                }
+            }
+
+            if (!inputError && errorContainer) {
+                errorContainer.textContent = '';
+                validityIcon.setAttribute('src', './assets/valid_check_FILL0_wght400_GRAD0_opsz48.svg');
+                validity.style.display = 'grid';
+                input.className = 'valid';
             }
         }
-
-        if (!inputError && errorContainer) {
-            errorContainer.textContent = '';
-        }
-
         return !inputError;
     }
 
@@ -79,15 +89,15 @@ const validateForm = formSelector => {
     }
 
     function validateOnBlur(e) {
-        validateInput(e.target.parentElement);
-        if(!validateInput(e.srcElement.parentElement)) {
+        validateInput(e.target.parentElement.parentElement);
+        if(!validateInput(e.srcElement.parentElement.parentElement)) {
             e.srcElement.addEventListener('input', validateOnInput);
         }
     }
 
     function validateOnInput(e) {
         console.log(e.srcElement);
-        validateInput(e.srcElement.parentElement);
+        validateInput(e.srcElement.parentElement.parentElement);
     }
 
     buttonCancel.addEventListener('click', () => {
@@ -179,7 +189,7 @@ function createBookContainer(index) {
     const bookElement = document.createElement('div');
     bookElement.className = `book`;
     bookElement.setAttribute('data-index', index);
-    library.appendChild(bookElement)
+    library.insertBefore(bookElement, buttonAddNewBook)
 
     const bookContainer = document.createElement('div');
     bookContainer.className = `container`;
@@ -207,8 +217,10 @@ function createBookInfo(text, key, list, index) {
     if (key === 'read') {
         if (myLibrary[index][key] === true) {
             newText = document.createTextNode('✔');
+            bookInfoValue.style.color = 'green';
         } else {
             newText = document.createTextNode('✘');
+            bookInfoValue.style.color = 'red';
         }
         bookInfoValue.appendChild(newText);
     } else {
@@ -219,21 +231,27 @@ function createBookInfo(text, key, list, index) {
 }
 
 function createBookButtons(text, bookContainer) {
-    const textValues = ['Remove', 'Read']
+    const imageURL = ['./assets/delete_FILL0_wght400_GRAD0_opsz48.svg', './assets/mark_unread_chat_alt_FILL0_wght400_GRAD0_opsz48.svg']
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
     bookContainer.appendChild(buttonContainer);
-    for (i = 0; i < textValues.length; i++) {
+    for (i = 0; i < imageURL.length; i++) {
         const buttonWrapper = document.createElement('div');
+        buttonWrapper.className = 'wrapper';
         const button = document.createElement('button');
-        text = document.createTextNode(textValues[i]);
-        button.appendChild(text);
+        const image = document.createElement('img');
+        image.setAttribute('src', imageURL[i]);
+
+        button.appendChild(image);
         buttonContainer.appendChild(buttonWrapper);
         buttonWrapper.appendChild(button);
-        if (textValues[i] === 'Remove') {
+
+        if (imageURL[i].includes('delete')) {
             button.addEventListener('click', removeBook);
+            button.className = 'remove';
         } else {
             button.addEventListener('click', toggleReadStatus);
+            button.className = 'toggle-read-status';
         }
     }
 }
@@ -273,9 +291,11 @@ function toggleReadStatus() {
             if (myLibrary[i].read) {
                 readStatus = false;
                 readStatusElement.textContent = '✘';
+                readStatusElement.style.color = 'red';
             } else {
-                readStatusElement.textContent = '✔';
                 readStatus = true;
+                readStatusElement.textContent = '✔';
+                readStatusElement.style.color = 'green';
             }
             myLibrary[i].toggleReadStatus(readStatus);
         }
@@ -290,6 +310,8 @@ function clearInput() {
         formItem.querySelector('input').value = '';
         if (formItem.querySelector('.error')) {
             formItem.querySelector('.error').textContent = '';
+            formItem.querySelector('.validity').style.display = 'none';
+            formItem.querySelector('input').classList.remove('valid', 'invalid');
         }
     });
 }

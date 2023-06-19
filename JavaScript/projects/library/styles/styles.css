@@ -1,3 +1,6 @@
+/* create color scheme/pallete */
+/* https://coolors.co/fcbe59-fdeede-fcc3bb-43e5bc-fb7b79 */
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -6,7 +9,8 @@
 
 :root {
     --text-clor-primary: rgb(25, 31, 20);
-    --background-color-primary: #FDEEDE;
+    --background-color-primary: #fcfaf7;
+    /* #FDEEDE */
     --background-color-secondary: #fcc3bb;
     --background-color-accent-primary: #FB7B79;
     --background-color-books-default: #FCBE59;
@@ -30,7 +34,6 @@ header {
 #main-content {
     display: grid;
     padding: 0.5rem;
-    border: 2px solid rgb(32, 100, 217); /*for debugging*/
 }
 
 #modal {
@@ -61,23 +64,49 @@ header {
 }
 
 #modal > #form > .form-item:nth-child(6) {
-    grid-template-columns: repeat(2, max-content);
+    grid-template-columns: minmax(0, 1fr) min-content;
     gap: 1rem;
-    justify-content: center;
+    justify-self: center;
 }
 
-#modal > #form > .form-item > input {
+#modal > #form > .form-item:nth-child(6) > .container > input {
+    width: 2.75rem;
+}
+
+#modal > #form > .form-item > .container {
+    position: relative;
+}
+
+#modal > #form > .form-item > .container > span {
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+
+#modal > #form > .form-item > .container > span > img {
+    max-width: 24px;
+}
+
+#modal > #form > .form-item > .container > input {
     padding: 0.25rem;
     padding-left: 0.5rem;
     background-color: rgba(198, 198, 198, 0.25);
     border-radius: 0.30rem;
     border: none;
     border-bottom: 2px solid var(--text-clor-primary);
+    width: 100%;
 }
 
-#modal > #form > .form-item > input:focus {
-    padding: 0.5rem;
-    padding-left: 1rem;
+#modal > #form > .form-item > .container > input.valid {
+    border: 2px solid rgb(27, 220, 27);
+}
+
+#modal > #form > .form-item > .container > input.invalid {
+    border: 2px solid rgb(252, 71, 71);
+}
+
+#modal > #form > .form-item > .container > input:focus {
+    padding-left: 0.75rem;
     outline: none;
 }
 
@@ -88,6 +117,7 @@ header {
 #modal > #form > .button-container > button {
     background: none;
     border: none;
+    
 }
 
 #modal > #form > .button-container ~ .button-container {
@@ -104,15 +134,27 @@ header {
     cursor: pointer;
 }
 
+#modal > #form > .button-container > .cancel > img {
+    width: min(1.75rem, 10vw);
+}
+
+#modal > #form > .button-container > button:not(.cancel) > img {
+    width: min(3rem, 15vw);
+}
+
 #library {
-    border: 2px solid rgb(14, 105, 14); /*for debugging*/
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    grid-auto-rows: min-content;
+    align-content: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
 #library > .button-add-book {
-    justify-self: center;
-    align-self: center;
-    padding: 1rem;
+    display: grid;
+    background-color: hsl(0, 0%, 83%);
+    border-radius: 0.35rem;
 }
 
 #library > .button-add-book > .add-book {
@@ -121,34 +163,76 @@ header {
     background-color: var(--background-color-accent-primary);
     border: none;
     border-radius: 3rem;
+    justify-self: center;
+    align-self: center;
+    margin: 1rem 0rem;
 }
 
-#library > .button-add-book > .add-book:hover {
+#library > .button-add-book:hover {
+    filter: brightness(0.8);
+}
+
+#library > .button-add-book:hover,
+#library > .button-add-book > .add-book {
     cursor: pointer;
 }
 
-#library > .book {
-    border: 2px dashed rgb(75, 9, 113); /*for debugging*/
+#library > .button-add-book:active {
+    box-shadow: 0px 1px 0px 1px black;
 }
 
 #library > .book > .container {
     min-height: 100%;
     background-color: var(--background-color-books-default);
+    padding: 0.5rem;
+    display: grid;
+    grid-auto-rows: 1fr min-content;
+    border-radius: 0.35rem;
+}
+
+#library > .book > .container > :first-child {
+    margin-bottom: 1rem;
+    text-align: center;
+    align-self: center;
+}
+
+#library > .book > .container > ul {
+    padding: 0vw 2vw;
 }
 
 #library > .book > .container > ul > li {
-    border: 2px dashed rgb(180, 147, 56); /*for debugging*/
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    background-color: var(--background-color-secondary);
+    justify-items: center;
 }
 
 #library > .book > .container > ul > li > p {
-    border: 2px dashed rgb(64, 56, 180); /*for debugging*/
+    padding: 0.5rem;
+}
+
+#library > .book > .container > ul > li > p:first-child {
+    text-transform: capitalize;
 }
 
 #library > .book > .container > .button-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+}
+
+#library > .book > .container > .button-container > div > button  {
+    background: none;
+    border: none;
+}
+
+#library > .book > .container > .button-container > div > button > img {
+    width: min(3rem, 15vw);
+}
+
+#library > .book > .container > .button-container > div > button > img:hover {
+    cursor: pointer;
 }
 
 #library > .book > .container > .button-container > * > * {
@@ -159,9 +243,36 @@ footer {
     background-color: var(--background-color-secondary);
     display: grid;
     justify-items: center;
-    padding: 0.50rem;
+    padding: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {
+    #main-content {
+        padding: 2vw;
+    }
 
+    #modal {
+        min-width: 25vw;
+        min-height: 25vh;
+    }
+
+    #modal > #form {
+        grid-template-columns: repeat(auto-fit, minmax());
+    }
+
+    #modal > #form > *:first-child { 
+        grid-area: 1 / span 2;
+    }
+
+    #modal > #form > .form-item:nth-child(6) {
+        grid-area: 4 / span 2;
+    }
+
+    #modal > #form > .button-container ~ .button-container {
+        grid-area: 5 / span 2;
+    }
+
+    #library {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 25%));
+    }
 }
