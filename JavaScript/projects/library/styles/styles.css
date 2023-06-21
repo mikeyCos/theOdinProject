@@ -16,6 +16,7 @@ https://coolors.co/41d3bd-fffff2-791e94-de6449-407899
     --background-color-secondary: rgb(222, 100, 73);
     --background-color-accent-primary: rgb(251, 123, 121);
     --background-color-books-default: rgb(188, 162, 125);
+    --background-color-books-read: rgb(111 199 120);
     --font-family-primary: 'Titillium Web', sans-serif, Arial;
     --font-family-secondary: 'Pathway Extreme', sans-serif, Arial;
     --button-active-box-shadow: 0px 0px 5px 0px rgb(0, 0, 0);
@@ -40,10 +41,11 @@ header {
 }
 
 header > h1 {
-    justify-self: center;
+    text-align: center;
     font-family: var(--font-family-secondary);
     font-weight: 400;
     letter-spacing: 0.5rem;
+    font-size: clamp(1.5rem, 3vw, 4rem);
 }
 
 header > .nav {
@@ -162,6 +164,10 @@ header > .nav > ul > li > a > .github {
     color: red;
 }
 
+#modal > #form > .form-item > .isbn-search > a {
+    text-decoration: inherit;
+}
+
 #modal > #form > .button-container > button {
     display: grid;
     background: none;
@@ -208,6 +214,8 @@ header > .nav > ul > li > a > .github {
     display: grid;
     background-color: hsl(0, 0%, 83%);
     border-radius: var(--button-border-radius);
+    animation-name: nothingtosomething;
+    animation-duration: 250ms;
 }
 
 #library > .button-add-book > .add-book {
@@ -234,6 +242,11 @@ header > .nav > ul > li > a > .github {
     box-shadow: var(--button-active-box-shadow);
 }
 
+#library > .book {
+    animation-name: nothingtosomething;
+    animation-duration: 100ms;
+}
+
 #library > .book > .container {
     min-height: 100%;
     background-color: var(--background-color-books-default);
@@ -241,10 +254,12 @@ header > .nav > ul > li > a > .github {
     display: grid;
     grid-auto-rows: 1fr min-content;
     border-radius: var(--button-border-radius);
-    animation-name: nothingtosomething;
-    animation-duration: 100ms;
+    transition-duration: 500ms;
 }
 
+#library > .book > .read {
+    background-color: var(--background-color-books-read);
+}
 
 #library > .book > .container:hover {
     outline: 2px solid rgb(73, 73, 73);
@@ -357,6 +372,16 @@ footer {
 
     #library {
         grid-template-columns: repeat(auto-fit, minmax(300px, 25%));
+    }
+
+    #library > *:nth-child(2n+1) {
+        animation-name: slideinright;
+        animation-duration: 200ms;
+    }
+    
+    #library > *:nth-child(2n) {
+        animation-name: slideinleft;
+        animation-duration: 200ms;
     }
 }
 

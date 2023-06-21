@@ -8,10 +8,14 @@ const library = document.querySelector('#library');
 let books = library.children;
 
 buttonAddNewBook.addEventListener('click', () => {
+    modal.inert = true;
     modal.showModal();
+    modal.inert = false;
     modal.focus()
     validateForm('#form');
 })
+
+let counter = 0;
 
 const validateForm = formSelector => {
     const formElement = document.querySelector(formSelector);
@@ -69,7 +73,6 @@ const validateForm = formSelector => {
             const input = formItem.querySelector('input');
             const errorContainer = formItem.querySelector('.error');
             const validityIcon = validity.querySelector('img');  
-            // debugger
             for (const rule of validationRules) {
                 if(input.hasAttribute(rule.attribute) && !rule.isValid(input)) {
                     errorContainer.textContent = rule.errorMessage(input, label);
@@ -100,15 +103,14 @@ const validateForm = formSelector => {
 
     formElement.addEventListener('submit', e => {
         e.preventDefault();
-
         const formValidity = validateAllFormItems(formElement);
-
         if (formValidity) {
-            removeBlurEvents();
+            removeEvents();
             addBookToLibrary();
-            clearInput();
+            e.stopImmediatePropagation();
+            buttonAddNewBook.scrollIntoView();
         }
-    });
+    }, false);
 
     const validateAllFormItems = formToValidate => {
         const formItems = Array.from(formToValidate.querySelectorAll('.form-item'));
@@ -122,32 +124,34 @@ const validateForm = formSelector => {
 
     function validateOnBlur(e) {
         validateInput(e.target.parentElement.parentElement);
+        e.stopImmediatePropagation();
         if(!validateInput(e.srcElement.parentElement.parentElement)) {
             e.srcElement.addEventListener('input', validateOnInput);
         }
     }
 
     function validateOnInput(e) {
-        console.log(e.srcElement);
         validateInput(e.srcElement.parentElement.parentElement);
+        e.stopImmediatePropagation();
     }
 
     buttonCancel.addEventListener('click', () => {
         clearInput();
-        removeBlurEvents()
+        removeEvents()
     });
 
     modal.addEventListener('click', (e) => {
         if (e.target.tagName === 'DIALOG') {
-            removeBlurEvents();
+            removeEvents();
         }
     });
 
-    function removeBlurEvents() {
+    function removeEvents() {
         Array.from(formElement.elements).forEach(element => {
             element.removeEventListener('blur', validateOnBlur);
-            modal.close()
+            element.removeEventListener('input', validateOnInput);
         });
+        modal.close();
     }
 }
 
@@ -210,8 +214,8 @@ function displayBook(book) {
                 createBookHeader(newText, myLibrary[i][key], bookContainer);
                 bookContainer.appendChild(list);
             } else {
-                if(myLibrary[i].hasOwnProperty(key)) {
-                    createBookInfo(newText, key, list, i);
+                if (myLibrary[i].hasOwnProperty(key)) {
+                    createBookInfo(bookContainer, newText, key, list, i);
                 }
             }
             // console.log(key + ' : ' + myLibrary[i][key]); //for debugging
@@ -238,7 +242,7 @@ function createBookHeader(text, title, bookContainer) {
     bookContainer.appendChild(titleElement);
 }
 
-function createBookInfo(text, key, list, index) {
+function createBookInfo(bookContainer, text, key, list, index) {
     const listItem = document.createElement('li');
     list.appendChild(listItem);
 
@@ -253,6 +257,7 @@ function createBookInfo(text, key, list, index) {
         if (myLibrary[index][key] === true) {
             newText = document.createTextNode('✔');
             bookInfoValue.style.color = 'green';
+            bookContainer.classList.add('read');
         } else {
             newText = document.createTextNode('✘');
             bookInfoValue.style.color = 'red';
@@ -310,16 +315,9 @@ function updateDataIndex() {
     }
 }
 
-function toggleReadStatus() {
-    console.log(this.parentElement)
-    console.log(this.parentElement.parentElement)
-    console.log(this.parentElement.parentElement.parentElement)
-    console.log(this.parentElement.parentElement.parentElement.children[1])
-    console.log(this.parentElement.parentElement.parentElement.children[1].children[3])
-    console.log(this.parentElement.parentElement.parentElement.children[1].children[3].children[1])
-    
+function toggleReadStatus() {    
     let readStatusElement = this.parentElement.parentElement.parentElement.children[1].children[3].children[1];
-
+    let bookContainer = this.parentElement.parentElement.parentElement;
     for (let i = 0; i < myLibrary.length; i++) {
         if (this.parentElement.parentElement.parentElement.parentElement.dataset.index == i) {
             let readStatus;
@@ -327,10 +325,12 @@ function toggleReadStatus() {
                 readStatus = false;
                 readStatusElement.textContent = '✘';
                 readStatusElement.style.color = 'red';
+                bookContainer.classList.remove('read');
             } else {
                 readStatus = true;
                 readStatusElement.textContent = '✔';
                 readStatusElement.style.color = 'green';
+                bookContainer.classList.add('read');
             }
             myLibrary[i].toggleReadStatus(readStatus);
         }
@@ -347,6 +347,8 @@ function clearInput() {
             formItem.querySelector('.error').textContent = '';
             formItem.querySelector('.validity').style.display = 'none';
             formItem.querySelector('input').classList.remove('valid', 'invalid');
+        } else if (formItem.querySelector('#read')) {
+            formItem.querySelector('#read').checked = false;
         }
     });
 }
@@ -354,5 +356,3 @@ function clearInput() {
 // testing manual input
 const bookOne = new Book(`1984`, `George Orwell`, 328, 9780451524935, true);
 const bookTwo = new Book (`The Hitchhiker's Guide to the Galaxy`, `Douglas Adams`, 224, 9780345391803, false);
-
-console.log(document.activeElement);
