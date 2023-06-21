@@ -7,6 +7,7 @@ Library
 Live preview: (https://mikeycos.github.io/theOdinProject/JavaScript/projects/library/)
 ---
 ### Changelog
+20 JUN 2023 : Pattern/minlength/custommaxlength applied to validation rules, imported Google fonts `Titillium Web / Pathway Extreme`, ISBN input is recorded as a number and removes dashes, changed color palette, for loops using `books.length` are subtracted by 1 and index starting at 0, link to Github repository included on header, and applied font properties to form and book containers.  
 19 JUN 2023 : Removed borders for debugging, library children elements max size is 300px on mobile and 25% on screen sizes equal/above 768px wide, book elements now append before the `button-add-book` node, and added `fill` attribute for each validity icon in their respective svg fill.  
 18 JUN 2023 : `createBookButtons` function now creates and appends an image tag, input validity styles are now altered by assigning a class name, and increased column size for books at media query breakpoint.  
 17 JUN 2023 : Wrapped input elements inside a container, implemented a span element with class name `validity` that changes icon based on validity check, and updated querySelectors for validity event listeners.  

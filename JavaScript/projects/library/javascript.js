@@ -18,8 +18,40 @@ const validateForm = formSelector => {
 
     const validationRules = [
         {
+            attribute: 'minlength',
+            isValid: input => {
+                return input.value && input.value.length >= parseInt(input.minLength, 10);
+            },
+            errorMessage: (input, label) => {
+                return `${label.textContent} needs to be at least ${input.minLength} characters long.`;
+            }
+        },
+        {
+            attribute: 'customMaxLength',
+            isValid: input => {
+                return input.value && input.value.length <= parseInt(input.getAttribute('customMaxLength'), 10);
+            },
+            errorMessage: (input, label) => {
+                return `${label.textContent} needs to be less than ${input.getAttribute('customMaxLength')} characters long.`;
+            }
+        },
+        {
+            attribute: 'pattern',
+            isValid: (input) =>  {
+                const patternRegex = new RegExp(input.pattern);
+                return patternRegex.test(input.value);
+            },
+            errorMessage: (input, label) => {
+                if (input.id === 'isbn') {
+                    return `Not a valid value for ${label.textContent}. (E.g. 978-1-86197-876-9)`;
+                } else {
+                    return `Not a valid value for ${label.textContent}.`;
+                }
+            }
+        },
+        {
             attribute: 'required',
-            isValid: (input) => {
+            isValid: input => {
                 return input.value.trim() !== '';
             },
             errorMessage: (input, label) => {
@@ -37,7 +69,7 @@ const validateForm = formSelector => {
             const input = formItem.querySelector('input');
             const errorContainer = formItem.querySelector('.error');
             const validityIcon = validity.querySelector('img');  
-
+            // debugger
             for (const rule of validationRules) {
                 if(input.hasAttribute(rule.attribute) && !rule.isValid(input)) {
                     errorContainer.textContent = rule.errorMessage(input, label);
@@ -140,9 +172,12 @@ function addBookToLibrary() {
     const book = new Book()
     for (let input of formInputs) {
         for (let prop in book) {
-            if (input.getAttribute('id') === prop) {
+            if (input.id === prop) {
                 if (input.getAttribute('type') !== 'checkbox') {
                     book[prop] = input.value
+                    if (input.id === 'isbn') {
+                        book[prop] = parseInt(input.value.replace(/-/g, ''), 10);
+                    }
                 } else if (input.getAttribute('type') === 'checkbox') {
                     if (input.checked) {
                         book[prop] = true;
@@ -160,7 +195,7 @@ function addBookToLibrary() {
 
 function displayBook(book) {
     outer: for (let i = 0; i < myLibrary.length; i++) {
-        for (let j = 1; j < books.length; j++) {
+        for (let j = 0; j < books.length - 1; j++) {
             //checks if a book in myLibrary[] currently exists on the DOM
             if (books[j].dataset.index == i) {
                 continue outer;
@@ -270,7 +305,7 @@ function removeBook() {
 // updates books' attributes data-index
 function updateDataIndex() {
     let newIndex = 0;
-    for (let j = 1; j < books.length; j++) {
+    for (let j = 0; j < books.length - 1; j++) {
         books[j].dataset.index = newIndex++;
     }
 }

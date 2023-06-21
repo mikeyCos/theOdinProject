@@ -11,6 +11,15 @@
 <body>
     <header>
         <h1>The Library</h1>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="https://github.com/mikeyCos/theOdinProject/tree/main/JavaScript/projects/library">
+                        <img class="github" src="./assets/github-mark-white.svg" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
     </header>
     <div id="main-content">
         <div id="library">
@@ -27,7 +36,7 @@
                 <div class="form-item">
                     <label for="title">Title</label>
                     <div class="container">
-                        <input id="title" name="title" type="text" placeholder="Book title" minlength="1" maxlength="200" required>
+                        <input id="title" name="title" type="text" placeholder="Book title" minlength="1" customMaxLength="200" required>
                         <span class="validity"><img src="#" alt=""></span>
                     </div>
                     <span class="error"></span>
@@ -35,7 +44,7 @@
                 <div class="form-item">
                     <label for="author">Author</label>
                     <div class="container">
-                        <input id="author" name="author" type="text" placeholder="Author" maxlength="70" required>
+                        <input id="author" name="author" type="text" placeholder="Author's name" pattern="^[A-Za-z ,.'-]+$" minlength="2" customMaxLength="70" required>
                         <span class="validity"><img src="#" alt=""></span>
                     </div>
                     <span class="error"></span>
@@ -43,15 +52,15 @@
                 <div class="form-item">
                     <label for="pages">Pages</label>
                     <div class="container">
-                        <input id="pages" name="pages" type="number" placeholder="Number of pages" maxlength="21450" required>
+                        <input id="pages" name="pages" type="number" placeholder="Enter a whole number" pattern="^[\d,]+$" customMaxLength="21450" required>
                         <span class="validity"><img src="#" alt=""></span>
                     </div>
                     <span class="error"></span>
                 </div>
                 <div class="form-item">
-                    <label for="isbn">ISBN</label>
+                    <label for="isbn">ISBN-13</label>
                     <div class="container">
-                        <input id="isbn" name="isbn" type="text" placeholder="ISBN" required>
+                        <input id="isbn" name="isbn" type="text" placeholder="E.g. 978-1-86197-876-9" pattern="^(\d){3}\-?(\d){1}\-?(\d){5}\-?(\d){3}\-?(\d){1}$" required>
                         <span class="validity"><img src="#" alt=""></span>
                     </div>
                     <span class="error"></span>

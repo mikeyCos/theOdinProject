@@ -1,5 +1,8 @@
-/* create color scheme/pallete */
-/* https://coolors.co/fcbe59-fdeede-fcc3bb-43e5bc-fb7b79 */
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Titillium+Web:wght@200;300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Extreme:wght@100;200;300;400;500;600;700;800;900&display=swap');/* create color scheme/pallete */
+/*
+https://coolors.co/41d3bd-fffff2-791e94-de6449-407899
+*/
 
 *, *::before, *::after {
     margin: 0;
@@ -9,12 +12,14 @@
 
 :root {
     --text-clor-primary: rgb(25, 31, 20);
-    --background-color-primary: #fcfaf7;
-    /* #FDEEDE */
-    --background-color-secondary: #fcc3bb;
-    --background-color-accent-primary: #FB7B79;
-    --background-color-books-default: #FCBE59;
-    --background-color-books-read: #3E5BC;
+    --background-color-primary: rgb(255, 255, 242);
+    --background-color-secondary: rgb(222, 100, 73);
+    --background-color-accent-primary: rgb(251, 123, 121);
+    --background-color-books-default: rgb(188, 162, 125);
+    --font-family-primary: 'Titillium Web', sans-serif, Arial;
+    --font-family-secondary: 'Pathway Extreme', sans-serif, Arial;
+    --button-active-box-shadow: 0px 0px 5px 0px rgb(0, 0, 0);
+    --button-border-radius: 0.35rem;
 }
 
 body {
@@ -27,18 +32,47 @@ body {
 header {
     background-color: var(--background-color-secondary);
     display: grid;
-    justify-content: center;
-    padding: 1.25rem;
+    padding: 2.25rem;
+    box-shadow: 2px 2px 2px 1px hsl(0, 0%, 60%);
+    animation-name: slideinright;
+    animation-duration: 500ms;
+    position: relative;
+}
+
+header > h1 {
+    justify-self: center;
+    font-family: var(--font-family-secondary);
+    font-weight: 400;
+    letter-spacing: 0.5rem;
+}
+
+header > .nav {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+header > .nav > ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    justify-content: end;
+    align-items: center;
+    padding: 0.15rem;
+}
+
+header > .nav > ul > li > a > .github {
+    max-width: 24px;
 }
 
 #main-content {
     display: grid;
-    padding: 0.5rem;
+    padding: 2rem;
 }
 
 #modal {
     margin: auto;
-    min-width: 50vw;
+    min-width: 70vw;
     min-height: 50vh;
     box-shadow: 0px 2px 8px 1px rgb(0, 0, 0);
     border: none;
@@ -57,16 +91,24 @@ header {
     padding: 1rem;
     gap: 1rem;
     background-color: var(--background-color-primary);
+    font-family: var(--font-family-primary)
 }
 
 #modal > #form > .form-item {
     display: grid;
 }
 
+#modal > #form > .form-item > label {
+    font-size: clamp(1rem, 0.744rem + 2.953vw, 1.5rem);
+}
+
+#modal > #form > *:first-child {
+    font-size: clamp(1.25rem, 0.744rem + 2.953vw, 2.5rem);
+}
+
 #modal > #form > .form-item:nth-child(6) {
-    grid-template-columns: minmax(0, 1fr) min-content;
+    grid-template-columns: minmax(0, 1fr) 10%;
     gap: 1rem;
-    justify-self: center;
 }
 
 #modal > #form > .form-item:nth-child(6) > .container > input {
@@ -80,11 +122,15 @@ header {
 #modal > #form > .form-item > .container > span {
     position: absolute;
     top: 0;
-    right: 15px;
+    right: 24px;
+    min-height: 100%;
+    align-items: center;
 }
 
 #modal > #form > .form-item > .container > span > img {
-    max-width: 24px;
+    max-width: 18px;
+    border-radius: 1rem;
+    background-color: rgb(210, 210, 210);
 }
 
 #modal > #form > .form-item > .container > input {
@@ -95,6 +141,8 @@ header {
     border: none;
     border-bottom: 2px solid var(--text-clor-primary);
     width: 100%;
+    font-size: clamp(1rem, 0.744rem + 1.953vw, 1.25rem);
+    font-family: var(--font-family-secondary);
 }
 
 #modal > #form > .form-item > .container > input.valid {
@@ -115,14 +163,19 @@ header {
 }
 
 #modal > #form > .button-container > button {
+    display: grid;
     background: none;
     border: none;
-    
+    border-radius: var(--button-border-radius);
+}
+#modal > #form > .button-container > button:active {
+    box-shadow: var(--button-active-box-shadow);
 }
 
 #modal > #form > .button-container ~ .button-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
 }
 
 #modal > #form > .button-container:not(.button-container ~ .button-container) {
@@ -154,7 +207,7 @@ header {
 #library > .button-add-book {
     display: grid;
     background-color: hsl(0, 0%, 83%);
-    border-radius: 0.35rem;
+    border-radius: var(--button-border-radius);
 }
 
 #library > .button-add-book > .add-book {
@@ -178,7 +231,7 @@ header {
 }
 
 #library > .button-add-book:active {
-    box-shadow: 0px 1px 0px 1px black;
+    box-shadow: var(--button-active-box-shadow);
 }
 
 #library > .book > .container {
@@ -187,13 +240,22 @@ header {
     padding: 0.5rem;
     display: grid;
     grid-auto-rows: 1fr min-content;
-    border-radius: 0.35rem;
+    border-radius: var(--button-border-radius);
+    animation-name: nothingtosomething;
+    animation-duration: 100ms;
+}
+
+
+#library > .book > .container:hover {
+    outline: 2px solid rgb(73, 73, 73);
 }
 
 #library > .book > .container > :first-child {
     margin-bottom: 1rem;
     text-align: center;
     align-self: center;
+    font-family: var(--font-family-primary);
+    font-weight: 700;
 }
 
 #library > .book > .container > ul {
@@ -205,26 +267,40 @@ header {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));;
     align-items: center;
     margin-bottom: 0.5rem;
-    background-color: var(--background-color-secondary);
+    background-color: var(--background-color-primary);
     justify-items: center;
+    font-family: var(--font-family-primary);
+    border-radius: 0.25rem;
+    padding: 0rem 0.25rem;
+    box-shadow: 0px 2px #FFFFF2;
 }
 
 #library > .book > .container > ul > li > p {
     padding: 0.5rem;
+    text-align: center;
 }
 
 #library > .book > .container > ul > li > p:first-child {
-    text-transform: capitalize;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 #library > .book > .container > .button-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
 }
 
-#library > .book > .container > .button-container > div > button  {
+#library > .book > .container > .button-container > div > button {
+    display: grid;
     background: none;
     border: none;
+    border-radius: var(--button-border-radius);
+}
+
+#library > .book > .container > .button-container > div > button:active {
+    box-shadow: var(--button-active-box-shadow);
 }
 
 #library > .book > .container > .button-container > div > button > img {
@@ -244,7 +320,14 @@ footer {
     display: grid;
     justify-items: center;
     padding: 0.5rem;
+    font-family: var(--font-family-secondary);
+    font-weight: 200;
+    box-shadow: 2px 2px 2px 3px hsl(0, 0%, 60%);
+    animation-name: slideinleft;
+    animation-delay: 100ms;
+    animation-duration: 400ms;
 }
+
 
 @media screen and (min-width: 768px) {
     #main-content {
@@ -274,5 +357,35 @@ footer {
 
     #library {
         grid-template-columns: repeat(auto-fit, minmax(300px, 25%));
+    }
+}
+
+@keyframes slideinright {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slideinleft {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes nothingtosomething {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }
