@@ -98,6 +98,7 @@ header > .nav > ul > li > a > .github {
 
 #modal > #form > .form-item {
     display: grid;
+    align-content: baseline;
 }
 
 #modal > #form > .form-item > label {
@@ -352,10 +353,6 @@ footer {
     #modal {
         min-width: 25vw;
         min-height: 25vh;
-    }
-
-    #modal > #form {
-        grid-template-columns: repeat(auto-fit, minmax());
     }
 
     #modal > #form > *:first-child { 
