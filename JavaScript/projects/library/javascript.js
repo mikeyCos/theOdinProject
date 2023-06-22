@@ -193,11 +193,11 @@ function addBookToLibrary() {
         }
     }
 
-    displayBook(book);
+    displayBook();
     clearInput();
 }
 
-function displayBook(book) {
+function displayBook() {
     outer: for (let i = 0; i < myLibrary.length; i++) {
         for (let j = 0; j < books.length - 1; j++) {
             //checks if a book in myLibrary[] currently exists on the DOM
@@ -356,3 +356,4 @@ function clearInput() {
 // testing manual input
 const bookOne = new Book(`1984`, `George Orwell`, 328, 9780451524935, true);
 const bookTwo = new Book (`The Hitchhiker's Guide to the Galaxy`, `Douglas Adams`, 224, 9780345391803, false);
+displayBook();
