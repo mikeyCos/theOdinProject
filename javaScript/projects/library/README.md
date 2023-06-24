@@ -6,7 +6,7 @@ Library
 3. ISBN look up inside form.
 4. Focus on the last item created.
 ---
-Live preview: (https://mikeycos.github.io/theOdinProject/JavaScript/projects/library/)
+Live preview: (https://mikeycos.github.io/theOdinProject/javaScript/projects/library/)
 ---
 # Bugs
 1. Sometimes, when the form is submitted and reopened the first/last input is validated. `e.stopImmediatePropagation();` Attached to multiple event handlers.

@@ -297,7 +297,6 @@ function createBookButtons(text, bookContainer) {
 }
 
 function removeBook() {
-    console.log(this.parentElement.parentElement.parentElement)
     for (let i = 0; i < myLibrary.length; i++) {
         if (this.parentElement.parentElement.parentElement.parentElement.dataset.index == i) {
             myLibrary.splice(i, 1);

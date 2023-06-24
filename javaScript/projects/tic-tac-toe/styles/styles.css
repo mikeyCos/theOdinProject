@@ -1,0 +1,16 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --background-color-primary: rgb(236, 236, 236);
+    --background-color-secondary: rgb(211, 101, 44);
+}
+
+body {
+    background-color: var(--background-color-primary);
+}

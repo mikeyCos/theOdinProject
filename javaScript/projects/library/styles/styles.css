@@ -280,7 +280,7 @@ header > .nav > ul > li > a > .github {
 
 #library > .book > .container > ul > li {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));;
     align-items: center;
     margin-bottom: 0.5rem;
     background-color: var(--background-color-primary);
