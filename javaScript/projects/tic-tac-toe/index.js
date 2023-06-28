@@ -1,59 +1,77 @@
 // module pattern
 const ticTacToe = (function() {
-    //cache dom
-    const _board = document.querySelector('#gameboard');
+    const gameboard = {
+        //about spread syntax
+        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+        gameboard: [...Array(3)].map(e => Array(3).fill(null)),
+        // gameboard: [
+        //     ['X', 'O', 'X'],
+        //     ['O', 'X', 'X'],
+        //     ['O', 'X', 'O'],
+        // ],
+        init: function() {
+            this.cacheDom();
+            this.bindEvents();
+        },
+        cacheDom: function() {
+            this.main = document.querySelector('#main');
+            this.boardElement = this.main.querySelectorAll('#gameboard ul li')
+        },
+        render: function() {
+            this.gameboard.map((e) => {
+                e.map((x, index, element) => {
+                    console.log(x)
+                })
+            })
 
-    let _gameboard = new Array(9);
+            console.log(this.gameboard.flat(1))
+            //this works if the array is full
+            this.gameboard.flat(1).map((e, index, element) => {
+                this.boardElement[index].textContent = this.gameboard.flat(1)[index];
+            })
 
-    //renders empty board
-    function _render(index, marker) {
-        if (!index) {
-            const ul = document.createElement('ul');
-            for (i = 0; i < _gameboard.length; i++) {
-                const li = document.createElement('li');
-                ul.appendChild(li);
+            // this.gameboard.map(e => e.map(x => console.log(`Test: ${e.indexOf(x)}`), console.log(e.length)))
+        },
+        bindEvents: function() {
+            //why does this work?
+            this.markboard = this.markboard.bind(this);
+            this.boardElement.forEach(li => li.addEventListener('click', this.markboard));
+        },
+        counter: 0,
+        markboard: function(e) {
+            let marker;
+            console.log(this.counter)
+            if (this.counter % 2 === 0) {
+                marker = 'X';
+            } else {
+                marker = 'O';
             }
-            _board.appendChild(ul);
-        } else {
-            // _spaces[index].textContent = marker;
-            const text = document.createTextNode(marker);
-            _spaces[index].appendChild(text);
+            
+            this.counter++;
+            // if e.target textContent is empty
+                //update this.gameboard and remove event listener
+            if (!e.target.textContent) {
+                const elementIndex = Array.from(this.boardElement).indexOf(e.target);
+                const row = e.target.dataset.row;
+                const col = e.target.dataset.col;
+                this.gameboard[row][col] = marker;
 
-        }
-    }
+                console.log(this.gameboard[row])
+                console.log(`row: ${row}, col: ${col}`)
+                console.log(`elementIndex: ${elementIndex}`)
+                console.log(this.boardElement[elementIndex].textContent);
 
-    _render();
-    //event listeners
-    const _spaces = _board.querySelectorAll('li');
-    _spaces.forEach(list => list.addEventListener('click', _markBoardSpace));
+                e.target.removeEventListener('click', this.markboard);
+                this.render()
+            }
+        },
+        checkGameStatus: function() {
+            
+        },
+    };
 
-    let counter = 0;
-    function _markBoardSpace(e) {
-        let marker;
-        if (counter % 2 === 0) {
-            marker = 'X';
-        } else {
-            marker = 'O';
-        }
-
-        //gets index of clicked elememt on the dom
-        const elementIndex = Array.from(_spaces).indexOf(e.target);
-        //gets array item at the index corresponding to the index of the element on the dom
-        const gameboardItem = _gameboard[elementIndex];
-        //if _gameboard[index of element] is empty
-        if (!gameboardItem) {
-            // update _gameboard[] and remove event listener
-            _gameboard[elementIndex] = marker;
-            _render(elementIndex, marker);
-            e.target.removeEventListener('click', _markBoardSpace);
-            console.log(`turn: ${counter++}`)
-        }
-    }
-
-    function _checkGameStatus() {
-
-    }
-
+    gameboard.init();
+    gameboard.render();
 })();
 
 // factory function
