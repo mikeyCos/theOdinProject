@@ -4,11 +4,6 @@ const ticTacToe = (function() {
         //about spread syntax
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
         gameboard: [...Array(3)].map(e => Array(3).fill(null)),
-        // gameboard: [
-        //     ['X', 'O', 'X'],
-        //     ['O', 'X', 'X'],
-        //     ['O', 'X', 'O'],
-        // ],
         init: function() {
             this.cacheDom();
             this.bindEvents();
@@ -16,21 +11,24 @@ const ticTacToe = (function() {
         cacheDom: function() {
             this.main = document.querySelector('#main');
             this.boardElement = this.main.querySelectorAll('#gameboard ul li')
+            this.buttonReset = this.main.querySelector('.reset button');
         },
         render: function() {
-            this.gameboard.map((e) => {
-                e.map((x, index, element) => {
-                    console.log(x)
-                })
-            })
+            // this.gameboard.map((e) => {
+            //     e.map((x, index, element) => {
+            //         console.log(x)
+            //     })
+            // });
+
+            [...this.gameboard].map((e) => {
+                console.log({...e})
+            });
 
             console.log(this.gameboard.flat(1))
             //this works if the array is full
             this.gameboard.flat(1).map((e, index, element) => {
                 this.boardElement[index].textContent = this.gameboard.flat(1)[index];
             })
-
-            // this.gameboard.map(e => e.map(x => console.log(`Test: ${e.indexOf(x)}`), console.log(e.length)))
         },
         bindEvents: function() {
             //why does this work?
@@ -41,11 +39,7 @@ const ticTacToe = (function() {
         markboard: function(e) {
             let marker;
             console.log(this.counter)
-            if (this.counter % 2 === 0) {
-                marker = 'X';
-            } else {
-                marker = 'O';
-            }
+            this.counter % 2 === 0 ? marker = 'X' : marker = 'O';
             
             this.counter++;
             // if e.target textContent is empty
@@ -63,11 +57,46 @@ const ticTacToe = (function() {
 
                 e.target.removeEventListener('click', this.markboard);
                 this.render()
+                this.checkGameStatus()
             }
         },
         checkGameStatus: function() {
+            //horizontal
+            // this.gameboard.map((e) => { 
+            //     e.some((item, i, arr) => {
+            //         if (item !== null && item === arr[i-2] && item === arr[i-1]) {
+            //             console.log(true)
+            //         }
+            //     })
+            // });
+
+            //vertical
+            // this.gameboard.map((rows, index) => {
+            //     rows.some((item, i, arr) => {
+            //         if (i > 1 && this.gameboard[i][index] !== null && this.gameboard[i][index] === this.gameboard[i-2][index] && this.gameboard[i][index] === this.gameboard[i-1][index]) {
+            //             console.log(true)
+            //         }
+            //     })
+            // });
             
+            //diagonal
+            //top left to bottom right
+            this.gameboard.map((rows, index) => {
+                // console.log(rows[index])
+                //top right 
+                // console.log(rows[index+2])
+                //bottom left
+                // console.log(rows[index-2])
+
+                // console.log(this.gameboard[index])
+                // [...Array(rows[index])]
+                // console.log([...Array(rows[index])])
+            });
         },
+        reset: function() {
+            //empty the gameboard[]
+        },
+
     };
 
     gameboard.init();
@@ -78,3 +107,4 @@ const ticTacToe = (function() {
 const Player = (score, maker) => {
 
 }
+
