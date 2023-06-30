@@ -14,19 +14,13 @@ const ticTacToe = (function() {
             this.buttonReset = this.main.querySelector('.reset button');
         },
         render: function() {
-            // this.gameboard.map((e) => {
-            //     e.map((x, index, element) => {
-            //         console.log(x)
-            //     })
-            // });
-
             [...this.gameboard].map((e) => {
                 console.log({...e})
             });
 
             console.log(this.gameboard.flat(1))
             //this works if the array is full
-            this.gameboard.flat(1).map((e, index, element) => {
+            this.gameboard.flat(1).forEach((e, index, element) => {
                 this.boardElement[index].textContent = this.gameboard.flat(1)[index];
             })
         },
@@ -50,26 +44,57 @@ const ticTacToe = (function() {
                 const col = e.target.dataset.col;
                 this.gameboard[row][col] = marker;
 
-                console.log(this.gameboard[row])
-                console.log(`row: ${row}, col: ${col}`)
-                console.log(`elementIndex: ${elementIndex}`)
-                console.log(this.boardElement[elementIndex].textContent);
-
                 e.target.removeEventListener('click', this.markboard);
                 this.render()
-                this.checkGameStatus()
+                console.log(this.checkGameStatus())
             }
         },
         checkGameStatus: function() {
+            let gameOver;
+            this.gameboard.map((rows, index) => { 
+                rows.some((item, i, arr) => {
+                    if (item !== null && item === arr[i-2] && item === arr[i-1]) {
+                        //horizontal check
+                        gameOver = true;
+                    } else if (i > 1 && 
+                        this.gameboard[i][index] !== null &&
+                        this.gameboard[i][index] === this.gameboard[i-2][index] &&
+                        this.gameboard[i][index] === this.gameboard[i-1][index]) {
+                        //vertical check
+                        gameOver = true;
+                    } else if (index > 1 && i > 1 && (
+                        (this.gameboard[i][index] !== null && 
+                        this.gameboard[i-1][index-1] === this.gameboard[i][index] &&
+                        this.gameboard[i-2][index-2] === this.gameboard[i][index]) 
+                        ||
+                        (this.gameboard[i][index-2] !== null &&
+                        this.gameboard[i-2][index] === this.gameboard[i][index-2] &&
+                        this.gameboard[i-1][index-1] === this.gameboard[i][index-2]))) {
+                        //diagonal check
+                        gameOver = true;
+                    }
+                })
+            });
+            
+            if (gameOver || this.gameboard.flat(1).every(e => e !== null)) {
+                if (gameOver) {
+                    console.log(`Game is over`)
+                } else {
+                    console.log('Draw')
+                }
+                this.boardElement.forEach(li => li.removeEventListener('click', this.markboard));
+                return true;
+            }
+
             //horizontal
-            // this.gameboard.map((e) => { 
-            //     e.some((item, i, arr) => {
+            // this.gameboard.map((rows, index) => { 
+            //     rows.some((item, i, arr) => {
             //         if (item !== null && item === arr[i-2] && item === arr[i-1]) {
             //             console.log(true)
             //         }
             //     })
             // });
-
+            
             //vertical
             // this.gameboard.map((rows, index) => {
             //     rows.some((item, i, arr) => {
@@ -81,17 +106,32 @@ const ticTacToe = (function() {
             
             //diagonal
             //top left to bottom right
-            this.gameboard.map((rows, index) => {
-                // console.log(rows[index])
-                //top right 
-                // console.log(rows[index+2])
-                //bottom left
-                // console.log(rows[index-2])
+            // this.gameboard.map((rows, index) => {
+            //     //top right 
+            //     // console.log(rows[index+2])
+            //     //bottom left
+            //     // console.log(rows[index-2])
+            //     rows.some((item, i, arr) => {
+            //         if (index > 1 && i > 1 && ((
+            //             this.gameboard[i][index] !== null && 
+            //             this.gameboard[i-1][index-1] === this.gameboard[i][index] &&
+            //             this.gameboard[i-2][index-2] === this.gameboard[i][index]
+            //         ) || (
+            //             this.gameboard[i][index-2] !== null &&
+            //             this.gameboard[i-2][index] === this.gameboard[i][index-2] &&
+            //             this.gameboard[i-1][index-1] === this.gameboard[i][index-2]
+            //         ))) {
+            //             console.log(true)
+            //             // console.log(this.gameboard[i-1][index-1])
+            //             // console.log(this.gameboard[i-2][index-2])
+            //             // console.log(this.gameboard[i][index])
 
-                // console.log(this.gameboard[index])
-                // [...Array(rows[index])]
-                // console.log([...Array(rows[index])])
-            });
+            //             // console.log(this.gameboard[i-2][index])
+            //             // console.log(this.gameboard[i-1][index-1])
+            //             // console.log(this.gameboard[i][index-2])
+            //         }  
+            //     })
+            // });
         },
         reset: function() {
             //empty the gameboard[]
@@ -104,7 +144,14 @@ const ticTacToe = (function() {
 })();
 
 // factory function
-const Player = (score, maker) => {
+const player = (name, score, marker) => {
+    const win = () => {
+        console.log(`${name} has won!`)
+    }
+    const getName = () => name;
+    const getScore = () => score;
+    const getMarker = () => marker;
 
+    return {getName, getScore, getMarker, win};
 }
 
