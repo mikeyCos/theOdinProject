@@ -1,12 +1,33 @@
 // module pattern
 const ticTacToe = (function() {
+    //factory
+    const player = (name, marker) => {
+        let score = 0;
+        const getName = () => name;
+        const getMarker = () => marker;
+        const win = () => {
+            console.log(`${name} has won!`)
+        }
+        const updateScore = (x) => {
+            return !x ? score += 1 : score = 0;
+        }
+        return {updateScore, getName, getMarker, win};
+    }
+
+    const players = [
+        player('Jack', 'X'),
+        player('Pam', 'O'),
+    ]
+
     const gameboard = {
         //about spread syntax
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
         gameboard: [...Array(3)].map(e => Array(3).fill(null)),
+        activePlayer: players[0],
         init: function() {
             this.cacheDom();
-            this.bindEvents();
+            this.bindButtonEvents();
+            this.bindBoardEvents();
         },
         cacheDom: function() {
             this.main = document.querySelector('#main');
@@ -14,6 +35,7 @@ const ticTacToe = (function() {
             this.buttonReset = this.main.querySelector('.reset button');
         },
         render: function() {
+            //for debugging
             [...this.gameboard].map((e) => {
                 console.log({...e})
             });
@@ -24,30 +46,33 @@ const ticTacToe = (function() {
                 this.boardElement[index].textContent = this.gameboard.flat(1)[index];
             })
         },
-        bindEvents: function() {
+        bindBoardEvents: function() {
             //why does this work?
-            this.markboard = this.markboard.bind(this);
-            this.boardElement.forEach(li => li.addEventListener('click', this.markboard));
+            this.markBoard = this.markBoard.bind(this);
+            this.boardElement.forEach(li => li.addEventListener('click', this.markBoard));
         },
-        counter: 0,
-        markboard: function(e) {
-            let marker;
-            console.log(this.counter)
-            this.counter % 2 === 0 ? marker = 'X' : marker = 'O';
-            
-            this.counter++;
+        bindButtonEvents: function() {
+            this.reset = this.reset.bind(this);
+            this.buttonReset.addEventListener('click', this.reset)
+        },
+        markBoard: function(e) {
             // if e.target textContent is empty
                 //update this.gameboard and remove event listener
             if (!e.target.textContent) {
                 const elementIndex = Array.from(this.boardElement).indexOf(e.target);
                 const row = e.target.dataset.row;
                 const col = e.target.dataset.col;
-                this.gameboard[row][col] = marker;
+                this.gameboard[row][col] = this.activePlayer.getMarker();
 
-                e.target.removeEventListener('click', this.markboard);
+                e.target.removeEventListener('click', this.markBoard);
                 this.render()
+                this.switchTurns();
                 console.log(this.checkGameStatus())
             }
+        },
+        switchTurns: function() {
+            //'X' goes first, then 'O'
+            this.activePlayer = this.activePlayer === players[0] ? players[1] : players[0];
         },
         checkGameStatus: function() {
             let gameOver;
@@ -75,83 +100,32 @@ const ticTacToe = (function() {
                     }
                 })
             });
-            
+
             if (gameOver || this.gameboard.flat(1).every(e => e !== null)) {
                 if (gameOver) {
                     console.log(`Game is over`)
                 } else {
                     console.log('Draw')
                 }
-                this.boardElement.forEach(li => li.removeEventListener('click', this.markboard));
+                //need to display an eement that congratulates the winning player
+                this.boardElement.forEach(li => li.removeEventListener('click', this.markBoard));
+                this.reset()
                 return true;
             }
-
-            //horizontal
-            // this.gameboard.map((rows, index) => { 
-            //     rows.some((item, i, arr) => {
-            //         if (item !== null && item === arr[i-2] && item === arr[i-1]) {
-            //             console.log(true)
-            //         }
-            //     })
-            // });
-            
-            //vertical
-            // this.gameboard.map((rows, index) => {
-            //     rows.some((item, i, arr) => {
-            //         if (i > 1 && this.gameboard[i][index] !== null && this.gameboard[i][index] === this.gameboard[i-2][index] && this.gameboard[i][index] === this.gameboard[i-1][index]) {
-            //             console.log(true)
-            //         }
-            //     })
-            // });
-            
-            //diagonal
-            //top left to bottom right
-            // this.gameboard.map((rows, index) => {
-            //     //top right 
-            //     // console.log(rows[index+2])
-            //     //bottom left
-            //     // console.log(rows[index-2])
-            //     rows.some((item, i, arr) => {
-            //         if (index > 1 && i > 1 && ((
-            //             this.gameboard[i][index] !== null && 
-            //             this.gameboard[i-1][index-1] === this.gameboard[i][index] &&
-            //             this.gameboard[i-2][index-2] === this.gameboard[i][index]
-            //         ) || (
-            //             this.gameboard[i][index-2] !== null &&
-            //             this.gameboard[i-2][index] === this.gameboard[i][index-2] &&
-            //             this.gameboard[i-1][index-1] === this.gameboard[i][index-2]
-            //         ))) {
-            //             console.log(true)
-            //             // console.log(this.gameboard[i-1][index-1])
-            //             // console.log(this.gameboard[i-2][index-2])
-            //             // console.log(this.gameboard[i][index])
-
-            //             // console.log(this.gameboard[i-2][index])
-            //             // console.log(this.gameboard[i-1][index-1])
-            //             // console.log(this.gameboard[i][index-2])
-            //         }  
-            //     })
-            // });
         },
         reset: function() {
-            //empty the gameboard[]
+            //if user clicks winning container OR restart button
+                //empty gameboard[]
+                //set activePlayer to players[0]
+            this.gameboard = [...Array(3)].map(e => Array(3).fill(null))
+            this.activePlayer = players[0];
+            this.render()
+            this.bindBoardEvents();
         },
-
     };
 
     gameboard.init();
     gameboard.render();
 })();
 
-// factory function
-const player = (name, score, marker) => {
-    const win = () => {
-        console.log(`${name} has won!`)
-    }
-    const getName = () => name;
-    const getScore = () => score;
-    const getMarker = () => marker;
-
-    return {getName, getScore, getMarker, win};
-}
-
+const buttonReset = document.querySelector('#reset')
