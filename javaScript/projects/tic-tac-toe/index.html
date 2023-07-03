@@ -15,12 +15,12 @@
     </header>
 
     <div id="main">
-        <div class="button-wrapper">
+        <div class="button-wrapper select">
             <!-- select player vs player
             or player vs computer -->
             <!-- computer difficulty selection? -->
             <label for=""></label>
-            <select>
+            <select id="select">
                 <option value="">Player Vs. Player</option>
                 <option value="">Player Vs. Computer</option>
             </select>
@@ -34,19 +34,19 @@
         </div>
         <div id="gameboard">
             <ul>
-                <li data-row="0" data-col="0"></li>
-                <li data-row="0" data-col="1"></li>
-                <li data-row="0" data-col="2"></li>
-                <li data-row="1" data-col="0"></li>
-                <li data-row="1" data-col="1"></li>
-                <li data-row="1" data-col="2"></li>
-                <li data-row="2" data-col="0"></li>
-                <li data-row="2" data-col="1"></li>
-                <li data-row="2" data-col="2"></li>
+                <li><button data-row="0" data-col="0"></button></li>
+                <li><button data-row="0" data-col="1"></button></li>
+                <li><button data-row="0" data-col="2"></button></li>
+                <li><button data-row="1" data-col="0"></button></li>
+                <li><button data-row="1" data-col="1"></button></li>
+                <li><button data-row="1" data-col="2"></button></li>
+                <li><button data-row="2" data-col="0"></button></li>
+                <li><button data-row="2" data-col="1"></button></li>
+                <li><button data-row="2" data-col="2"></button></li>
             </ul>
         </div>
         <div class="button-wrapper reset">
-            <button>Reset</button>
+            <button id="reset">Reset</button>
         </div>
     </div>
     

@@ -26,6 +26,7 @@ body {
 #gameboard {
     min-height: 100%;
     display: grid;
+    position: relative;
 }
 
 #gameboard > ul {
@@ -41,6 +42,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#gameboard > ul > li > button {
+    width: 100%;
+    height: 100%;
     font-size: 3.5rem;
     background-color: lightsalmon;
+}
+
+#winner-wrapper { 
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(122, 214, 97);
 }
