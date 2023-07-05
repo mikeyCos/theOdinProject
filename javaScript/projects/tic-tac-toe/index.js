@@ -7,98 +7,152 @@ const ticTacToe = (function() {
         const getMarker = () => marker;
         const win = () => {
             updateScore();
-            // console.log(`${name} has won!`)
             return `${name} has won!`;
         }
         const updateScore = (x) => {
             return !x ? score += 1 : score = 0;
         }
-        return {updateScore, getName, getMarker, win};
+        const updateName = (newName) => name = newName;
+        return {updateName, updateScore, getName, getMarker, win};
     }
 
     const players = {
         //if user selects 'Player Vs. Player'
             //display two inputs to set player name
-        players: [player('Jack', 'X'), player('Pam', 'O')],
+        players: [player('Player One', 'X'), player('Player Two', 'O')],
         init: function() {
             this.cacheDom();
+            this.bindEvents();
         },
         cacheDom: function() {
+            this.selectWrapper = document.querySelector('.container-button.select');
             this.selectElement = document.querySelector('#select');
+            this.inputWrapper = document.querySelector('.input-wrapper.input');
+            this.inputs = document.querySelectorAll('.input-wrapper.input input');
+        },
+        bindInputs: function() {
+            this.inputs.forEach(input => {
+
+            })
         },
         bindEvents: function() {
-
+            this.selectPlayer = this.selectPlayer.bind(this);
+            this.selectElement.addEventListener('change', this.selectPlayer)
         },
         render: function() {
-            const wrapper = document.createElement('')
-        }
-    }
+            //renders inputs to allow players to enter their names
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('input-wrapper', 'input');
+            for (i = 0; i < this.players.length; i++) {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                this.setAttributes(i, label, input)
+                wrapper.appendChild(label);
+                wrapper.appendChild(input);
+            }
+            this.selectWrapper.appendChild(wrapper);
+            this.cacheDom();
+        },
+        setAttributes: function(i, label, input) {
+            let id = 'player-one';
+            let text = 'Player One';
+            if (i === 1) {
+                id = 'player-two';
+                text = 'Player Two';
+            }
+            Object.assign(input, {
+                type: 'text',
+                pattern: '[A-Za-z]',
+                id: id,
+                name: id,
+                placeholder: text,
+            })
+            label.setAttribute('for', id)
+            const textNode = document.createTextNode(text);
+            label.appendChild(textNode);
+        },
+        selectPlayer: function(e) {
+            let selection = e.target.options[e.target.selectedIndex].text;
+            //if 'Player Vs. Player' is selected
+                //render inputs to allow players to enter their names
+                //add event listeners to inputs
+                //the event listeners will add player objects to players[]
+            //else run compter
+                //remove event listeners from inputs
+                //remove DOM input elements
+            if (!selection.includes('Computer')) {
+                this.render();
+            } else {
+                this.inputWrapper.remove();
+                //need to set this.players[1] to human
+                //need to set this.players[2] to computer
+            }
+            
+        },
+        computer: function() {
 
-    // players.players[0].win()
-    // players.players[0].updateScore()
-    // console.log(players.players[0].updateScore())
-    // console.log(players.players[0].updateScore(true))
-    // console.log(players.players[0].updateScore())
+        },
+        updateName: function() {
+
+        },
+        selectMarker: function() {
+            //person is always 'X' even if 'Player Vs. Computer' is selected
+
+        },
+    }
 
     const gameboard = {
         //about spread syntax
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-        gameboard: [...Array(3)].map(e => Array(3).fill(null)),
+        gameboard: [],
         init: function() {
+            this.gameboard =  [...Array(3)].map(e => Array(3).fill(null));
             this.cacheDom();
             this.bindButtonEvents();
             this.bindBoardEvents();
         },
         cacheDom: function() {
             this.wrapperGameboard = document.querySelector('#gameboard');
-            this.boardElement = document.querySelectorAll('#gameboard ul li button');
+            this.boardElements = document.querySelectorAll('#gameboard ul li button');
             this.buttonReset = document.querySelector('#reset');
         },
         bindBoardEvents: function() {
             //why does this work?
             this.markBoard = this.markBoard.bind(this);
-            this.boardElement.forEach(btn => btn.addEventListener('click', this.markBoard));
+            this.boardElements.forEach(btn => btn.addEventListener('click', this.markBoard));
         },
         bindButtonEvents: function() {
             reset = gameController.reset.bind(gameController);
-            this.buttonReset.addEventListener('click', reset)
+            this.buttonReset.addEventListener('click', reset);
         },
         render: function() {
-            console.log(this.gameboard.flat(1))
+            console.log(this.gameboard.flat(1)); //for debugging
             //this works if the array is full
             this.gameboard.flat(1).forEach((e, index, element) => {
-                this.boardElement[index].textContent = this.gameboard.flat(1)[index];
-            })
-
-            //if gameController.checkGameStatus() returns true
-                //create wrapper element
-                //append gameController.activePlayer.win()
-            // if (gameController.checkGameStatus()) {
-            //     console.log(`game over`)
-            // }
+                this.boardElements[index].textContent = this.gameboard.flat(1)[index];
+            });
         },
         markBoard: function(e) {
             // if e.target textContent is empty
                 //update this.gameboard and remove event listener
             if (!e.target.textContent) {
-                const elementIndex = Array.from(this.boardElement).indexOf(e.target);
+                const elementIndex = Array.from(this.boardElements).indexOf(e.target);
                 const row = e.target.dataset.row;
                 const col = e.target.dataset.col;
                 this.gameboard[row][col] = gameController.activePlayer.getMarker();
                 e.target.removeEventListener('click', this.markBoard);
                 this.render();
                 gameController.checkGameStatus();
-                // console.log(gameController.checkGameStatus())
-                // gameController.switchTurns()
             }
         }
-    };
+    }
 
     const gameController = {
         activePlayer: players.players[0],
         switchTurns: function() {
             //'X' goes first, then 'O'
-            this.activePlayer = this.activePlayer === players.players[0] ? players.players[1] : players.players[0];
+            this.activePlayer = this.activePlayer === players.players[0]?
+            players.players[1] : players.players[0];
         },
         checkGameStatus: function() {
             const board = gameboard.gameboard;
@@ -130,15 +184,15 @@ const ticTacToe = (function() {
 
             if (gameOver || board.flat(1).every(e => e !== null)) {
                 if (gameOver) {
-                    console.log(`Game is over`);
-                    console.log(this.activePlayer.win());
+                    console.log(`Game is over`); //for debugging
+                    console.log(this.activePlayer.win()); //for debugging
                 } else {
-                    console.log('Draw')
+                    console.log('Draw'); //for debugging
                 }
+                //remove event listeners from board
+                gameboard.boardElements.forEach(btn => btn.removeEventListener('click', gameboard.markBoard));
                 //need to display an element that congratulates the winning player
-                gameboard.boardElement.forEach(btn => btn.removeEventListener('click', gameboard.markBoard));
-                this.render()
-                // this.reset()
+                this.render();
                 return true;
             } else {
                 this.switchTurns();
@@ -148,36 +202,31 @@ const ticTacToe = (function() {
             this.winnerMessage = document.querySelector('#winner-wrapper');
         },
         bindEvents: function() {
-            this.cacheDom();
             this.reset = this.reset.bind(this);
             this.winnerMessage.addEventListener('click', this.reset);
-            console.log(this)
-            // console.log(document.querySelector('#winner-wrapper'))
-            // document.querySelector('#winner-wrapper')
         },
         render: function() {
             const wrapperWinner = document.createElement('div');
             wrapperWinner.id = 'winner-wrapper';
             const winnerMessage = document.createElement('p');
-            const textWinner = document.createTextNode(this.activePlayer.win());
+            const textNode = document.createTextNode(this.activePlayer.win());
             wrapperWinner.appendChild(winnerMessage);
-            winnerMessage.appendChild(textWinner);
-            console.log(textWinner)
-
-            console.log(wrapperWinner)
+            winnerMessage.appendChild(textNode);
+            console.log(textNode); //for debugging
+            console.log(wrapperWinner); //for debugging
             gameboard.wrapperGameboard.appendChild(wrapperWinner);
-            this.bindEvents()
+            this.cacheDom();
+            this.bindEvents();
         },
         reset: function() {
             //if user clicks winning container OR restart button
                 //empty gameboard[]
                 //set activePlayer to players[0]
-            gameboard.gameboard = [...Array(3)].map(e => Array(3).fill(null));
             this.activePlayer = players.players[0];
             this.winnerMessage.removeEventListener('click', this.reset);
             this.winnerMessage.remove();
+            gameboard.init();
             gameboard.render();
-            gameboard.bindBoardEvents();
         },
     }
 
