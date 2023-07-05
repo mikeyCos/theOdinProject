@@ -7,13 +7,13 @@ const ticTacToe = (function() {
         const getMarker = () => marker;
         const win = () => {
             updateScore();
-            return `${name} has won!`;
+            return `${name} is the winner!`;
         }
         const updateScore = (x) => {
             return !x ? score += 1 : score = 0;
         }
         const updateName = (newName) => name = newName;
-        return {updateName, updateScore, getName, getMarker, win};
+        return {updateName, getName, getMarker, win};
     }
 
     const players = {
@@ -21,8 +21,17 @@ const ticTacToe = (function() {
             //display two inputs to set player name
         players: [player('Player One', 'X'), player('Player Two', 'O')],
         init: function() {
+            // this.players = [...Array(2)];
             this.cacheDom();
-            this.bindEvents();
+            this.bindSelectEvents();
+            let selection = this.selectElement.value;
+            //this is if 'selected attribute is on pvp option
+            if (!selection.includes('pvc')) {
+                this.render();
+            } else {
+                this.players[1].updateName('Computer');
+                // console.log(this.players[0])
+            }
         },
         cacheDom: function() {
             this.selectWrapper = document.querySelector('.container-button.select');
@@ -31,11 +40,10 @@ const ticTacToe = (function() {
             this.inputs = document.querySelectorAll('.input-wrapper.input input');
         },
         bindInputs: function() {
-            this.inputs.forEach(input => {
-
-            })
+            this.updateName = this.updateName.bind(this);
+            this.inputs.forEach(input => input.addEventListener('input', this.updateName));
         },
-        bindEvents: function() {
+        bindSelectEvents: function() {
             this.selectPlayer = this.selectPlayer.bind(this);
             this.selectElement.addEventListener('change', this.selectPlayer)
         },
@@ -54,25 +62,29 @@ const ticTacToe = (function() {
             this.cacheDom();
         },
         setAttributes: function(i, label, input) {
+            //sets attributes for labels/inputs
+            //sets text node for label
             let id = 'player-one';
             let text = 'Player One';
+            let value = text;
             if (i === 1) {
                 id = 'player-two';
                 text = 'Player Two';
             }
             Object.assign(input, {
-                type: 'text',
-                pattern: '[A-Za-z]',
                 id: id,
                 name: id,
+                type: 'text',
+                pattern: '[A-Za-z]',
                 placeholder: text,
+                value: text,
             })
             label.setAttribute('for', id)
             const textNode = document.createTextNode(text);
             label.appendChild(textNode);
         },
         selectPlayer: function(e) {
-            let selection = e.target.options[e.target.selectedIndex].text;
+            let selection = e.target.value;
             //if 'Player Vs. Player' is selected
                 //render inputs to allow players to enter their names
                 //add event listeners to inputs
@@ -80,19 +92,50 @@ const ticTacToe = (function() {
             //else run compter
                 //remove event listeners from inputs
                 //remove DOM input elements
-            if (!selection.includes('Computer')) {
+                console.log(selection)
+                gameController.reset();
+                // gameboard.render();
+            if (!selection.includes('pvc')) {
                 this.render();
+                this.bindInputs();
             } else {
                 this.inputWrapper.remove();
+                this.inputs.forEach(input => input.removeEventListener('input', this.updateName));
+                this.players[1].updateName('Computer');
                 //need to set this.players[1] to human
                 //need to set this.players[2] to computer
             }
             
         },
         computer: function() {
+            //computer randomly marks board
+            console.log(this.players[1].getMarker())
+            const event = new Event("build");
+            const boardElements = gameboard.boardElements;
+            // Listen for the event.
+            boardElements.forEach(elem => elem.addEventListener("build", gameboard.markBoard));
 
+            // Dispatch the event.
+            // this.boardElements.forEach(elem => elem.dispatchEvent(event));
+            let index = Math.floor(Math.random() * 8);
+            //computer only marks if boardElements[index].textContent is empty
+            while (boardElements[index].textContent !== '') {
+                index = Math.floor(Math.random() * 8);
+            }
+            // console.log(boardElements[index].textContent)
+            boardElements[index].dispatchEvent(event);
+            // console.log(boardElements[index].textContent)
         },
-        updateName: function() {
+        updateName: function(e) {
+            //update player's name based on e.target.id
+            let id = e.target.id;
+            let newName = e.target.value;
+            if (id === 'player-one') {
+                players.players[0].updateName(newName);
+            } else {
+                players.players[1].updateName(newName);
+            }
+            console.log(players.players[0].getName())
 
         },
         selectMarker: function() {
@@ -144,7 +187,7 @@ const ticTacToe = (function() {
                 this.render();
                 gameController.checkGameStatus();
             }
-        }
+        },
     }
 
     const gameController = {
@@ -153,6 +196,11 @@ const ticTacToe = (function() {
             //'X' goes first, then 'O'
             this.activePlayer = this.activePlayer === players.players[0]?
             players.players[1] : players.players[0];
+            //if this.activePlayer is computer
+                //run the computer's functin to mark the board
+            if (this.activePlayer.getName() === 'Computer') {
+                players.computer();
+            }
         },
         checkGameStatus: function() {
             const board = gameboard.gameboard;
@@ -223,8 +271,10 @@ const ticTacToe = (function() {
                 //empty gameboard[]
                 //set activePlayer to players[0]
             this.activePlayer = players.players[0];
-            this.winnerMessage.removeEventListener('click', this.reset);
-            this.winnerMessage.remove();
+            if (this.winnerMessage) {
+                this.winnerMessage.removeEventListener('click', this.reset);
+                this.winnerMessage.remove()
+            }
             gameboard.init();
             gameboard.render();
         },
@@ -233,4 +283,6 @@ const ticTacToe = (function() {
     gameboard.init();
     gameboard.render();
     players.init();
+    // gameboard.computer();
+    // players.computer();
 })();

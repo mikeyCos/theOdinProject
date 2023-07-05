@@ -1,8 +1,13 @@
-Tic Tac Toe
+# Tic Tac Toe
 ---
 Live preview (https://mikeycos.github.io/theOdinProject/javaScript/projects/tic-tac-toe/)
 ---
+### Questions
+1. Is it bad practice to cacheDom element before it exists?
+2. Will rebinding events without removing them cause memory issues?
+---
 ### Changelog
+5 JUL 2023: Inputs changes the player's name corresponding to the input's ID and it's value, `players.computer()` randomly selects an empty board element and activates `gameboard.markBoard()`, and issue discovered with winner message if the game is a draw.  
 4 JUL 2023: `gameboard.init()` will always initialized the 3x3 two dimensional array, selecting option `Player Vs. Player` will render inputs for player one/two's names, selecting option `Player Vs. Computer` will remove the container with the name inputs, and `setAttributes()` sets attributes for label and inputs.  
 3 JUL 2023: Organized `gameboard` object into two parts (`gameboard` and `gameController` objects), button elements inserted in each list item for accessibility, `gameController` renders text with winner's name, and HTML element displaying who won can be clicked to start a new round.  
 30 JUN 2023 : `player` factory function only returns updateScore/getName/getMarker/win, `switchTurns` property changes `activePlayer` based on the current state of `activePlayer`, `reset` function created, and planning to refactor the `gameboard` object into smaller peices.  
