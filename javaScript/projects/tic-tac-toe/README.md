@@ -3,10 +3,12 @@
 Live preview (https://mikeycos.github.io/theOdinProject/javaScript/projects/tic-tac-toe/)
 ---
 ### Questions
-1. Is it bad practice to cacheDom element before it exists?
-2. Will rebinding events without removing them cause memory issues?
+1. Is it bad practice to cacheDom element before it exists while other elements do exist and then re-cacheDom?
+2. Will rebinding events, on static elements, without removing them cause memory issues?
+3. 
 ---
 ### Changelog
+10 JUL 2023: `setGameState` renamed to `getGameState` and returns a value, `checkGameStatus` renamed to `setGameSTatus`, `getPossibleMoves` gets all possible moves from the current game state and returns the the moves in an array, and `minimx` seems to run after the first conditional statement runs and returns the board.  
 6 JUL 2023: Inserted span elements inside button elements and the span's textContent is updated, moved `computer()` onto it's own computer object, researched minimax algorithm, added property `gameState` to object `gameController`, and `checkGameStatus` refactored into to `checkGameStatus` and `setGameState` functions.  
 5 JUL 2023: Inputs changes the player's name corresponding to the input's ID and it's value, `players.computer()` randomly selects an empty board element and activates `gameboard.markBoard()`, and issue discovered with winner message if the game is a draw.  
 4 JUL 2023: `gameboard.init()` will always initialized the 3x3 two dimensional array, selecting option `Player Vs. Player` will render inputs for player one/two's names, selecting option `Player Vs. Computer` will remove the container with the name inputs, and `setAttributes()` sets attributes for label and inputs.  
