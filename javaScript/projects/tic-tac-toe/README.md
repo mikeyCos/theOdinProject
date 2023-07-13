@@ -2,13 +2,20 @@
 ---
 Live preview (https://mikeycos.github.io/theOdinProject/javaScript/projects/tic-tac-toe/)
 ---
+### Ideas
+1. Implement minimax algorithm.
+2. 
+---
 ### Questions
 1. Is it bad practice to cacheDom element before it exists while other elements do exist and then re-cacheDom?
 2. Will rebinding events, on static elements, without removing them cause memory issues?
-3. 
+3. How do you translate the minimax algorithm into JavaScript?
+4. Is it bad practice to have each object have their own `cacheDom`/`init`/`render` functions?
 ---
 ### Changelog
-10 JUL 2023: `setGameState` renamed to `getGameState` and returns a value, `checkGameStatus` renamed to `setGameSTatus`, `getPossibleMoves` gets all possible moves from the current game state and returns the the moves in an array, and `minimx` seems to run after the first conditional statement runs and returns the board.  
+12 JUL 2023: Implemented a `scoreboardController` object that renders the scoreboard when a player wins and resets the scoreboard when the 'game mode' changes, renamed and added multiple classes to HTML elements, applied CSS grid to the container with class `container-button mode` and it's children, reverted to computer player making pseudo random moves, and span elements now get their text content updated.  
+11 JUL 2023: Reevaluating `minimax` functionality, asked "how do we know what tree depth we are on based on the current gameboard. For Example, what if we only started the game? Are at depth 0? Now, if player X marks the board first, are we at depth 1?" and "Is the node argument in minimax(node, depth, maximizingPlayer) referring to the current gameboard?", and `makeMove` returns one move made by active player.  
+10 JUL 2023: `setGameState` renamed to `getGameState` and returns a value, `checkGameStatus` renamed to `setGameSTatus`, `getPossibleMoves` gets all possible moves from the current game state and returns the the moves in an array, and `minimax` seems to run after the first conditional statement runs and returns the board.  
 6 JUL 2023: Inserted span elements inside button elements and the span's textContent is updated, moved `computer()` onto it's own computer object, researched minimax algorithm, added property `gameState` to object `gameController`, and `checkGameStatus` refactored into to `checkGameStatus` and `setGameState` functions.  
 5 JUL 2023: Inputs changes the player's name corresponding to the input's ID and it's value, `players.computer()` randomly selects an empty board element and activates `gameboard.markBoard()`, and issue discovered with winner message if the game is a draw.  
 4 JUL 2023: `gameboard.init()` will always initialized the 3x3 two dimensional array, selecting option `Player Vs. Player` will render inputs for player one/two's names, selecting option `Player Vs. Computer` will remove the container with the name inputs, and `setAttributes()` sets attributes for label and inputs.  

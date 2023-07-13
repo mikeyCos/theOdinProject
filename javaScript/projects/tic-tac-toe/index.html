@@ -15,22 +15,28 @@
     </header>
 
     <div id="main">
-        <div class="container-button select">
+        <div class="container-button mode">
             <!-- select player vs player
             or player vs computer -->
             <!-- computer difficulty selection? -->
-            <label for=""></label>
-            <select id="select">
-                <option value="pvp">Player Vs. Player</option>
-                <option value="pvc" selected="selected">Player Vs. Computer</option>
-            </select>
+            <div class="wrapper-select select">
+                <label for="select">Select mode</label>
+                <select id="select">
+                    <option value="pvp">Player Vs. Player</option>
+                    <option value="pvc" selected="selected">Player Vs. Computer</option>
+                </select>
+            </div>
         </div>
-        <div>
+        <div class="container-scoreboard">
             <!-- score controller -->
-            <p>X</p>
-            <p></p>
-            <p>O</p>
-            <p></p>
+            <div class="player">
+                <p>X</p>
+                <p class="player-one"></p>
+            </div>
+            <div class="player">
+                <p>O</p>
+                <p class="player-two"></p>
+            </div>
         </div>
         <div id="gameboard">
             <ul>
@@ -45,13 +51,13 @@
                 <li><button data-row="2" data-col="2"><span></span></button></li>
             </ul>
         </div>
-        <div class="button-wrapper reset">
+        <div class="wrapper-button reset">
             <button id="reset">Reset</button>
         </div>
     </div>
     
     <footer>
-        <div class="wrapper">
+        <div class="wrapper-footer">
             <h6>placeholder</h6>
         </div>
     </footer>

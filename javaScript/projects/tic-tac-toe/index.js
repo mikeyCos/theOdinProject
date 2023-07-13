@@ -5,15 +5,16 @@ const ticTacToe = (function() {
         let score = 0;
         const getName = () => name;
         const getMarker = () => marker;
+        const getScore = () => score;
         const win = () => {
             updateScore();
             return `${name} is the winner!`;
         }
         const updateScore = (x) => {
-            return !x ? score += 1 : score = 0;
+            !x ? score += 1 : score = 0;
         }
         const updateName = (newName) => name = newName;
-        return {updateName, getName, getMarker, win};
+        return {updateScore, getScore, updateName, getName, getMarker, win};
     }
 
     const players = {
@@ -34,10 +35,11 @@ const ticTacToe = (function() {
             }
         },
         cacheDom: function() {
-            this.selectWrapper = document.querySelector('.container-button.select');
+            this.buttonContainer = document.querySelector('.container-button.mode');
+            this.selectWrapper = document.querySelector('.wrapper-select.select');
             this.selectElement = document.querySelector('#select');
-            this.inputWrapper = document.querySelector('.input-wrapper.input');
-            this.inputs = document.querySelectorAll('.input-wrapper.input input');
+            this.inputWrapper = document.querySelector('.wrapper-input.input');
+            this.inputs = document.querySelectorAll('.wrapper-input.input input');
         },
         bindInputs: function() {
             this.updateName = this.updateName.bind(this);
@@ -50,7 +52,7 @@ const ticTacToe = (function() {
         render: function() {
             //renders inputs to allow players to enter their names
             const wrapper = document.createElement('div');
-            wrapper.classList.add('input-wrapper', 'input');
+            wrapper.classList.add('wrapper-input', 'input');
             for (i = 0; i < this.players.length; i++) {
                 const label = document.createElement('label');
                 const input = document.createElement('input');
@@ -58,7 +60,7 @@ const ticTacToe = (function() {
                 wrapper.appendChild(label);
                 wrapper.appendChild(input);
             }
-            this.selectWrapper.appendChild(wrapper);
+            this.buttonContainer.appendChild(wrapper);
             this.cacheDom();
         },
         setAttributes: function(i, label, input) {
@@ -66,7 +68,6 @@ const ticTacToe = (function() {
             //sets text node for label
             let id = 'player-one';
             let text = 'Player One';
-            let value = text;
             if (i === 1) {
                 id = 'player-two';
                 text = 'Player Two';
@@ -77,7 +78,6 @@ const ticTacToe = (function() {
                 type: 'text',
                 pattern: '[A-Za-z]',
                 placeholder: text,
-                value: text,
             })
             label.setAttribute('for', id)
             const textNode = document.createTextNode(text);
@@ -86,6 +86,7 @@ const ticTacToe = (function() {
         selectPlayer: function(e) {
             let selection = e.target.value;
                 gameController.reset();
+                scoreboardController.renderScore();
             if (!selection.includes('pvc')) {
                 this.render();
                 this.bindInputs();
@@ -148,8 +149,8 @@ const ticTacToe = (function() {
             console.log(`---`) //for debugging
             // console.log(this.gameboard[0]); //for debugging
             //this works if the array is full
-            this.gameboard.flat(1).forEach((e, index) => {
-                this.boardElements[index].textContent = this.gameboard.flat(1)[index];
+            this.gameboard.flat(1).forEach((value, index) => {
+            this.boardSpanElements[index].textContent = value;
             });
         },
         markBoard: function(e) {
@@ -174,12 +175,12 @@ const ticTacToe = (function() {
             this.activePlayer = this.activePlayer === players.players[0]?
             players.players[1] : players.players[0];
             if (this.activePlayer.getName() === 'Computer') {
-                computer.computer();
+                computer.computer(this.activePlayer);
             }
         },
         getGameState: function(board) {
             // const board = gameboard.gameboard;
-            let gameOver;
+            let gameOver = false;
             board.map((rows, index) => { 
                 rows.some((item, i, arr) => {
                     if (item !== null && item === arr[i-2] && item === arr[i-1]) {
@@ -206,22 +207,25 @@ const ticTacToe = (function() {
             });
 
             if (gameOver || board.flat(1).every(e => e !== null)) {
-                if (gameOver) {
-                    return this.activePlayer.getMarker() === 'X' ? 1 : -1;
-                } else {
-                    return 0;
-                }
-                // return gameOver ? this.activePlayer.getMarker() === 'X' ? 1 : -1 : 0;
+                // if (gameOver) {
+                //     return this.activePlayer.getMarker() === 'X' ? 1 : -1;
+                // } else {
+                //     return 0;
+                // }
+                return gameOver ? this.activePlayer.getMarker() === 'X' ? 1 : -1 : 0;
+            } else {
+                return gameOver;
             }
-            return null;
         },
         setGameStatus: function (state, board) {
             this.gameState = this.getGameState(gameboard.gameboard);
             console.log(`gameState: ${this.gameState}`) //for debugging
-            if (this.gameState !== null) {
+            if (this.gameState || this.gameState === 0) {
                 let gameMessage;
                 if (this.gameState === 1 || this.gameState === -1) {
                     gameMessage = this.activePlayer.win();
+                    // debugger
+                    scoreboardController.renderScore(this.activePlayer.getScore(), this.gameState);
                 } else {
                     gameMessage = 'Draw';
                 }
@@ -244,8 +248,6 @@ const ticTacToe = (function() {
             const textNode = document.createTextNode(message);
             wrapperWinner.appendChild(winnerMessage);
             winnerMessage.appendChild(textNode);
-            console.log(textNode); //for debugging
-            console.log(wrapperWinner); //for debugging
             gameboard.wrapperGameboard.appendChild(wrapperWinner);
             this.cacheDom();
             this.bindEvents();
@@ -262,31 +264,57 @@ const ticTacToe = (function() {
         },
     }
 
+    const scoreboardController = {
+        init: function() {
+            this.cacheDom();
+        },
+        cacheDom: function() {
+            this.scorePlayerOne = document.querySelector('.player-one');
+            this.scorePlayerTwo = document.querySelector('.player-two');
+        },
+        renderScore: function(score, gameState) {
+            console.log(gameState)
+            if (score === undefined || gameState === undefined) {
+                this.scorePlayerOne.textContent = '';
+                this.scorePlayerTwo.textContent = '';
+                this.resetScores();
+            } else if (gameState === 1) {
+                this.scorePlayerOne.textContent = score;
+            } else if (gameState === -1) {
+                this.scorePlayerTwo.textContent = score;
+            }
+        },
+        resetScores: function() {
+            players.players.forEach(player => {
+                player.updateScore(true);
+            })
+        }
+    }
+
     const computer = {
         fauxBoard: null,
-        fauxPlayer: gameController.activePlayer,
-        computer: function() {
+        fauxPlayer: null,
+        computer: function(activePlayer) {
             //deep clone
+            this.fauxPlayer = activePlayer;
             this.fauxBoard = JSON.parse(JSON.stringify(gameboard.gameboard))
+            
             const event = new Event("build");
             const boardElements = gameboard.boardElements;
             boardElements.forEach(elem => elem.addEventListener('build', gameboard.markBoard));
-            
             //computer randomly marks board
-            // let index = Math.floor(Math.random() * 8);
-            //computer only marks if boardElements[index].textContent is empty
-            // while (boardElements[index].textContent !== '') {
-            //     index = Math.floor(Math.random() * 8);
-            // }
-            console.log(`----------minimax running------------`)
-            let test = this.minimax(gameController.getGameState(this.fauxBoard))
-            // gameboard.gameboard = JSON.parse(JSON.stringify(this.fauxBoard))
-            // console.log(this.minimax(gameController.getGameState(this.fauxBoard)))
-            // gameboard.gameboard = test;
-            // console.table(gameboard.gameboard)
+            let index = Math.floor(Math.random() * 8);
+            // computer only marks if boardElements[index].textContent is empty
+            while (boardElements[index].textContent !== '') {
+                index = Math.floor(Math.random() * 8);
+            }
 
-            // boardElements[index].dispatchEvent(event);
-            // boardElements[index].removeEventListener('build', gameboard.markBoard);
+            // console.log(`----------minimax running------------`)
+            // this.minimax(gameController.getGameState(this.fauxBoard))
+            // this.minimax(this.fauxBoard);
+
+            boardElements[index].dispatchEvent(event);
+            boardElements[index].removeEventListener('build', gameboard.markBoard);
         },
         switchTurns: function() {
             //'X' goes first, then 'O'
@@ -294,21 +322,6 @@ const ticTacToe = (function() {
             players.players[1] : players.players[0];
         },
         getPossibleMoves: function() {
-            let xMoves = [];
-            let oMoves = [];
-            // for (y = 0; y < this.fauxBoard.length; y++) {
-            //     for (x = 0; x < this.fauxBoard[y].length; x++) {
-            //         if (this.fauxBoard[y][x] === null) {
-            //             if (this.fauxPlayer.getMarker() === 'X') {
-            //                 xMoves.push([y, x]);
-            //             } else {
-            //                 oMoves.push([y, x]);
-            //             }
-            //             this.fauxBoard[y][x] = this.fauxPlayer.getMarker();
-            //             this.switchTurns();
-            //         }
-            //     }
-            // }
             let possibleMoves = []
             for (y = 0; y < this.fauxBoard.length; y++) {
                 for (x = 0; x < this.fauxBoard[y].length; x++) {
@@ -317,49 +330,56 @@ const ticTacToe = (function() {
                     }
                 }
             }
-            // this.switchTurns();
-            // console.log(`----------xMoves----------`);
-            // console.table(xMoves);
-            // console.log(`----------oMoves----------`);
-            // console.table(oMoves);
-            // console.log(`----------possible moves----------`)
-            // console.table(possibleMoves);
-            // console.table(this.fauxBoard);
+            console.table(possibleMoves); //for debugging
             return possibleMoves;
-            // this.fauxBoard = null;
         },
-        makeMove: function(i) {
-            this.fauxBoard[i[0]][i[1]] = this.fauxPlayer.getMarker();
-            // console.log(gameController.getGameState(this.fauxBoard));
-            return gameController.getGameState(this.fauxBoard);
+        makeMove: function(board, i) {
+            const shallowCopy = board.map(arr => {
+                return arr.slice();
+            })
+            shallowCopy[i[0]][i[1]] = this.fauxPlayer.getMarker();
+            console.table(shallowCopy); //for debugging
+            // const newGameState = gameController.getGameState(shallowCopy);
+            // const results = [newGameState, shallowCopy];
+            // return results;
+            // return gameController.getGameState(shallowCopy);
+            return shallowCopy;
         },
-        minimax: function(gameState) {
-            //"You don't need to 'compare' the current board with any of the paths, there's no comparison needed other than the score for each path at depth 1 when all has been completed. Since you don't need to see all of the possible board states at the same time, you don't need to create copies of the board. Therefore, if you're only doing one path at a time, think about a simple way to make (a) move(s) then undo any as you backtrack and check other paths.
-            this.switchTurns();
+        minimax: function(board) {
+            let gameState = gameController.getGameState(board);
             console.log(`---------`)
             console.log(`gameState: ${gameState}`)
-            if (gameState >= -1 && gameState !== null) {
-                // return gameController.getGameState(gameboard.gameboard);
-                console.log(`minimax ends`)
-                console.table(this.fauxBoard)
-                return this.fauxBoard;
+            if (gameState) {
+                if (gameState >= -1 && gameState !== null) {
+                    // return gameController.getGameState(gameboard.gameboard);
+                    console.log(`minimax ends`)
+                    // console.table(this.fauxBoard)
+                    return gameState;
+                }
             }
+
             let value;
-            //if maximizingPlayer [human][X]
-            //max player wants biggest number
             if (this.fauxPlayer.getMarker() === 'X') {
+                console.log(`--------max running--------`);
+                 //if maximizingPlayer [human][X]
+                //max player wants biggest number
                 value = -Infinity;
                 this.getPossibleMoves().forEach(i => {
-                    value = Math.max(value, this.minimax(this.makeMove(i)));
+                    // value = Math.max(value, this.minimax(this.makeMove(board, i)));;
+                    console.log(this.makeMove(board, i))
                 })
-                return value;
+                // this.switchTurns();
+                // return value;
             } else {
+                console.log(`--------min running--------`);
                 //minimizingPlayer [computer][O]
                 //min player wants smallest number
                 value = +Infinity;
                 this.getPossibleMoves().forEach(i => {
-                    value = Math.min(value, this.minimax(this.makeMove(i)));
+                    // value = Math.min(value, this.minimax(this.makeMove(board, i)));
+                    // console.log(this.makeMove(board, i));
                 })
+                // this.switchTurns();
                 return value;
             }
         },
@@ -368,4 +388,5 @@ const ticTacToe = (function() {
     gameboard.init();
     gameboard.render();
     players.init();
+    scoreboardController.init();
 })();
