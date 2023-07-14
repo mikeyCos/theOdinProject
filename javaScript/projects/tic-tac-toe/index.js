@@ -8,7 +8,7 @@ const ticTacToe = (function() {
         const getScore = () => score;
         const win = () => {
             updateScore();
-            return `${name} is the winner!`;
+            return [name, `is the winner`];
         }
         const updateScore = (x) => {
             !x ? score += 1 : score = 0;
@@ -85,8 +85,8 @@ const ticTacToe = (function() {
         },
         selectPlayer: function(e) {
             let selection = e.target.value;
-                gameController.reset();
-                scoreboardController.renderScore();
+            gameController.reset();
+            scoreboardController.resetScores();
             if (!selection.includes('pvc')) {
                 this.render();
                 this.bindInputs();
@@ -175,8 +175,11 @@ const ticTacToe = (function() {
             this.activePlayer = this.activePlayer === players.players[0]?
             players.players[1] : players.players[0];
             if (this.activePlayer.getName() === 'Computer') {
-                computer.computer(this.activePlayer);
+                setTimeout(() => {
+                    computer.computer(this.activePlayer);
+                }, 700);
             }
+            scoreboardController.render(this.activePlayer.getMarker());
         },
         getGameState: function(board) {
             // const board = gameboard.gameboard;
@@ -207,11 +210,6 @@ const ticTacToe = (function() {
             });
 
             if (gameOver || board.flat(1).every(e => e !== null)) {
-                // if (gameOver) {
-                //     return this.activePlayer.getMarker() === 'X' ? 1 : -1;
-                // } else {
-                //     return 0;
-                // }
                 return gameOver ? this.activePlayer.getMarker() === 'X' ? 1 : -1 : 0;
             } else {
                 return gameOver;
@@ -225,7 +223,7 @@ const ticTacToe = (function() {
                 if (this.gameState === 1 || this.gameState === -1) {
                     gameMessage = this.activePlayer.win();
                     // debugger
-                    scoreboardController.renderScore(this.activePlayer.getScore(), this.gameState);
+                    scoreboardController.render(null, this.gameState, this.activePlayer.getScore());
                 } else {
                     gameMessage = 'Draw';
                 }
@@ -244,10 +242,12 @@ const ticTacToe = (function() {
         render: function(message) {
             const wrapperWinner = document.createElement('div');
             wrapperWinner.id = 'winner-wrapper';
-            const winnerMessage = document.createElement('p');
-            const textNode = document.createTextNode(message);
-            wrapperWinner.appendChild(winnerMessage);
-            winnerMessage.appendChild(textNode);
+            message.forEach(i => {
+                const winnerMessage = document.createElement('p');
+                const textNode = document.createTextNode(i);
+                wrapperWinner.appendChild(winnerMessage);
+                winnerMessage.appendChild(textNode);
+            })
             gameboard.wrapperGameboard.appendChild(wrapperWinner);
             this.cacheDom();
             this.bindEvents();
@@ -261,33 +261,37 @@ const ticTacToe = (function() {
             }
             gameboard.init();
             gameboard.render();
+            scoreboardController.render(this.activePlayer.getMarker())
         },
     }
 
     const scoreboardController = {
         init: function() {
             this.cacheDom();
+            this.render(gameController.activePlayer.getMarker())
         },
         cacheDom: function() {
             this.scorePlayerOne = document.querySelector('.player-one');
             this.scorePlayerTwo = document.querySelector('.player-two');
+            this.x = document.querySelector('.x');
+            this.o = document.querySelector('.o');
         },
-        renderScore: function(score, gameState) {
-            console.log(gameState)
-            if (score === undefined || gameState === undefined) {
-                this.scorePlayerOne.textContent = '';
-                this.scorePlayerTwo.textContent = '';
-                this.resetScores();
-            } else if (gameState === 1) {
-                this.scorePlayerOne.textContent = score;
-            } else if (gameState === -1) {
-                this.scorePlayerTwo.textContent = score;
+        render: function(marker) {
+            if (marker === 'X') {
+                this.o.classList.remove('active');
+                this.x.classList.add('active');
+            } else {
+                this.x.classList.remove('active');
+                this.o.classList.add('active');
             }
+            this.scorePlayerOne.textContent = players.players[0].getScore();
+            this.scorePlayerTwo.textContent = players.players[1].getScore();
         },
         resetScores: function() {
             players.players.forEach(player => {
                 player.updateScore(true);
             })
+            this.render(gameController.activePlayer.getMarker());
         }
     }
 
@@ -339,10 +343,6 @@ const ticTacToe = (function() {
             })
             shallowCopy[i[0]][i[1]] = this.fauxPlayer.getMarker();
             console.table(shallowCopy); //for debugging
-            // const newGameState = gameController.getGameState(shallowCopy);
-            // const results = [newGameState, shallowCopy];
-            // return results;
-            // return gameController.getGameState(shallowCopy);
             return shallowCopy;
         },
         minimax: function(board) {

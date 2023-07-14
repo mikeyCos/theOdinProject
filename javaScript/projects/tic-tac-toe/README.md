@@ -4,15 +4,18 @@ Live preview (https://mikeycos.github.io/theOdinProject/javaScript/projects/tic-
 ---
 ### Ideas
 1. Implement minimax algorithm.
-2. 
+2. Undo and redo functionality.
+3. Line strike through three in a row.
 ---
 ### Questions
 1. Is it bad practice to cacheDom element before it exists while other elements do exist and then re-cacheDom?
 2. Will rebinding events, on static elements, without removing them cause memory issues?
 3. How do you translate the minimax algorithm into JavaScript?
 4. Is it bad practice to have each object have their own `cacheDom`/`init`/`render` functions?
+5. Why do I need to use an anonymous arrow function expression for `setTimeout()`?
 ---
 ### Changelog
+13 JUL 2023: `scoreboardController` reworked to display who is the active player and displays score, imported Google Fonts Comfortaa and Roboto Mono, changed color palette of elements, and experimented with different width values.  
 12 JUL 2023: Implemented a `scoreboardController` object that renders the scoreboard when a player wins and resets the scoreboard when the 'game mode' changes, renamed and added multiple classes to HTML elements, applied CSS grid to the container with class `container-button mode` and it's children, reverted to computer player making pseudo random moves, and span elements now get their text content updated.  
 11 JUL 2023: Reevaluating `minimax` functionality, asked "how do we know what tree depth we are on based on the current gameboard. For Example, what if we only started the game? Are at depth 0? Now, if player X marks the board first, are we at depth 1?" and "Is the node argument in minimax(node, depth, maximizingPlayer) referring to the current gameboard?", and `makeMove` returns one move made by active player.  
 10 JUL 2023: `setGameState` renamed to `getGameState` and returns a value, `checkGameStatus` renamed to `setGameSTatus`, `getPossibleMoves` gets all possible moves from the current game state and returns the the moves in an array, and `minimax` seems to run after the first conditional statement runs and returns the board.  

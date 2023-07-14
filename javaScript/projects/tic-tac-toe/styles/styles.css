@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap');
+
 *,
 *::before,
 *::after {
@@ -7,8 +10,19 @@
 }
 
 :root {
-    --background-color-primary: rgb(236, 236, 236);
-    --background-color-secondary: rgb(211, 101, 44);
+    /* color pallete
+    #A798FF
+    #C5C5FF
+    #F8F7FF
+    #FFF1E2
+    #FFDFC9
+    */
+    --background-color-primary: #FFF1E2;
+    --background-color-secondary: #A798FF;
+    --background-color-accent: #C5C5FF;
+    --color-text-secondary: #F8F7FF;
+    --font-family-primary: 'Comfortaa', Arial;
+    --font-family-score: 'Roboto Mono', monospace;
 }
 
 body {
@@ -16,6 +30,27 @@ body {
     display: grid;
     grid-template-rows: min-content 1fr min-content;
     background-color: var(--background-color-primary);
+    font-family: var(--font-family-primary);
+}
+
+header {
+    box-shadow: 0px 2px 2px -1px black;
+    padding: 1rem;
+    display: grid;
+    justify-items: center;
+    position: relative;
+    background-color: var(--background-color-secondary)
+}
+
+header > .nav {
+    padding: 0.1rem;
+    position: absolute;
+    align-self: end;
+    justify-self: end;
+}
+
+header > .nav > ul{
+    list-style: none;
 }
 
 #main {
@@ -38,14 +73,51 @@ body {
     justify-items: center;
 }
 
+#main > .container-button > .wrapper-select.select {
+    font-weight: 900;
+}
+
+#main > .container-button > .wrapper-select.select > #select {
+    background-color: var(--background-color-primary);
+    border-radius: 2rem;
+    padding: 0.25rem;
+    text-align: center;
+}
+
+#main > .container-button > .wrapper-select.select > #select:focus {
+    background-color: var(--background-color-accent);
+}
+
 #main > .container-button > .wrapper-input.input {
     display: grid;
     grid-template-columns: repeat(2, minmax(100px, 1fr));
     justify-items: center;
 }
 
+#main > .container-button > .wrapper-input.input > input {
+    border-radius: 2rem;
+    padding: 0.25rem 0.5rem;
+    border: none;
+    text-align: center;
+    border-left: 5px solid var(--background-color-secondary);
+    border-right: 5px solid var(--background-color-secondary);
+    font-family: inherit;
+    max-width: 35vw;
+}
+
+#main > .container-button > .wrapper-input.input > input:focus {
+    outline: none;
+    border:1px solid var(--background-color-accent);
+    background-color: var(--background-color-secondary);
+}
+
+#main > .container-button > .wrapper-input.input > input:focus::placeholder {
+    color: var(--color-text-secondary);
+}
+
 #main > .container-button > .wrapper-input.input > input::placeholder {
     text-align: center;
+    font-family: var(--font-family-primary);
 }
 
 #main > .container-button > .wrapper-input.input > #player-one {
@@ -61,25 +133,39 @@ body {
 
 #main > .container-scoreboard > .player > *:first-child {
     font-size: 3rem;
+    position: relative;
+}
+
+#main > .container-scoreboard > .player > .x.active::after,
+#main > .container-scoreboard > .player > .o.active::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    border: 2px solid var(--background-color-secondary);
+    border-radius: 1rem;
+    animation: active 200ms ease-in;
 }
 
 #main > .container-scoreboard > .player > *:last-child {
     font-size: 2rem;
+    margin-top: 1rem;
+    font-family: var(--font-family-score);
 }
 
 #gameboard {
-    /* min-height: 100%; */
     display: grid;
     position: relative;
     justify-self: center;
     padding: 1rem;
-    margin: 1rem 0rem;
+    margin: 2rem 0rem;
+    animation: popIn 100ms ease-in;
 }
 
 #gameboard > ul {
     display: grid;
     grid-template-columns: repeat(3, minmax(70px, 256px));
-    /* grid-template-columns: repeat(3, minmax(70px, 100px)); */
     grid-auto-rows: minmax(70px, 25vw);
     background-color: black;
     gap: 0.85rem;
@@ -87,21 +173,25 @@ body {
 
 #gameboard > ul > * {
     list-style-type: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: none;
 }
 
 #gameboard > ul > li > button {
     width: 100%;
     height: 100%;
-    font-size: 20vw;
     border: none;
     background-color: var(--background-color-primary);
     display: grid;
     justify-items: center;
     align-content: center;
+}
+
+#gameboard > ul > li > button:focus {
+    outline-color: var(--background-color-secondary);
+}
+
+#gameboard > ul > li > button > span {
+    font-size: 18vw;
+    font-family: var(--font-family-primary);
 }
 
 #winner-wrapper { 
@@ -110,12 +200,14 @@ body {
     right: 0;
     width: 100%;
     height: 100%;
-    display: flex;
+    display: grid;
     justify-content: center;
-    align-items: center;
-    background-color: rgb(122, 214, 97);
-    font-size: 5rem;
+    align-content: center;
+    background: linear-gradient(45deg, var(--background-color-primary), var(--background-color-secondary));
+    font-size: 10vw;
     text-align: center;
+    border-radius: 2%;
+    animation: fadeIn 500ms ease-in
 }
 
 .wrapper-button.reset {
@@ -124,21 +216,78 @@ body {
 }
 
 .wrapper-button.reset > button {
-    padding: 1rem 20vw;
+    padding: 1rem 5rem;
+    background-color: var(--background-color-secondary);
+    border: none;
+    border-radius: 2rem;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-family: var(--font-family-primary);
+}
+
+.wrapper-button.reset > button:active {
+    box-shadow: 0px 2px 2px 1px black;
 }
 
 .wrapper-footer {
+    margin-top: 5rem;
+    padding: 1rem;
     display: grid;
     justify-content: center;
+    background-color: var(--background-color-secondary)
+}
+
+@keyframes active {
+    0% {
+        transform: scaleX(0);
+    }
+    
+    100% {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 @media screen and (min-width: 768px) {
-    #gameboard > ul {
-        grid-template-columns: repeat(3, minmax(70px, 256px));
-        grid-auto-rows: minmax(70px, 200px);
+    #main > .container-button > .wrapper-input.input {
+        max-width: 60vw;
+        justify-self: center;
     }
 
-    #gameboard > ul > li > button {
-        font-size: 12rem;
+    #main > .container-scoreboard {
+        max-width: 60vw;
+        justify-self: center;
+    }
+
+    #gameboard > ul {
+        grid-template-columns: repeat(3, minmax(70px, 125px));
+        grid-auto-rows: minmax(70px, 125px);
+    }
+
+    #gameboard > ul > li > button > span {
+        font-size: 6vw;
+    }
+
+    #winner-wrapper {
+        font-size: 5vw;
     }
 }
