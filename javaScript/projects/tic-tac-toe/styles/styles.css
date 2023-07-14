@@ -39,7 +39,8 @@ header {
     display: grid;
     justify-items: center;
     position: relative;
-    background-color: var(--background-color-secondary)
+    background-color: var(--background-color-secondary);
+    animation: dropDown 150ms ease-in;
 }
 
 header > .nav {
@@ -92,6 +93,7 @@ header > .nav > ul{
     display: grid;
     grid-template-columns: repeat(2, minmax(100px, 1fr));
     justify-items: center;
+    gap: 0.5rem 1rem;
 }
 
 #main > .container-button > .wrapper-input.input > input {
@@ -102,7 +104,7 @@ header > .nav > ul{
     border-left: 5px solid var(--background-color-secondary);
     border-right: 5px solid var(--background-color-secondary);
     font-family: inherit;
-    max-width: 35vw;
+    width: 100%;
 }
 
 #main > .container-button > .wrapper-input.input > input:focus {
@@ -194,6 +196,10 @@ header > .nav > ul{
     font-family: var(--font-family-primary);
 }
 
+#gameboard > ul > li > button > span.marked {
+    animation: markBoard 250ms ease-in;
+}
+
 #winner-wrapper { 
     position: absolute;
     top: 0;
@@ -204,7 +210,7 @@ header > .nav > ul{
     justify-content: center;
     align-content: center;
     background: linear-gradient(45deg, var(--background-color-primary), var(--background-color-secondary));
-    font-size: 10vw;
+    font-size: clamp(1.25rem, 12vw, 4rem);
     text-align: center;
     border-radius: 2%;
     animation: fadeIn 500ms ease-in
@@ -267,15 +273,31 @@ header > .nav > ul{
     }
 }
 
-@media screen and (min-width: 768px) {
-    #main > .container-button > .wrapper-input.input {
-        max-width: 60vw;
-        justify-self: center;
+@keyframes markBoard {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
     }
 
-    #main > .container-scoreboard {
-        max-width: 60vw;
-        justify-self: center;
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dropDown {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #main > .container-button > .wrapper-input.input > input {
+        width: 30%;
     }
 
     #gameboard > ul {
@@ -284,10 +306,10 @@ header > .nav > ul{
     }
 
     #gameboard > ul > li > button > span {
-        font-size: 6vw;
+        font-size: 5rem;
     }
 
     #winner-wrapper {
-        font-size: 5vw;
+        font-size: clamp(1.25rem, 5vw, 4rem);
     }
 }

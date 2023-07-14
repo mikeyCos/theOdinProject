@@ -147,10 +147,22 @@ const ticTacToe = (function() {
                 console.log(e)
             })
             console.log(`---`) //for debugging
-            // console.log(this.gameboard[0]); //for debugging
             //this works if the array is full
             this.gameboard.flat(1).forEach((value, index) => {
-            this.boardSpanElements[index].textContent = value;
+                // if (value === 'O') {
+                //     this.boardSpanElements[index].style
+                // }
+                console.log(this.boardSpanElements[index].className)
+                if (this.boardSpanElements[index].className === '' && value !== null) {
+                    let classNames = ['marked', 'X'];
+                    if (value === 'O') {
+                        classNames[1] = 'O';
+                    }
+                    this.boardSpanElements[index].classList.add(classNames[0], classNames[1])
+                } else if (value === null) {
+                    this.boardSpanElements[index].className = '';
+                }
+                this.boardSpanElements[index].textContent = value;
             });
         },
         markBoard: function(e) {
@@ -225,7 +237,7 @@ const ticTacToe = (function() {
                     // debugger
                     scoreboardController.render(null, this.gameState, this.activePlayer.getScore());
                 } else {
-                    gameMessage = 'Draw';
+                    gameMessage = ['Draw'];
                 }
                 this.render(gameMessage);
             } else {
@@ -314,8 +326,8 @@ const ticTacToe = (function() {
             }
 
             // console.log(`----------minimax running------------`)
-            // this.minimax(gameController.getGameState(this.fauxBoard))
             // this.minimax(this.fauxBoard);
+            // console.log(this.minimax(this.fauxBoard))
 
             boardElements[index].dispatchEvent(event);
             boardElements[index].removeEventListener('build', gameboard.markBoard);
@@ -338,48 +350,40 @@ const ticTacToe = (function() {
             return possibleMoves;
         },
         makeMove: function(board, i) {
-            const shallowCopy = board.map(arr => {
-                return arr.slice();
-            })
-            shallowCopy[i[0]][i[1]] = this.fauxPlayer.getMarker();
-            console.table(shallowCopy); //for debugging
-            return shallowCopy;
+            board[i[0]][i[1]] = this.fauxPlayer.getMarker();
+            // this.switchTurns();
+            return board;
         },
         minimax: function(board) {
             let gameState = gameController.getGameState(board);
-            console.log(`---------`)
-            console.log(`gameState: ${gameState}`)
-            if (gameState) {
-                if (gameState >= -1 && gameState !== null) {
-                    // return gameController.getGameState(gameboard.gameboard);
-                    console.log(`minimax ends`)
-                    // console.table(this.fauxBoard)
-                    return gameState;
-                }
+            // console.log(`---------`);
+            // console.log(`gameState: ${gameState}`);
+            // console.table(board);
+            if (gameState !== false) {
+                console.table(board);
+                return gameState
             }
 
             let value;
             if (this.fauxPlayer.getMarker() === 'X') {
-                console.log(`--------max running--------`);
+                // console.log(`--------max running--------`);
                  //if maximizingPlayer [human][X]
                 //max player wants biggest number
                 value = -Infinity;
                 this.getPossibleMoves().forEach(i => {
-                    // value = Math.max(value, this.minimax(this.makeMove(board, i)));;
-                    console.log(this.makeMove(board, i))
+                    value = Math.max(value, this.minimax(this.makeMove(board, i)));;
                 })
-                // this.switchTurns();
-                // return value;
+                // console.log(`--------min running--------`);
+                return value;
             } else {
-                console.log(`--------min running--------`);
+                // console.log(`--------min running--------`);
                 //minimizingPlayer [computer][O]
                 //min player wants smallest number
                 value = +Infinity;
-                this.getPossibleMoves().forEach(i => {
-                    // value = Math.min(value, this.minimax(this.makeMove(board, i)));
-                    // console.log(this.makeMove(board, i));
+                this.getPossibleMoves().every(i => {
+                    value = Math.min(value, this.minimax(this.makeMove(board, i)));
                 })
-                // this.switchTurns();
+                // console.log(`--------min end--------`)
                 return value;
             }
         },
