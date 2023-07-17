@@ -157,18 +157,34 @@ const validateForm = formSelector => {
 
 let myLibrary = []
 
-function Book(title, author, pages, isbn, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.isbn = isbn
-    this.read = read;
-    myLibrary.push(this);
-}
+// function Book(title, author, pages, isbn, read) {
+//     this.title = title
+//     this.author = author
+//     this.pages = pages
+//     this.isbn = isbn
+//     this.read = read;
+//     myLibrary.push(this);
+// }
 
-Book.prototype.toggleReadStatus = function(readStatus) {
-    this.read = readStatus;
-    console.log(this) //for debugging
+// Book.prototype.toggleReadStatus = function(readStatus) {
+//     this.read = readStatus;
+//     console.log(this) //for debugging
+// }
+
+class Book {
+    constructor(title, author, pages, isbn, read) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.isbn = isbn
+        this.read = read;
+        myLibrary.push(this);
+    }
+
+    toggleReadStatus(readStatus) {
+        this.read = readStatus;
+        console.log(this) //for debugging
+    }
 }
 
 function addBookToLibrary() {

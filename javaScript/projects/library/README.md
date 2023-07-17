@@ -12,6 +12,7 @@ Live preview: (https://mikeycos.github.io/theOdinProject/javaScript/projects/lib
 1. Sometimes, when the form is submitted and reopened the first/last input is validated. `e.stopImmediatePropagation();` Attached to multiple event handlers.
 ---
 ### Changelog
+17 JUL 2023: Refactored `Book` object into a class and included the `toggleReadStatus` function inside the class notation.  
 21 JUN 2023 : First input is focused when modal is opened then `modal.focus()` changes focus from the input to the modal, books that have been read will be assigned the class name `read`, set transition duration for book containers, `buttonAddNewBook.scrollIntoView()` after form is submitted with valid inputs.  
 20 JUN 2023 : Pattern/minlength/custommaxlength applied to validation rules, imported Google fonts `Titillium Web / Pathway Extreme`, ISBN input is recorded as a number and removes dashes, changed color palette, for loops using `books.length` are subtracted by 1 and index starting at 0, link to Github repository included on header, and applied font properties to form and book containers.  
 19 JUN 2023 : Removed borders for debugging, library children elements max size is 300px on mobile and 25% on screen sizes equal/above 768px wide, book elements now append before the `button-add-book` node, and added `fill` attribute for each validity icon in their respective svg fill.  
