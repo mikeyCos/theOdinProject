@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&family=Tektur:wght@400;500;600;700;800;900&display=swap');
+/* @font-face {
+    font-family: 'MyFont';
+    src: url('./Heebo-VariableFont.ttf') format('ttf'),
+        url('./Tektur-VariableFont.ttf') format('ttf');
+    font-weight: 600;
+    font-style: normal;
+} */
+
+.hello {
+    color: red;
+    font-family: 'Tektur', cursive;
+    font-size: 4rem;
+    /* background: url('./bxl-git.svg'); */
+}
