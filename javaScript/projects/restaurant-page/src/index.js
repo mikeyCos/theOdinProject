@@ -1,10 +1,11 @@
 import './styles.css';
 import AssetImage from './assets/test.jpg';
-import buildHeader from './header.js';
-import buildHome from './home.js';
-import buildAbout from './about.js';
-import buildMenu from './menu.js';
-import buildContact from './contact.js';
+import buildHeader from './modules/header.js';
+import buildHome from './modules/home.js';
+import buildAbout from './modules/about.js';
+import buildMenu from './modules/menu.js';
+import buildContact from './modules/contact.js';
+import buildFooter from './modules/footer.js';
 
 const home = (function() {
     const build = {
@@ -13,6 +14,7 @@ const home = (function() {
         about: buildAbout,
         menu: buildMenu,
         contact: buildContact,
+        footer: buildFooter,
     }
 
     const content = {
@@ -22,6 +24,8 @@ const home = (function() {
             this.cacheDOM();
             this.bindEvents();
             this.render();
+            build.footer();
+
         },
         cacheDOM: function() {
             this.contentContainer = document.querySelector('#content');

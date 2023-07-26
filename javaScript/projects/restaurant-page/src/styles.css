@@ -1,3 +1,12 @@
+:root {
+    /* color palette */
+    /* https://huemint.com/brand-intersection/ */
+    --background-color-primary: #f3f3f3;
+    --placeholder-one: #f5d3d2;
+    --placeholder-two: #3a4279;
+    --placeholder-three: #478dd6;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -6,5 +15,47 @@
 
 body {
     min-height: 100vh;
-    background-color: lightseagreen;
+    background-color: var(--background-color-primary);
+    display: grid;
+    grid-template-rows: min-content 1fr min-content;
+}
+
+#navbar > .container {
+    display: grid;
+    justify-content: end;
+    position: relative;
+}
+
+.links {
+    display: none;
+    list-style: none;
+    position: absolute;
+    top: 0;
+    right: 2rem;
+}
+
+.links > li > a {
+    text-decoration: none;
+}
+
+.menu {
+    border: none;
+    background: none;
+}
+
+.menu > img {
+    max-width: 32px;
+}
+
+#hero {
+    display: grid;
+}
+
+#hero > h1 {
+    justify-self: center;
+}
+
+footer > .container {
+    display: flex;
+    justify-content: center;
 }
