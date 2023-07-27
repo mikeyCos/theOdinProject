@@ -1,5 +1,4 @@
 import './styles.css';
-import AssetImage from './assets/test.jpg';
 import buildHeader from './modules/header.js';
 import buildHome from './modules/home.js';
 import buildAbout from './modules/about.js';
