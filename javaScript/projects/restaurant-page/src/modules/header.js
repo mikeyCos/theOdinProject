@@ -31,7 +31,6 @@ const nav = {
         const navMenuImg = new Image();
         navMenuImg.src = MenuIcon;
         navMenu.appendChild(navMenuImg);
-        navContainer.appendChild(navMenu);
     
         navMenu.classList.add('menu');
 
@@ -53,6 +52,7 @@ const nav = {
             navList.appendChild(navItem);
         })
         navContainer.appendChild(navList);
+        navContainer.appendChild(navMenu);
         navWrapper.appendChild(navContainer);
         this.cacheDOM(navMenu, navList);
         this.bindEvents();
@@ -65,10 +65,11 @@ const nav = {
     bindEvents: function() {
         this.toggleMenu = this.toggleMenu.bind(this);
         this.button.addEventListener('click', this.toggleMenu);
+        this.menu.addEventListener('click', this.toggleMenu);
     },
-    toggleMenu: function(e) {
+    toggleMenu: function() {
         console.log(`toggleMenu firing`); //for debugging
-        let isPressed = JSON.parse(e.target.parentElement.getAttribute('aria-pressed')) == true || false;
+        let isPressed = JSON.parse(this.button.getAttribute('aria-pressed')) == true || false;
         this.button.setAttribute('aria-pressed', !isPressed);
         let display;
         isPressed ? display = 'none' : display = 'grid';
