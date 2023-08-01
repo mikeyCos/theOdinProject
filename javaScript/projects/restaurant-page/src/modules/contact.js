@@ -12,10 +12,6 @@ export default function buildContact() {
     return contactContainer;
 }
 
-//name
-//email
-//phone number
-//message
 const form = {
     render: function() {
         const formContainer = document.createElement('div');
@@ -23,36 +19,55 @@ const form = {
         
         const formElement = document.createElement('form');
         formElement.id = 'form'
+
+        const formNoteLabel = document.createElement('label');
+        const formNoteLabelText = document.createTextNode('Indicates required field');
+        const formNoteSpan = document.createElement('span');
+        const formNoteSpanText = document.createTextNode('*');
+        formNoteSpan.classList.add('asterik');
+
+        formNoteSpan.appendChild(formNoteSpanText);
+        formNoteLabel.appendChild(formNoteSpan);
+        formNoteLabel.appendChild(formNoteLabelText);
+        formElement.appendChild(formNoteLabel);
         for (let inputs in this.attributes) {
-            console.log(inputs)
-            console.log(this.attributes[inputs])
             const formItem = document.createElement('div');
             formItem.classList.add('form-item');
-            const label = document.createElement('label');
-            const labelText = document.createTextNode(inputs);
-            const span = document.createElement('span');
-            span.classList.add('asterik');
-            const spanText = document.createTextNode('*');
-            label.htmlFor = inputs;
-            label.appendChild(labelText);
-            span.appendChild(spanText);
-            label.appendChild(span);
-            formItem.appendChild(label);
 
-            if (inputs !== 'message') {
-                const input = document.createElement('input');
-                input.id = inputs;
-                Object.assign(input, this.attributes[inputs]);
-                formItem.appendChild(input);
-            } else {
-                const textArea = document.createElement('textarea');
-                textArea.id = inputs;
-                for (let attr in this.attributes[inputs]) {
-                    textArea.setAttribute(attr, this.attributes[inputs][attr]);
+            if (inputs !== 'submit') {
+                const label = document.createElement('label');
+                const labelText = document.createTextNode(`${inputs} `);
+                const span = document.createElement('span');
+                span.classList.add('asterik');
+                const spanText = document.createTextNode('*');
+                label.htmlFor = inputs;
+                label.appendChild(labelText);
+                span.appendChild(spanText);
+                label.appendChild(span);
+                formItem.appendChild(label);
+
+                if (inputs !== 'message') {
+                    const input = document.createElement('input');
+                    input.id = inputs;
+                    Object.assign(input, this.attributes[inputs]);
+                    formItem.appendChild(input);
+                } else {
+                    const textArea = document.createElement('textarea');
+                    textArea.id = inputs;
+                    for (let attr in this.attributes[inputs]) {
+                        textArea.setAttribute(attr, this.attributes[inputs][attr]);
+                    }
+                    formItem.appendChild(textArea);
                 }
-                formItem.appendChild(textArea);
+            } else {
+                const submitButton = document.createElement('button');
+                submitButton.id = inputs;
+                const submitButtonText = document.createTextNode('Submit');
+                Object.assign(submitButton, this.attributes[inputs]);
+                submitButton.appendChild(submitButtonText);
+                formItem.appendChild(submitButton);
             }
-            
+
             formElement.appendChild(formItem);
         }
 
@@ -87,6 +102,9 @@ const form = {
             type: 'text',
             placeholder: 'your message here (500 characters max)',
             required: 'required',
+        },
+        submit: {
+            type: 'submit',
         },
     }
 }

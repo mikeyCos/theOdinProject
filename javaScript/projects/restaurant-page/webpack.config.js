@@ -8,7 +8,6 @@ module.exports = {
         // navbar: './src/navbar.js',
         // import and export statement have been standardized in ES2015
         // older browsers do not support import/export statements
-        
     },
     devtool: 'inline-source-map',
     devServer: {

@@ -36,10 +36,16 @@ const menu = {
         pizzas: [
             food('rhoa', 'tomato sauce, mozzarella, oregano, roasted rhoa', '15.00'),
             food('pepperoni', 'tomato sauce, mozzarella, oregano, pepperoni', '10.00'),
+            food('juicy one', 'ranch suace, mozzarella, parsley, BBQ beast', '12.00'),
         ],
         salads: [
             food('weta', 'romaine lettuce, cucumber, sunflower seeds, tomatoes, weta', '5.00'),
-        ]
+            food('perandus crunch', 'green cabbage, butterhead lettuce, almonds, croutons', '9.00'),
+        ],
+        desserts: [
+            food(`alva's sacrifice`, 'vanilla ice cream, Atzoatl syrup, walnuts', '7.00'),
+            food('the delve bar', 'azurite, oreos, dark chocolate chips, almonds', '6.00'),
+        ],
     },
     render: function() {
         const foodContainer = document.createElement('div');

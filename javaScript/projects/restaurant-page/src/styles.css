@@ -53,12 +53,20 @@ body {
     max-width: 32px;
 }
 
-#hero {
+#hero > .container {
+    position: relative;
     display: grid;
 }
 
-#hero > h1 {
-    justify-self: center;
+#hero > .container > .hero-text {
+    position: absolute;
+    min-width: 100%;
+    align-self: center;
+    text-align: center;
+}
+
+#hero > .container > #carousel > .container > .carousel-item > img {
+    max-width: 100%;
 }
 
 footer > .container {

@@ -1,29 +1,38 @@
 import MenuIcon from '../assets/icons/menu.svg';
+import importAll from './images.js';
 
 const navLinks = ['home', 'about', 'menu', 'contact'];
 
 export default function buildHeader() {
     console.log(`navbar.js running`); //for debugging
-    const headerWrapper = document.createElement('header');
-    const headerContainer = document.createElement('div');
+    const headerElement = document.createElement('header');
+    const heroWrapper = document.createElement('div');
+
+    const heroTextWrapper = document.createElement('div');
+    heroTextWrapper.classList.add('hero-text');
     const heading = document.createElement('h1');
     const headingText = document.createTextNode('Restaurant');
-    headerContainer.id = 'hero';
+    heroWrapper.id = 'hero';
 
     const heroContainer = document.createElement('div');
     heroContainer.classList.add('container');
 
+    heroTextWrapper.appendChild(heading);
+    heroWrapper.appendChild(heroContainer);
     heading.appendChild(headingText);
-    headerContainer.appendChild(heading);
-    headerWrapper.appendChild(headerContainer);
+    heroContainer.appendChild(heroTextWrapper);
+    heroContainer.appendChild(imageCarousel.render());
+    headerElement.appendChild(heroWrapper);
 
-    headerWrapper.insertBefore(nav.render(), headerContainer);
-    document.body.insertBefore(headerWrapper, document.body.firstChild);
+    headerElement.insertBefore(nav.render(), heroWrapper);
+    document.body.insertBefore(headerElement, document.body.firstChild);
+
+    
 }
 
 const nav = {
     render: function() {
-        const navWrapper = document.createElement('nav');
+        const navElement = document.createElement('nav');
         const navContainer = document.createElement('div');
         
         const navMenu = document.createElement('button');
@@ -34,7 +43,7 @@ const nav = {
     
         navMenu.classList.add('menu');
 
-        navWrapper.id = 'navbar';
+        navElement.id = 'navbar';
         navContainer.classList.add('container');
     
         const navList = document.createElement('ul');
@@ -53,10 +62,10 @@ const nav = {
         })
         navContainer.appendChild(navList);
         navContainer.appendChild(navMenu);
-        navWrapper.appendChild(navContainer);
+        navElement.appendChild(navContainer);
         this.cacheDOM(navMenu, navList);
         this.bindEvents();
-        return navWrapper;
+        return navElement;
     },
     cacheDOM: function(btn, ul) {
         this.button = btn;
@@ -75,4 +84,43 @@ const nav = {
         isPressed ? display = 'none' : display = 'grid';
         this.menu.style.display = display;
     },
+}
+
+
+//images slideshow
+const imageCarousel = {
+    render: function() {
+        const carouselWrapper = document.createElement('div');
+        carouselWrapper.id = 'carousel';
+        const carouselContainer = document.createElement('div');
+        carouselContainer.classList.add('container');
+
+        // <div class="carousel-item item-0"><img class="" src="" loading="lazy"</div>
+        const carouselItem = document.createElement('div');
+        carouselItem.classList.add('carousel-item');
+
+        const carouselImg = document.createElement('img');
+        carouselImg.src = `${this.images.images['pizza0.jpg']}`;
+
+        const buttonBack = document.createElement('button');
+        const buttonForward = document.createElement('button');
+        // const images = importAll(require.context('../assets/images/', false, /\.jpg$/));
+        // console.log(this.images.images['pizza0.jpg']);
+        // console.log(images.imagesArr.length);
+        // console.log(this.images.imagesArr[0])
+        // for (let i = 0; i < this.images.imagesArr.length; i++) {
+        //     for (let image in this.images.images) {
+                
+        //     }
+        // }
+
+        carouselItem.appendChild(carouselImg);
+        carouselContainer.appendChild(carouselItem);
+        carouselWrapper.appendChild(carouselContainer);
+        return carouselWrapper;
+    },
+    cacheDOM: function() {
+
+    },
+    images: importAll(require.context('../assets/images/', false, /\.jpg$/)),
 }
