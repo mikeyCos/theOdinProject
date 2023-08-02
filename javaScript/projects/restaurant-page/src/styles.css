@@ -20,10 +20,19 @@ body {
     grid-template-rows: min-content 1fr min-content;
 }
 
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
 #navbar > .container {
     display: grid;
     justify-content: end;
     position: relative;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0px -0.5px 5px -0.5px black;
 }
 
 .links {
@@ -58,6 +67,35 @@ body {
     display: grid;
 }
 
+#hero > .container > .hero-text > h1 {
+    color: white;
+}
+
+#hero > .container > #carousel > .container {
+    display: grid;
+}
+
+#hero > .container > #carousel > .container > button {
+    position: absolute;
+    align-self: center;
+    border: none;
+    background: none;
+    display: grid;
+}
+
+#hero > .container > #carousel > .container > button:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#hero > .container > #carousel > .container > button:last-of-type {
+    right: 0;
+}
+
+#hero > .container > #carousel > .container > button > img {
+    width: clamp(2rem, 5vw, 5rem);
+    filter: brightness(0) saturate(100%) invert(100%) sepia(3%) saturate(2%) hue-rotate(64deg) brightness(108%) contrast(101%);
+}
+
 #hero > .container > .hero-text {
     position: absolute;
     min-width: 100%;
@@ -67,9 +105,22 @@ body {
 
 #hero > .container > #carousel > .container > .carousel-item > img {
     max-width: 100%;
+    min-height: 100vh;
+    object-fit: cover;
 }
 
 footer > .container {
     display: flex;
     justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+    .links {
+        display: grid;
+        grid-template-columns: repeat(4, max-content);
+        list-style: none;
+        width: 100vw;
+        height: min-content;
+        top: 0;
+    }
 }

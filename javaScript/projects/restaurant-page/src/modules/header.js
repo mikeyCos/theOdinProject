@@ -1,5 +1,9 @@
-import MenuIcon from '../assets/icons/menu.svg';
 import importAll from './images.js';
+
+const assets = {
+    icons: importAll(require.context('../assets/icons/', false, /\.svg$/)),
+    images: importAll(require.context('../assets/images/', false, /\.jpg$/)),
+}
 
 const navLinks = ['home', 'about', 'menu', 'contact'];
 
@@ -38,9 +42,8 @@ const nav = {
         const navMenu = document.createElement('button');
         navMenu.setAttribute('aria-pressed', false);
         const navMenuImg = new Image();
-        navMenuImg.src = MenuIcon;
+        navMenuImg.src = assets.icons.images['menu.svg'];
         navMenu.appendChild(navMenuImg);
-    
         navMenu.classList.add('menu');
 
         navElement.id = 'navbar';
@@ -52,7 +55,7 @@ const nav = {
         navLinks.forEach(item => {
             const navItem = document.createElement('li');
             const anchor = document.createElement('a');
-            anchor.href = '#';
+            anchor.href = `#${item}`;
             anchor.classList.add(item);
     
             const navItemText = document.createTextNode(item);
@@ -95,32 +98,68 @@ const imageCarousel = {
         const carouselContainer = document.createElement('div');
         carouselContainer.classList.add('container');
 
-        // <div class="carousel-item item-0"><img class="" src="" loading="lazy"</div>
         const carouselItem = document.createElement('div');
         carouselItem.classList.add('carousel-item');
 
         const carouselImg = document.createElement('img');
-        carouselImg.src = `${this.images.images['pizza0.jpg']}`;
+        carouselImg.src = assets.images.images['pizza0.jpg'];
 
         const buttonBack = document.createElement('button');
+        buttonBack.classList.add('btn-carousel', 'back');
+        const imageBack = document.createElement('img');
+        imageBack.src = assets.icons.images['chevron_left.svg'];
+        buttonBack.appendChild(imageBack);
+
         const buttonForward = document.createElement('button');
-        // const images = importAll(require.context('../assets/images/', false, /\.jpg$/));
-        // console.log(this.images.images['pizza0.jpg']);
-        // console.log(images.imagesArr.length);
-        // console.log(this.images.imagesArr[0])
-        // for (let i = 0; i < this.images.imagesArr.length; i++) {
-        //     for (let image in this.images.images) {
-                
-        //     }
-        // }
+        buttonForward.classList.add('btn-carousel', 'forward');
+        const imageForward = document.createElement('img');
+        imageForward.src = assets.icons.images['chevron_right.svg'];
+        buttonForward.appendChild(imageForward);
+        this.cacheDOM(carouselImg, buttonBack, buttonForward);
+
+        carouselContainer.appendChild(buttonBack);
+        carouselContainer.appendChild(buttonForward);
 
         carouselItem.appendChild(carouselImg);
         carouselContainer.appendChild(carouselItem);
         carouselWrapper.appendChild(carouselContainer);
+        this.bindEvents();
         return carouselWrapper;
     },
-    cacheDOM: function() {
-
+    cacheDOM: function(image, ...buttons) {
+        this.carouselImg = image;
+        this.buttons = buttons;
     },
-    images: importAll(require.context('../assets/images/', false, /\.jpg$/)),
+    bindEvents: function() {
+        this.changeImage = this.changeImage.bind(this);
+        [...this.buttons].forEach(button => button.addEventListener('click', this.changeImage));
+    },
+    changeImage: function(e) {
+        console.log(`changeImage running`);
+        let direction = e.target.parentElement.className.split(' ')[1];
+        let imageIndex;
+        for (let key in assets.images.images) {
+            if (assets.images.images[key] === this.carouselImg.src) {
+                imageIndex = Object.keys(assets.images.images).indexOf(key);
+                break;
+            }
+        }
+
+        let newIndex;        
+        if (direction === 'forward') {
+            if (imageIndex < Object.keys(assets.images.images).length - 1) {
+                newIndex = imageIndex + 1;
+            } else {
+                newIndex = 0;
+            }
+        } else {
+            if (imageIndex > 0) {
+                newIndex = imageIndex - 1;
+            } else {
+                newIndex = Object.keys(assets.images.images).length - 1;
+            }
+        }
+
+        this.carouselImg.src = assets.images.images[Object.keys(assets.images.images)[newIndex]];
+    },
 }
