@@ -1,3 +1,5 @@
+import '../styles/home.css';
+
 export default function buildHome() {
     console.log('buildHome running');
     const homeContainer = document.createElement('div');

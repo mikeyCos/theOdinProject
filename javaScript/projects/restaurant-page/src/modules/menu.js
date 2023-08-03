@@ -1,3 +1,5 @@
+import '../styles/menu.css';
+
 export default function buildMenu() {
     console.log(`menu.js running`);
     const menuContainer = document.createElement('div');
@@ -48,7 +50,11 @@ const menu = {
         ],
     },
     render: function() {
+        const foodWrapper = document.createElement('div');
+        foodWrapper.id = 'menu-main';
         const foodContainer = document.createElement('div');
+        foodContainer.classList.add('container');
+
         for (let item in this.food) {
             const menuSection = document.createElement('div');
             const menuSectionHeader = document.createElement(('h2'));
@@ -56,7 +62,7 @@ const menu = {
             menuSection.classList.add(item);
             menuSectionHeader.appendChild(menuSectionHeaderText);
             menuSection.appendChild(menuSectionHeader);
-            console.log(typeof this.food[item])
+
             this.food[item].map(food => { 
                 const menuItemContainer = document.createElement('div');
                 for (let info in food) {
@@ -67,9 +73,10 @@ const menu = {
                 };
                 menuSection.appendChild(menuItemContainer);
             });
-            foodContainer.appendChild(menuSection);
+            foodContainer.appendChild(menuSection)
         }
-        return foodContainer;
+        foodWrapper.appendChild(foodContainer);
+        return foodWrapper;
     }
 }
 //Pizzas

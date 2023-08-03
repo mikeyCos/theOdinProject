@@ -1,8 +1,10 @@
+import '../styles/contact.css';
+
 export default function buildContact() {
     console.log(`contact.js running`);
     const contactContainer = document.createElement('div');
     contactContainer.id = 'contact';
-
+    
     const header = document.createElement('h1');
     const headerText = document.createTextNode('Contact');
     header.appendChild(headerText);
@@ -14,11 +16,11 @@ export default function buildContact() {
 
 const form = {
     render: function() {
-        const formContainer = document.createElement('div');
-        formContainer.id = 'container';
-        
         const formElement = document.createElement('form');
         formElement.id = 'form'
+
+        const formWrapper = document.createElement('div');
+        formWrapper.classList.add('container');
 
         const formNoteLabel = document.createElement('label');
         const formNoteLabelText = document.createTextNode('Indicates required field');
@@ -29,7 +31,7 @@ const form = {
         formNoteSpan.appendChild(formNoteSpanText);
         formNoteLabel.appendChild(formNoteSpan);
         formNoteLabel.appendChild(formNoteLabelText);
-        formElement.appendChild(formNoteLabel);
+        formWrapper.appendChild(formNoteLabel);
         for (let inputs in this.attributes) {
             const formItem = document.createElement('div');
             formItem.classList.add('form-item');
@@ -68,11 +70,11 @@ const form = {
                 formItem.appendChild(submitButton);
             }
 
-            formElement.appendChild(formItem);
+            formWrapper.appendChild(formItem);
         }
 
-        formContainer.appendChild(formElement);
-        return formContainer;
+        formElement.appendChild(formWrapper);
+        return formElement;
     },
     attributes: {
         name: {

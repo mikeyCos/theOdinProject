@@ -1,3 +1,5 @@
+import '../styles/about.css';
+
 export default function buildAbout() {
     console.log(`about.js running`);
     const aboutContainer = document.createElement('div');
@@ -19,10 +21,14 @@ const aboutMain = {
         const aboutMainWrapper = document.createElement('div');
         aboutMainWrapper.id = 'about';
 
+        const aboutMainContainer = document.createElement('div');
+        aboutMainContainer.classList.add('container');
+
         const aboutMainParagraph = document.createElement('p');
         const aboutMainParagraphText = document.createTextNode(text);
         aboutMainParagraph.appendChild(aboutMainParagraphText);
-        aboutMainWrapper.appendChild(aboutMainParagraph);
+        aboutMainContainer.appendChild(aboutMainParagraph);
+        aboutMainWrapper.appendChild(aboutMainContainer);
 
         return aboutMainWrapper;
     }
@@ -32,6 +38,9 @@ const aboutHistory = {
     render: function() {
         const historyWrapper = document.createElement('div');
         historyWrapper.id = 'history';
+
+        const historyMainContainer = document.createElement('div');
+        historyMainContainer.classList.add('container');
 
         for (let key in this.history) {
             const historyContainer = document.createElement('div');
@@ -45,8 +54,10 @@ const aboutHistory = {
 
             historyContainer.appendChild(historyHeading);
             historyContainer.appendChild(historyParagraph);
-            historyWrapper.appendChild(historyContainer);
+            historyMainContainer.appendChild(historyContainer);
         }
+
+        historyWrapper.appendChild(historyMainContainer);
 
         return historyWrapper;
     },

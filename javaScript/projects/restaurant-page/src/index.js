@@ -1,4 +1,4 @@
-import './styles.css';
+import './index.css';
 import buildHeader from './modules/header.js';
 import buildHome from './modules/home.js';
 import buildAbout from './modules/about.js';
@@ -29,22 +29,17 @@ const home = (function() {
         cacheDOM: function() {
             this.contentContainer = document.querySelector('#content');
             this.navBar = document.querySelector('#navbar');
-            this.navItems = Array.from(this.navBar.querySelectorAll('.container ul li'));
-            console.log(this.contentContainer);
+            this.navItems = Array.from(this.navBar.querySelectorAll('.container ul li a'));
         },
         render: function(key) {
             let content;
             if (!key) {
-                console.log('render running: no key'); //for debugging
                 content = build.home();
-                this.activeTab = content;
             } else {
-                console.log(`render running: ${key}`); //for debugging
-                this.activeTab.remove();
+                this.contentContainer.firstChild.remove();
                 content = build[key]();
-                this.activeTab = content;
             }
-            console.log(content); //for debugging
+            this.setActiveTab(content);
             this.contentContainer.appendChild(content);
         },
         bindEvents: function() {
@@ -52,22 +47,22 @@ const home = (function() {
             this.navItems.forEach(item => item.addEventListener('click', this.switchTab));
         },
         switchTab: function(e) {
-            console.log('switchTab running');
             for (const key in build) {
-                if (e.target.className ===  key && this.activeTab.id !== e.target.className) {
+                if (e.target.classList.contains(key) && !e.target.classList.contains('active')) {
+                    this.activeTab.classList.remove('active');
                     this.render(key);
                 }
             }
         },
+        setActiveTab: function(content) {
+            this.navItems.find(item => {
+                if (item.className === content.id) {
+                    this.activeTab = item;
+                    item.classList.add('active');
+                }
+            });
+        },
     }
-    //structure
-        //nav
-            //HOME ABOUT MENU CONTACT
-        //header
-            //h1
-        //#content
-            //changes based on current tab
-        //footer
 
     content.init();
 })();

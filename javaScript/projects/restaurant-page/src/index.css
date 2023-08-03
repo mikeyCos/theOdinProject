@@ -21,8 +21,10 @@ body {
 }
 
 #navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    right: 0;
+    min-width: 100%;
     z-index: 1;
 }
 
@@ -52,6 +54,10 @@ body {
     font-size: 2rem;
 }
 
+.links > li > a.active {
+    color: lightcyan;
+}
+
 .menu {
     border: none;
     background: none;
@@ -73,6 +79,7 @@ body {
 
 #hero > .container > #carousel > .container {
     display: grid;
+    height: 100vh;
 }
 
 #hero > .container > #carousel > .container > button {
@@ -105,8 +112,26 @@ body {
 
 #hero > .container > #carousel > .container > .carousel-item > img {
     max-width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     object-fit: cover;
+}
+
+#content {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    display: grid;
+    align-content: center;
+}
+
+#content > * > h1 {
+    text-align: center;
+    padding: 1rem;
+}
+
+#content > * > *:not(h1) > .container {
+    background-color: lightcoral;
+    display: grid;
+    padding: 1rem;
 }
 
 footer > .container {
@@ -122,5 +147,9 @@ footer > .container {
         width: 100vw;
         height: min-content;
         top: 0;
+    }
+
+    .menu {
+        /* display: none; */
     }
 }

@@ -1,0 +1,22 @@
+#home {
+    /* display: grid; */
+    /* gap: 1rem; */
+}
+
+#home > *:not(h1) > .container {
+    text-align: center;
+}
+
+#home > #hours > .container > ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#home > #hours > .container > ul > :nth-child(2n - 1 ) {
+    text-align: right;
+}
+
+#home > #hours > .container > ul > :nth-child(2n) {
+    text-align: left;
+}

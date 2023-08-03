@@ -38,13 +38,6 @@ const nav = {
     render: function() {
         const navElement = document.createElement('nav');
         const navContainer = document.createElement('div');
-        
-        const navMenu = document.createElement('button');
-        navMenu.setAttribute('aria-pressed', false);
-        const navMenuImg = new Image();
-        navMenuImg.src = assets.icons.images['menu.svg'];
-        navMenu.appendChild(navMenuImg);
-        navMenu.classList.add('menu');
 
         navElement.id = 'navbar';
         navContainer.classList.add('container');
@@ -63,14 +56,24 @@ const nav = {
             navItem.appendChild(anchor);
             navList.appendChild(navItem);
         })
-        navContainer.appendChild(navList);
+
+        
+        const navMenu = document.createElement('button');
+        navMenu.setAttribute('aria-pressed', false);
+        const navMenuImg = new Image();
+        navMenuImg.src = assets.icons.images['menu.svg'];
+        navMenu.appendChild(navMenuImg);
+        navMenu.classList.add('menu');
         navContainer.appendChild(navMenu);
+
+        navContainer.appendChild(navList);
         navElement.appendChild(navContainer);
         this.cacheDOM(navMenu, navList);
         this.bindEvents();
         return navElement;
     },
     cacheDOM: function(btn, ul) {
+        console.log(btn);
         this.button = btn;
         this.menu = ul;
     },
@@ -78,14 +81,23 @@ const nav = {
         this.toggleMenu = this.toggleMenu.bind(this);
         this.button.addEventListener('click', this.toggleMenu);
         this.menu.addEventListener('click', this.toggleMenu);
+        // this.getWindowWidth = this.getWindowWidth.bind(this);
+        // window.addEventListener('resize', this.getWindowWidth);
+    },
+    removeEvents: function() {
+        this.button.removeEventListener('click', this.toggleMenu);
+        this.menu.removeEventListener('click', this.toggleMenu);
     },
     toggleMenu: function() {
-        console.log(`toggleMenu firing`); //for debugging
         let isPressed = JSON.parse(this.button.getAttribute('aria-pressed')) == true || false;
         this.button.setAttribute('aria-pressed', !isPressed);
         let display;
         isPressed ? display = 'none' : display = 'grid';
         this.menu.style.display = display;
+    },
+    getWindowWidth: function() {
+        console.log(window.innerWidth);
+        return window.innerWidth;
     },
 }
 
