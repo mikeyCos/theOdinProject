@@ -48,6 +48,10 @@ const menu = {
             food(`alva's sacrifice`, 'vanilla ice cream, Atzoatl syrup, walnuts', '7.00'),
             food('the delve bar', 'azurite, oreos, dark chocolate chips, almonds', '6.00'),
         ],
+        appetizers: [
+            food('breadstick', null,'2.00'),
+            food('waffle fries', null, '4.99'),
+        ],
     },
     render: function() {
         const foodWrapper = document.createElement('div');
@@ -67,10 +71,20 @@ const menu = {
                 const menuItemContainer = document.createElement('div');
                 menuItemContainer.classList.add('item');
                 for (let info in food) {
-                    const menuItemParagraph = document.createElement('p');
-                    const menuItemParagraphText = document.createTextNode(food[info])
-                    menuItemParagraph.appendChild(menuItemParagraphText);
-                    menuItemContainer.appendChild(menuItemParagraph)
+                    if (food[info] !== null) {
+                        const menuItemParagraph = document.createElement('p');
+                        let menuItemParagraphText = document.createTextNode(food[info]);
+                        menuItemParagraph.appendChild(menuItemParagraphText);
+                        menuItemContainer.appendChild(menuItemParagraph)
+                        if (info === 'price') {
+                            const menuItemCents = document.createElement('sup');
+                            menuItemParagraphText.nodeValue = food[info].split('.')[0];
+                            const menuItemCentsText = document.createTextNode(food[info].split('.')[1]);
+                            menuItemCents.appendChild(menuItemCentsText);
+                            menuItemParagraph.appendChild(menuItemCents);
+                        }
+                        
+                    }
                 };
                 menuSection.appendChild(menuItemContainer);
             });
@@ -80,6 +94,3 @@ const menu = {
         return foodWrapper;
     }
 }
-//Pizzas
-//Signature Pizzas
-//Sides

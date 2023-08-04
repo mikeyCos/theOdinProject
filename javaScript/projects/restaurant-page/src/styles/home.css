@@ -1,6 +1,6 @@
-#home > *:not(h1) > .container {
+#home > *:not(h1) > .container > h2,
+#home > *:last-child > .container > p {
     text-align: center;
-    font-size: clamp(1rem, 5vw, 2rem);
 }
 
 #home > #hours > .container > ul {
@@ -16,4 +16,20 @@
 
 #home > #hours > .container > ul > :nth-child(2n) {
     text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+    #home {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #home > h1,
+    #home > #statement {
+        grid-column: span 2;
+    }
+
+    #home > #location > .container {
+        min-height: 100%;
+        grid-template-rows: min-content;
+    }
 }

@@ -5,14 +5,17 @@ Live preview: [Restaurant Page](https://mikeycos.github.io/theOdinProject/javaSc
 ### Ideas
 1. Separate changelog into it's own file.
 2. Use ImageMinimizerWebpackPlugin.
-3. Dynamic navigation bar that add/removes menu button and event listeners based on window width.
+3. :heavy_check_mark: Dynamic navigation bar that add/removes menu button and event listeners based on window width.
+4. JS Form validation.
 ---
 ### Questions
-1. Why do I need to run `npm run build` after running `npm run start` (i.e. webpack dev server)?  
+1. Why do I need to run `npm run build` after stopping `npm run start` (i.e. webpack dev server)?  
 2. Does the order of `appendChild` matter?
 3. How am I able to use custom CSS variables defined in `index.css` in a different CSS file?
+4. Does using `sup` element for cents considered a typographical convention?
 ---
 ### Changelog
+- 04 JUL 2023: Removed `text-align: center` from `hero-text` selector, passed in `null` when creating food objects for appetizers, food price is split and cents is appended inside a `sup` element, `header.js` module now adds and removes a class longer instead of directly altering the navbar unordered list's style, discovered issue with overflowing navbar, and applied transitions and animations to a few containers.  
 - 03 JUL 2023: Applied min-height property to a variety of selectors within the `#hero` container, removed the padding property from `#content` selector, downloaded Google Fonts (Nunito Sans and Teko), applied a variety of CSS properties to a variety of elements, resolved elements are overflowing in mobile viewport, and applied media query breakpoint for desktop layout.  
 - 02 JUL 2023: Created separate CSS files for each module, implemented `setActiveTab` in `index.js` module to track current tab and add a class to the corresponding navigation item, `#content` section now takes up 100% viewport-height, and attempted to dynamically add/remove the navigation bar.  
 - 01 JUL 2023: Z-index applied to navbar unordered list, implemented the ability to change the header's image using the forward/backward buttons, navbar will stick to page upon page scroll, imported uncompressed images, and set carousel image to take 100% of viewport-height.  

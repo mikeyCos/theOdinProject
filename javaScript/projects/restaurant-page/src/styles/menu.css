@@ -3,10 +3,6 @@
     row-gap: 1rem;
 }
 
-#menu > #menu-main > .container > * > h2 {
-    font-size: clamp(1.5rem, 10vw, 2rem);
-}
-
 #menu > #menu-main > .container > * > .item {
     padding: 0.5rem;
 }
@@ -17,6 +13,12 @@
     font-weight: 700;
     position: relative;
     margin-bottom: 1rem;
+}
+
+#menu > #menu-main > .container > * > .item > p:last-child > sup {
+    font-size: clamp(0.65rem, 2vw, 0.95rem);
+    text-decoration: underline;
+    padding: 0.15rem;
 }
 
 #menu > #menu-main > .container > * > .item > p:first-child::after {

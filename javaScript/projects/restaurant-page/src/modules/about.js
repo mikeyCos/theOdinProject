@@ -45,7 +45,7 @@ const aboutHistory = {
         for (let key in this.history) {
             const historyContainer = document.createElement('div');
             historyContainer.classList.add('item');
-            const historyHeading = document.createElement('h3');
+            const historyHeading = document.createElement('h2');
             const historyHeadingText = document.createTextNode(`${key}, ${this.history[key][0]}`);
             historyHeading.appendChild(historyHeadingText);
 

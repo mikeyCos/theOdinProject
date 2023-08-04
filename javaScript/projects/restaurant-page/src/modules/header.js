@@ -30,8 +30,6 @@ export default function buildHeader() {
 
     headerElement.insertBefore(nav.render(), heroWrapper);
     document.body.insertBefore(headerElement, document.body.firstChild);
-
-    
 }
 
 const nav = {
@@ -57,32 +55,41 @@ const nav = {
             navList.appendChild(navItem);
         })
 
-        
+        const logo = document.createElement('div');
+        logo.id = 'logo';
+        const logoLink = document.createElement('a');
+        const logoLinkText = document.createTextNode(`Exile's Pizza`);
+        logoLink.appendChild(logoLinkText);
+        logo.appendChild(logoLink);
+        navContainer.appendChild(logo);
+
         const navMenu = document.createElement('button');
         navMenu.setAttribute('aria-pressed', false);
         const navMenuImg = new Image();
         navMenuImg.src = assets.icons.images['menu.svg'];
         navMenu.appendChild(navMenuImg);
-        navMenu.classList.add('menu');
+        navMenu.classList.add('btn-menu');
         navContainer.appendChild(navMenu);
 
         navContainer.appendChild(navList);
         navElement.appendChild(navContainer);
         this.cacheDOM(navMenu, navList);
-        this.bindEvents();
+        this.getWindowWidth();
+        this.watchScreen();
         return navElement;
     },
+    watchScreen: function() {
+        this.getWindowWidth = this.getWindowWidth.bind(this);
+        window.addEventListener('resize', this.getWindowWidth);
+    },
     cacheDOM: function(btn, ul) {
-        console.log(btn);
         this.button = btn;
         this.menu = ul;
+        this.toggleMenu = this.toggleMenu.bind(this);
     },
     bindEvents: function() {
-        this.toggleMenu = this.toggleMenu.bind(this);
         this.button.addEventListener('click', this.toggleMenu);
         this.menu.addEventListener('click', this.toggleMenu);
-        // this.getWindowWidth = this.getWindowWidth.bind(this);
-        // window.addEventListener('resize', this.getWindowWidth);
     },
     removeEvents: function() {
         this.button.removeEventListener('click', this.toggleMenu);
@@ -91,16 +98,17 @@ const nav = {
     toggleMenu: function() {
         let isPressed = JSON.parse(this.button.getAttribute('aria-pressed')) == true || false;
         this.button.setAttribute('aria-pressed', !isPressed);
-        let display;
-        isPressed ? display = 'none' : display = 'grid';
-        this.menu.style.display = display;
+        isPressed ? this.menu.classList.remove('active') : this.menu.classList.add('active');
     },
     getWindowWidth: function() {
         console.log(window.innerWidth);
-        return window.innerWidth;
+        if (window.innerWidth > 768) {
+            this.removeEvents();
+        } else {
+            this.bindEvents();
+        }
     },
 }
-
 
 //images slideshow
 const imageCarousel = {
