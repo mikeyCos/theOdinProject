@@ -19,7 +19,7 @@ const aboutMain = {
     render: function() {
         const text = 'Varius morbi enim nunc faucibus a pellentesque sit amet porttitor. Magna eget est lorem ipsum dolor sit. Arcu felis bibendum ut tristique et. Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum. Viverra orci sagittis eu volutpat odio. Id nibh tortor id aliquet. Faucibus nisl tincidunt eget nullam. Egestas quis ipsum suspendisse ultrices. Suspendisse potenti nullam ac tortor vitae purus faucibus. Tincidunt eget nullam non nisi est sit.';
         const aboutMainWrapper = document.createElement('div');
-        aboutMainWrapper.id = 'about';
+        aboutMainWrapper.id = 'about-main';
 
         const aboutMainContainer = document.createElement('div');
         aboutMainContainer.classList.add('container');
@@ -44,6 +44,7 @@ const aboutHistory = {
 
         for (let key in this.history) {
             const historyContainer = document.createElement('div');
+            historyContainer.classList.add('item');
             const historyHeading = document.createElement('h3');
             const historyHeadingText = document.createTextNode(`${key}, ${this.history[key][0]}`);
             historyHeading.appendChild(historyHeadingText);

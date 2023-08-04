@@ -1,9 +1,0 @@
-#home {
-    display: grid;
-}
-
-#home > *:not(h1) > .container {
-    background-color: lightcoral;
-    display: grid;
-    justify-items: center;
-}

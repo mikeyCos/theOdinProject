@@ -6,7 +6,7 @@ export default function buildHome() {
     homeContainer.id = 'home';
 
     const header = document.createElement('h1');
-    const headerText = document.createTextNode('Welcome');
+    const headerText = document.createTextNode('Still sane?');
     header.appendChild(headerText);
     
     homeContainer.appendChild(header);

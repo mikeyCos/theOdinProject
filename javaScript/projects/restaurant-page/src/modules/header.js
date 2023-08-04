@@ -15,7 +15,7 @@ export default function buildHeader() {
     const heroTextWrapper = document.createElement('div');
     heroTextWrapper.classList.add('hero-text');
     const heading = document.createElement('h1');
-    const headingText = document.createTextNode('Restaurant');
+    const headingText = document.createTextNode(`Exile's Pizza`);
     heroWrapper.id = 'hero';
 
     const heroContainer = document.createElement('div');

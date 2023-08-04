@@ -13,6 +13,7 @@ Live preview: [Restaurant Page](https://mikeycos.github.io/theOdinProject/javaSc
 3. How am I able to use custom CSS variables defined in `index.css` in a different CSS file?
 ---
 ### Changelog
+- 03 JUL 2023: Applied min-height property to a variety of selectors within the `#hero` container, removed the padding property from `#content` selector, downloaded Google Fonts (Nunito Sans and Teko), applied a variety of CSS properties to a variety of elements, resolved elements are overflowing in mobile viewport, and applied media query breakpoint for desktop layout.  
 - 02 JUL 2023: Created separate CSS files for each module, implemented `setActiveTab` in `index.js` module to track current tab and add a class to the corresponding navigation item, `#content` section now takes up 100% viewport-height, and attempted to dynamically add/remove the navigation bar.  
 - 01 JUL 2023: Z-index applied to navbar unordered list, implemented the ability to change the header's image using the forward/backward buttons, navbar will stick to page upon page scroll, imported uncompressed images, and set carousel image to take 100% of viewport-height.  
 - 31 JUL 2023: Added headers to homepage, implemented the ability to import all images inside a repository, and initialized an early build of image carousel.  

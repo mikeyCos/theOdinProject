@@ -23,7 +23,7 @@ const form = {
         formWrapper.classList.add('container');
 
         const formNoteLabel = document.createElement('label');
-        const formNoteLabelText = document.createTextNode('Indicates required field');
+        const formNoteLabelText = document.createTextNode(' Indicates required field');
         const formNoteSpan = document.createElement('span');
         const formNoteSpanText = document.createTextNode('*');
         formNoteSpan.classList.add('asterik');
@@ -81,7 +81,7 @@ const form = {
             id: 'name',
             name: 'name',
             type: 'text',
-            placeholder: 'firstname lastname',
+            placeholder: 'full name',
             required: 'required',
         },
         email: {

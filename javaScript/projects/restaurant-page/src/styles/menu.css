@@ -1,9 +1,42 @@
-#menu {
-    
+#menu > #menu-main > .container > * {
+    display: grid;
+    row-gap: 1rem;
 }
 
-#menu > *:not(h1) > .container {
-    /* background-color: lightcoral;
-    display: grid;
-    padding: 1rem; */
+#menu > #menu-main > .container > * > h2 {
+    font-size: clamp(1.5rem, 10vw, 2rem);
+}
+
+#menu > #menu-main > .container > * > .item {
+    padding: 0.5rem;
+}
+
+#menu > #menu-main > .container > * > .item > p:first-child {
+    text-transform: capitalize;
+    font-style: italic;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+#menu > #menu-main > .container > * > .item > p:first-child::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: ' ';
+    width: 75%;
+    border-bottom: 3px dotted black;
+}
+
+#menu > #menu-main > .container > * > .item > p:nth-child(n + 2) {
+    text-align: end;
+    text-wrap: balance;
+    font-weight: 300;
+    position: relative;
+}
+
+@media screen and (min-width: 768px) {
+    #content > #menu > *:not(h1) > .container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

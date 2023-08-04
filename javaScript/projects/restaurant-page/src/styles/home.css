@@ -1,16 +1,13 @@
-#home {
-    /* display: grid; */
-    /* gap: 1rem; */
-}
-
 #home > *:not(h1) > .container {
     text-align: center;
+    font-size: clamp(1rem, 5vw, 2rem);
 }
 
 #home > #hours > .container > ul {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    column-gap: 5vw;
 }
 
 #home > #hours > .container > ul > :nth-child(2n - 1 ) {

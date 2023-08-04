@@ -1,9 +1,78 @@
-#contact {
-    
+label > .asterik {
+    color: red;
 }
 
-#form {
+#form > .container >:first-child {
+    font-size: clamp(1rem, 5vw, 1.5rem);
+    text-decoration: underline;
+}
+
+#form > .container > .form-item {
     display: grid;
-    justify-content: center;
 }
 
+#form > .container > .form-item > label {
+    font-size: clamp(1.5rem, 10vw, 2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* selects inputs and textarea */
+#form > .container > .form-item > *:nth-child(n + 2) {
+    font-size: clam(1rem, 10vw, 2rem);
+    border-radius: 0.35rem;
+    outline: none;
+    border-color: transparent;
+    padding: 0.5rem;
+}
+
+#form > .container > .form-item > *:nth-child(n + 2)::placeholder {
+    text-transform: uppercase;
+    text-indent: 5%;
+}
+
+#form > .container > .form-item > *:nth-child(n + 2):focus {
+    border: 4px solid var(--accent-color-secondary);
+    padding: 0.75rem;
+}
+
+#form > .container > .form-item:last-child {
+    border: none;
+    background: none;
+    justify-self: center;
+    margin-bottom: 1rem;
+}
+
+#form > .container > .form-item:last-child > button {
+    padding: 0.75rem 4rem;
+    border: none;
+    border-radius: 2rem;
+    background-color: var(--accent-color-primary);
+    box-shadow: 0px 1px 2px 0px black;
+}
+
+#form > .container > .form-item:last-child > button:active {
+    box-shadow: 0px 2px 3px 1px black
+}
+
+@media screen and (min-width: 768px) {
+    #form > .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #form > .container > label {
+        grid-area: 1 / span 2;
+    }
+
+    #form > .container > .form-item:first-of-type {
+        grid-area: 2 / span 2;
+    }
+
+    #form > .container > .form-item:nth-of-type(4) {
+        grid-area: 4 / span 2
+    }
+
+    #form > .container > .form-item:last-of-type {
+        grid-area: 5 / span 2;
+    }
+}

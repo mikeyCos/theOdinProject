@@ -65,6 +65,7 @@ const menu = {
 
             this.food[item].map(food => { 
                 const menuItemContainer = document.createElement('div');
+                menuItemContainer.classList.add('item');
                 for (let info in food) {
                     const menuItemParagraph = document.createElement('p');
                     const menuItemParagraphText = document.createTextNode(food[info])

@@ -4,8 +4,8 @@ export default function buildFooter() {
     const footerContainer = document.createElement('div');
     footerContainer.classList.add('container');
 
-    const footerHeader = document.createElement('h6');
-    const footerText = document.createTextNode('Placholder');
+    const footerHeader = document.createElement('h5');
+    const footerText = document.createTextNode('Placeholder');
     
     footerHeader.appendChild(footerText);
     footerContainer.appendChild(footerHeader);
