@@ -2,10 +2,12 @@ import importAll from './images.js';
 
 const assets = {
     icons: importAll(require.context('../assets/icons/', false, /\.svg$/)),
+    github: importAll(require.context('../assets/github-mark', false, /\.svg$/)),
     images: importAll(require.context('../assets/images/', false, /\.jpg$/)),
 }
 
-const navLinks = ['home', 'about', 'menu', 'contact'];
+const navLinks = ['home', 'about', 'menu', 'contact', 'github-mark.svg'];
+// assets.github.images['github-mark.svg']
 
 export default function buildHeader() {
     console.log(`navbar.js running`); //for debugging
@@ -46,14 +48,30 @@ const nav = {
         navLinks.forEach(item => {
             const navItem = document.createElement('li');
             const anchor = document.createElement('a');
-            anchor.href = `#${item}`;
-            anchor.classList.add(item);
+            let href;
+            let className;
     
-            const navItemText = document.createTextNode(item);
-            anchor.appendChild(navItemText);
+            if (item.includes('svg')) {
+                const githubIcon = document.createElement('img');
+                anchor.setAttribute('target', '_blank');
+                console.log(item)
+                githubIcon.src = assets.github.images[item];
+                anchor.appendChild(githubIcon);
+                href = 'https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/restaurant-page';
+                className = 'github';
+            } else {
+                const navItemText = document.createTextNode(item);
+                anchor.appendChild(navItemText);
+                href = `#${item}`;
+                className = item;
+            }
+            anchor.href = href;
+            anchor.classList.add(className);
+
             navItem.appendChild(anchor);
             navList.appendChild(navItem);
         })
+
 
         const logo = document.createElement('div');
         logo.id = 'logo';

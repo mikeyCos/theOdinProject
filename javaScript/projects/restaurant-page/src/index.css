@@ -94,7 +94,7 @@ body {
     padding: 0.25rem 1rem;
 }
 
-.links > li > a:hover {
+.links > li > a:not(.github):hover {
     background-color: var(--accent-color-secondary);
     color: var(--background-color-primary);
     transform: translateX(10%);
@@ -103,6 +103,12 @@ body {
 
 .links > li > a.active {
     color: var(--accent-color-primary);
+}
+
+.links > li > a.github > img {
+    max-width: 64px;
+    width: 3vw;
+    min-width: 24px;
 }
 
 .btn-menu {
@@ -282,7 +288,7 @@ footer > .container > h5 {
         display: grid;
         justify-content: end;
         align-content: center;
-        grid-template-columns: repeat(4, min-content);
+        grid-template-columns: repeat(5, min-content);
         position: static;
         padding-top: 0;
         padding-right: 2rem;
@@ -297,13 +303,23 @@ footer > .container > h5 {
         justify-items: center;
     }
 
-    .links > li > a:hover {
+    .links > li > a.github {
+        display: inline-grid;
+        display: -moz-inline-grid;
+    }
+
+    .links > li > a:not(.github):hover {
         background-color: transparent;
         transform: scale(1.25);
         transition: all 200ms ease-in-out;
     }
 
-    .links > li > a:after {
+    .links > li > a:hover {
+        transform: scale(1.25);
+        transition: all 200ms ease-in-out;
+    }
+
+    .links > li > a:not(.github):after {
         position: absolute;
         bottom: -10%;
         content: '';
