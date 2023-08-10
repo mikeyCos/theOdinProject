@@ -1,12 +1,6 @@
-#about-main > .container > p,
-#history > .container > .item > :last-child {
-    /* font-size: clamp(1rem, 5vw, 1.25rem); */
-}
-
 @media screen and (min-width: 768px) {
     #about > #history > .container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
     }
-
 }

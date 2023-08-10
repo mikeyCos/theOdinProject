@@ -1,7 +1,6 @@
 import '../styles/menu.css';
 
 export default function buildMenu() {
-    console.log(`menu.js running`);
     const menuContainer = document.createElement('div');
     menuContainer.id = 'menu';
 

@@ -1,7 +1,6 @@
 import '../styles/contact.css';
 
 export default function buildContact() {
-    console.log(`contact.js running`);
     const contactContainer = document.createElement('div');
     contactContainer.id = 'contact';
     

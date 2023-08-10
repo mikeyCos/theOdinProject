@@ -1,7 +1,6 @@
 import '../styles/about.css';
 
 export default function buildAbout() {
-    console.log(`about.js running`);
     const aboutContainer = document.createElement('div');
     aboutContainer.id = 'about';
 

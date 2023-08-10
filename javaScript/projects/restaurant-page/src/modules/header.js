@@ -7,10 +7,8 @@ const assets = {
 }
 
 const navLinks = ['home', 'about', 'menu', 'contact', 'github-mark.svg'];
-// assets.github.images['github-mark.svg']
 
 export default function buildHeader() {
-    console.log(`navbar.js running`); //for debugging
     const headerElement = document.createElement('header');
     const heroWrapper = document.createElement('div');
 
@@ -54,7 +52,6 @@ const nav = {
             if (item.includes('svg')) {
                 const githubIcon = document.createElement('img');
                 anchor.setAttribute('target', '_blank');
-                console.log(item)
                 githubIcon.src = assets.github.images[item];
                 anchor.appendChild(githubIcon);
                 href = 'https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/restaurant-page';
@@ -119,7 +116,6 @@ const nav = {
         isPressed ? this.menu.classList.remove('active') : this.menu.classList.add('active');
     },
     getWindowWidth: function() {
-        console.log(window.innerWidth);
         if (window.innerWidth > 768) {
             this.removeEvents();
         } else {
@@ -173,7 +169,6 @@ const imageCarousel = {
         [...this.buttons].forEach(button => button.addEventListener('click', this.changeImage));
     },
     changeImage: function(e) {
-        console.log(`changeImage running`);
         let direction = e.target.parentElement.className.split(' ')[1];
         let imageIndex;
         for (let key in assets.images.images) {
