@@ -2,8 +2,3 @@
     font-family: 'Bebas Neue';
     src: url('./assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf');
 }
-
-.hello {
-    color: red;
-    font-family: 'Bebas Neue', Arial;
-}
