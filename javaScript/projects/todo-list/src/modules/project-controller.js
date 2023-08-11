@@ -1,4 +1,4 @@
-let projects = [];
+const projects = [];
 
 // creates a project object
     // tasks property created upon object creation
@@ -11,25 +11,28 @@ export const project = (title) => {
 function createTasks() {
 }
 
-export function pushTask(project, text) {
+export const pushTask = (project, text) => {
     getProject(project).tasks.push(text);
     console.table(projects);
 }
 
-export function addProject() {
-    // projects.push(createProject(prompt('Enter project name.')));
-    projects.push(project(prompt('Enter project name.')));
+export const addProject = () => {
+    const obj = project(prompt('Enter project name.'));
+    projects.push(obj);
     console.table(projects);
 }
 
 // complete/remove project
-export function removeProject() {
+export const removeProject = () => {
     const projectSelection = prompt(`Enter project name you want to delete.`);
     projects.splice(getProjectIndex(projectSelection), 1);
 }
 
 // gets project's index from projects[];
-function getProjectIndex(project) {
+//     need to recursively go through the objects and their keys
+//     for subtasks within subtasks within tasks within project
+//     project > task > subtask > subtask > subtask
+const getProjectIndex = (project) => {
     for (const index in projects) {
         for (const key in projects[index]) {
             if (projects[index][key] === project) {
@@ -41,8 +44,6 @@ function getProjectIndex(project) {
 
 // gets project object
 // do I need this function?
-function getProject(project) {
-    // const projectSelection = prompt(`Enter project name you want to search.`);
-    console.log(projects[getProjectIndex(project)]);
+const getProject = (project) => {
     return projects[getProjectIndex(project)];
 }

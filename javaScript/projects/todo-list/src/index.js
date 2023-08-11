@@ -1,11 +1,16 @@
 import './index.css';
-// import createProject from './modules/controller-project.js';
-// import projects from './modules/controller-project.js';
-import { addProject, removeProject } from './modules/project-controller.js';
-import { addTask } from './modules/add-task.js';
+// import { addProject, removeProject } from './modules/project-controller.js';
+// import { addTask } from './modules/task-controller';
+import { addProject, removeProject, addTask, build} from './modules/barrel.js';
 
 const mainController = (function() {
-    const content = {
+    const main = {
+        init: function() {
+            build.header();
+        },
+        cacheDOM: function() {
+            this.content = document.querySelector('#content');
+        },
         render: function() {
 
         },
@@ -14,24 +19,26 @@ const mainController = (function() {
         }
     }
 
-    const element = document.createElement('div');
-    const addBtn = document.createElement('button');
-    const delBtn = document.createElement('button');
-    const addTaskBtn = document.createElement('button');
+    // const element = document.createElement('div');
+    // const addBtn = document.createElement('button');
+    // const delBtn = document.createElement('button');
+    // const addTaskBtn = document.createElement('button');
 
-    addBtn.innerHTML = 'Create project';
-    delBtn.innerHTML = 'Delete project';
-    addTaskBtn.innerHTML = 'Add task';
+    // addBtn.innerHTML = 'Create project';
+    // delBtn.innerHTML = 'Delete project';
+    // addTaskBtn.innerHTML = 'Add task';
 
-    element.appendChild(addBtn);
-    element.appendChild(delBtn);
-    element.appendChild(addTaskBtn);
+    // element.appendChild(addBtn);
+    // element.appendChild(delBtn);
+    // element.appendChild(addTaskBtn);
 
 
-    addBtn.addEventListener('click', addProject);
-    delBtn.addEventListener('click', removeProject);
-    addTaskBtn.addEventListener('click', addTask);
-    document.body.appendChild(element);
+    // addBtn.addEventListener('click', addProject);
+    // delBtn.addEventListener('click', removeProject);
+    // addTaskBtn.addEventListener('click', addTask);
+    // document.body.appendChild(element);
+
+    main.init();
 })();
 
 //main
