@@ -1,0 +1,27 @@
+header {
+    background-color: rgb(241, 80, 80);
+    position: fixed;
+    top: 0;
+    min-width: 100%;
+    z-index: 1;
+}
+
+header > #navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+header > #navbar > .nav-left > .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24px, min-content));
+}
+
+header > #navbar > * > .container > button {
+    background-color: transparent;
+    border: none;
+}
+
+header > #navbar > * > .container > button > img,
+header > #navbar > * > .container > a > img {
+    width: 24px;
+}

@@ -11,6 +11,7 @@ export const project = (title) => {
 function createTasks() {
 }
 
+//
 export const pushTask = (project, text) => {
     getProject(project).tasks.push(text);
     console.table(projects);
@@ -19,7 +20,7 @@ export const pushTask = (project, text) => {
 export const addProject = () => {
     const obj = project(prompt('Enter project name.'));
     projects.push(obj);
-    console.table(projects);
+    console.table(projects); // for debugging
 }
 
 // complete/remove project
@@ -28,10 +29,7 @@ export const removeProject = () => {
     projects.splice(getProjectIndex(projectSelection), 1);
 }
 
-// gets project's index from projects[];
-//     need to recursively go through the objects and their keys
-//     for subtasks within subtasks within tasks within project
-//     project > task > subtask > subtask > subtask
+// gets project's index from projects[] based on project name
 const getProjectIndex = (project) => {
     for (const index in projects) {
         for (const key in projects[index]) {
@@ -47,3 +45,4 @@ const getProjectIndex = (project) => {
 const getProject = (project) => {
     return projects[getProjectIndex(project)];
 }
+

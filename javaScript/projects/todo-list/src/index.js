@@ -1,15 +1,19 @@
 import './index.css';
-// import { addProject, removeProject } from './modules/project-controller.js';
-// import { addTask } from './modules/task-controller';
-import { addProject, removeProject, addTask, build} from './modules/barrel.js';
+import { addProject, removeProject } from './modules/project-controller.js';
+import { addTask } from './modules/task-controller';
+import buildHeader from './modules/header.js';
+import buildSidebar from './modules/sidebar.js';
 
 const mainController = (function() {
     const main = {
         init: function() {
-            build.header();
+            buildHeader();
+            buildSidebar();
+            this.cacheDOM();
+            
         },
         cacheDOM: function() {
-            this.content = document.querySelector('#content');
+            this.content = document.querySelector('#todo_app');
         },
         render: function() {
 

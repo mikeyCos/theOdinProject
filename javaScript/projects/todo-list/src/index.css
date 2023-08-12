@@ -2,3 +2,17 @@
     font-family: 'Bebas Neue';
     src: url('./assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf');
 }
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --text-color-primary: rgb(32, 32, 32);
+}
+
+body {
+    min-height: 100vh;
+}
