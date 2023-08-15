@@ -2,7 +2,7 @@ const projects = [];
 
 // creates a project object
     // tasks property created upon object creation
-export const project = (title) => {
+const project = (title) => {
     const tasks = [];
     return { title, tasks };
 }
@@ -11,8 +11,7 @@ export const project = (title) => {
 function createTasks() {
 }
 
-//
-export const pushTask = (project, text) => {
+const pushTask = (project, text) => {
     getProject(project).tasks.push(text);
     console.table(projects);
 }

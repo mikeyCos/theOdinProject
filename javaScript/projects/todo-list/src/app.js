@@ -1,19 +1,23 @@
-import './index.css';
-import { addProject, removeProject } from './modules/project-controller.js';
-import { addTask } from './modules/task-controller';
-import buildHeader from './modules/header.js';
-import buildSidebar from './modules/sidebar.js';
+import './app.css';
+// import { addProject, removeProject } from './modules/project-controller.js';
+// import { addTask } from './modules/task-controller';
+import buildHeader from './components/header.js';
+import buildSidebar from './components/sidebar.js';
+import buildMain from './components/main.js';
+import buildFormProject from './components/form_project.js';
 
-const mainController = (function() {
-    const main = {
+const appController = (function() {
+    const app = {
         init: function() {
-            buildHeader();
-            buildSidebar();
             this.cacheDOM();
-            
+            buildHeader(this.app, this.content);
+            buildSidebar(this.content);
+            buildMain(this.content);
+            buildFormProject();
         },
         cacheDOM: function() {
-            this.content = document.querySelector('#todo_app');
+            this.app = document.querySelector('#todo_app');
+            this.content = this.app.querySelector('#content');
         },
         render: function() {
 
@@ -42,7 +46,7 @@ const mainController = (function() {
     // addTaskBtn.addEventListener('click', addTask);
     // document.body.appendChild(element);
 
-    main.init();
+    app.init();
 })();
 
 //main

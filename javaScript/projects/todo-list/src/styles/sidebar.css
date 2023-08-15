@@ -3,3 +3,12 @@
     z-index: 1;
     min-height: 100%;
 }
+
+#sidebar > .container > .wrapper-projects > .projects-item > .btn-add-project {
+    background-color: transparent;
+    border: none;
+}
+
+#sidebar > .container > .wrapper-projects > .projects-item > .btn-add-project > img {
+    width: 24px;
+}
