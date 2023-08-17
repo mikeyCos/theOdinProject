@@ -3,7 +3,7 @@
 Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/projects/todo-list/dist)
 ---
 ### Ideas
-1. Placeholder2
+1. Form validator module.  
 ---
 ### Questions
 1. How do we distinguish a single step versus a single responsibility?
@@ -11,6 +11,8 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 3. Is it worth creating modules for individual elements (ex, button elements)?
 ---
 ### Changelog
+- 17 AUG 2023: 
+- 16 AUG 2023: The `btnMenu` button can now change the sidebar's display to none or an empty string, `btn-add-project` now creates/deletes a dialog element containing a form element, and `submitForm()` defined in `formProject` object.  
 - 15 AUG 2023: Restarted project, refactored `header.js` into one forEach loop, `toggleSidebar()` included in `sidebar.js` and is imported into `header.js`, created `button_add.js` module that exports `buildButtonAddProject()` and the function returns a add task/project button, and `.btn-menu` is bound to `toggleSidebar()`.  
 - 14 AUG 2023: Restructured files into different file names and directories (i.e. components, containers, ultilities), render function in `sidebar.js` iterates through objects and checks if `childElement` property is an object, and created `form_project.js` to provide a form for users to create a project.
 - 11 AUG 2023: A header element with content now renders in `index.js` when `main.init()` is called, removed `barrel.js` and imported/exported modules as needed, template now generates a generic container inside the body's first element, header content appended inside body's first element, and sidebar element appended inside `#content_main` container.  

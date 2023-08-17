@@ -16,10 +16,13 @@ const pushTask = (project, text) => {
     console.table(projects);
 }
 
-export const addProject = () => {
-    const obj = project(prompt('Enter project name.'));
-    projects.push(obj);
-    console.table(projects); // for debugging
+// creates project and pushes it to projects[]
+export const addProject = (inputs) => {
+    console.log(`addProject() running`)
+    console.log(inputs)
+    // const obj = project(prompt('Enter project name.'));
+    // projects.push(obj);
+    // console.table(projects); // for debugging
 }
 
 // complete/remove project

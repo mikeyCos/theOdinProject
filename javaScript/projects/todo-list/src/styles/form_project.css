@@ -1,0 +1,11 @@
+#form_project {
+    margin: auto;
+    min-width: 70vw;
+    min-height: 50vh;
+}
+
+#form_project > #form {
+    position: relative;
+    min-width: inherit;
+    min-height: inherit;
+}

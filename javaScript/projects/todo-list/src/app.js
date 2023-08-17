@@ -21,7 +21,13 @@ const appController = (function() {
         },
         bindEvents: function() {
 
-        }
+        },
+        switchContent: function() {
+
+        },
+        setActiveContent: function() {
+
+        },
     }
 
     app.init();
