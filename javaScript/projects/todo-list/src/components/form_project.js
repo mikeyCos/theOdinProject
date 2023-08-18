@@ -1,4 +1,5 @@
 import { addProject } from '../containers/project-controller.js';
+import { buildProjectList } from '../components/list_projects.js'; // testing
 import '../styles/form_project.css';
 // renders a form to create a project
 export default function buildFormProject() {
@@ -22,18 +23,18 @@ const formProject = {
             required: 'required',
         },
         add: {
-            className: 'btn-submit-project',
+            className: 'btn_submit_project',
             type: 'submit',
         },
         cancel: {
-            className: 'btn-cancel',
+            className: 'btn_cancel',
             type: 'button',
         },
     },
     cacheDOM: function() {
         this.dialogElement = document.querySelector('#form_project');
-        this.btnCancel = document.querySelector('.btn-cancel');
-        this.btnSubmit = document.querySelector('.btn-submit-project');
+        this.btnCancel = document.querySelector('.btn_cancel');
+        this.btnSubmit = document.querySelector('.btn_submit_project');
         this.form = document.querySelector('#form');
         this.formInputs = document.querySelectorAll('#form input');
     },
@@ -56,13 +57,13 @@ const formProject = {
 
         for (let formChild in this.formChildren) {
             const formItem = document.createElement('div');
-            formItem.classList.add('form-item');
+            formItem.classList.add('form_item');
             if (this.formChildren[formChild].hasOwnProperty('required')) {
                 const label = document.createElement('label');
-                const input = document.createElement('input');
+                const input = Object.assign(document.createElement('input'), this.formChildren[formChild]);
                 label.textContent = formChild;
                 label.htmlFor = this.formChildren[formChild].id;
-                Object.assign(input, this.formChildren[formChild]);
+                // Object.assign(input, this.formChildren[formChild]);
                 formItem.appendChild(label);
                 formItem.appendChild(input);
             } else {
@@ -89,8 +90,10 @@ const formProject = {
         this.dialogElement.remove();
     },
     submitForm: function(e) {
+        // optional, form validation
         e.preventDefault();
-        // form validation optional
         addProject(this.formInputs);
+        buildProjectList();
+        this.removeModal();
     }
 }

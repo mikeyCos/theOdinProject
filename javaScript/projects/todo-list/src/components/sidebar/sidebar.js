@@ -15,13 +15,11 @@ const assets = {
     icons: importAll(require.context('../../assets/icons', false, /\.svg$/)),
 }
 
-const sidebar = {
+export const sidebar = {
     cacheDOM: function() {
         this.sidebar = document.querySelector('#sidebar');
-        this.btnAddProject = document.querySelector('.btn-add-project');
-        console.log(this.btnAddProject);
-        console.log(this.btnAddProject.parentElement);
-        console.log(this.sidebar);
+        this.projectsContainer = this.sidebar.querySelector('.section_projects');
+        this.btnAddProject = document.querySelector('.btn_add_project');
     },
     bindEvents: function() {
         this.btnAddProject.addEventListener('click', buildFormProject);
@@ -35,8 +33,8 @@ const sidebar = {
         const anchor = document.createElement('a');
 
         sidebarContainer.classList.add('container');
-        projectsHeader.classList.add('header-projects');
-        projectsHeaderWrapper.classList.add('header-projects-wrapper');
+        projectsHeader.classList.add('section_projects');
+        projectsHeaderWrapper.classList.add('projects_wrapper');
         anchorWrapper.classList.add('anchor-wrapper');
 
         anchor.textContent = 'Projects';

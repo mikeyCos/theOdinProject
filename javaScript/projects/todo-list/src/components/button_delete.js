@@ -1,10 +1,10 @@
-import IconAdd from '../assets/icons/add.svg';
-// returns a button element to create a project/task
+import IconDelete from '../assets/icons/delete.svg';
+// returns a button element to delete a project/task
 // if spanText provided, then a span element is created
-export default function buildButtonAdd(type, spanText) {
+export default function buildButtonDelete(type, spanText) {
     const button = Object.assign(document.createElement('button'), buttonAttributes[type]);    
     const image = new Image();
-    image.src = IconAdd;
+    image.src = IconDelete;
 
     if (spanText) {
         const imageWrapper = document.createElement('div');
@@ -23,11 +23,11 @@ export default function buildButtonAdd(type, spanText) {
 
 const buttonAttributes = {
     project: {
-        className: 'btn_add_project',
+        className: 'btn_delete_project',
         type: 'button',
     },
     task: {
-        className: 'btn_add_task',
+        className: 'btn_delete_task',
         type: 'button',
     }
 }
