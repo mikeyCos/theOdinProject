@@ -1,13 +1,14 @@
 import importAll from '../utilities/import-all.js';
 import { toggleSidebar } from '../components/sidebar/sidebar.js';
+import pubSub from '../containers/pubsub.js'; // sub .btn_home
 // import '../styles/header.css';
 
 export default function buildHeader(app, content) {
     const headerElement = document.createElement('header');
     headerElement.appendChild(header.render());
-    app.insertBefore(headerElement, content);
-    header.cacheDOM();
+    header.cacheDOM(headerElement);
     header.bindEvents();
+    return headerElement;
 }
 
 const assets = {
@@ -15,9 +16,10 @@ const assets = {
 }
 
 const header = {
-    cacheDOM: function() {
-        this.btnMenu = document.querySelector('.btn_menu');
-        this.btnAddTask = document.querySelector('.btn_add_task');
+    cacheDOM: function(container) {
+        this.btnMenu = container.querySelector('.btn_menu');
+        this.btnHome = container.querySelector('.btn_home');
+        this.btnAddTask = container.querySelector('.btn_add_task');
     },
     bindEvents: function() {
         this.btnMenu.addEventListener('click', toggleSidebar);

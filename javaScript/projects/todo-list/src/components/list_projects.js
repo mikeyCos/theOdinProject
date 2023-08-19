@@ -5,7 +5,6 @@ import { removeProject } from '../containers/project-controller.js';
 // renders list of projects
 // each list item is clickable
     // project is opened 
-
 export function buildProjectList() {
     
     sidebar.projectsContainer.appendChild(projectList.render());
@@ -44,7 +43,7 @@ const projectList = {
             const anchor = document.createElement('a');
             const anchorSpan = document.createElement('span');
             anchorSpan.textContent = projects[i].title;
-            anchor.href = `#${projects[i]};`
+            anchor.href = `#${projects[i].title};`
 
             listItem.setAttribute(`data-uuid`, projects[i].uuid);
             const buttonSpan = document.createElement('span');

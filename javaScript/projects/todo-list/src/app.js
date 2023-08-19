@@ -1,28 +1,50 @@
 import buildHeader from './components/header.js';
 import buildSideBar from './components/sidebar/sidebar.js';
+// import buildHome from './components/home.js'
+// import buildProjectsList from './components/projects.js';
+import buildMain from './components/main.js';
 import './app.css';
 
 
 const appController = (function() {
+    const build = {
+        header: buildHeader,
+        sidebar: buildSideBar,
+        main: buildMain,
+        // home: buildHome, // renders all tasks
+        // projects: buildProjectsList,
+        // projectTasks: buildProjectTasks, // renders project's task
+    }
+
     const app = {
+        activeContent: null,
         init: function() {
-            this.cacheDOM();
-            // buildHeader(this.app, this.content);
-            
-            buildSideBar(this.content);
-            buildHeader(this.app, this.content);
+            this.render();
         },
         cacheDOM: function() {
-            this.app = document.querySelector('#todo_app');
-            this.content = this.app.querySelector('#content');
+
         },
         render: function() {
+            
+            const appWrapper = document.createElement('div');
+            const appContent = document.createElement('div');
+            // const main = document.createElement('main');
+            appWrapper.id = 'todo_app';
+            appContent.id = 'content';
+            // main.id = 'main_content';
+
+            appWrapper.appendChild(build.header());
+            appContent.appendChild(build.sidebar());
+            // appContent.appendChild(main);
+            appWrapper.appendChild(appContent);
+
+            document.body.appendChild(appWrapper);
 
         },
         bindEvents: function() {
 
         },
-        switchContent: function() {
+        switchContent: function(e) {
 
         },
         setActiveContent: function() {

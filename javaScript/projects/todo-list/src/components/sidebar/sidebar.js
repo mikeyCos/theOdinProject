@@ -1,14 +1,24 @@
 import importAll from '../../utilities/import-all.js';
 import buildButtonAdd from '../button_add.js';
 import buildFormProject from '../form_project.js';
+import { pubSub } from '../../containers/pubsub.js'; // testing
 
 export default function buildSidebar(content) {
     const sidebarWrapper = document.createElement('div');
     sidebarWrapper.id = 'sidebar';
     sidebarWrapper.appendChild(sidebar.render());
-    content.appendChild(sidebarWrapper);
-    sidebar.cacheDOM();
+    sidebar.cacheDOM(sidebarWrapper);
     sidebar.bindEvents();
+    return sidebarWrapper;
+
+    // pubSub.subscribe('test', function(number) {
+    //     console.log(`pubSub running ${number}`);
+    // });
+
+    // pubSub.subscribe('test', buildFormProject);
+    
+    // pubSub.publish('test', '3');
+
 }
 
 const assets = {
@@ -16,10 +26,10 @@ const assets = {
 }
 
 export const sidebar = {
-    cacheDOM: function() {
-        this.sidebar = document.querySelector('#sidebar');
+    cacheDOM: function(container) {
+        this.sidebar = container;
         this.projectsContainer = this.sidebar.querySelector('.section_projects');
-        this.btnAddProject = document.querySelector('.btn_add_project');
+        this.btnAddProject = container.querySelector('.btn_add_project');
     },
     bindEvents: function() {
         this.btnAddProject.addEventListener('click', buildFormProject);

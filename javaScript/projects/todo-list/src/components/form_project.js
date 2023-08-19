@@ -1,5 +1,6 @@
 import { addProject } from '../containers/project-controller.js';
 import { buildProjectList } from '../components/list_projects.js'; // testing
+import { pubSub } from '../containers/pubsub.js'; // testing
 import '../styles/form_project.css';
 // renders a form to create a project
 export default function buildFormProject() {
