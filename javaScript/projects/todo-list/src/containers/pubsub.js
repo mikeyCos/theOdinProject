@@ -1,7 +1,6 @@
 export const pubSub = {
     subscribers: {},
     subscribe: function(subscriber, handler) {
-        // debugger
         this.subscribers[subscriber] = this.subscribers[subscriber] || [];
         this.subscribers[subscriber].push(handler);
     },

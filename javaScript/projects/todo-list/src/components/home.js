@@ -8,3 +8,15 @@ export default function buildHome() {
     homeContainer.appendChild(header);
     return homeContainer
 }
+
+const home = {
+    cacheDOM: function() {
+
+    },
+    bindEvents: function() {
+
+    },
+    render: function() {
+
+    },
+}

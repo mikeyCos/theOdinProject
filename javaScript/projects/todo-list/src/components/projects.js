@@ -1,4 +1,4 @@
-export default function buildProjectList() {
+export default function buildProjectsList() {
     const projectsContainer = document.createElement('div');
     projectsContainer.id = 'home';
 
@@ -7,4 +7,16 @@ export default function buildProjectList() {
 
     projectsContainer.appendChild(header);
     return projectsContainer
+}
+
+const projects = {
+    cacheDOM: function() {
+
+    },
+    bindEvents: function() {
+
+    },
+    render: function() {
+
+    },
 }

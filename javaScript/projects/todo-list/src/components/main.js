@@ -1,6 +1,5 @@
 import buildHome from '../components/home.js';
-import buildProjectsList from '../components/projects.js';
-import { pubSub } from '../containers/pubsub.js';
+import buildProjects from '../components/projects.js';
 export default function buildMain() {
     const main = document.createElement('main');
     main.id = 'main_content';
@@ -10,7 +9,7 @@ export default function buildMain() {
 
 const build = {
     home: buildHome,
-    projects: buildProjectsList,
+    projects: buildProjects,
 }
 
 export const mainContent = {
@@ -24,7 +23,8 @@ export const mainContent = {
     render: function(key) {
         let content;
         if (!key) {
-            content = build.home();
+            // content = build.home();
+            content = build.buildProjects();
         } else {
             this.main.firstChild.remove();
             content = build[key]();

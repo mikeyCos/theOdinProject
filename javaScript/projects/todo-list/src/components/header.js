@@ -1,7 +1,8 @@
 import importAll from '../utilities/import-all.js';
 import { toggleSidebar } from '../components/sidebar/sidebar.js';
-import pubSub from '../containers/pubsub.js'; // sub .btn_home
-// import '../styles/header.css';
+// import { pubSub } from '../containers/pubsub.js'; // connect .btn_home to mainContent.switchContent
+// import mainContent from '../components/main.js'; // testing
+import '../styles/header.css';
 
 export default function buildHeader(app, content) {
     const headerElement = document.createElement('header');
@@ -16,6 +17,9 @@ const assets = {
 }
 
 const header = {
+    // sub: function() {
+    //     pubSub.subscribe('home', mainContent.switchContent); // testing
+    // },
     cacheDOM: function(container) {
         this.btnMenu = container.querySelector('.btn_menu');
         this.btnHome = container.querySelector('.btn_home');
@@ -23,6 +27,7 @@ const header = {
     },
     bindEvents: function() {
         this.btnMenu.addEventListener('click', toggleSidebar);
+        // this.btnHome.addEventListener('click', pubSub.subscribe('home', this.btnHome)) // testing
     },
     headerContent: {
         headerLeft: [

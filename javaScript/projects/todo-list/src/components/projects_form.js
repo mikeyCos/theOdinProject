@@ -1,13 +1,11 @@
 import { addProject } from '../containers/project-controller.js';
-import { buildProjectList } from '../components/list_projects.js'; // testing
-import { pubSub } from '../containers/pubsub.js'; // testing
+import buildProjectsList from '../components/projects_list.js'; // testing
 import '../styles/form_project.css';
 // renders a form to create a project
-export default function buildFormProject() {
+export default function buildProjectForm() {
     const dialogElement = document.createElement('dialog');
     dialogElement.id = 'form_project';
     dialogElement.appendChild(formProject.render());
-    console.log(`buildFormProject() is running`);
     document.body.appendChild(dialogElement);
     dialogElement.showModal();
     formProject.cacheDOM();
@@ -91,10 +89,12 @@ const formProject = {
         this.dialogElement.remove();
     },
     submitForm: function(e) {
-        // optional, form validation
         e.preventDefault();
+        // optional, form validation
+            // if form is valid
+                // then addProject()
         addProject(this.formInputs);
-        buildProjectList();
+        buildProjectsList();
         this.removeModal();
     }
 }

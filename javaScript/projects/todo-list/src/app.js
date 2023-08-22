@@ -1,7 +1,5 @@
 import buildHeader from './components/header.js';
 import buildSideBar from './components/sidebar/sidebar.js';
-// import buildHome from './components/home.js'
-// import buildProjectsList from './components/projects.js';
 import buildMain from './components/main.js';
 import './app.css';
 
