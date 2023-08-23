@@ -11,38 +11,28 @@ export default function buildProjectsList() {
     projectsContainer.classList.add('projects');
     list.classList.add('projects_list');
 
-    console.log('projectList.testa: ' + projectList.testa);
-    console.log(projectList.testa);
-    if (projectList.testa) {
-        console.log(`projectList.testa exists`);
-        projectList.ulList.remove();
+    let cacheContainer;
+    if (projectList.listContainer) {
+        projectList.listContainer.remove();
+        projectList.ulList.appendChild(projectList.render());
+        cacheContainer = projectList.ulList;
     } else {
-        console.log(`projectList.testa does NOT exists`);
-        // list.appendChild(projectList.render());
-        console.log(list);
+        list.appendChild(projectList.render());
+        projectsContainer.appendChild(list);
+        cacheContainer = list;
     }
-    // list.appendChild(projectList.render());
-    projectList.cacheDOM(list);
-    projectsContainer.appendChild(list);
-    // projectList.bindEvents();
-    
+    projectList.cacheDOM(cacheContainer);
+    projectList.bindEvents();
+
     return projectsContainer;
 }
 
 const projectList = {
-    init: function() {
-        this.render();
-    },
     cacheDOM: function(container) {
-        // this.projectsList = document.querySelector('.projects_list');
         this.ulList = container;
-        this.testa = container.firstChild;
+        this.listContainer = container.firstChild;
         this.projectsListItems = this.ulList.querySelectorAll('li');
         this.btnDeleteProject = this.ulList.querySelectorAll('.btn_delete_project');
-        console.log(`cacheDOM() running`);
-        console.log(this.ulList);
-        console.log(this.testa);
-        console.log(`cacheDOM() ending`)
     },
     bindEvents: function() {
         this.btnDeleteProject.forEach( button => {
@@ -50,10 +40,7 @@ const projectList = {
         });
     },
     render: function() {
-        // console.log(`projectList.render() is running`);
-        // console.log('this.testa: ' + this.testa);
-        // console.log(this.testa);
-        const a = document.createElement('div');
+        const listItems = document.createElement('div');
         for (let i = 0; i < projects.length; i++) {
             const listItem = document.createElement('li');
             const anchor = document.createElement('a');
@@ -69,13 +56,13 @@ const projectList = {
             listItem.appendChild(anchor);
             listItem.appendChild(buttonSpan);
 
-            a.appendChild(listItem);
+            listItems.appendChild(listItem);
         }
-        return a;
+        return listItems;
     },
     removeListItem: function(e) {
         const listItem = e.target.parentElement.parentElement.parentElement;
         removeProject(listItem.dataset.uuid);
         listItem.remove();
-    }
+    },
 }

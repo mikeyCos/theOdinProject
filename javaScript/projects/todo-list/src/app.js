@@ -34,6 +34,7 @@ const appController = (function() {
             appWrapper.appendChild(build.header());
             appContent.appendChild(build.sidebar());
             // appContent.appendChild(main);
+            appContent.appendChild(build.main());
             appWrapper.appendChild(appContent);
 
             document.body.appendChild(appWrapper);

@@ -1,5 +1,3 @@
-export const projects = [];
-
 // creates a project object
     // tasks property created upon object creation
 const project = (title) => {
@@ -7,6 +5,8 @@ const project = (title) => {
     const uuid = crypto.randomUUID();
     return { title, tasks, uuid };
 }
+
+export const projects = [project('test1')];
 
 // idea, creates tasks property in project object
 function createTasks() {

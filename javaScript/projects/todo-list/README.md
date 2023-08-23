@@ -11,9 +11,10 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 3. Is it worth creating modules for individual elements (ex, button elements)?
 4. Does exporting/importing a module use memory? If so, how?
 5. Is it less efficient removing/adding an element than updating the element's contents? For example, adding and removing `#projects_list`.  
-6. What is the point, if any, using an object literal patter
+6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
+- 22 AUG 2023: Temporarily(?) fixed the ability to add/delete projects to the sidebar, and elements in `cacheDOM()` from `projects_list.js` are preventing each parent container being unique.  
 - 21 AUG 2023: Attempting to update project list after it has been created within `projects_list.js` module, and renamed `form_` `form`/`projects``.js` to `projects_form.js`.  
 - 18 AUG 2023: Removed `/template`, refactored `app.js` so that `#todo_app`/`#content`/header/sidebar/and main are appended to `document.body` at the start, and created `pubSub.js` module to link events together.  
 - 17 AUG 2023: Created a `button_delete.js` module that returns a button with a class name `btn_delete_project/task`, a project is assigned a random UUID during initialization, user can create a project and delete a project from the DOM, and clicking the 'tash' button will delete the project from the DOM and remove it's counterpart in the `projects[]` by their corresponding UUID.  

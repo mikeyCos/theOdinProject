@@ -62,7 +62,6 @@ const formProject = {
                 const input = Object.assign(document.createElement('input'), this.formChildren[formChild]);
                 label.textContent = formChild;
                 label.htmlFor = this.formChildren[formChild].id;
-                // Object.assign(input, this.formChildren[formChild]);
                 formItem.appendChild(label);
                 formItem.appendChild(input);
             } else {

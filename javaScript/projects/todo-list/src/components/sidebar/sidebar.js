@@ -1,3 +1,4 @@
+import { projects } from '../../containers/project-controller.js';
 import importAll from '../../utilities/import-all.js';
 import buildButtonAdd from '../button_add.js';
 import buildProjectForm from '../projects_form.js';
@@ -20,7 +21,8 @@ export const sidebar = {
     cacheDOM: function(container) {
         this.sidebar = container;
         // need to append list_projects to this.projectsContainer
-        this.projectsContainer = this.sidebar.querySelector('.section_projects');
+        this.projectsContainer = this.sidebar.querySelector('.projects_container');
+        this.anchorProjects = this.projectsContainer.querySelector('.nav_projects a');
         this.btnAddProject = container.querySelector('.btn_add_project');
     },
     bindEvents: function() {

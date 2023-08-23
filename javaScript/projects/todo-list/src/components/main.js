@@ -4,7 +4,10 @@ export default function buildMain() {
     const main = document.createElement('main');
     main.id = 'main_content';
     mainContent.cacheDOM(main);
+    mainContent.render();
+    console.log(document.querySelector('header'));
 
+    return main;
 }
 
 const build = {
@@ -24,13 +27,13 @@ export const mainContent = {
         let content;
         if (!key) {
             // content = build.home();
-            content = build.buildProjects();
+            content = build.projects();
         } else {
             this.main.firstChild.remove();
             content = build[key]();
         }
 
-        this.setACtiveTab(content);
+        this.setActiveContent(content);
         this.main.appendChild(content);
     },
     bindEvents: function() {
@@ -45,12 +48,13 @@ export const mainContent = {
         }
     },
     setActiveContent: function(content) {
-        pubSub.subscribers.find(item => {
-            // this will NOT work
-            if (item.className === content.id) {
-                this.activeContent = item;
-                item.classList.add('active');
-            }
-        });
+        // pubSub.subscribers.find(item => {
+        //     // this will NOT work
+        //     if (item.className === content.id) {
+        //         this.activeContent = item;
+        //         item.classList.add('active');
+        //     }
+        // });
+        this.activeContent = content;
     },
 }
