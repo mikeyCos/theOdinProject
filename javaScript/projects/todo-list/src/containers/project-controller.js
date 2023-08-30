@@ -1,21 +1,27 @@
+export const projects = [];
 // creates a project object
     // tasks property created upon object creation
 const project = (title) => {
     const tasks = [];
+    const addTask = (name, description) => tasks.push(task(name, description));
     const uuid = crypto.randomUUID();
     return { title, tasks, uuid };
 }
 
-export const projects = [project('test1')];
+const task = (name, description) => {
+    return { name, description };
+}
+
+projects.push(project('test1'));
 
 // idea, creates tasks property in project object
 function createTasks() {
 }
 
-const pushTask = (project, text) => {
-    getProject(project).tasks.push(text);
-    console.table(projects);
-}
+// const task = (name, description) => {
+//     getProject(uuid).tasks.push(task(name, description));
+//     console.table(projects);
+// }
 
 // creates project and pushes it to projects[]
 export const addProject = (inputs) => {
@@ -49,7 +55,10 @@ const getProjectIndex = (uuid) => {
 
 // gets project object
 // do I need this function?
-const getProject = (project) => {
-    return projects[getProjectIndex(project)];
+export const getProject = (uuid) => {
+    return projects[getProjectIndex(uuid)];
 }
 
+export const test = () => {
+    console.log(`test() running from project-controller.js`);
+}

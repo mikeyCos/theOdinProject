@@ -1,5 +1,7 @@
-import { addProject } from '../containers/project-controller.js';
-import buildProjectsList from '../components/projects_list.js'; // testing
+import { addProject, projects } from '../containers/project-controller';
+// import buildProjectsList from '../components/projects_list'; // testing
+import { buildList } from '../components/projects_list';
+import { pubSub } from '../containers/pubsub';
 import '../styles/form_project.css';
 // renders a form to create a project
 export default function buildProjectForm() {
@@ -93,7 +95,8 @@ const formProject = {
             // if form is valid
                 // then addProject()
         addProject(this.formInputs);
-        buildProjectsList();
+        // buildList.modules.forEach(module => module.render())
+        buildList.find('sidebar').render(); // will render only the sidebar
         this.removeModal();
     }
 }

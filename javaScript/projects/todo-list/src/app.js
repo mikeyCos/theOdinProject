@@ -1,6 +1,6 @@
-import buildHeader from './components/header.js';
-import buildSideBar from './components/sidebar/sidebar.js';
-import buildMain from './components/main.js';
+import buildHeader from './components/header';
+import buildSideBar from './components/sidebar/sidebar';
+import buildMain from './components/main';
 import './app.css';
 
 

@@ -1,6 +1,6 @@
 export default function buildHome() {
     const homeContainer = document.createElement('div');
-    homeContainer.id = 'home';
+    homeContainer.classList.add('home');
 
     const header = document.createElement('h1');
     header.textContent = 'HOME';

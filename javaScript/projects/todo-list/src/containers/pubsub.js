@@ -3,6 +3,7 @@ export const pubSub = {
     subscribe: function(subscriber, handler) {
         this.subscribers[subscriber] = this.subscribers[subscriber] || [];
         this.subscribers[subscriber].push(handler);
+        console.log(this.subscribers); // for debugging
     },
     unsubscribe: function(subscriber,  handler) {
         if (this.subscribers[subscriber]) {
@@ -15,6 +16,7 @@ export const pubSub = {
         }
     },
     publish: function(subscriber, data) {
+        console.log(`publish running`); // for debugging
         if (this.subscribers[subscriber]) {
             this.subscribers[subscriber].forEach(function(handler) {
                 handler(data);

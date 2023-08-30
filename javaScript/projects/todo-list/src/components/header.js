@@ -1,6 +1,5 @@
-import importAll from '../utilities/import-all.js';
-import { toggleSidebar } from '../components/sidebar/sidebar.js';
-// import { pubSub } from '../containers/pubsub.js'; // connect .btn_home to mainContent.switchContent
+import importAll from '../utilities/import-all';
+import { pubSub } from '../containers/pubsub'; // connect .btn_home to mainContent.switchContent
 // import mainContent from '../components/main.js'; // testing
 import '../styles/header.css';
 
@@ -17,17 +16,14 @@ const assets = {
 }
 
 const header = {
-    // sub: function() {
-    //     pubSub.subscribe('home', mainContent.switchContent); // testing
-    // },
     cacheDOM: function(container) {
         this.btnMenu = container.querySelector('.btn_menu');
         this.btnHome = container.querySelector('.btn_home');
         this.btnAddTask = container.querySelector('.btn_add_task');
     },
     bindEvents: function() {
-        this.btnMenu.addEventListener('click', toggleSidebar);
-        // this.btnHome.addEventListener('click', pubSub.subscribe('home', this.btnHome)) // testing
+        this.btnMenu.addEventListener('click', this.publish);
+        this.btnHome.addEventListener('click', this.publish); // testing
     },
     headerContent: {
         headerLeft: [
@@ -69,5 +65,15 @@ const header = {
             headerElement.appendChild(headerWrapper);
         }
         return headerElement;
+    },
+    publish: function(e) {
+        let className = e.target.parentElement.className;
+        let subscriber;
+        if (className.includes('home')) {
+            subscriber = 'content';
+        } else {
+            subscriber = 'sidebar'
+        }
+        pubSub.publish(subscriber, e.target.parentElement);
     }
 }

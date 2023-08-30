@@ -14,6 +14,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
+- 29 AUG 2023: Factory function created in `projects_list.js` to create an object for the sidebar and project modules, sidebar and project modules will have unique properties (ex, cached elements are restricted to their respective module), creating a project will change the `main_content` section to the newly created project, created `project_tasks.js` and `tasks_form.js` modules, and clicking the 'projects' anchor on the sidebar will render a list of projects on the `main_content` section (similar to the one show on the sidebar).  
 - 22 AUG 2023: Temporarily(?) fixed the ability to add/delete projects to the sidebar, and elements in `cacheDOM()` from `projects_list.js` are preventing each parent container being unique.  
 - 21 AUG 2023: Attempting to update project list after it has been created within `projects_list.js` module, and renamed `form_` `form`/`projects``.js` to `projects_form.js`.  
 - 18 AUG 2023: Removed `/template`, refactored `app.js` so that `#todo_app`/`#content`/header/sidebar/and main are appended to `document.body` at the start, and created `pubSub.js` module to link events together.  
