@@ -5,14 +5,23 @@ const project = (title) => {
     const tasks = [];
     const addTask = (name, description) => tasks.push(task(name, description));
     const uuid = crypto.randomUUID();
-    return { title, tasks, uuid };
+    return { title, tasks, uuid, addTask };
 }
 
 const task = (name, description) => {
+    // priorities 1-4
+        // 1 = most important
+        // 4 = least important
+        // optional, colors 
+    // due date
     return { name, description };
 }
 
 projects.push(project('test1'));
+projects[0].addTask('taskA');
+projects[0].addTask('taskB', 'pizza pizza');
+projects.push(project('test2'));
+projects[1].addTask('taskA', 'foo bar');
 
 // idea, creates tasks property in project object
 function createTasks() {
@@ -57,8 +66,4 @@ const getProjectIndex = (uuid) => {
 // do I need this function?
 export const getProject = (uuid) => {
     return projects[getProjectIndex(uuid)];
-}
-
-export const test = () => {
-    console.log(`test() running from project-controller.js`);
 }

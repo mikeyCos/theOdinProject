@@ -7,13 +7,20 @@ import '../styles/form_project.css';
     // one needs to be a non-dialog element
 export default function buildTasksForm() {
     console.log(`buildTaskForm() running from tasks_form.js`);
+    console.log(this.parentElement);
+    const button = this;
+    const listItem = this.parentElement;
+    // this.remove();
+    const form = document.createElement('form');
+    // listItem.appendChild(form);
+    console.log(button);
     let container;
     // if () {
     //     container = document.createElement('dialog');
     // } else {
 
     // }
-    
+
     // const dialogElement = document.createElement('dialog');
     // dialogElement.id = 'form_project';
     // dialogElement.appendChild(formProject.render());

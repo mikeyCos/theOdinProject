@@ -23,6 +23,7 @@ const build = {
 
 export const mainContent = {
     activeContent: null,
+    activeTab: null,
     cacheDOM: function(container) {
         this.main = container;
     },
@@ -32,47 +33,44 @@ export const mainContent = {
             // content = build.home();
             content = build.projects();
         } else {
-            console.log(this.main);
-            console.log(this.main.firstChild);
+            // console.log(this.main);
+            // console.log(this.main.firstChild);
             this.main.firstChild.remove();
             content = build[key](uuid);
         }
-        // this.setActiveContent(content);
+        this.setActiveContent(content);
         this.main.appendChild(content);
     },
     bindEvents: function() {
         this.switchContent = this.switchContent.bind(this);
     },
     switchContent: function(e) {
-        let classSubstring = e.className.substring(e.className.lastIndexOf('_') + 1);
-        let uuid = e.parentElement.dataset.uuid;
-        
         console.log(e);
-        this.activeContent = e;
+        // need to refactor this
+        let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
+        let uuid = e.parentElement.dataset.uuid;
+
         for (const key in build) {
             if (key === classSubstring) {
-                console.log(`key: ${key}`); // for debugging
-                this.activeContent.classList.remove('active');
-                // this.setActiveContent(e);
+                this.setActiveTab(e);
                 mainContent.render(key, uuid);
+            } else if (classSubstring === 'delete' && this.activeContent.classList.contains('task')) {
+                mainContent.render('home');
             }
         }
     },
+    setActiveTab: function(tab) {
+        if (this.activeTab) {
+            this.activeTab.classList.remove('active');
+        }
+        tab.classList.add('active');
+        this.activeTab = tab;
+    },
     setActiveContent: function(content) {
-        // pubSub.subscribers.find(item => {
-        //     // this will NOT work
-        //     // if (item.className === content.id) {
-        //     //     this.activeContent = item;
-        //     //     item.classList.add('active');
-        //     // }
-        // });
-
-        // for (let key in pubSub.subscribers) {
-            // console.log(key); // for debugging
-        // }
-
+        if (this.activeContent) {
+            this.activeContent.classList.remove('active');
+        }
         content.classList.add('active');
         this.activeContent = content;
-        console.log(content);
-    },
+    }
 }

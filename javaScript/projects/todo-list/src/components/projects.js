@@ -33,7 +33,7 @@ const projects = {
         const parentContainer = document.createElement('div');
         const anchorWrapper = document.createElement('div');
         anchorWrapper.classList.add('nav_projects');
-        
+
         anchorWrapper.appendChild(buildButtonAdd('project', 'Add project'));
         
         parentContainer.appendChild(anchorWrapper);

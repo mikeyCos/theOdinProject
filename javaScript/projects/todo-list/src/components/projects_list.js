@@ -45,18 +45,31 @@ const projectList = (state) => ({
         this.cacheDOM(list);
         this.bindEvents();
         this.container.appendChild(list);
+
     },
-    cacheDOM: function(container)  {
+    cacheDOM: function(container)  {    
         this.ulList = container;
         this.listContainer = this.ulList.firstChild;
         this.projectsListItems = this.ulList.querySelectorAll('li');
         this.projectsListAnchors = this.ulList.querySelectorAll('li a');
         this.btnDeleteProject = this.ulList.querySelectorAll('.btn_delete_project');
+        // window.addEventListener("load", (event) => {
+        //     const test = document.querySelector('#main_content');
+        //     console.log(test);
+        //     console.log(this);
+        //     console.log("page is fully loaded");
+            
+        // });
+
+        // onload = (event) => {
+        //     console.log(`test`);
+        // };
+        // this.test = document.querySelector('#main_content');
     },
     bindEvents: function() {
-        this.removeListItem = this.removeListItem.bind(this);
-        this.btnDeleteProject.forEach( button => {
-            button.addEventListener('click', this.removeListItem);
+        this.removeProject = this.removeProject.bind(this);
+        this.btnDeleteProject.forEach(button => {
+            button.addEventListener('click', this.removeProject);
         });
 
         this.projectsListAnchors.forEach( project => {
@@ -99,14 +112,15 @@ const projectList = (state) => ({
         }
         return listItems;
     },
-    removeListItem: function(e) {
+    removeProject: function(e) {
         const listItem = e.target.parentElement.parentElement.parentElement;
         listItem.remove();
+        pubSub.publish('content', e.target.parentElement);
         removeProject(listItem.dataset.uuid);
         buildList.modules.forEach(module => module.render());
     },
     publish: function(e) {
-        console.log(`publish() running`);
+        // console.log(`publish() running`); // for debugging
         let className = e.target.parentElement.className;
         let itemUUID = e.target.parentElement.parentElement
         pubSub.publish('content', e.target.parentElement);

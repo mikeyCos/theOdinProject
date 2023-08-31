@@ -1,6 +1,7 @@
 import importAll from '../utilities/import-all';
 import { pubSub } from '../containers/pubsub'; // connect .btn_home to mainContent.switchContent
 // import mainContent from '../components/main.js'; // testing
+import buildTasksForm from '../components/tasks_form';
 import '../styles/header.css';
 
 export default function buildHeader(app, content) {
@@ -24,6 +25,7 @@ const header = {
     bindEvents: function() {
         this.btnMenu.addEventListener('click', this.publish);
         this.btnHome.addEventListener('click', this.publish); // testing
+        this.btnAddTask.addEventListener('click', buildTasksForm);
     },
     headerContent: {
         headerLeft: [
