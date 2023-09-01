@@ -11,7 +11,7 @@ import buildTaskForm from '../components/tasks_form';
     // we delete it from there or from the sidebar
         // change content to home
 export default function buildProjectTasks(uuid) {
-    console.log(`tasks.js running`);
+    console.log(`tasks.js running`); // for debugging
     const project = getProject(uuid);
     projectTasks.project = getProject(uuid);
     const projectsContainer = document.createElement('div');
@@ -53,7 +53,8 @@ const projectTasks = {
     },
     bindEvents: function() {
         this.removeTask = this.removeTask.bind(this);
-        this.btnAddTask.addEventListener('click', buildTaskForm);
+
+        this.btnAddTask.addEventListener('click', (e) => { buildTaskForm(e) });
         this.btnDeleteTask.forEach(button => {
             button.addEventListener('click', this.removeTask);
         });
@@ -71,6 +72,8 @@ const projectTasks = {
             
             taskName.textContent = this.project.tasks[i].name;
 
+            // need to create a button that complete tasks
+            // listItemContainer.appendChild(buildButtonCheck)
             listItemContainer.appendChild(taskName);
 
             if (this.project.tasks[i].description !== undefined) {

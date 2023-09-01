@@ -1,4 +1,4 @@
-import { projects, removeProject } from '../containers/project-controller';
+import { projects, removeProject, getProject } from '../containers/project-controller';
 import buildButtonDelete from './button_delete';
 import { pubSub } from '../containers/pubsub';
 
@@ -122,7 +122,11 @@ const projectList = (state) => ({
     publish: function(e) {
         // console.log(`publish() running`); // for debugging
         let className = e.target.parentElement.className;
-        let itemUUID = e.target.parentElement.parentElement
+        let projectUUID = e.target.parentElement.parentElement.dataset.uuid
+        console.log(projectUUID);
+        console.log(getProject(projectUUID));
+        getProject(projectUUID).active = true;
+        console.log(getProject(projectUUID));
         pubSub.publish('content', e.target.parentElement);
     },
     clearCache: function() {

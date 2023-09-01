@@ -4,8 +4,9 @@ export const projects = [];
 const project = (title) => {
     const tasks = [];
     const addTask = (name, description) => tasks.push(task(name, description));
+    let active = false; // there can only be one project active
     const uuid = crypto.randomUUID();
-    return { title, tasks, uuid, addTask };
+    return { title, tasks, uuid, active, addTask };
 }
 
 const task = (name, description) => {
