@@ -1,4 +1,5 @@
-import { projects, removeProject, getProject } from '../containers/project-controller';
+// import { projects, removeProject, getProject } from '../containers/project-controller';
+import { projectController } from '../containers/project-controller';
 import buildButtonDelete from './button_delete';
 import { pubSub } from '../containers/pubsub';
 
@@ -10,10 +11,11 @@ const buildProjectsList = (type, container) => {
 
     return Object.assign(
         {},
-        projectList(state),
+        projectsList(state),
         )
 }
 
+// rename to buildProjectsList (?)
 export const buildList = {
     modules: [],
     add: function (type, container) {
@@ -31,7 +33,7 @@ export const buildList = {
     }
 }
 
-const projectList = (state) => ({
+const projectsList = (state) => ({
     type: state.type,
     container: state.container,
     init: function() {
@@ -78,14 +80,14 @@ const projectList = (state) => ({
     },
     render: function() {
         const listItems = document.createElement('div');
-        for (let i = 0; i < projects.length; i++) {
+        for (let i = 0; i < projectController.projects.length; i++) {
             const listItem = document.createElement('li');
             const anchor = document.createElement('a');
             const anchorSpan = document.createElement('span');
-            anchorSpan.textContent = projects[i].title;
-            anchor.href = `#${projects[i].title};`
+            anchorSpan.textContent = projectController.projects[i].title;
+            anchor.href = `#${projectController.projects[i].title};`
 
-            listItem.setAttribute('data-uuid', projects[i].uuid);
+            listItem.setAttribute('data-uuid', projectController.projects[i].uuid);
             anchor.classList.add('nav_project');
             const buttonSpan = document.createElement('span');
             
@@ -100,12 +102,9 @@ const projectList = (state) => ({
         if (this.listContainer) {
             this.listContainer.remove();
             this.ulList.appendChild(listItems);
-            // changes content only when a new project is added
-            if (this.projectsListItems.length < projects.length) {
+            // changes content to the newly project is added
+            if (this.projectsListItems.length < projectController.projects.length && this.type === 'sidebar') {
                 pubSub.publish('content', [...listItems.children].splice(-1).pop().firstChild);
-            } else if (this.projectsListItems.length > projects.length ) {
-                // console.log(`this.projectsListItems.length is > projects.length`);
-                // alert('foo');
             }
             this.cacheDOM(this.ulList);
             this.bindEvents();
@@ -114,19 +113,21 @@ const projectList = (state) => ({
     },
     removeProject: function(e) {
         const listItem = e.target.parentElement.parentElement.parentElement;
+        const projectUUID = listItem.dataset.uuid;
         listItem.remove();
-        pubSub.publish('content', e.target.parentElement);
-        removeProject(listItem.dataset.uuid);
+        // if there is no active project
+        // OR the project's uuid we want to remove is the same as the current active project's uuid
+            // update the content to the homepage
+        if (projectController.findActive() === undefined || projectUUID === projectController.findActive().uuid) {
+            pubSub.publish('content', e.target.parentElement);
+        }
+        projectController.remove(projectUUID);
         buildList.modules.forEach(module => module.render());
     },
     publish: function(e) {
         // console.log(`publish() running`); // for debugging
         let className = e.target.parentElement.className;
         let projectUUID = e.target.parentElement.parentElement.dataset.uuid
-        console.log(projectUUID);
-        console.log(getProject(projectUUID));
-        getProject(projectUUID).active = true;
-        console.log(getProject(projectUUID));
         pubSub.publish('content', e.target.parentElement);
     },
     clearCache: function() {

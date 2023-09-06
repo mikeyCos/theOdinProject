@@ -1,7 +1,7 @@
-import { addProject, projects } from '../containers/project-controller';
+// import { addProject, projects } from '../containers/project-controller';
+import { projectController } from '../containers/project-controller';
 // import buildProjectsList from '../components/projects_list'; // testing
 import { buildList } from '../components/projects_list';
-import { pubSub } from '../containers/pubsub';
 import '../styles/form_project.css';
 // renders a form to create a project
 export default function buildProjectForm() {
@@ -81,7 +81,6 @@ const formProject = {
         return formElement
     },
     closeModal: function(e) {
-        console.log(`closeModal() running`);
         if (e.target.tagName === 'DIALOG') {
             this.removeModal();
         }
@@ -94,7 +93,8 @@ const formProject = {
         // optional, form validation
             // if form is valid
                 // then addProject()
-        addProject(this.formInputs);
+        // addProject(this.formInputs);
+        projectController.addProject(this.formInputs);
         // buildList.modules.forEach(module => module.render())
         buildList.find('sidebar').render(); // will render only the sidebar
         this.removeModal();

@@ -1,6 +1,5 @@
 // import buildProjectsList from '../components/projects_list';
 import { buildList } from '../components/projects_list';
-import { pubSub } from '../containers/pubsub';
 import buildButtonAdd from '../components/button_add';
 import buildProjectForm from '../components/projects_form';
 

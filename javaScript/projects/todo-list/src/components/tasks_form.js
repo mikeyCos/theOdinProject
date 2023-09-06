@@ -1,6 +1,7 @@
-import { addTask } from '../containers/project-controller';
+// import { addTask } from '../containers/project-controller';
 // import buildProjectsList from '../components/projects_list'; // testing
 // import { buildList } from '../components/projects_list';
+import { projectController } from '../containers/project-controller';
 import '../styles/form_project.css';
 
 const buildTaskForm = (type, form, button, dialogElement) => {
@@ -27,12 +28,16 @@ const buildTaskForm = (type, form, button, dialogElement) => {
     );
 }
 
-const buildForm = {
+export const buildForm = {
     sections: [],
     add: function (type, form, button, dialogElement) {
         // need to check if the section exists already
         // if section exists, section update it's container
         // prevents similar sections to be added
+        if (this.find(type)) {
+            // this.find(type).unBindEvent();
+            this.remove(type);
+        }
         this.sections = [...this.sections, buildTaskForm(type, form, button, dialogElement)];
         console.log(this.sections); // for debugging
     },
@@ -49,7 +54,8 @@ const buildForm = {
     // one needs to be a non-dialog element
 export default function buildTasksForm(e) {
     console.log(`buildTaskForm() running from tasks_form.js`); // for debugging
-    const button = e.target;
+
+    const button = e.currentTarget;
     const buttonParent = button.parentElement;
     const form = document.createElement('form');
     form.classList.add('form_task');
@@ -113,13 +119,16 @@ const formTask = (state) => ({
     bindEvents: function() {
         this.submitForm = this.submitForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
-        this.btnSubmit.addEventListener('submit', this.submitForm);
+        this.form.addEventListener('submit', this.submitForm);
         this.btnCancel.addEventListener('click', this.closeForm);
         
         if (this.dialogElement) {
             this.closeModal = this.closeModal.bind(this);
             this.dialogElement.addEventListener('click', this.closeModal);
         }
+    },
+    unBindEvent: function() {
+        this.form.removeEventListener('submit', this.submitForm);
     },
     // take a look at restaurant project's contact module
     render: function() {
@@ -157,12 +166,16 @@ const formTask = (state) => ({
     submitForm: function(e) {
         e.preventDefault();
         console.log(`submitForm() running`); // for debugging
-        this.closeForm();
+        projectController.findActive().addTask(this.formInputs);
+        if (this.dialogElement) {
+            this.closeForm();
+        } else {
+            this.formInputs.forEach(input => input.value = '')
+        }
     },
     closeForm: function(e) {
         if (!this.dialogElement) {
             this.form.remove();
-            buildForm.remove(this.type);
             this.buttonParent.appendChild(this.button);
             buildForm.remove(this.type);
         } else {

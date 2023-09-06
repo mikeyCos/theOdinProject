@@ -1,70 +1,76 @@
-export const projects = [];
+import { taskList } from '../components/tasks_list';
+import { pubSub } from './pubsub';
+
+const getFormValues = (inputs) => {
+    
+    const obj = {}
+    inputs.forEach(input => { 
+        if (input.value.length !== 0 )
+        obj[input.id] = input.value 
+    });
+    return obj;
+}
 // creates a project object
     // tasks property created upon object creation
-const project = (title) => {
-    const tasks = [];
-    const addTask = (name, description) => tasks.push(task(name, description));
+const project = () => {
     let active = false; // there can only be one project active
     const uuid = crypto.randomUUID();
-    return { title, tasks, uuid, active, addTask };
+    const tasks = [];
+    const addTask = (inputs) => {
+        tasks.push(Object.assign(task(uuid), getFormValues(inputs)));
+        pubSub.publish('addTask', getFormValues(inputs));
+        console.log(tasks);
+    };
+    return { tasks, uuid, active, addTask };
 }
 
-const task = (name, description) => {
-    // priorities 1-4
-        // 1 = most important
-        // 4 = least important
-        // optional, colors 
-    // due date
-    return { name, description };
-}
 
-projects.push(project('test1'));
-projects[0].addTask('taskA');
-projects[0].addTask('taskB', 'pizza pizza');
-projects.push(project('test2'));
-projects[1].addTask('taskA', 'foo bar');
-
-// idea, creates tasks property in project object
-function createTasks() {
-}
-
-// const task = (name, description) => {
-//     getProject(uuid).tasks.push(task(name, description));
-//     console.table(projects);
-// }
-
-// creates project and pushes it to projects[]
-export const addProject = (inputs) => {
-    console.log(`addProject() running`)
-    for (let prop in project()) {
-        for (let input of inputs) {
-            if (input.id === prop) {
-                projects.push(project(input.value));
-            }
+export const projectController = {
+    inbox: [],
+    projects: [],
+    addProject: function(inputs) {
+        console.log(inputs)
+        this.projects.push(Object.assign(project(), getFormValues(inputs)));
+    },
+    remove: function(uuid) {
+        this.projects.splice(this.projects.indexOf(this.find(uuid)), 1);
+    },
+    find: function(uuid) {
+        return this.projects.find(project => project.uuid === uuid);
+    },
+    setActive: function(uuid) {
+        if (this.findActive()) {
+            this.findActive().active = false;
         }
+        this.find(uuid).active = true;
+        console.log(this.projects);
+    },
+    findActive: function() {
+        return this.projects.find(project => project.active === true);
     }
 }
 
-// complete/remove project
-export const removeProject = (uuid) => {
-    // const projectSelection = prompt(`Enter project name you want to delete.`);
-    // projects.splice(getProjectIndex(projectSelection), 1);
-    projects.splice(getProjectIndex(uuid), 1);
+
+const task = (uuid) => {
+    const uuidRef = uuid;
+    let priority = 4;
+    let dueDate = null;
+    return { priority, dueDate, uuidRef };
 }
+
+projectController.addProject([{id: 'title', value: 'test1'}]);
+projectController.addProject([{id: 'title', value: 'test2'}]);
+projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id:'description', value: 'pizza pizza'}]);
+projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id:'description', value: 'foo bar'}]);
+projectController.projects[1].addTask([{id: 'name', value: 'taskA'}]);
 
 // gets project's index from projects[] based on project name
-const getProjectIndex = (uuid) => {
-    for (const index in projects) {
-        for (const key in projects[index]) {
-            if (key === 'uuid' && projects[index][key] === uuid) {
-                return index;
-            }
-        }
-    }
-}
-
-// gets project object
-// do I need this function?
-export const getProject = (uuid) => {
-    return projects[getProjectIndex(uuid)];
-}
+// const getProjectIndex = (uuid) => {
+//     for (const index in projects) {
+//         for (const key in projects[index]) {
+//             if (key === 'uuid' && projects[index][key] === uuid) {
+//                 return index;
+//             }
+//         }
+//     }
+// }

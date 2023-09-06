@@ -4,6 +4,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 ---
 ### Ideas
 1. Form validator module.  
+2. Update current url with respective anchor href; `window.location`.
 ---
 ### Questions
 1. How do we distinguish a single step versus a single responsibility?
@@ -14,7 +15,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
-- 01 SEP 2023: Both task forms can be canceled and closed, 
+- 05 SEP 2023: Both task forms can be canceled and closed, refactored the way projects and tasks can be created in the `project-controller.js` module, home is only rendered when an active project (it is displayed on the `main_content` container) is deleted, tasks can be added to their respective projects, and newly created tasks are dynamically rendered to the DOM (if the non-modal form is opened, tasks are appended to the container before the form.).  
 - 30 AUG 2023: A project that is deleted from the sidebar while active on the `main_content` section will automatically set the `main_content` section to 'home', hard-coded tasks can be rendered for display, and imported `buildTasksForm()` into `header.js` module.
 - 29 AUG 2023: Factory function created in `projects_list.js` to create an object for the sidebar and project modules, sidebar and project modules will have unique properties (ex, cached elements are restricted to their respective module), creating a project will change the `main_content` section to the newly created project, created `project_tasks.js` and `tasks_form.js` modules, and clicking the 'projects' anchor on the sidebar will render a list of projects on the `main_content` section (similar to the one show on the sidebar).  
 - 22 AUG 2023: Temporarily(?) fixed the ability to add/delete projects to the sidebar, and elements in `cacheDOM()` from `projects_list.js` are preventing each parent container being unique.  
