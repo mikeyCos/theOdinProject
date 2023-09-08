@@ -3,7 +3,7 @@
 import { pubSub } from '../containers/pubsub';
 // import { projects, getProject } from '../containers/project-controller';
 import { projectController } from '../containers/project-controller';
-import buildButtonAdd from '../components/button_add';
+import buildButton from '../components/buttons';
 import buildTasksForm, { buildForm } from '../components/tasks_form';
 import { tasksList } from '../components/tasks_list';
 
@@ -52,7 +52,7 @@ export const projectTasks = {
         projectsContainer.appendChild(header);
 
         listItem.appendChild(tasksList.init()); // something fishing is going on
-        listItem.appendChild(buildButtonAdd('task', 'Add task'));
+        listItem.appendChild(buildButton('add', 'task', 'Add task'));
         list.appendChild(listItem);
 
         projectsContainer.appendChild(list);

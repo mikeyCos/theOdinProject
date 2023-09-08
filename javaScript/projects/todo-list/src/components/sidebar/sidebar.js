@@ -1,5 +1,5 @@
 import importAll from '../../utilities/import-all';
-import buildButtonAdd from '../button_add';
+import buildButton from '../buttons';
 import buildProjectForm from '../projects_form';
 import { buildList } from '../projects_list';
 import { pubSub } from '../../containers/pubsub';
@@ -46,7 +46,7 @@ const sidebar = {
         anchor.href = '#projects';
 
         anchorWrapper.appendChild(anchor);
-        anchorWrapper.appendChild(buildButtonAdd('project'));
+        anchorWrapper.appendChild(buildButton('add', 'project'));
         projectsContainer.appendChild(anchorWrapper);
 
         buildList.add('sidebar', projectsContainer);

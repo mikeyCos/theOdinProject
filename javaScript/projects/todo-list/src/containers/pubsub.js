@@ -1,7 +1,6 @@
 export const pubSub = {
     subscribers: {},
     subscribe: function(subscriber, handler) {
-        console.log(handler);
         if (this.subscribers[subscriber]) {
             delete this.subscribers[subscriber];
         }

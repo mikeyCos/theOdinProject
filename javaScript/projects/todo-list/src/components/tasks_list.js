@@ -1,11 +1,15 @@
 import { projectController } from '../containers/project-controller';
-import buildButtonDelete from '../components/button_delete';
+import buildButton from '../components/buttons'
+// import buildTasksForm from '../components/tasks_form_edit';
+import buildTasksForm from '../components/tasks_form';
 import { pubSub } from '../containers/pubsub';
 
 export const tasksList = {
+    btnDeleteTask: [],
     init: function() {
         this.render = this.render.bind(this);
         pubSub.subscribe('addTask', this.render);
+        pubSub.subscribe('updateTask', this.render);
         this.project = projectController.findActive()
         this.listContainer = this.render();
         this.project.tasks.forEach(task => this.render(task));
@@ -14,47 +18,70 @@ export const tasksList = {
     project: null,
     cacheDOM: function() {
         // this.listContainer = this.listContainer;
-        console.log(this.listContainer)
-        this.btnDeleteTask = this.listContainer.querySelectorAll('.btn_delete_task');
+        // this.btnDeleteTask = this.listContainer.querySelectorAll('.btn_delete_task');
         // this.projectsListItems = this.ulList.querySelectorAll('li');
         // console.log(this.projectsListItems);
-        console.log(this.btnDeleteTask);
     },
     bindEvents: function(...args) {
         this.removeTask = this.removeTask.bind(this);
-        // this.btnDeleteTask.forEach(button => {
-        //     button.addEventListener('click', this.removeTask);
-        // });
-        args.forEach(element => console.log(element));
-        // args.forEach(element => element.addEventListener('click', this.removeTask));
+        this.editTask = this.editTask.bind(this);
+        // args.forEach(element => console.log(element));
+        args.forEach(element => {
+            if (element.getAttribute('type')) {
+                element.addEventListener('click', this.removeTask, true);
+            } else {
+                element.addEventListener('click', this.editTask);
+            }
+        });
         // this will need to generate a form
             // removes the button
     },
     render: function(task) {
-        console.log(`render() in tasks_list.js is running`);
+        // buttons to implement
+            // checkbox, appended before heading
+            // due date
+            // priority
         
         if (task) {
-            console.log(this);
-            console.log(this.listContainer);
-            console.log(task);
+            const listItemWrapper = document.createElement('div');
             const listItem = document.createElement('li');
             const listItemContainer = document.createElement('div');
             const taskName = document.createElement('h3');
+            const priority = document.createElement('p');
 
+            listItemWrapper.setAttribute('role', 'button');
+            listItem.setAttribute('data-uuid', task.uuidTask);
+            listItem.setAttribute('data-uuid-proj', task.uuidProj);
+            listItem.classList.add('task_list_item');
+            taskName.classList.add('task_name');
             taskName.textContent = task.name;
+            priority.classList.add('task_priority');
+            priority.textContent = `Priority ${task.priority}`;
             listItemContainer.appendChild(taskName);
-
+            
             if (task.description !== undefined) {
                 const taskDescription = document.createElement('p');
+                taskDescription.classList.add('task_description');
                 taskDescription.textContent = task.description;
                 listItemContainer.appendChild(taskDescription);
             }
-            const button = buildButtonDelete('task');
+            
+            if (task.due_date !== undefined) {
+                const dueDate = document.createElement('p');
+                dueDate.classList.add('task_due_date');
+                dueDate.textContent = task.due_date;
+                listItemContainer.appendChild(dueDate);
+            }
+
+            listItemContainer.appendChild(priority);
+
+            const button = buildButton('delete', 'task');
             listItemContainer.appendChild(button);
             listItem.appendChild(listItemContainer);
-            this.listContainer.appendChild(listItem);
-            this.cacheDOM();
-            this.bindEvents({button, listItemContainer});
+            listItemWrapper.appendChild(listItem);
+            this.btnDeleteTask.push(button)
+            this.bindEvents(button, listItemWrapper);
+            this.listContainer.appendChild(listItemWrapper);
         } else {
             return document.createElement('div');
         }
@@ -62,6 +89,18 @@ export const tasksList = {
             // the task list grows while the task form is open
     },
     removeTask: function(e) {
-        console.log('removeTask() running');
+        e.stopImmediatePropagation();
+        console.log(`removeTask() in tasks_list.js is running`)
+
+        const listItem = e.currentTarget.parentElement.parentElement;
+        const listItemWrapper = listItem.parentElement;
+        let uuidTask = listItem.dataset.uuid;
+        this.project.removeTask(uuidTask);
+        listItem.remove();
+    },
+    editTask: function(e) {
+        console.log(`editTask() in tasks_list.js is running`)
+        console.log(e.currentTarget);
+        buildTasksForm(e);
     }
 }

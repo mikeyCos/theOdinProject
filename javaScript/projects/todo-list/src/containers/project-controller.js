@@ -2,11 +2,13 @@ import { taskList } from '../components/tasks_list';
 import { pubSub } from './pubsub';
 
 const getFormValues = (inputs) => {
-    
     const obj = {}
     inputs.forEach(input => { 
-        if (input.value.length !== 0 )
-        obj[input.id] = input.value 
+        if (input.id === 'priority') {
+            obj[input.id] = parseInt(input.value.slice(input.value.length - 1, input.value.length));
+        } else if (input.value.length !== 0 ) {
+            obj[input.id] = input.value
+        }
     });
     return obj;
 }
@@ -17,11 +19,24 @@ const project = () => {
     const uuid = crypto.randomUUID();
     const tasks = [];
     const addTask = (inputs) => {
-        tasks.push(Object.assign(task(uuid), getFormValues(inputs)));
-        pubSub.publish('addTask', getFormValues(inputs));
+        const newTask = Object.assign(task(uuid), getFormValues(inputs));
+        tasks.push(newTask);
+        pubSub.publish('addTask', newTask);
         console.log(tasks);
     };
-    return { tasks, uuid, active, addTask };
+    const removeTask = (uuid) => {
+        const task = findTask(uuid);
+        tasks.splice(tasks.indexOf(task), 1);
+    };
+    const updateTask = (uuid, inputs) => {
+        const newTask = Object.assign(findTask(uuid), getFormValues(inputs));
+        pubSub.publish('updateTask', newTask);
+        console.log(tasks);
+    };
+    const findTask = (uuid) => {
+        return tasks.find(element => element.uuidTask === uuid);
+    };
+    return { tasks, uuid, active, addTask, removeTask, updateTask };
 }
 
 
@@ -52,17 +67,18 @@ export const projectController = {
 
 
 const task = (uuid) => {
-    const uuidRef = uuid;
-    let priority = 4;
-    let dueDate = null;
-    return { priority, dueDate, uuidRef };
+    const uuidTask = crypto.randomUUID();
+    const uuidProj = uuid;
+    // let priority = 4;
+    // let dueDate = null;
+    return { uuidTask, uuidProj };
 }
 
 projectController.addProject([{id: 'title', value: 'test1'}]);
-projectController.addProject([{id: 'title', value: 'test2'}]);
-projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id:'description', value: 'pizza pizza'}]);
-projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id:'description', value: 'foo bar'}]);
-projectController.projects[1].addTask([{id: 'name', value: 'taskA'}]);
+projectController.addProject([{id: 'title', value: 'test2', priority: 1}]);
+projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'pizza pizza'}, {id: 'priority', value: 'prirotiy 2'}]);
+projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id: 'description', value: 'foo bar'}, {id: 'priority', value: 'priority 4'}]);
+projectController.projects[1].addTask([{id: 'name', value: 'taskA'}, {id: 'priority', value: 'priority 3'}]);
 
 // gets project's index from projects[] based on project name
 // const getProjectIndex = (uuid) => {

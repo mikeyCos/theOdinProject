@@ -1,6 +1,6 @@
 // import { projects, removeProject, getProject } from '../containers/project-controller';
 import { projectController } from '../containers/project-controller';
-import buildButtonDelete from './button_delete';
+import buildButton from './buttons';
 import { pubSub } from '../containers/pubsub';
 
 const buildProjectsList = (type, container) => {
@@ -91,7 +91,7 @@ const projectsList = (state) => ({
             anchor.classList.add('nav_project');
             const buttonSpan = document.createElement('span');
             
-            buttonSpan.appendChild(buildButtonDelete('project'));
+            buttonSpan.appendChild(buildButton('delete', 'project'));
             anchor.appendChild(anchorSpan);
             listItem.appendChild(anchor);
             listItem.appendChild(buttonSpan);

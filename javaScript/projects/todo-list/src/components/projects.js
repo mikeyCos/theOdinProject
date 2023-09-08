@@ -1,6 +1,6 @@
 // import buildProjectsList from '../components/projects_list';
 import { buildList } from '../components/projects_list';
-import buildButtonAdd from '../components/button_add';
+import buildButton from '../components/buttons';
 import buildProjectForm from '../components/projects_form';
 
 export default function buildProjects() {
@@ -33,14 +33,12 @@ const projects = {
         const anchorWrapper = document.createElement('div');
         anchorWrapper.classList.add('nav_projects');
 
-        anchorWrapper.appendChild(buildButtonAdd('project', 'Add project'));
-        
+        anchorWrapper.appendChild(buildButton('add', 'project', 'Add project'));        
         parentContainer.appendChild(anchorWrapper);
 
         buildList.add('content', parentContainer);
         buildList.find('content').clearCache();
         buildList.find('content').init();
-        // return anchorWrapper;
         return parentContainer;
     },
 }
