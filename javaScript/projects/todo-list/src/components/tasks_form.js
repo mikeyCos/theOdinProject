@@ -1,17 +1,22 @@
 // import { addTask } from '../containers/project-controller';
 // import buildProjectsList from '../components/projects_list'; // testing
 // import { buildList } from '../components/projects_list';
+import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
 import '../styles/form_project.css';
 
-const buildTaskForm = (type, form, button, dialogElement) => {
+const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
     let state = {
         form,
         type,
     }
 
     if (type === 'default') {
+        if (button.hasAttribute('role')) {
+            console.log(button);
+        }
         state.button = button;
+        state.buttonParent = buttonParent;
         return Object.assign(
             {},
             formTask(state),
@@ -36,7 +41,6 @@ export const buildForm = {
         // if section exists, section update it's container
         // prevents similar sections to be added
         if (this.find(type)) {
-            // this.find(type).unBindEvent();
             this.find(type).closeForm();
             this.remove(type);
         }
@@ -64,7 +68,7 @@ export default function buildTasksForm(e) {
         form.classList.add('modal');
         const dialogElement = document.createElement('dialog');
         dialogElement.id = 'modal';
-        buildForm.add('modal', form, undefined, dialogElement);
+        buildForm.add('modal', form, undefined, undefined, dialogElement);
 
         form.appendChild(buildForm.find(`modal`).render());
         buildForm.find(`modal`).cacheDOM();
@@ -73,12 +77,8 @@ export default function buildTasksForm(e) {
         document.body.appendChild(dialogElement);
         dialogElement.showModal();
     } else {
-        console.log(button)
-        console.log(button.parentElement)
-        console.log(buttonParent)
         e.currentTarget.replaceWith(form);
-        buildForm.add('default', form, button)
-        buildForm.find('default').init();
+        buildForm.add('default', form, button, buttonParent)
         form.appendChild(buildForm.find(`default`).render());
         buildForm.find(`default`).cacheDOM();
         buildForm.find(`default`).bindEvents();
@@ -86,40 +86,15 @@ export default function buildTasksForm(e) {
 }
 
 const formTask = (state) => ({
-    // inputs to implement
-        // due date
-        // priority
-        // project selection (drop-down)
     type: state.type,
     form: state.form,
-    init: function() {
-        console.log(`init() running in tasks_form_edit.js`)
-        console.log(this.content)
-        for (let formChild in this.formChildren) {
-            
-            if (this.formChildren[formChild].attributes) {
-                console.log(this.formChildren[formChild].attributes);
-            }
-            // if (this.formChildren[formChild].attributes && Array.from(this.content).find(element => element.className.includes(this.formChildren[formChild].attributes.id))) {
-                
-            //     if (!this.formChildren[formChild].options) {
-            //         Object.assign(
-            //             this.formChildren[formChild].attributes,
-            //             { value: Array.from(this.content).find(element => element.className.includes(this.formChildren[formChild].attributes.id)).textContent });
-            //     } else {
-            //         Object.assign(
-            //             this.formChildren[formChild].options,
-            //             { value: Array.from(this.content).find(element => element.className.includes(this.formChildren[formChild].attributes.id)).textContent });
-            //     }
-            // }
-        }
-    },
     cacheDOM: function() {
         this.btnCancel = this.form.querySelector('.btn_cancel');
-        this.btnSubmit = this.form.querySelector('.btn_submit_task');
+        this.btnSubmit = this.form.querySelector('.btn_submit_task') || this.form.querySelector('.btn_update_task');
         this.formInputs = this.form.querySelectorAll('.task_input');
     },
     bindEvents: function() {
+        console.log(this);
         this.submitForm = this.submitForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.form.addEventListener('submit', this.submitForm);
@@ -135,9 +110,7 @@ const formTask = (state) => ({
     },
     // take a look at restaurant project's contact module
     render: function() {
-        console.log(this.button);
         const container = document.createElement('div');
-        
         for (let formChild in this.formChildren) {
             const formItem = document.createElement('div');
             formItem.classList.add('form_item');
@@ -153,7 +126,11 @@ const formTask = (state) => ({
 
                 // idea, make separate module for options button
                 if (this.formChildren[formChild].options) {
-                    for (let i = 1; i <= 4; i++) {
+                    let length = 4;
+                    if (formChild === 'project') {
+                        length = projectController.projects.length;
+                    }
+                    for (let i = 1; i <= length; i++) {
                         const selectOption = Object.assign(
                             document.createElement(this.formChildren[formChild].options.element),
                             this.formChildren[formChild].options.attributes(i)
@@ -182,28 +159,35 @@ const formTask = (state) => ({
     },
     submitForm: function(e) {
         e.preventDefault();
-        projectController.findActive().addTask(this.formInputs);
-        if (this.dialogElement) {
-            this.closeForm();
+        // pubSub.publish('resetOldTask'); // testing
+        if (!this.listItem) {
+            projectController.findActive().addTask(this.formInputs);
+            if (this.dialogElement) {
+                this.closeForm();
+            } else {
+                this.form.reset();
+            }
         } else {
-            // this.formInputs.forEach(input => input.value = '')
-
-            this.form.reset();
+            this.closeForm();
+            pubSub.publish('resetOldTask', this.button); // testing
+            projectController.findActive().updateTask(this.listItem.dataset.uuid, this.formInputs);
         }
     },
     closeForm: function(e) {
+        console.log(`closeForm() from tasks_from.js is running`); // for debugging
         if (!this.dialogElement) {
-            // this.form.remove();
             this.form.replaceWith(this.button);
             buildForm.remove(this.type);
         } else {
             this.removeModal();
         }
+        pubSub.publish('resetOldTask'); // testing
     }
 });
 
 const nonModal = (state) => ({
     button: state.button,
+    parentButton: state.buttonParent,
 });
 
 const modal = (state) => ({
@@ -220,72 +204,143 @@ const modal = (state) => ({
     },
 });
 
-const formInputs = (state) => ({
-    formChildren: {
-        name: {
-            element: 'input',
-            attributes: {
-                id: 'name',
-                className: 'task_input',
-                name: 'name',
-                type: 'text',
-                placeholder: 'Task name',
-                required: 'required',
+const formInputs = (state) => {
+    const content = state.button.firstChild.firstChild.childNodes;
+    const init = () => {
+        for (let formChild in inputs.formChildren) {
+            if (inputs.formChildren[formChild].attributes && Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id))) {
+                console.log(formChild)
+                if (!inputs.formChildren[formChild].options) {
+                    Object.assign(
+                        inputs.formChildren[formChild].attributes,
+                        { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
+                } else {
+                    Object.assign(
+                        inputs.formChildren[formChild].options,
+                        { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
+                }
             }
-        },
-        description: {
-            element: 'textarea',
-            attributes: {
-                id: 'description',
-                className: 'task_input',
-                name: 'description',
-                placeholder: 'Description'
-            }
-        },
-        dueDate: {
-            element: 'input',
-            attributes: {
-                id: 'due_date',
-                className: 'task_input',
-                name: 'dueDate',
-                type: 'datetime-local',
-                placeholder: 'Due Date',
-            }
-        },
-        priority: {
-            element: 'select',
-            attributes: {
-                id: 'priority',
-                className: 'task_input',
-                name: 'priority',
-                placeholder: 'Priority'
+        }
+    }
+
+    const inputs = {
+        formChildren: {
+            name: {
+                element: 'input',
+                attributes: {
+                    id: 'name',
+                    className: 'task_input',
+                    name: 'name',
+                    type: 'text',
+                    placeholder: 'Task name',
+                    required: 'required',
+                }
             },
-            options:
-            {
-                element: 'option',
-                attributes: function(priority) {
-                    const newPriority = {
-                        value: `Priority ${priority}`,
-                    }
-                    if (this.value) {
-                        if (this.value === newPriority.value) {
-                            return Object.assign(newPriority, { selected: true })
-                        } else {
-                            return newPriority
+            description: {
+                element: 'textarea',
+                attributes: {
+                    id: 'description',
+                    className: 'task_input',
+                    name: 'description',
+                    placeholder: 'Description'
+                }
+            },
+            dueDate: {
+                element: 'input',
+                attributes: {
+                    id: 'due_date',
+                    className: 'task_input',
+                    name: 'dueDate',
+                    type: 'datetime-local',
+                    placeholder: 'Due Date',
+                }
+            },
+            priority: {
+                element: 'select',
+                attributes: {
+                    id: 'priority',
+                    className: 'task_input',
+                    name: 'priority',
+                    placeholder: 'Priority',
+                },
+                options: {
+                    element: 'option',
+                    attributes: function(priority) {
+                        const newPriority = {
+                            value: `Priority ${priority}`,
                         }
-                    } else {
-                        return priority === 4? Object.assign(newPriority, { selected: true}) : newPriority;
+                        if (this.value) {
+                            console.log(this.value)
+                            if (this.value === newPriority.value) {
+                                return Object.assign(newPriority, { selected: true })
+                            } else {
+                                return newPriority
+                            }
+                        } else {
+                            // defaultSelected parameter MDN
+                            // https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#parameters
+                            return priority === 4? Object.assign(newPriority, { selected: true}, { defaultSelected : true}) : newPriority;
+                        }
+                    }
+                },
+            },
+            project: {
+                element: 'select',
+                attributes: {
+                    id: '',
+                    className: 'task_input',
+                    name: 'project',
+                    placeholder: 'Project'
+                },
+                options: {
+                    element: 'option',
+                    attributes: function(i) {
+                        console.log(projectController.projects[i-1])
+                        const project = {
+                            value: projectController.projects[i-1].title
+                        }
+                        return projectController.findActive().uuid === projectController.projects[i-1].uuid ?
+                        Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
                     }
                 }
             },
+            cancel: {
+                className: 'btn_cancel',
+                type: 'button',
+            },
         },
-        cancel: {
-            className: 'btn_cancel',
-            type: 'button',
-        },
+    }
+
+    const inputsAdd = {
         add: {
             className: 'btn_submit_task',
             type: 'submit',
         },
-    },
-});
+    }
+
+    const inputsEdit = {
+        button: {
+            save: {
+            className: 'btn_update_task',
+            type: 'submit',
+            },
+        },
+        prop: {
+            listItem: state.button.firstChild,
+        }
+    }
+
+    // if the button clicked has 'role' attribute
+        // assign formChildren with a save-button
+        // assign formTask with a content property/init function
+    // otherwise, 
+        // assign formChildren with only a add-button
+    if (state.button.hasAttribute('role')) {
+        init();
+        Object.assign(inputs.formChildren, inputsEdit.button);
+        Object.assign(inputs, inputsEdit.prop);
+    } else {
+        Object.assign(inputs.formChildren, inputsAdd);
+    }
+    return inputs;
+}

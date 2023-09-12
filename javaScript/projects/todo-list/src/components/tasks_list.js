@@ -8,18 +8,21 @@ export const tasksList = {
     btnDeleteTask: [],
     init: function() {
         this.render = this.render.bind(this);
+        this.resetOldTask = this.resetOldTask.bind(this);
         pubSub.subscribe('addTask', this.render);
         pubSub.subscribe('updateTask', this.render);
+        pubSub.subscribe('resetOldTask', this.resetOldTask); // testing
         this.project = projectController.findActive()
         this.listContainer = this.render();
         this.project.tasks.forEach(task => this.render(task));
         return this.listContainer;
     },
+    oldTask: null,
     project: null,
     cacheDOM: function() {
-        // this.listContainer = this.listContainer;
+        this.listContainer = this.listContainer;
         // this.btnDeleteTask = this.listContainer.querySelectorAll('.btn_delete_task');
-        // this.projectsListItems = this.ulList.querySelectorAll('li');
+        this.projectsListItems = this.listContainer.querySelectorAll('li');
         // console.log(this.projectsListItems);
     },
     bindEvents: function(...args) {
@@ -41,7 +44,6 @@ export const tasksList = {
             // checkbox, appended before heading
             // due date
             // priority
-        
         if (task) {
             const listItemWrapper = document.createElement('div');
             const listItem = document.createElement('li');
@@ -67,6 +69,7 @@ export const tasksList = {
             }
             
             if (task.due_date !== undefined) {
+                // need to render it 
                 const dueDate = document.createElement('p');
                 dueDate.classList.add('task_due_date');
                 dueDate.textContent = task.due_date;
@@ -81,7 +84,16 @@ export const tasksList = {
             listItemWrapper.appendChild(listItem);
             this.btnDeleteTask.push(button)
             this.bindEvents(button, listItemWrapper);
-            this.listContainer.appendChild(listItemWrapper);
+
+            console.log(this.oldTask) // for debugging
+            if (!this.oldTask) {
+                this.listContainer.appendChild(listItemWrapper);
+            } else {
+                this.oldTask.replaceWith(listItemWrapper);
+                this.oldTask = null;
+            }
+            // updating task
+                // need to only append at that task's index
         } else {
             return document.createElement('div');
         }
@@ -99,8 +111,16 @@ export const tasksList = {
         listItem.remove();
     },
     editTask: function(e) {
-        console.log(`editTask() in tasks_list.js is running`)
-        console.log(e.currentTarget);
+        console.log(`editTask() from tasks_list.js is running`);
+        this.oldTask = e.currentTarget;
         buildTasksForm(e);
+    },
+    resetOldTask: function(oldTask) {
+        console.log(`resetOldTask() from tasks_list.js is running`);
+        if (this.oldTask) {
+            this.oldTask = null
+        } else if (oldTask) {
+            this.oldTask = oldTask;
+        }
     }
 }

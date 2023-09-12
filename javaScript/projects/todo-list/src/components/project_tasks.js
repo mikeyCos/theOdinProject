@@ -4,7 +4,7 @@ import { pubSub } from '../containers/pubsub';
 // import { projects, getProject } from '../containers/project-controller';
 import { projectController } from '../containers/project-controller';
 import buildButton from '../components/buttons';
-import buildTasksForm, { buildForm } from '../components/tasks_form';
+import buildTasksForm from '../components/tasks_form';
 import { tasksList } from '../components/tasks_list';
 
 // renders a project's page and it's tasks
@@ -36,7 +36,7 @@ export const projectTasks = {
             // removes the button
     },
     render: function() {
-        console.log(`render() in project_tasks.js is running`);
+        console.log(`render() in project_tasks.js is running`); // for debugging
         const projectsContainer = document.createElement('div');
         const header = document.createElement('h1');
         const list = document.createElement('ul');

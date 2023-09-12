@@ -6,7 +6,9 @@ const getFormValues = (inputs) => {
     inputs.forEach(input => { 
         if (input.id === 'priority') {
             obj[input.id] = parseInt(input.value.slice(input.value.length - 1, input.value.length));
-        } else if (input.value.length !== 0 ) {
+        } else if (input.value.length !== 0) {
+        // } else {
+            console.log(input.value)
             obj[input.id] = input.value
         }
     });
@@ -19,19 +21,21 @@ const project = () => {
     const uuid = crypto.randomUUID();
     const tasks = [];
     const addTask = (inputs) => {
+        // need to allow user to pick what project to assign the newly/edited task
         const newTask = Object.assign(task(uuid), getFormValues(inputs));
         tasks.push(newTask);
         pubSub.publish('addTask', newTask);
-        console.log(tasks);
+        console.log(tasks); // for debugging
     };
     const removeTask = (uuid) => {
         const task = findTask(uuid);
         tasks.splice(tasks.indexOf(task), 1);
     };
     const updateTask = (uuid, inputs) => {
+        console.log(`updateTask() from project-controller.js is running`); // for debugging
         const newTask = Object.assign(findTask(uuid), getFormValues(inputs));
         pubSub.publish('updateTask', newTask);
-        console.log(tasks);
+        console.log(tasks); // for debugging
     };
     const findTask = (uuid) => {
         return tasks.find(element => element.uuidTask === uuid);
@@ -44,7 +48,7 @@ export const projectController = {
     inbox: [],
     projects: [],
     addProject: function(inputs) {
-        console.log(inputs)
+        console.log(inputs) // for debugging
         this.projects.push(Object.assign(project(), getFormValues(inputs)));
     },
     remove: function(uuid) {
@@ -58,7 +62,7 @@ export const projectController = {
             this.findActive().active = false;
         }
         this.find(uuid).active = true;
-        console.log(this.projects);
+        console.log(this.projects); // for debugging
     },
     findActive: function() {
         return this.projects.find(project => project.active === true);
@@ -69,8 +73,6 @@ export const projectController = {
 const task = (uuid) => {
     const uuidTask = crypto.randomUUID();
     const uuidProj = uuid;
-    // let priority = 4;
-    // let dueDate = null;
     return { uuidTask, uuidProj };
 }
 
