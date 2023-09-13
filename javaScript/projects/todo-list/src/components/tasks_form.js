@@ -36,7 +36,7 @@ const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
 
 export const buildForm = {
     sections: [],
-    add: function (type, form, button, dialogElement) {
+    add: function (type, form, button, buttonParent, dialogElement) {
         // need to check if the section exists already
         // if section exists, section update it's container
         // prevents similar sections to be added
@@ -44,7 +44,7 @@ export const buildForm = {
             this.find(type).closeForm();
             this.remove(type);
         }
-        this.sections = [...this.sections, buildTaskForm(type, form, button, dialogElement)];
+        this.sections = [...this.sections, buildTaskForm(type, form, button, buttonParent, dialogElement)];
         console.log(this.sections); // for debugging
     },
     remove: function(type) {
@@ -99,7 +99,6 @@ const formTask = (state) => ({
         this.closeForm = this.closeForm.bind(this);
         this.form.addEventListener('submit', this.submitForm);
         this.btnCancel.addEventListener('click', this.closeForm);
-        
         if (this.dialogElement) {
             this.closeModal = this.closeModal.bind(this);
             this.dialogElement.addEventListener('click', this.closeModal);
@@ -136,7 +135,6 @@ const formTask = (state) => ({
                             this.formChildren[formChild].options.attributes(i)
                         )
 
-                        selectOption.textContent = selectOption.getAttribute('value');
                         item.appendChild(selectOption);
                     }
                 }
@@ -205,7 +203,11 @@ const modal = (state) => ({
 });
 
 const formInputs = (state) => {
-    const content = state.button.firstChild.firstChild.childNodes;
+    // does not work for modal
+    console.log(state)
+    console.log(state.button)
+
+    const content = state.button ? state.button.firstChild.firstChild.childNodes : null;
     const init = () => {
         for (let formChild in inputs.formChildren) {
             if (inputs.formChildren[formChild].attributes && Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id))) {
@@ -215,9 +217,11 @@ const formInputs = (state) => {
                         inputs.formChildren[formChild].attributes,
                         { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
                 } else {
+                    const text = Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent;
+                    const number = parseInt(text.slice(text.indexOf('_'), text.length));
                     Object.assign(
                         inputs.formChildren[formChild].options,
-                        { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
+                        { value: number }, { text: text});
                 }
             }
         }
@@ -267,7 +271,8 @@ const formInputs = (state) => {
                     element: 'option',
                     attributes: function(priority) {
                         const newPriority = {
-                            value: `Priority ${priority}`,
+                            value: priority,
+                            text: `Priority ${priority}`,
                         }
                         if (this.value) {
                             console.log(this.value)
@@ -287,7 +292,7 @@ const formInputs = (state) => {
             project: {
                 element: 'select',
                 attributes: {
-                    id: '',
+                    id: 'project',
                     className: 'task_input',
                     name: 'project',
                     placeholder: 'Project'
@@ -297,7 +302,8 @@ const formInputs = (state) => {
                     attributes: function(i) {
                         console.log(projectController.projects[i-1])
                         const project = {
-                            value: projectController.projects[i-1].title
+                            value: projectController.projects[i-1].uuid,
+                            text: projectController.projects[i-1].title,
                         }
                         return projectController.findActive().uuid === projectController.projects[i-1].uuid ?
                         Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
@@ -311,35 +317,35 @@ const formInputs = (state) => {
         },
     }
 
-    const inputsAdd = {
-        add: {
-            className: 'btn_submit_task',
-            type: 'submit',
-        },
-    }
-
-    const inputsEdit = {
-        button: {
-            save: {
-            className: 'btn_update_task',
-            type: 'submit',
-            },
-        },
-        prop: {
-            listItem: state.button.firstChild,
-        }
-    }
-
     // if the button clicked has 'role' attribute
         // assign formChildren with a save-button
         // assign formTask with a content property/init function
     // otherwise, 
         // assign formChildren with only a add-button
-    if (state.button.hasAttribute('role')) {
+    if (state.button && state.button.hasAttribute('role')) {
+        const inputsEdit = {
+            button: {
+                save: {
+                className: 'btn_update_task',
+                type: 'submit',
+                },
+            },
+            prop: {
+                listItem: state.button.firstChild,
+            }
+        }
+
         init();
         Object.assign(inputs.formChildren, inputsEdit.button);
         Object.assign(inputs, inputsEdit.prop);
     } else {
+        const inputsAdd = {
+            add: {
+                className: 'btn_submit_task',
+                type: 'submit',
+            },
+        }
+
         Object.assign(inputs.formChildren, inputsAdd);
     }
     return inputs;

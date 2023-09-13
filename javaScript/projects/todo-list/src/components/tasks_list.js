@@ -7,14 +7,20 @@ import { pubSub } from '../containers/pubsub';
 export const tasksList = {
     btnDeleteTask: [],
     init: function() {
+        console.log(projectController.inbox);
+        console.log(projectController.inbox.tasks);
         this.render = this.render.bind(this);
         this.resetOldTask = this.resetOldTask.bind(this);
+        this.removeTask = this.removeTask.bind(this);
         pubSub.subscribe('addTask', this.render);
         pubSub.subscribe('updateTask', this.render);
-        pubSub.subscribe('resetOldTask', this.resetOldTask); // testing
+        pubSub.subscribe('resetOldTask', this.resetOldTask);
+        pubSub.subscribe('removeTask', this.removeTask);
         this.project = projectController.findActive()
         this.listContainer = this.render();
-        this.project.tasks.forEach(task => this.render(task));
+        this.project.tasks.forEach(task => {
+            this.render(task)
+        });
         return this.listContainer;
     },
     oldTask: null,
@@ -45,6 +51,7 @@ export const tasksList = {
             // due date
             // priority
         if (task) {
+            console.log(task)
             const listItemWrapper = document.createElement('div');
             const listItem = document.createElement('li');
             const listItemContainer = document.createElement('div');
@@ -87,7 +94,10 @@ export const tasksList = {
 
             console.log(this.oldTask) // for debugging
             if (!this.oldTask) {
+                console.log(`this.oldTask = ${this.oldTask}`);
                 this.listContainer.appendChild(listItemWrapper);
+                console.log(listItemWrapper);
+                console.log(this.listContainer);
             } else {
                 this.oldTask.replaceWith(listItemWrapper);
                 this.oldTask = null;
@@ -101,14 +111,19 @@ export const tasksList = {
             // the task list grows while the task form is open
     },
     removeTask: function(e) {
-        e.stopImmediatePropagation();
         console.log(`removeTask() in tasks_list.js is running`)
-
-        const listItem = e.currentTarget.parentElement.parentElement;
-        const listItemWrapper = listItem.parentElement;
-        let uuidTask = listItem.dataset.uuid;
-        this.project.removeTask(uuidTask);
-        listItem.remove();
+        if (e) {
+            e.stopImmediatePropagation();
+            const listItem = e.currentTarget.parentElement.parentElement;
+            const listItemWrapper = listItem.parentElement;
+            let uuidTask = listItem.dataset.uuid;
+            this.project.removeTask(uuidTask);
+            listItem.parentElement.remove();    
+        } else {
+            this.oldTask.remove();
+            this.oldTask = null;
+        }
+        
     },
     editTask: function(e) {
         console.log(`editTask() from tasks_list.js is running`);

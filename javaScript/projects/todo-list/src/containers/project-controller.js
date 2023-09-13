@@ -1,4 +1,3 @@
-import { taskList } from '../components/tasks_list';
 import { pubSub } from './pubsub';
 
 const getFormValues = (inputs) => {
@@ -8,10 +7,11 @@ const getFormValues = (inputs) => {
             obj[input.id] = parseInt(input.value.slice(input.value.length - 1, input.value.length));
         } else if (input.value.length !== 0) {
         // } else {
-            console.log(input.value)
+            // console.log(input.value)
             obj[input.id] = input.value
         }
     });
+    console.log(obj)
     return obj;
 }
 // creates a project object
@@ -22,10 +22,25 @@ const project = () => {
     const tasks = [];
     const addTask = (inputs) => {
         // need to allow user to pick what project to assign the newly/edited task
-        const newTask = Object.assign(task(uuid), getFormValues(inputs));
-        tasks.push(newTask);
-        pubSub.publish('addTask', newTask);
+            // pushes task to respective project
+        const formValues = getFormValues(inputs);
+        const newTask = Object.assign(task(uuid), formValues);
+
+        console.log(formValues.project)
+        console.log(newTask.uuidProj)
+
+        if (formValues.project && formValues.project !== newTask.uuidProj) {
+            console.log(`new uuid proj: ${formValues.project}`);
+            console.log(`old uuid proj: ${newTask.uuidProj}`);
+            newTask.uuidProj = formValues.project;
+            projectController.find(formValues.project).tasks.push(newTask);
+        } else {
+            tasks.push(newTask);
+            pubSub.publish('addTask', newTask);
+        }
+
         console.log(tasks); // for debugging
+        console.log(projectController.projects);
     };
     const removeTask = (uuid) => {
         const task = findTask(uuid);
@@ -33,9 +48,20 @@ const project = () => {
     };
     const updateTask = (uuid, inputs) => {
         console.log(`updateTask() from project-controller.js is running`); // for debugging
-        const newTask = Object.assign(findTask(uuid), getFormValues(inputs));
-        pubSub.publish('updateTask', newTask);
+        const formValues = getFormValues(inputs);
+        const newTask = Object.assign(findTask(uuid), formValues);
+
+        if (formValues.project && formValues.project !== newTask.uuidProj) {
+            removeTask(newTask.uuidTask);
+            newTask.uuidProj = formValues.project;
+            projectController.find(formValues.project).tasks.push(newTask);
+            pubSub.publish('removeTask');
+        } else {
+            pubSub.publish('updateTask', newTask);
+        }
+        
         console.log(tasks); // for debugging
+        console.log(projectController.projects); // for debugging
     };
     const findTask = (uuid) => {
         return tasks.find(element => element.uuidTask === uuid);
@@ -45,7 +71,7 @@ const project = () => {
 
 
 export const projectController = {
-    inbox: [],
+    inbox: project({id: 'title', value: 'Inbox'}), // will hold tasks assigned to the 'inbox'
     projects: [],
     addProject: function(inputs) {
         console.log(inputs) // for debugging
