@@ -1,12 +1,12 @@
-// import { projects, removeProject, getProject } from '../containers/project-controller';
 import { projectController } from '../containers/project-controller';
 import buildButton from './buttons';
 import { pubSub } from '../containers/pubsub';
 
-const buildProjectsList = (type, container) => {
+const buildProjectsList = (type, container, array) => {
     let state = {
         container,
         type,
+        array,
     }
 
     return Object.assign(
@@ -18,14 +18,14 @@ const buildProjectsList = (type, container) => {
 // rename to buildProjectsList (?)
 export const buildList = {
     modules: [],
-    add: function (type, container) {
+    add: function (type, container, array) {
         // need to check if the module exists already
         // if module exists, then update it's container
         // prevents similar modules to be added
         if (this.modules.some(module => module.type === type)) {
             this.find(type).container = container;
         } else {
-            this.modules = [...this.modules, buildProjectsList(type, container)];
+            this.modules = [...this.modules, buildProjectsList(type, container, array)];
         }
     },
     find: function(type) {
@@ -34,6 +34,7 @@ export const buildList = {
 }
 
 const projectsList = (state) => ({
+    array: state.array,
     type: state.type,
     container: state.container,
     init: function() {
@@ -80,18 +81,21 @@ const projectsList = (state) => ({
     },
     render: function() {
         const listItems = document.createElement('div');
-        for (let i = 0; i < projectController.projects.length; i++) {
+        for (let i = 0; i < this.array.length; i++) {
             const listItem = document.createElement('li');
             const anchor = document.createElement('a');
             const anchorSpan = document.createElement('span');
-            anchorSpan.textContent = projectController.projects[i].title;
-            anchor.href = `#${projectController.projects[i].title};`
+            anchorSpan.textContent = this.array[i].title;
+            anchor.href = `#${this.array[i].title};`
 
-            listItem.setAttribute('data-uuid', projectController.projects[i].uuid);
+            listItem.setAttribute('data-uuid', this.array[i].uuid);
             anchor.classList.add('nav_project');
             const buttonSpan = document.createElement('span');
             
-            buttonSpan.appendChild(buildButton('delete', 'project'));
+            if (state.type !== 'misc') {
+                buttonSpan.appendChild(buildButton('delete', 'project'));
+            }
+
             anchor.appendChild(anchorSpan);
             listItem.appendChild(anchor);
             listItem.appendChild(buttonSpan);
@@ -103,7 +107,7 @@ const projectsList = (state) => ({
             this.listContainer.remove();
             this.ulList.appendChild(listItems);
             // changes content to the newly project is added
-            if (this.projectsListItems.length < projectController.projects.length && this.type === 'sidebar') {
+            if (this.projectsListItems.length < this.array.length && this.type === 'sidebar') {
                 pubSub.publish('content', [...listItems.children].splice(-1).pop().firstChild);
             }
             this.cacheDOM(this.ulList);

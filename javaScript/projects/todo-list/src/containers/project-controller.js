@@ -71,28 +71,50 @@ const project = () => {
 
 
 export const projectController = {
-    inbox: project({id: 'title', value: 'Inbox'}), // will hold tasks assigned to the 'inbox'
+    inbox: [Object.assign(project(), {title: 'Inbox',})], // will hold tasks assigned to the 'inbox'
     projects: [],
+    allProjects: [],
     addProject: function(inputs) {
         console.log(inputs) // for debugging
-        this.projects.push(Object.assign(project(), getFormValues(inputs)));
+        const formValues = getFormValues(inputs);
+        this.projects.push(Object.assign(project(), formValues));
+        this.setAllProjects()
     },
     remove: function(uuid) {
         this.projects.splice(this.projects.indexOf(this.find(uuid)), 1);
+        this.setAllProjects();
     },
     find: function(uuid) {
-        return this.projects.find(project => project.uuid === uuid);
+        // return this.projects.find(project => project.uuid === uuid);
+        return this.allProjects.find(project => project.uuid === uuid);
     },
     setActive: function(uuid) {
+        console.log(`setActive() is running from project-controller.js`) // for debugging
         if (this.findActive()) {
             this.findActive().active = false;
         }
         this.find(uuid).active = true;
-        console.log(this.projects); // for debugging
+        console.table(this.projects); // for debugging
+        console.table(this.allProjects);
     },
     findActive: function() {
-        return this.projects.find(project => project.active === true);
-    }
+        console.log(this.projects.find(project => project.active === true));
+        // return this.projects.find(project => project.active === true);
+        if (!this.allProjects.find(project => project.active === true)) {
+            this.inbox[0].active = true;
+            return this.inbox;
+        } else {
+            return this.allProjects.find(project => project.active === true);
+        }
+        // return this.allProjects.find(project => project.active === true) ? this.allProjects.find(project => project.active === true) : this.inbox ;
+    },
+    setAllProjects: function() {
+        this.allProjects = this.inbox.concat(this.projects);
+        console.table(this.allProjects)
+    },
+    sort: function() {
+        // this.allProjects.forEach()
+    },
 }
 
 

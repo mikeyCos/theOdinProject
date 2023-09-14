@@ -1,6 +1,7 @@
 import importAll from '../../utilities/import-all';
 import buildButton from '../buttons';
 import buildProjectForm from '../projects_form';
+import { projectController } from '../../containers/project-controller';
 import { buildList } from '../projects_list';
 import { pubSub } from '../../containers/pubsub';
 
@@ -24,34 +25,41 @@ const sidebar = {
         this.sidebar = container;
         // need to append list_projects to this.projectsContainer
         this.projectsContainer = this.sidebar.querySelector('#projects_container');
-        this.anchorProjects = this.projectsContainer.querySelector('.nav_projects a');
+        this.anchorProjects = this.projectsContainer.querySelector('.nav_projects');
         this.btnAddProject = container.querySelector('.btn_add_project');
+        // this.anchorInbox = this.sidebar.querySelector('.nav_inbox');
     },
     bindEvents: function() {
         this.btnAddProject.addEventListener('click', buildProjectForm);
         this.anchorProjects.addEventListener('click', this.publish);
+        // this.anchorInbox.addEventListener('click', this.publish);
     },
     render: function() {
         const sidebarContainer = document.createElement('div');
 
+        const navMisc = document.createElement('div');
+        buildList.add('misc', navMisc, projectController.inbox);
+        buildList.find(`misc`).init();
+
         const projectsContainer = document.createElement('div');
         const anchorWrapper = document.createElement('div');
-        const anchor = document.createElement('a');
+        const projectsAnchor = document.createElement('a');
 
         sidebarContainer.classList.add('container');
         projectsContainer.id = 'projects_container';
-        anchorWrapper.classList.add('nav_projects');
 
-        anchor.textContent = 'Projects';
-        anchor.href = '#projects';
+        projectsAnchor.textContent = 'Projects';
+        projectsAnchor.href = '#projects';
+        projectsAnchor.classList.add('nav_projects')
 
-        anchorWrapper.appendChild(anchor);
+        anchorWrapper.appendChild(projectsAnchor);
         anchorWrapper.appendChild(buildButton('add', 'project'));
         projectsContainer.appendChild(anchorWrapper);
 
-        buildList.add('sidebar', projectsContainer);
+        buildList.add('sidebar', projectsContainer, projectController.projects);
         buildList.find(`sidebar`).init();
 
+        sidebarContainer.appendChild(navMisc)
         sidebarContainer.appendChild(projectsContainer);
         return sidebarContainer;
     },
@@ -64,6 +72,7 @@ const sidebar = {
         }
     },
     publish: function(e) {
-        pubSub.publish('content', e.target.parentElement);
+        console.log(e.currentTarget);
+        pubSub.publish('content', e.currentTarget);
     }
 }

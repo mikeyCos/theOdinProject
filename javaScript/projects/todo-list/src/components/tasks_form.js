@@ -126,10 +126,12 @@ const formTask = (state) => ({
                 // idea, make separate module for options button
                 if (this.formChildren[formChild].options) {
                     let length = 4;
+                    let i = 1;
                     if (formChild === 'project') {
                         length = projectController.projects.length;
+                        i = 0;
                     }
-                    for (let i = 1; i <= length; i++) {
+                    for (i; i <= length; i++) {
                         const selectOption = Object.assign(
                             document.createElement(this.formChildren[formChild].options.element),
                             this.formChildren[formChild].options.attributes(i)
@@ -211,12 +213,20 @@ const formInputs = (state) => {
     const init = () => {
         for (let formChild in inputs.formChildren) {
             if (inputs.formChildren[formChild].attributes && Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id))) {
-                console.log(formChild)
                 if (!inputs.formChildren[formChild].options) {
-                    Object.assign(
-                        inputs.formChildren[formChild].attributes,
-                        { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
+                    console.log(inputs.formChildren[formChild])
+                    if (inputs.formChildren[formChild].attributes.type === 'date') {
+                        // value: "2024-12-01"
+                        Object.assign(
+                            inputs.formChildren[formChild].attributes,
+                            { value: new Date(Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent).toISOString().split('T')[0] });
+                    } else {
+                        Object.assign(
+                            inputs.formChildren[formChild].attributes,
+                            { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
+                    }
                 } else {
+                    console.log(inputs.formChildren[formChild]);
                     const text = Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent;
                     const number = parseInt(text.slice(text.indexOf('_'), text.length));
                     Object.assign(
@@ -255,9 +265,19 @@ const formInputs = (state) => {
                     id: 'due_date',
                     className: 'task_input',
                     name: 'dueDate',
-                    type: 'datetime-local',
+                    type: 'date',
                     placeholder: 'Due Date',
                 }
+            },
+            dueTime: {
+                element: 'input',
+                attributes: {
+                    id: 'due_time',
+                    className: 'task_input',
+                    name: 'dueTime',
+                    type: 'time',
+                    placeholder: 'Time'
+                },
             },
             priority: {
                 element: 'select',
@@ -300,12 +320,12 @@ const formInputs = (state) => {
                 options: {
                     element: 'option',
                     attributes: function(i) {
-                        console.log(projectController.projects[i-1])
                         const project = {
-                            value: projectController.projects[i-1].uuid,
-                            text: projectController.projects[i-1].title,
+                            value: projectController.allProjects[i].uuid,
+                            text: projectController.allProjects[i].title,
                         }
-                        return projectController.findActive().uuid === projectController.projects[i-1].uuid ?
+                        
+                        return projectController.findActive().uuid === projectController.allProjects[i].uuid ?
                         Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
                     }
                 }

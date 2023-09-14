@@ -2,6 +2,7 @@
 import { buildList } from '../components/projects_list';
 import buildButton from '../components/buttons';
 import buildProjectForm from '../components/projects_form';
+import { projectController } from '../containers/project-controller';
 
 export default function buildProjects() {
     console.log(`projects.js running`);
@@ -36,7 +37,7 @@ const projects = {
         anchorWrapper.appendChild(buildButton('add', 'project', 'Add project'));        
         parentContainer.appendChild(anchorWrapper);
 
-        buildList.add('content', parentContainer);
+        buildList.add('content', parentContainer, projectController.projects);
         buildList.find('content').clearCache();
         buildList.find('content').init();
         return parentContainer;

@@ -7,8 +7,6 @@ import { pubSub } from '../containers/pubsub';
 export const tasksList = {
     btnDeleteTask: [],
     init: function() {
-        console.log(projectController.inbox);
-        console.log(projectController.inbox.tasks);
         this.render = this.render.bind(this);
         this.resetOldTask = this.resetOldTask.bind(this);
         this.removeTask = this.removeTask.bind(this);
@@ -76,11 +74,26 @@ export const tasksList = {
             }
             
             if (task.due_date !== undefined) {
-                // need to render it 
+                // format MMM DD YYYY
+                    // from 2023-12-11 to Dec 11 2023
+                console.log(task.due_date);
+                const date = new Date (task.due_date);
+
+                console.log(task.due_date)
                 const dueDate = document.createElement('p');
                 dueDate.classList.add('task_due_date');
-                dueDate.textContent = task.due_date;
+                dueDate.textContent = date.toDateString();
+                // dueDate.textContent = task.due_date;
+
                 listItemContainer.appendChild(dueDate);
+            }
+
+            if (task.due_time !== undefined) {
+                console.log(task.due_time);
+                const dueTime = document.createElement('p');
+                dueTime.classList.add('task_due_time');
+                dueTime.textContent = task.due_time;
+                listItemContainer.appendChild(dueTime);
             }
 
             listItemContainer.appendChild(priority);
