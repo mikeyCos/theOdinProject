@@ -13,7 +13,6 @@ const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
 
     if (type === 'default') {
         if (button.hasAttribute('role')) {
-            console.log(button);
         }
         state.button = button;
         state.buttonParent = buttonParent;
@@ -45,7 +44,6 @@ export const buildForm = {
             this.remove(type);
         }
         this.sections = [...this.sections, buildTaskForm(type, form, button, buttonParent, dialogElement)];
-        console.log(this.sections); // for debugging
     },
     remove: function(type) {
         this.sections.splice(this.sections.indexOf(this.find(type)), 1);
@@ -94,7 +92,6 @@ const formTask = (state) => ({
         this.formInputs = this.form.querySelectorAll('.task_input');
     },
     bindEvents: function() {
-        console.log(this);
         this.submitForm = this.submitForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.form.addEventListener('submit', this.submitForm);
@@ -161,6 +158,7 @@ const formTask = (state) => ({
         e.preventDefault();
         // pubSub.publish('resetOldTask'); // testing
         if (!this.listItem) {
+            console.log(projectController.findActive())
             projectController.findActive().addTask(this.formInputs);
             if (this.dialogElement) {
                 this.closeForm();
@@ -205,34 +203,41 @@ const modal = (state) => ({
 });
 
 const formInputs = (state) => {
-    // does not work for modal
-    console.log(state)
-    console.log(state.button)
-
     const content = state.button ? state.button.firstChild.firstChild.childNodes : null;
     const init = () => {
         for (let formChild in inputs.formChildren) {
-            if (inputs.formChildren[formChild].attributes && Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id))) {
+            let attributes = inputs.formChildren[formChild].attributes;
+            if (attributes && find(attributes.name)) {
                 if (!inputs.formChildren[formChild].options) {
-                    console.log(inputs.formChildren[formChild])
-                    if (inputs.formChildren[formChild].attributes.type === 'date') {
-                        // value: "2024-12-01"
-                        Object.assign(
-                            inputs.formChildren[formChild].attributes,
-                            { value: new Date(Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent).toISOString().split('T')[0] });
+                    let value;
+                    if (formChild !== 'dueDate') {
+                        value = { value: find(attributes.name).textContent };
                     } else {
-                        Object.assign(
-                            inputs.formChildren[formChild].attributes,
-                            { value: Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent });
+                        value = { value: new Date(find(attributes.name).textContent).toISOString().split('T')[0] }
                     }
+                    Object.assign(attributes, value);
                 } else {
-                    console.log(inputs.formChildren[formChild]);
-                    const text = Array.from(content).find(element => element.className.includes(inputs.formChildren[formChild].attributes.id)).textContent;
-                    const number = parseInt(text.slice(text.indexOf('_'), text.length));
+                    const text = find(attributes.name).textContent;
+                    const number = parseInt(find(attributes.name).textContent.split(' ')[1]);
                     Object.assign(
                         inputs.formChildren[formChild].options,
-                        { value: number }, { text: text});
+                        { value: number }, { text: text }
+                    )
                 }
+            }
+        }
+    }
+
+    // finds DOM element based on id attribute
+    const find = (name) => {
+        const element = [...content].find(element => element.className.includes(name));
+        if (element) {
+            if (element.childNodes.length === 1) {
+                return element;
+            } else {
+                const span = [...element.childNodes].find(child => child.className.includes(name));
+                return span;
+
             }
         }
     }
@@ -264,7 +269,7 @@ const formInputs = (state) => {
                 attributes: {
                     id: 'due_date',
                     className: 'task_input',
-                    name: 'dueDate',
+                    name: 'date',
                     type: 'date',
                     placeholder: 'Due Date',
                 }
@@ -274,7 +279,7 @@ const formInputs = (state) => {
                 attributes: {
                     id: 'due_time',
                     className: 'task_input',
-                    name: 'dueTime',
+                    name: 'time',
                     type: 'time',
                     placeholder: 'Time'
                 },

@@ -1,6 +1,7 @@
 import buildHeader from './components/header';
 import buildSideBar from './components/sidebar/sidebar';
 import buildMain from './components/main';
+import { setProjects } from './storage/storage';
 import './app.css';
 
 
@@ -17,7 +18,9 @@ const appController = (function() {
     const app = {
         activeContent: null,
         init: function() {
+            setProjects();
             this.render();
+
         },
         cacheDOM: function() {
 
@@ -38,7 +41,6 @@ const appController = (function() {
             appWrapper.appendChild(appContent);
 
             document.body.appendChild(appWrapper);
-
         },
         bindEvents: function() {
 

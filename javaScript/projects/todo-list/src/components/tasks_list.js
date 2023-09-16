@@ -72,29 +72,38 @@ export const tasksList = {
                 taskDescription.textContent = task.description;
                 listItemContainer.appendChild(taskDescription);
             }
-            
-            if (task.due_date !== undefined) {
-                // format MMM DD YYYY
-                    // from 2023-12-11 to Dec 11 2023
+
+            if (task.due_date !== undefined || task.due_time !== undefined) {
                 console.log(task.due_date);
-                const date = new Date (task.due_date);
-
-                console.log(task.due_date)
-                const dueDate = document.createElement('p');
-                dueDate.classList.add('task_due_date');
-                dueDate.textContent = date.toDateString();
-                // dueDate.textContent = task.due_date;
-
-                listItemContainer.appendChild(dueDate);
-            }
-
-            if (task.due_time !== undefined) {
                 console.log(task.due_time);
-                const dueTime = document.createElement('p');
-                dueTime.classList.add('task_due_time');
-                dueTime.textContent = task.due_time;
-                listItemContainer.appendChild(dueTime);
+                const dateTimeWrapper = document.createElement('p');
+                dateTimeWrapper.classList.add('task_due_date_time')
+                // format MMM DD YYYY
+                    // from 2024-03-04 to Sun Mar 03 2024
+                    // Sun Mar 03 2024 10:00
+                if (task.due_date !== undefined) {
+                    const date = new Date (task.due_date);
+                    const dueDate = document.createElement('span');
+                    dueDate.classList.add('task_due_date');
+                    if (task.due_time === undefined) {
+                        dueDate.textContent = date.toDateString();
+                    } else {
+                        dueDate.textContent = `${date.toDateString()} `
+                    }
+                    dateTimeWrapper.appendChild(dueDate);
+                }
+
+                if (task.due_time !== undefined) {
+                    console.log(task.due_time);
+                    const dueTime = document.createElement('span');
+                    dueTime.classList.add('task_due_time');
+                    dueTime.textContent = task.due_time;
+                    dateTimeWrapper.appendChild(dueTime);
+                }
+
+                listItemContainer.appendChild(dateTimeWrapper);
             }
+
 
             listItemContainer.appendChild(priority);
 
