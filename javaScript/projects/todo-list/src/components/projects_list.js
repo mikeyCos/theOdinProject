@@ -93,7 +93,10 @@ const projectsList = (state) => ({
             const buttonSpan = document.createElement('span');
             
             if (state.type !== 'misc') {
-                buttonSpan.appendChild(buildButton('delete', 'project'));
+                const deleteButton = buildButton('delete', 'project');
+                deleteButton.setAttribute('data-inbox-uuid', projectController.inbox[0].uuid);
+                console.log(projectController.inbox[0].uuid)
+                buttonSpan.appendChild(deleteButton);
             }
 
             anchor.appendChild(anchorSpan);
@@ -121,7 +124,7 @@ const projectsList = (state) => ({
         listItem.remove();
         // if there is no active project
         // OR the project's uuid we want to remove is the same as the current active project's uuid
-            // update the content to the homepage
+            // update the content to the inbox
         if (projectController.findActive() === undefined || projectUUID === projectController.findActive().uuid) {
             pubSub.publish('content', e.target.parentElement);
         }

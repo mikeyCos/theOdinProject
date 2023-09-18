@@ -28,6 +28,8 @@ export const mainContent = {
         this.main = container;
     },
     render: function(key, uuid) {
+        console.log(key);
+        console.log(uuid);
         let content;
         if (!key) {
             // content = build.home();
@@ -45,19 +47,19 @@ export const mainContent = {
         this.switchContent = this.switchContent.bind(this);
     },
     switchContent: function(e) {
-        // console.log('-------------------');
+        console.log('-------------------');
         console.log(e); // for debugging
         console.log(e.parentElement);
         // need to refactor this
         let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
-        let uuid = e.parentElement.dataset.uuid;
-        // console.log(classSubstring);
+        let uuid = e.parentElement.dataset.uuid || e.dataset.inboxUuid;
+        console.log(classSubstring);
         console.log(uuid);
-        // console.log('-------------------');
+        console.log('-------------------');
 
         for (const key in build) {
             if (classSubstring === 'delete' && this.activeContent.classList.contains('task')) {
-                mainContent.render('inbox');
+                mainContent.render('project', uuid);
             } else if (key === classSubstring) {
                 console.log('home is NOT rendered');
                 this.setActiveTab(e);

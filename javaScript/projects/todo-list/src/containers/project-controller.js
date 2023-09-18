@@ -2,6 +2,7 @@ import { pubSub } from './pubsub';
 import { populateStorage } from '../storage/storage';
 
 const getFormValues = (inputs) => {
+    // tasks is empty with local storage
     const obj = {}
     inputs.forEach(input => { 
         if (input.id === 'priority') {
@@ -13,12 +14,14 @@ const getFormValues = (inputs) => {
     console.log(obj)
     return obj;
 }
+
 // creates a project object
     // tasks property created upon object creation
 const project = () => {
     let active = false; // there can only be one project active
     const uuid = crypto.randomUUID();
-    const tasks = [];
+    const tasks = []; // tasks is empty due to local storage
+    // might need to implement a state when project is created
     const addTask = (inputs) => {
         // need to allow user to pick what project to assign the newly/edited task
             // pushes task to respective project
@@ -45,6 +48,7 @@ const project = () => {
     const updateTask = (uuid, inputs) => {
         console.log(`updateTask() from project-controller.js is running`); // for debugging
         const formValues = getFormValues(inputs);
+        console.log(uuid)
         const newTask = Object.assign(findTask(uuid), formValues);
 
         if (formValues.project && formValues.project !== newTask.uuidProj) {
@@ -58,16 +62,17 @@ const project = () => {
         populateStorage();
     };
     const findTask = (uuid) => {
+        console.log(tasks);
         return tasks.find(element => element.uuidTask === uuid);
     };
-    return { tasks, uuid, active, addTask, removeTask, updateTask };
+    return { tasks, uuid, active, addTask, removeTask, updateTask, findTask };
 }
 
 
 export const projectController = {
     inbox: [Object.assign(project(), {title: 'Inbox',})], // will hold tasks assigned to the 'inbox'
-    projects: null,
-    allProjects: null,
+    projects: [],
+    allProjects: [],
     addProject: function(inputs) {
         const formValues = getFormValues(inputs);
         this.projects.push(Object.assign(project(), formValues));
@@ -109,6 +114,16 @@ export const projectController = {
     sort: function() {
         // this.allProjects.forEach()
     },
+    init: function() {
+        this.projects.forEach(obj => {
+            for (let key in project()) {
+                if (!Object.keys(obj).some(a => a === key)) {
+                    // obj[key] = project()[key];
+                    
+                }
+            }
+        });
+    }
 }
 
 
@@ -118,19 +133,8 @@ const task = (uuid) => {
     return { uuidTask, uuidProj };
 }
 
-// projectController.addProject([{id: 'title', value: 'test1'}]);
-// projectController.addProject([{id: 'title', value: 'test2'}]);
-// projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'pizza pizza'}, {id: 'priority', value: 'prirotiy 2'}]);
-// projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id: 'description', value: 'foo bar'}, {id: 'priority', value: 'priority 4'}]);
-// projectController.projects[1].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'Lorem ipsum'}, {id: 'due_date', value: '2024-03-04'}, {id: 'due_time', value: '11:20'}, {id: 'priority', value: 'priority 3'}]);
-
-// gets project's index from projects[] based on project name
-// const getProjectIndex = (uuid) => {
-//     for (const index in projects) {
-//         for (const key in projects[index]) {
-//             if (key === 'uuid' && projects[index][key] === uuid) {
-//                 return index;
-//             }
-//         }
-//     }
-// }
+projectController.addProject([{id: 'title', value: 'test1'}]);
+projectController.addProject([{id: 'title', value: 'test2'}]);
+projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'pizza pizza'}, {id: 'priority', value: 'prirotiy 2'}]);
+projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id: 'description', value: 'foo bar'}, {id: 'priority', value: 'priority 4'}]);
+projectController.projects[1].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'Lorem ipsum'}, {id: 'due_date', value: '2024-03-04'}, {id: 'due_time', value: '11:20'}, {id: 'priority', value: 'priority 3'}]);

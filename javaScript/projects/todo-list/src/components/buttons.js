@@ -7,7 +7,7 @@
     import IconEdit from '../assets/icons/edit.svg';
     // returns a button element to create a project/task
     // if spanText provided, then a span element is created
-    const icons = {add: IconAdd, delete: IconDelete};
+    const icons = {add: IconAdd, delete: IconDelete, edit: IconEdit};
 
     export default function buildButton(type, name, text) {
         const button = Object.assign(document.createElement('button'), buttonAttributes(type, name));    
