@@ -6,7 +6,6 @@ export const pubSub = {
         }
         this.subscribers[subscriber] = this.subscribers[subscriber] || [];
         this.subscribers[subscriber].push(handler);
-        console.log(this.subscribers); // for debugging
     },
     unsubscribe: function(subscriber,  handler) {
         if (this.subscribers[subscriber]) {

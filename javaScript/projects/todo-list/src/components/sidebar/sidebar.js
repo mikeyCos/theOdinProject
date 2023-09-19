@@ -72,7 +72,6 @@ const sidebar = {
         }
     },
     publish: function(e) {
-        console.log(e.currentTarget);
         pubSub.publish('content', e.currentTarget);
     }
 }

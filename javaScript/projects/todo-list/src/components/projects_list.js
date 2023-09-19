@@ -1,5 +1,6 @@
 import { projectController } from '../containers/project-controller';
 import buildButton from './buttons';
+import buildModalRemove from './modal_remove';
 import { pubSub } from '../containers/pubsub';
 
 const buildProjectsList = (type, container, array) => {
@@ -56,18 +57,6 @@ const projectsList = (state) => ({
         this.projectsListItems = this.ulList.querySelectorAll('li');
         this.projectsListAnchors = this.ulList.querySelectorAll('li a');
         this.btnDeleteProject = this.ulList.querySelectorAll('.btn_delete_project');
-        // window.addEventListener("load", (event) => {
-        //     const test = document.querySelector('#main_content');
-        //     console.log(test);
-        //     console.log(this);
-        //     console.log("page is fully loaded");
-            
-        // });
-
-        // onload = (event) => {
-        //     console.log(`test`);
-        // };
-        // this.test = document.querySelector('#main_content');
     },
     bindEvents: function() {
         this.removeProject = this.removeProject.bind(this);
@@ -95,7 +84,6 @@ const projectsList = (state) => ({
             if (state.type !== 'misc') {
                 const deleteButton = buildButton('delete', 'project');
                 deleteButton.setAttribute('data-inbox-uuid', projectController.inbox[0].uuid);
-                console.log(projectController.inbox[0].uuid)
                 buttonSpan.appendChild(deleteButton);
             }
 
@@ -121,6 +109,7 @@ const projectsList = (state) => ({
     removeProject: function(e) {
         const listItem = e.target.parentElement.parentElement.parentElement;
         const projectUUID = listItem.dataset.uuid;
+        // buildModalRemove(projectController.find(projectUUID));
         listItem.remove();
         // if there is no active project
         // OR the project's uuid we want to remove is the same as the current active project's uuid
@@ -145,7 +134,3 @@ const projectsList = (state) => ({
         this.btnDeleteProject = null;
     },
 })
-
-// const foobar = ['foo', 'bar'];
-// const foo = foobar.find((element) => element !== 'bar');
-// console.log(foo);

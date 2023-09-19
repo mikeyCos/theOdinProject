@@ -15,18 +15,30 @@ const getFormValues = (inputs) => {
     return obj;
 }
 
+const buildProject = (tasks) => {
+    let state = {
+        tasks,
+        uuid: crypto.randomUUID(),
+    }
+
+    return Object.assign(
+        {},
+        project(state),
+    )
+}
+
 // creates a project object
     // tasks property created upon object creation
-const project = () => {
-    let active = false; // there can only be one project active
-    const uuid = crypto.randomUUID();
-    const tasks = []; // tasks is empty due to local storage
-    // might need to implement a state when project is created
-    const addTask = (inputs) => {
+const project = (state) => ({
+    type: 'project',
+    active: false, // there can only be one project active
+    uuid: state.uuid,
+    tasks: state.tasks || [],
+    addTask: function(inputs) {
         // need to allow user to pick what project to assign the newly/edited task
             // pushes task to respective project
         const formValues = getFormValues(inputs);
-        const newTask = Object.assign(task(uuid), formValues);
+        const newTask = Object.assign(task(this.uuid), formValues);
 
         if (formValues.project && formValues.project !== newTask.uuidProj) {
             console.log(`new uuid proj: ${formValues.project}`);
@@ -34,25 +46,23 @@ const project = () => {
             newTask.uuidProj = formValues.project;
             projectController.find(formValues.project).tasks.push(newTask);
         } else {
-            tasks.push(newTask);
+            this.tasks.push(newTask);
             pubSub.publish('addTask', newTask);
         }
         populateStorage();
-        console.log(tasks); // for debugging
-    };
-    const removeTask = (uuid) => {
-        const task = findTask(uuid);
-        tasks.splice(tasks.indexOf(task), 1);
+    },
+    removeTask: function(uuid) {
+        const task = this.findTask(uuid);
+        this.tasks.splice(this.tasks.indexOf(task), 1);
         populateStorage();
-    };
-    const updateTask = (uuid, inputs) => {
+    },
+    updateTask: function(uuid, inputs) {
         console.log(`updateTask() from project-controller.js is running`); // for debugging
         const formValues = getFormValues(inputs);
-        console.log(uuid)
-        const newTask = Object.assign(findTask(uuid), formValues);
+        const newTask = Object.assign(this.findTask(uuid), formValues);
 
         if (formValues.project && formValues.project !== newTask.uuidProj) {
-            removeTask(newTask.uuidTask);
+            this.removeTask(newTask.uuidTask);
             newTask.uuidProj = formValues.project;
             projectController.find(formValues.project).tasks.push(newTask);
             pubSub.publish('removeTask');
@@ -60,22 +70,20 @@ const project = () => {
             pubSub.publish('updateTask', newTask);
         }
         populateStorage();
-    };
-    const findTask = (uuid) => {
-        console.log(tasks);
-        return tasks.find(element => element.uuidTask === uuid);
-    };
-    return { tasks, uuid, active, addTask, removeTask, updateTask, findTask };
-}
+    },
+    findTask: function(uuid) {
+        return this.tasks.find(element => element.uuidTask === uuid);
+    },
+})
 
 
 export const projectController = {
-    inbox: [Object.assign(project(), {title: 'Inbox',})], // will hold tasks assigned to the 'inbox'
-    projects: [],
+    inbox: [Object.assign(buildProject(), {title: 'Inbox',})], // will hold tasks assigned to the 'inbox'
+    projects: null,
     allProjects: [],
     addProject: function(inputs) {
         const formValues = getFormValues(inputs);
-        this.projects.push(Object.assign(project(), formValues));
+        this.projects.push(Object.assign(buildProject(), formValues));
         this.setAllProjects()
         populateStorage();
     },
@@ -94,13 +102,11 @@ export const projectController = {
             this.findActive().active = false;
         }
         this.find(uuid).active = true;
-        console.table(this.projects); // for debugging
-        console.table(this.allProjects);
     },
     findActive: function() {
         // return this.projects.find(project => project.active === true);
         if (!this.allProjects.find(project => project.active === true)) {
-            this.inbox[0].active = true;
+            this.inbox.active = true;
             return this.inbox;
         } else {
             return this.allProjects.find(project => project.active === true);
@@ -109,32 +115,28 @@ export const projectController = {
     },
     setAllProjects: function() {
         this.allProjects = this.inbox.concat(this.projects);
-        console.table(this.allProjects)
     },
     sort: function() {
         // this.allProjects.forEach()
     },
     init: function() {
         this.projects.forEach(obj => {
-            for (let key in project()) {
-                if (!Object.keys(obj).some(a => a === key)) {
-                    // obj[key] = project()[key];
-                    
-                }
-            }
+            Object.assign(obj, buildProject(obj.tasks));
         });
+        Object.assign(this.inbox[0], buildProject(this.inbox[0].tasks));
     }
 }
 
 
 const task = (uuid) => {
+    const type = 'task';
     const uuidTask = crypto.randomUUID();
     const uuidProj = uuid;
-    return { uuidTask, uuidProj };
+    return { uuidTask, uuidProj, type };
 }
 
-projectController.addProject([{id: 'title', value: 'test1'}]);
-projectController.addProject([{id: 'title', value: 'test2'}]);
-projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'pizza pizza'}, {id: 'priority', value: 'prirotiy 2'}]);
-projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id: 'description', value: 'foo bar'}, {id: 'priority', value: 'priority 4'}]);
-projectController.projects[1].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'Lorem ipsum'}, {id: 'due_date', value: '2024-03-04'}, {id: 'due_time', value: '11:20'}, {id: 'priority', value: 'priority 3'}]);
+// projectController.addProject([{id: 'title', value: 'test1'}]);
+// projectController.addProject([{id: 'title', value: 'test2'}]);
+// projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'pizza pizza'}, {id: 'priority', value: 'prirotiy 2'}]);
+// projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id: 'description', value: 'foo bar'}, {id: 'priority', value: 'priority 4'}]);
+// projectController.projects[1].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'Lorem ipsum'}, {id: 'due_date', value: '2024-03-04'}, {id: 'due_time', value: '11:20'}, {id: 'priority', value: 'priority 3'}]);

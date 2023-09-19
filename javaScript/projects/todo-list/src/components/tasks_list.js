@@ -1,6 +1,6 @@
 import { projectController } from '../containers/project-controller';
-import buildButton from '../components/buttons'
-// import buildTasksForm from '../components/tasks_form_edit';
+import buildButton from '../components/buttons';
+import buildModalRemove from '../components/modal_remove';
 import buildTasksForm from '../components/tasks_form';
 import { pubSub } from '../containers/pubsub';
 
@@ -27,12 +27,10 @@ export const tasksList = {
         this.listContainer = this.listContainer;
         // this.btnDeleteTask = this.listContainer.querySelectorAll('.btn_delete_task');
         this.projectsListItems = this.listContainer.querySelectorAll('li');
-        // console.log(this.projectsListItems);
     },
     bindEvents: function(...args) {
         this.removeTask = this.removeTask.bind(this);
         this.editTask = this.editTask.bind(this);
-        // args.forEach(element => console.log(element));
         args.forEach(element => {
             if (element.getAttribute('type')) {
                 element.addEventListener('click', this.removeTask, true);
@@ -49,7 +47,6 @@ export const tasksList = {
             // due date
             // priority
         if (task) {
-            console.log(task)
             const listItemWrapper = document.createElement('div');
             const listItem = document.createElement('li');
             const listItemContainer = document.createElement('div');
@@ -74,8 +71,6 @@ export const tasksList = {
             }
 
             if (task.due_date !== undefined || task.due_time !== undefined) {
-                console.log(task.due_date);
-                console.log(task.due_time);
                 const dateTimeWrapper = document.createElement('p');
                 dateTimeWrapper.classList.add('task_due_date_time')
                 // format MMM DD YYYY
@@ -94,7 +89,6 @@ export const tasksList = {
                 }
 
                 if (task.due_time !== undefined) {
-                    console.log(task.due_time);
                     const dueTime = document.createElement('span');
                     dueTime.classList.add('task_due_time');
                     dueTime.textContent = task.due_time;
@@ -114,12 +108,9 @@ export const tasksList = {
             this.btnDeleteTask.push(button)
             this.bindEvents(button, listItemWrapper);
 
-            console.log(this.oldTask) // for debugging
             if (!this.oldTask) {
                 console.log(`this.oldTask = ${this.oldTask}`);
                 this.listContainer.appendChild(listItemWrapper);
-                console.log(listItemWrapper);
-                console.log(this.listContainer);
             } else {
                 this.oldTask.replaceWith(listItemWrapper);
                 this.oldTask = null;
@@ -134,18 +125,19 @@ export const tasksList = {
     },
     removeTask: function(e) {
         console.log(`removeTask() in tasks_list.js is running`)
+        // create a modal to confirm removal
         if (e) {
             e.stopImmediatePropagation();
             const listItem = e.currentTarget.parentElement.parentElement;
             const listItemWrapper = listItem.parentElement;
             let uuidTask = listItem.dataset.uuid;
+            // buildModalRemove(this.project.findTask(uuidTask));
             this.project.removeTask(uuidTask);
             listItem.parentElement.remove();    
         } else {
             this.oldTask.remove();
             this.oldTask = null;
         }
-        
     },
     editTask: function(e) {
         console.log(`editTask() from tasks_list.js is running`);

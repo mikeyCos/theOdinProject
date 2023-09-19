@@ -3,7 +3,7 @@
 // import { buildList } from '../components/projects_list';
 import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
-import '../styles/form_project.css';
+// import '../styles/form_project.css';
 
 const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
     let state = {
@@ -30,7 +30,7 @@ const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
         formTask(state),
         modal(state),
         formInputs(state),
-    );
+    )
 }
 
 export const buildForm = {
@@ -104,7 +104,6 @@ const formTask = (state) => ({
     unBindEvent: function() {
         this.form.removeEventListener('submit', this.submitForm);
     },
-    // take a look at restaurant project's contact module
     render: function() {
         const container = document.createElement('div');
         for (let formChild in this.formChildren) {
@@ -156,9 +155,7 @@ const formTask = (state) => ({
     },
     submitForm: function(e) {
         e.preventDefault();
-        // pubSub.publish('resetOldTask'); // testing
         if (!this.listItem) {
-            console.log(projectController.findActive())
             projectController.findActive().addTask(this.formInputs);
             if (this.dialogElement) {
                 this.closeForm();
@@ -300,7 +297,6 @@ const formInputs = (state) => {
                             text: `Priority ${priority}`,
                         }
                         if (this.value) {
-                            console.log(this.value)
                             if (this.value === newPriority.value) {
                                 return Object.assign(newPriority, { selected: true })
                             } else {
