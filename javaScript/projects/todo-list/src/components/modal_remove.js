@@ -1,13 +1,17 @@
+import { pubSub } from '../containers/pubsub';
+import { projectController } from '../containers/project-controller';
+
 // mimics alert box confirming task/project removal
 export default function buildModalRemove(obj) {
     console.log(`buildModalRemove() is running from mmodal_remove.js`);
     const dialogElement = document.createElement('dialog');
     const form = document.createElement('form');
-    let text = obj.title ? obj.title : obj.name;
+    
+    console.log(obj)
     dialogElement.id = 'modal';
     form.classList.add('form_removal');
 
-    const modal = buildModal(dialogElement, form, text);
+    const modal = buildModal(dialogElement, form, obj);
     form.appendChild(modal.render());
     modal.cacheDOM();
     modal.bindEvents();
@@ -16,11 +20,12 @@ export default function buildModalRemove(obj) {
     document.body.appendChild(dialogElement);dialogElement.showModal();
 }
 
-const buildModal = (dialogElement, form, text) => {
+const buildModal = (dialogElement, form, obj) => {
     let state = {
         dialogElement,
         form,
-        text,
+        type: obj.type,
+        obj,
     }
 
     return Object.assign(
@@ -33,7 +38,8 @@ const buildModal = (dialogElement, form, text) => {
 const modal = (state) => ({
     dialogElement: state.dialogElement,
     form: state.form,
-    text: state.text,
+    type: state.type,
+    selection: state.obj,
     buttons: [
         {
             element: 'button',
@@ -76,8 +82,8 @@ const modal = (state) => ({
         const uniqueText = document.createElement('span');
 
         header.textContent = 'Delete?'
-        confirmationMessage.textContent = `Are you sure you want to delete`;
-        uniqueText.textContent = this.text;
+        confirmationMessage.textContent = `Are you sure you want to delete `;
+        uniqueText.textContent = this.selection.title ? this.selection.title : this.selection.name;
         confirmationMessage.appendChild(uniqueText)
         // <p>Are you sure you want to delete <span>${this.text}</span>?</p>
 
@@ -95,10 +101,18 @@ const modal = (state) => ({
     },
     submitForm: function(e) {
         e.preventDefault();
+        if (this.type === 'task') {
+            pubSub.publish('removeTask', this.selection.uuidTask);
+        } else {
+            console.log(this.selection);
+            console.log(this.selection.uuid);
+            pubSub.publish('removeProject', this.selection.uuid);
+        }
+        this.closeForm();
     },
     closeForm: function(e) {
         this.dialogElement.close()
-        // this.removeModal();
+        this.removeModal();
     },
     closeModal: function(e) {
         console.log(`closeModal running from modal_remove.js`);

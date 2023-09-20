@@ -37,9 +37,14 @@ const sidebar = {
     render: function() {
         const sidebarContainer = document.createElement('div');
 
+        projectController.setMiscProjects();
         const navMisc = document.createElement('div');
-        buildList.add('misc', navMisc, projectController.inbox);
+        buildList.add('misc', navMisc, projectController.misc);
         buildList.find(`misc`).init();
+
+        // const navInbox = document.createElement('div');
+        // buildList.add('inbox', navInbox, projectController.inbox);
+        // buildList.find(`inbox`).init();
 
         const projectsContainer = document.createElement('div');
         const anchorWrapper = document.createElement('div');
@@ -59,7 +64,9 @@ const sidebar = {
         buildList.add('sidebar', projectsContainer, projectController.projects);
         buildList.find(`sidebar`).init();
 
-        sidebarContainer.appendChild(navMisc)
+        sidebarContainer.appendChild(navMisc);
+        // sidebarContainer.appendChild(navInbox);
+        // sidebarContainer.appendChild(navToday);
         sidebarContainer.appendChild(projectsContainer);
         return sidebarContainer;
     },

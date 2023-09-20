@@ -15,6 +15,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
+- 19 SEP 2023: Resolved rendering the DOM when a project is deleted, task/project delete modal will call the remove task/project function was originally called on and passes it a UUID, and created a `today` and `misc` properties in `projectController`.  
 - 18 SEP 2023: Created `init()` function inside `projectController` object to reassign project methods, `projectController.init()` is called in `storage.js` after getting localStorage item, implemented `buildProject()` factory function that will provide an object's state, and started implementing a modal to confirm when a task/project is deleted.  
 - 15 SEP 2023: Refactored init and find functions in `task_form.js`, and created `storage.js` module to handle local storage.  
 - 13 SEP 2023: Tasks can be added to 'Inbox', 'Inbox' is a project object and cannot be deleted, due date value format changed from `YYYY-MM-DD` to `DDD MMM DD YYYY` (2024-03-04 to Sun Mar 03 2024), tasks can can be moved to and from different projects, and 'Inbox' is added to the project selection.  

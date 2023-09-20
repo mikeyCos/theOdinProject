@@ -60,7 +60,6 @@ const project = (state) => ({
         console.log(`updateTask() from project-controller.js is running`); // for debugging
         const formValues = getFormValues(inputs);
         const newTask = Object.assign(this.findTask(uuid), formValues);
-
         if (formValues.project && formValues.project !== newTask.uuidProj) {
             this.removeTask(newTask.uuidTask);
             newTask.uuidProj = formValues.project;
@@ -79,6 +78,8 @@ const project = (state) => ({
 
 export const projectController = {
     inbox: [Object.assign(buildProject(), {title: 'Inbox',})], // will hold tasks assigned to the 'inbox'
+    today: [Object.assign(buildProject(), {title: 'Today',})],
+    misc: null,
     projects: null,
     allProjects: [],
     addProject: function(inputs) {
@@ -114,14 +115,31 @@ export const projectController = {
         // return this.allProjects.find(project => project.active === true) ? this.allProjects.find(project => project.active === true) : this.inbox ;
     },
     setAllProjects: function() {
-        this.allProjects = this.inbox.concat(this.projects);
+        this.allProjects = this.inbox.concat(this.projects, this.today);
+        this.sort();
+    },
+    setMiscProjects: function() {
+        this.misc = this.inbox.concat(this.today)
     },
     sort: function() {
-        // this.allProjects.forEach()
+        // sets tasks in this.today
+        const today = new Date().toISOString().split('T')[0];
+        console.log(today)
+        this.allProjects.forEach(project => {
+            project.tasks.forEach(task => {
+                // console.log(task);
+                if (task.hasOwnProperty('due_date')) {
+                    console.log(task.due_date);
+                }
+            });
+        });
     },
     init: function() {
         this.projects.forEach(obj => {
             Object.assign(obj, buildProject(obj.tasks));
+            obj.tasks.forEach(task => {
+                task.uuidProj = obj.uuid;
+            });
         });
         Object.assign(this.inbox[0], buildProject(this.inbox[0].tasks));
     }

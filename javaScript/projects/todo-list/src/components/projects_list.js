@@ -35,6 +35,7 @@ export const buildList = {
 }
 
 const projectsList = (state) => ({
+    removeSelection: null,
     array: state.array,
     type: state.type,
     container: state.container,
@@ -60,6 +61,7 @@ const projectsList = (state) => ({
     },
     bindEvents: function() {
         this.removeProject = this.removeProject.bind(this);
+        pubSub.subscribe('removeProject', this.removeProject);
         this.btnDeleteProject.forEach(button => {
             button.addEventListener('click', this.removeProject);
         });
@@ -82,6 +84,7 @@ const projectsList = (state) => ({
             const buttonSpan = document.createElement('span');
             
             if (state.type !== 'misc') {
+            // if (state.type === 'sidebar' || state.type === 'content') {
                 const deleteButton = buildButton('delete', 'project');
                 deleteButton.setAttribute('data-inbox-uuid', projectController.inbox[0].uuid);
                 buttonSpan.appendChild(deleteButton);
@@ -107,18 +110,32 @@ const projectsList = (state) => ({
         return listItems;
     },
     removeProject: function(e) {
-        const listItem = e.target.parentElement.parentElement.parentElement;
-        const projectUUID = listItem.dataset.uuid;
-        // buildModalRemove(projectController.find(projectUUID));
-        listItem.remove();
-        // if there is no active project
-        // OR the project's uuid we want to remove is the same as the current active project's uuid
+        if (e instanceof MouseEvent) {
+            const listItem = e.target.parentElement.parentElement.parentElement;
+            
+            buildList.modules.forEach(module => {
+                module.removeSelection = listItem;
+            })
+            this.removeSelection = listItem;
+            const projectUUID = listItem.dataset.uuid;
+            buildModalRemove(projectController.find(projectUUID));
+            console.log(this);
+            console.log(this.type);
+            console.log(this.removeSelection)
+        } else {
+            // if there is no active project
+            // OR the project's uuid we want to remove is the same as the current active project's uuid
             // update the content to the inbox
-        if (projectController.findActive() === undefined || projectUUID === projectController.findActive().uuid) {
-            pubSub.publish('content', e.target.parentElement);
+
+            if (projectController.findActive() === undefined || e === projectController.findActive().uuid) {
+                pubSub.publish('content', this.removeSelection.lastChild.firstChild);
+            }
+            projectController.remove(e);
+            buildList.modules.forEach(module => module.render());
+
+            this.removeSelection.remove();
+            buildList.modules.forEach(module => module.removeSelection = null);
         }
-        projectController.remove(projectUUID);
-        buildList.modules.forEach(module => module.render());
     },
     publish: function(e) {
         // console.log(`publish() running`); // for debugging

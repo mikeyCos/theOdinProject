@@ -5,6 +5,7 @@ import buildTasksForm from '../components/tasks_form';
 import { pubSub } from '../containers/pubsub';
 
 export const tasksList = {
+    removeSelection: null,
     btnDeleteTask: [],
     init: function() {
         this.render = this.render.bind(this);
@@ -126,15 +127,19 @@ export const tasksList = {
     removeTask: function(e) {
         console.log(`removeTask() in tasks_list.js is running`)
         // create a modal to confirm removal
-        if (e) {
+        console.log(e);
+        if (e instanceof MouseEvent) {
             e.stopImmediatePropagation();
             const listItem = e.currentTarget.parentElement.parentElement;
-            const listItemWrapper = listItem.parentElement;
+            this.removeSelection = listItem;
             let uuidTask = listItem.dataset.uuid;
-            // buildModalRemove(this.project.findTask(uuidTask));
-            this.project.removeTask(uuidTask);
-            listItem.parentElement.remove();    
+            buildModalRemove(this.project.findTask(uuidTask));  
+        } else if (e) {
+            this.project.removeTask(e);
+            this.removeSelection.parentElement.remove();
+            this.removeSelection = null;
         } else {
+            console.log(this.oldTask)
             this.oldTask.remove();
             this.oldTask = null;
         }
@@ -146,10 +151,12 @@ export const tasksList = {
     },
     resetOldTask: function(oldTask) {
         console.log(`resetOldTask() from tasks_list.js is running`);
+        console.log(this.oldTask);
         if (this.oldTask) {
             this.oldTask = null
         } else if (oldTask) {
             this.oldTask = oldTask;
         }
+        console.log(this.oldTask)
     }
 }

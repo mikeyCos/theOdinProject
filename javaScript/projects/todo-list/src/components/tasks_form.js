@@ -3,7 +3,6 @@
 // import { buildList } from '../components/projects_list';
 import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
-// import '../styles/form_project.css';
 
 const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
     let state = {
@@ -61,7 +60,7 @@ export default function buildTasksForm(e) {
     const buttonParent = button.parentElement;
     const form = document.createElement('form');
     form.classList.add('form_task');
-
+    console.table(buildForm.sections);
     if (!button.hasAttribute('role') && buttonParent.tagName !== 'LI') {
         form.classList.add('modal');
         const dialogElement = document.createElement('dialog');
@@ -171,6 +170,8 @@ const formTask = (state) => ({
     closeForm: function(e) {
         console.log(`closeForm() from tasks_from.js is running`); // for debugging
         if (!this.dialogElement) {
+            console.log(this.form);
+            console.log(this.button);
             this.form.replaceWith(this.button);
             buildForm.remove(this.type);
         } else {
