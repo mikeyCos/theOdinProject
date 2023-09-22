@@ -45,30 +45,63 @@ const project = (state) => ({
             console.log(`old uuid proj: ${newTask.uuidProj}`);
             newTask.uuidProj = formValues.project;
             projectController.find(formValues.project).tasks.push(newTask);
+            if (new Date(`${newTask.due_date}T00:00:00`).toDateString() === new Date().toDateString()) {
+                pubSub.publish('addTask', newTask);
+            }
         } else {
             this.tasks.push(newTask);
             pubSub.publish('addTask', newTask);
         }
-        populateStorage();
+        projectController.setAllProjects();
+        console.log(projectController.today)
+        // populateStorage();
     },
     removeTask: function(uuid) {
+        // if the remove task is in today
+            // remove it from today AND it's respective project
+        // if the task's date in today is edited 
+            // remove it from only today
         const task = this.findTask(uuid);
         this.tasks.splice(this.tasks.indexOf(task), 1);
-        populateStorage();
+        // removes task in respective project
+        // console.log(task.uuidProj);
+        projectController.allProjects.forEach(project => {
+            project.tasks.forEach(task => {
+                if (task.uuidTask === uuid) {
+                    project.tasks.splice(project.tasks.indexOf(task), 1);
+                }
+            })
+        })
+        projectController.setAllProjects();
+        // populateStorage();
     },
     updateTask: function(uuid, inputs) {
         console.log(`updateTask() from project-controller.js is running`); // for debugging
         const formValues = getFormValues(inputs);
         const newTask = Object.assign(this.findTask(uuid), formValues);
+
+        console.log(formValues)
+        console.log(newTask.due_date);
+        debugger
+        // if the project is change for a task
         if (formValues.project && formValues.project !== newTask.uuidProj) {
             this.removeTask(newTask.uuidTask);
             newTask.uuidProj = formValues.project;
             projectController.find(formValues.project).tasks.push(newTask);
             pubSub.publish('removeTask');
         } else {
-            pubSub.publish('updateTask', newTask);
+            if (projectController.findActive().title === 'Today') {
+                if (new Date(`${newTask.due_date}T00:00:00`).toDateString() === new Date().toDateString()) {
+                    pubSub.publish('updateTask', newTask);
+                } else {
+                    pubSub.publish('removeTask');
+                }
+            } else {
+                pubSub.publish('updateTask', newTask);
+            }
         }
-        populateStorage();
+        projectController.setAllProjects();
+        // populateStorage();
     },
     findTask: function(uuid) {
         return this.tasks.find(element => element.uuidTask === uuid);
@@ -78,7 +111,7 @@ const project = (state) => ({
 
 export const projectController = {
     inbox: [Object.assign(buildProject(), {title: 'Inbox',})], // will hold tasks assigned to the 'inbox'
-    today: [Object.assign(buildProject(), {title: 'Today',})],
+    today: [Object.assign(buildProject(), {title: 'Today'})],
     misc: null,
     projects: null,
     allProjects: [],
@@ -86,12 +119,12 @@ export const projectController = {
         const formValues = getFormValues(inputs);
         this.projects.push(Object.assign(buildProject(), formValues));
         this.setAllProjects()
-        populateStorage();
+        // populateStorage();
     },
     remove: function(uuid) {
         this.projects.splice(this.projects.indexOf(this.find(uuid)), 1);
         this.setAllProjects();
-        populateStorage();
+        // populateStorage();
     },
     find: function(uuid) {
         // return this.projects.find(project => project.uuid === uuid);
@@ -105,34 +138,46 @@ export const projectController = {
         this.find(uuid).active = true;
     },
     findActive: function() {
-        // return this.projects.find(project => project.active === true);
+        console.log(this.allProjects)
         if (!this.allProjects.find(project => project.active === true)) {
-            this.inbox.active = true;
+            this.inbox[0].active = true;
             return this.inbox;
         } else {
             return this.allProjects.find(project => project.active === true);
         }
-        // return this.allProjects.find(project => project.active === true) ? this.allProjects.find(project => project.active === true) : this.inbox ;
     },
     setAllProjects: function() {
         this.allProjects = this.inbox.concat(this.projects, this.today);
-        this.sort();
+        this.sort()
+        populateStorage();
     },
     setMiscProjects: function() {
         this.misc = this.inbox.concat(this.today)
     },
     sort: function() {
-        // sets tasks in this.today
-        const today = new Date().toISOString().split('T')[0];
-        console.log(today)
+        const today = new Date().toDateString();
         this.allProjects.forEach(project => {
-            project.tasks.forEach(task => {
-                // console.log(task);
-                if (task.hasOwnProperty('due_date')) {
-                    console.log(task.due_date);
-                }
-            });
+            if (project.tasks.length > 0) {
+                console.log(project)
+                this.today[0].tasks = project.tasks.filter((task) => {
+                    let taskDate = new Date(`${task.due_date}T00:00:00`).toDateString();
+                    console.log(taskDate);
+                    console.log(today)
+                    if (task.hasOwnProperty('due_date') && taskDate == today) {
+                        return true;
+                    }
+                })
+                // this.today[0].tasks = project.tasks.filter((task) => {
+                //     let taskDate = new Date(`${task.due_date}T00:00:00`).toDateString();
+                //     console.log(taskDate);
+                //     console.log(today)
+                //     if (task.hasOwnProperty('due_date') && taskDate == today) {
+                //         return true;
+                //     }
+                // })
+            }
         });
+        console.log(this.today)
     },
     init: function() {
         this.projects.forEach(obj => {
@@ -141,10 +186,14 @@ export const projectController = {
                 task.uuidProj = obj.uuid;
             });
         });
+
         Object.assign(this.inbox[0], buildProject(this.inbox[0].tasks));
+        this.inbox[0].tasks.forEach(task => {
+            task.uuidProj = this.inbox[0].uuid;
+        })
+        this.setAllProjects();
     }
 }
-
 
 const task = (uuid) => {
     const type = 'task';
@@ -152,9 +201,3 @@ const task = (uuid) => {
     const uuidProj = uuid;
     return { uuidTask, uuidProj, type };
 }
-
-// projectController.addProject([{id: 'title', value: 'test1'}]);
-// projectController.addProject([{id: 'title', value: 'test2'}]);
-// projectController.projects[0].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'pizza pizza'}, {id: 'priority', value: 'prirotiy 2'}]);
-// projectController.projects[0].addTask([{id: 'name', value: 'taskB'}, {id: 'description', value: 'foo bar'}, {id: 'priority', value: 'priority 4'}]);
-// projectController.projects[1].addTask([{id: 'name', value: 'taskA'}, {id: 'description', value: 'Lorem ipsum'}, {id: 'due_date', value: '2024-03-04'}, {id: 'due_time', value: '11:20'}, {id: 'priority', value: 'priority 3'}]);

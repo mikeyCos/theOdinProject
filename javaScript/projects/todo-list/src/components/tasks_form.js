@@ -1,6 +1,3 @@
-// import { addTask } from '../containers/project-controller';
-// import buildProjectsList from '../components/projects_list'; // testing
-// import { buildList } from '../components/projects_list';
 import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
 
@@ -60,7 +57,6 @@ export default function buildTasksForm(e) {
     const buttonParent = button.parentElement;
     const form = document.createElement('form');
     form.classList.add('form_task');
-    console.table(buildForm.sections);
     if (!button.hasAttribute('role') && buttonParent.tagName !== 'LI') {
         form.classList.add('modal');
         const dialogElement = document.createElement('dialog');
@@ -155,6 +151,8 @@ const formTask = (state) => ({
     submitForm: function(e) {
         e.preventDefault();
         if (!this.listItem) {
+            console.log(this.formInputs);
+            console.log(projectController.findActive())
             projectController.findActive().addTask(this.formInputs);
             if (this.dialogElement) {
                 this.closeForm();
@@ -164,7 +162,10 @@ const formTask = (state) => ({
         } else {
             this.closeForm();
             pubSub.publish('resetOldTask', this.button); // testing
-            projectController.findActive().updateTask(this.listItem.dataset.uuid, this.formInputs);
+            console.log(this.listItem)
+            console.log(projectController.find(this.listItem.dataset.uuidProj))
+            console.log(projectController.inbox)
+            projectController.find(this.listItem.dataset.uuidProj).updateTask(this.listItem.dataset.uuid, this.formInputs);
         }
     },
     closeForm: function(e) {
@@ -326,9 +327,13 @@ const formInputs = (state) => {
                             value: projectController.allProjects[i].uuid,
                             text: projectController.allProjects[i].title,
                         }
-                        
-                        return projectController.findActive().uuid === projectController.allProjects[i].uuid ?
-                        Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
+                        if (state.button && projectController.find(state.button.firstChild.dataset.uuidProj)) {
+                            return projectController.find(state.button.firstChild.dataset.uuidProj).uuid === projectController.allProjects[i].uuid ?
+                            Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
+                        } else {
+                            return projectController.findActive().uuid === projectController.allProjects[i].uuid ?
+                            Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
+                        }
                     }
                 }
             },

@@ -43,6 +43,7 @@ export const tasksList = {
             // removes the button
     },
     render: function(task) {
+        console.log(this.project);
         // buttons to implement
             // checkbox, appended before heading
             // due date
@@ -78,7 +79,7 @@ export const tasksList = {
                     // from 2024-03-04 to Sun Mar 03 2024
                     // Sun Mar 03 2024 10:00
                 if (task.due_date !== undefined) {
-                    const date = new Date (task.due_date);
+                    const date = new Date(`${task.due_date}T00:00:00`);
                     const dueDate = document.createElement('span');
                     dueDate.classList.add('task_due_date');
                     if (task.due_time === undefined) {
@@ -134,13 +135,20 @@ export const tasksList = {
             this.removeSelection = listItem;
             let uuidTask = listItem.dataset.uuid;
             buildModalRemove(this.project.findTask(uuidTask));  
-        } else if (e) {
-            this.project.removeTask(e);
+        // } else if (e) {
+        } else if (this.removeSelection) {
+            console.log(this.removeSelection)
+            console.log(this.removeSelection.parentElement)
+            console.log(e)
+            // this.project.removeTask(e);
+            this.project.removeTask(this.removeSelection.dataset.uuid);
             this.removeSelection.parentElement.remove();
             this.removeSelection = null;
         } else {
+            if (this.project.title !== 'Today') {
+                this.oldTask.remove();
+            }
             console.log(this.oldTask)
-            this.oldTask.remove();
             this.oldTask = null;
         }
     },
