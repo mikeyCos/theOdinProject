@@ -1,6 +1,7 @@
 import buildHome from '../components/home';
 import buildProjects from '../components/projects';
 import buildProjectTasks from '../components/project_tasks';
+import { projectController } from '../containers/project-controller';
 import { pubSub } from '../containers/pubsub';
 
 export default function buildMain() {
@@ -16,7 +17,7 @@ export default function buildMain() {
 }
 
 const build = {
-    home: buildHome,
+    // home: buildHome,
     projects: buildProjects,
     project: buildProjectTasks,
 }
@@ -45,6 +46,7 @@ export const mainContent = {
         this.switchContent = this.switchContent.bind(this);
     },
     switchContent: function(e) {
+        console.log(e)
         // need to refactor this
         let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
         let uuid = e.parentElement.dataset.uuid || e.dataset.inboxUuid;
@@ -55,7 +57,10 @@ export const mainContent = {
             } else if (key === classSubstring) {
                 console.log('home is NOT rendered');
                 this.setActiveTab(e);
+                console.log(key)
                 mainContent.render(key, uuid);
+            } else {
+                mainContent.render('project', projectController.today[0].uuid)
             }
         }
     },

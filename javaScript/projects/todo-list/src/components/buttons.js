@@ -5,9 +5,10 @@
     import IconAdd from '../assets/icons/add.svg';
     import IconDelete from '../assets/icons/delete.svg';
     import IconEdit from '../assets/icons/edit.svg';
+    import IconRadio from '../assets/icons/radio_button_unchecked.svg';
     // returns a button element to create a project/task
     // if spanText provided, then a span element is created
-    const icons = {add: IconAdd, delete: IconDelete, edit: IconEdit};
+    const icons = {add: IconAdd, delete: IconDelete, edit: IconEdit, radio: IconRadio};
 
     export default function buildButton(type, name, text) {
         const button = Object.assign(document.createElement('button'), buttonAttributes(type, name));    

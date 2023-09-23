@@ -171,6 +171,7 @@ const formTask = (state) => ({
     closeForm: function(e) {
         console.log(`closeForm() from tasks_from.js is running`); // for debugging
         if (!this.dialogElement) {
+            
             console.log(this.form);
             console.log(this.button);
             this.form.replaceWith(this.button);
@@ -211,6 +212,7 @@ const formInputs = (state) => {
                     let value;
                     if (formChild !== 'dueDate') {
                         value = { value: find(attributes.name).textContent };
+                        console.log(value);
                     } else {
                         value = { value: new Date(find(attributes.name).textContent).toISOString().split('T')[0] }
                     }
@@ -328,6 +330,7 @@ const formInputs = (state) => {
                             text: projectController.allProjects[i].title,
                         }
                         if (state.button && projectController.find(state.button.firstChild.dataset.uuidProj)) {
+                            console.log(projectController.find(state.button.firstChild.dataset.uuidProj))
                             return projectController.find(state.button.firstChild.dataset.uuidProj).uuid === projectController.allProjects[i].uuid ?
                             Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
                         } else {

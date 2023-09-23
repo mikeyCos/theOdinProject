@@ -32,9 +32,14 @@ export const tasksList = {
     bindEvents: function(...args) {
         this.removeTask = this.removeTask.bind(this);
         this.editTask = this.editTask.bind(this);
+        this.completeTask = this.completeTask.bind(this);
         args.forEach(element => {
             if (element.getAttribute('type')) {
-                element.addEventListener('click', this.removeTask, true);
+                if (element.className.includes('delete')) {
+                    element.addEventListener('click', this.removeTask, true);
+                } else {
+                    element.addEventListener('click', this.completeTask)
+                }
             } else {
                 element.addEventListener('click', this.editTask);
             }
@@ -43,7 +48,6 @@ export const tasksList = {
             // removes the button
     },
     render: function(task) {
-        console.log(this.project);
         // buttons to implement
             // checkbox, appended before heading
             // due date
@@ -54,7 +58,9 @@ export const tasksList = {
             const listItemContainer = document.createElement('div');
             const taskName = document.createElement('h3');
             const priority = document.createElement('p');
+            const radioTask = buildButton('radio', 'task');
 
+            listItemContainer.appendChild(radioTask);
             listItemWrapper.setAttribute('role', 'button');
             listItem.setAttribute('data-uuid', task.uuidTask);
             listItem.setAttribute('data-uuid-proj', task.uuidProj);
@@ -96,7 +102,6 @@ export const tasksList = {
                     dueTime.textContent = task.due_time;
                     dateTimeWrapper.appendChild(dueTime);
                 }
-
                 listItemContainer.appendChild(dateTimeWrapper);
             }
 
@@ -108,7 +113,7 @@ export const tasksList = {
             listItem.appendChild(listItemContainer);
             listItemWrapper.appendChild(listItem);
             this.btnDeleteTask.push(button)
-            this.bindEvents(button, listItemWrapper);
+            this.bindEvents(button, radioTask, listItemWrapper);
 
             if (!this.oldTask) {
                 console.log(`this.oldTask = ${this.oldTask}`);
@@ -125,6 +130,14 @@ export const tasksList = {
         // when the task form inside the list is open and a new task is added
             // the task list grows while the task form is open
     },
+    completeTask: function(e) {
+        e.stopImmediatePropagation();
+        console.log(`completetask() running from tasks_list.js`);
+        console.log(e.currentTarget.parentElement.parentElement);
+        const listItem = e.currentTarget.parentElement.parentElement;
+        this.removeSelection = listItem;
+        this.removeTask();
+    },
     removeTask: function(e) {
         console.log(`removeTask() in tasks_list.js is running`)
         // create a modal to confirm removal
@@ -137,18 +150,14 @@ export const tasksList = {
             buildModalRemove(this.project.findTask(uuidTask));  
         // } else if (e) {
         } else if (this.removeSelection) {
-            console.log(this.removeSelection)
-            console.log(this.removeSelection.parentElement)
-            console.log(e)
             // this.project.removeTask(e);
             this.project.removeTask(this.removeSelection.dataset.uuid);
             this.removeSelection.parentElement.remove();
             this.removeSelection = null;
         } else {
-            if (this.project.title !== 'Today') {
+            // if (this.project.title !== 'Today') {
                 this.oldTask.remove();
-            }
-            console.log(this.oldTask)
+            // }
             this.oldTask = null;
         }
     },
@@ -159,12 +168,11 @@ export const tasksList = {
     },
     resetOldTask: function(oldTask) {
         console.log(`resetOldTask() from tasks_list.js is running`);
-        console.log(this.oldTask);
         if (this.oldTask) {
+            // debugger
             this.oldTask = null
         } else if (oldTask) {
             this.oldTask = oldTask;
         }
-        console.log(this.oldTask)
     }
 }

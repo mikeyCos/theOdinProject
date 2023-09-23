@@ -89,6 +89,11 @@ const project = (state) => ({
             newTask.uuidProj = formValues.project;
             projectController.find(formValues.project).tasks.push(newTask);
             pubSub.publish('removeTask');
+            if (projectController.findActive().title === 'Today') {
+                pubSub.publish('updateTask', newTask);
+            } else {
+
+            }
         } else {
             if (projectController.findActive().title === 'Today') {
                 if (new Date(`${newTask.due_date}T00:00:00`).toDateString() === new Date().toDateString()) {
@@ -157,24 +162,13 @@ export const projectController = {
     sort: function() {
         const today = new Date().toDateString();
         this.allProjects.forEach(project => {
-            if (project.tasks.length > 0) {
-                console.log(project)
-                this.today[0].tasks = project.tasks.filter((task) => {
+            if (project.tasks.length > 0 && project.title !== 'Today') {
+                project.tasks.forEach(task => {
                     let taskDate = new Date(`${task.due_date}T00:00:00`).toDateString();
-                    console.log(taskDate);
-                    console.log(today)
-                    if (task.hasOwnProperty('due_date') && taskDate == today) {
-                        return true;
+                    if (!this.today[0].findTask(task.uuidTask) && taskDate == today) {
+                        this.today[0].tasks.push(task);
                     }
                 })
-                // this.today[0].tasks = project.tasks.filter((task) => {
-                //     let taskDate = new Date(`${task.due_date}T00:00:00`).toDateString();
-                //     console.log(taskDate);
-                //     console.log(today)
-                //     if (task.hasOwnProperty('due_date') && taskDate == today) {
-                //         return true;
-                //     }
-                // })
             }
         });
         console.log(this.today)
