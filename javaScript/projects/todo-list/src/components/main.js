@@ -1,4 +1,3 @@
-import buildHome from '../components/home';
 import buildProjects from '../components/projects';
 import buildProjectTasks from '../components/project_tasks';
 import { projectController } from '../containers/project-controller';
@@ -17,7 +16,6 @@ export default function buildMain() {
 }
 
 const build = {
-    // home: buildHome,
     projects: buildProjects,
     project: buildProjectTasks,
 }
@@ -31,11 +29,8 @@ export const mainContent = {
     render: function(key, uuid) {
         let content;
         if (!key) {
-            // content = build.home();
-            content = build.projects();
+            content = build['project'](projectController.today[0].uuid);
         } else {
-            // console.log(this.main);
-            // console.log(this.main.firstChild);
             this.main.firstChild.remove();
             content = build[key](uuid);
         }
@@ -46,23 +41,28 @@ export const mainContent = {
         this.switchContent = this.switchContent.bind(this);
     },
     switchContent: function(e) {
-        console.log(e)
-        // need to refactor this
         let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
         let uuid = e.parentElement.dataset.uuid || e.dataset.inboxUuid;
+        let renderKey = Object.keys(build).find(key => key === classSubstring);
+        let args = ['project', uuid];
 
-        for (const key in build) {
-            if (classSubstring === 'delete' && this.activeContent.classList.contains('task')) {
-                mainContent.render('project', uuid);
-            } else if (key === classSubstring) {
-                console.log('home is NOT rendered');
-                this.setActiveTab(e);
-                console.log(key)
-                mainContent.render(key, uuid);
-            } else {
-                mainContent.render('project', projectController.today[0].uuid)
-            }
+        if (renderKey && uuid) {
+            // renders respective project
+            this.setActiveTab(e);
+            args[0] = renderKey;
+        } else if (!renderKey && !uuid) {
+            // if home button is clicked
+                // renders the today section
+            args[1] = projectController.today[0].uuid;
+        } else if (classSubstring === 'delete') {
+            // if a project is the content and is deleted,
+                // renders the inbox section
+            args[1] = projectController.inbox[0].uuid;
+        } else {
+            this.setActiveTab(e);
+            args[0] = 'projects';
         }
+        mainContent.render(args[0], args[1]);
     },
     setActiveTab: function(tab) {
         if (this.activeTab) {

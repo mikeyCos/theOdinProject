@@ -6,6 +6,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 1. Form validator module.  
 2. Update current url with respective anchor href; `window.location`.
 3. Change time representation from 24-hour clock to 12-hour clock.
+4. 
 ---
 ### Questions
 1. How do we distinguish a single step versus a single responsibility?
@@ -16,6 +17,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
+- 25 SEP 2023: Refactored `switchContent()` in `main.js` module, `switchContent()` now finds respective renderKey based on the clicked element's classSubstring, begun implementing CSS properties, and the content behind the sidebar will be darken when the sidebar is toggled open.  
 - 22 SEP 2023: Created and pushed `sort_today` Git branch, refactored `sort()` function in `projectController`, `sort()` no longer filters through project's tasks and uses a forEach loop, and a custom radio button implemented for each task and removes the respective task when button is clicked.  
 - 21 SEP 2023: Today's array is a shallow clone made up of only tasks with due dates equal to the current date, tasks that are due today can be moved to different projects while staying on the today section, the task's project does not currently change the default selection if a user stays on the today section and changes a task's date, and adding tasks on the today section are not immediately rendered until a user goes to a different section and returns to the today section.  
 - 19 SEP 2023: Resolved rendering the DOM when a project is deleted, task/project delete modal will call the remove task/project function was originally called on and passes it a UUID, and created a `today` and `misc` properties in `projectController`.  

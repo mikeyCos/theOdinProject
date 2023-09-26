@@ -10,6 +10,7 @@
 }
 
 :root {
+    /* custom variables */
     --text-color-primary: rgb(32, 32, 32);
 }
 
@@ -19,4 +20,27 @@ body {
 
 #todo_app {
     min-height: inherit;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
+
+#content {
+    position: relative;
+}
+
+#sidebar {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#sidebar > .container {
+    height: inherit;
+    width: 65%;
+    background-color: white;
+}
+
+@media screen and (min-width:768px) {
+    
 }
