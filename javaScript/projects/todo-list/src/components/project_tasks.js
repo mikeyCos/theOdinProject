@@ -1,7 +1,4 @@
-// import buildProjectsList from '../components/projects_list';
-// import { buildList } from '../components/projects_list';
 import { pubSub } from '../containers/pubsub';
-// import { projects, getProject } from '../containers/project-controller';
 import { projectController } from '../containers/project-controller';
 import buildButton from '../components/buttons';
 import buildTasksForm from '../components/tasks_form';

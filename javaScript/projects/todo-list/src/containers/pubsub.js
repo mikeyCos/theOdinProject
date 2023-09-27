@@ -18,7 +18,6 @@ export const pubSub = {
         }
     },
     publish: function(subscriber, data) {
-        console.log(`publish running`); // for debugging
         if (this.subscribers[subscriber]) {
             this.subscribers[subscriber].forEach(function(handler) {
                 handler(data);

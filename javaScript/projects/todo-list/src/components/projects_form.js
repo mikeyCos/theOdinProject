@@ -1,8 +1,8 @@
-// import { addProject, projects } from '../containers/project-controller';
 import { projectController } from '../containers/project-controller';
-// import buildProjectsList from '../components/projects_list'; // testing
 import { buildList } from '../components/projects_list';
-import '../styles/form_project.css';
+import { pubSub } from '../containers/pubsub';
+import '../styles/projects_form.css';
+
 // renders a form to create a project
 export default function buildProjectForm() {
     const dialogElement = document.createElement('dialog');
@@ -23,13 +23,15 @@ const formProject = {
             placeholder: 'Enter Project Title',
             required: 'required',
         },
-        add: {
-            className: 'btn_submit_project',
-            type: 'submit',
-        },
+    },
+    formButtons: {
         cancel: {
             className: 'btn_cancel',
             type: 'button',
+        },
+        add: {
+            className: 'btn_submit_project',
+            type: 'submit',
         },
     },
     cacheDOM: function() {
@@ -52,6 +54,8 @@ const formProject = {
     render: function() {
         const formElement = document.createElement('form');
         const formHeader = document.createElement('h2');
+        const formButtons = document.createElement('div');
+        formButtons.classList.add('form_buttons');
         formElement.id = 'form';
         formHeader.textContent = 'Add Project';
         formElement.appendChild(formHeader);
@@ -66,17 +70,20 @@ const formProject = {
                 label.htmlFor = this.formChildren[formChild].id;
                 formItem.appendChild(label);
                 formItem.appendChild(input);
-            } else {
-                const button = document.createElement('button');
-                const span = document.createElement('span');
-                Object.assign(button, this.formChildren[formChild]);
-                span.textContent = formChild;
-
-                button.appendChild(span);
-                formItem.appendChild(button);
             }
             formElement.appendChild(formItem);
         }
+
+        for (let btn in this.formButtons) {
+            const button = document.createElement('button');
+            const span = document.createElement('span');
+            Object.assign(button, this.formButtons[btn]);
+            span.textContent = btn;
+
+            button.appendChild(span);
+            formButtons.appendChild(button);
+        }
+        formElement.appendChild(formButtons);
 
         return formElement
     },
@@ -97,6 +104,7 @@ const formProject = {
         projectController.addProject(this.formInputs);
         // buildList.modules.forEach(module => module.render())
         buildList.find('sidebar').render(); // will render only the sidebar
+        pubSub.publish('sidebar');
         this.removeModal();
     }
 }

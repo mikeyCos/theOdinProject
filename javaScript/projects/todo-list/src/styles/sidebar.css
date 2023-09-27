@@ -1,0 +1,23 @@
+#sidebar > .container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding: 1.25rem;
+}
+
+.nav_project,
+.nav_projects {
+    text-decoration: none;
+    column-gap: 0.75rem;
+}
+
+#projects_container > *:first-child {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+
+#projects_container > *:first-child > .btn_add_project {
+    justify-self: end;
+}
+

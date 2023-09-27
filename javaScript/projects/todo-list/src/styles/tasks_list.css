@@ -1,0 +1,7 @@
+.tasks_list {
+    list-style: none;
+}
+
+.task_list_item > div {
+    display: grid;
+}

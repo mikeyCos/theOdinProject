@@ -1,4 +1,3 @@
-// import buildProjectsList from '../components/projects_list';
 import { buildList } from '../components/projects_list';
 import buildButton from '../components/buttons';
 import buildProjectForm from '../components/projects_form';

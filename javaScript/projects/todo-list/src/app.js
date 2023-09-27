@@ -4,51 +4,35 @@ import buildMain from './components/main';
 import { setProjects } from './storage/storage';
 import './app.css';
 
-
 const appController = (function() {
     const build = {
         header: buildHeader,
         sidebar: buildSideBar,
         main: buildMain,
-        // home: buildHome, // renders all tasks
-        // projects: buildProjectsList,
-        // projectTasks: buildProjectTasks, // renders project's task
     }
 
     const app = {
-        activeContent: null,
         init: function() {
             setProjects();
             this.render();
-
         },
         cacheDOM: function() {
 
         },
         render: function() {
-            
             const appWrapper = document.createElement('div');
             const appContent = document.createElement('div');
-            // const main = document.createElement('main');
             appWrapper.id = 'todo_app';
             appContent.id = 'content';
-            // main.id = 'main_content';
 
             appWrapper.appendChild(build.header());
             appContent.appendChild(build.sidebar());
-            // appContent.appendChild(main);
             appContent.appendChild(build.main());
             appWrapper.appendChild(appContent);
 
             document.body.appendChild(appWrapper);
         },
         bindEvents: function() {
-
-        },
-        switchContent: function(e) {
-
-        },
-        setActiveContent: function() {
 
         },
     }

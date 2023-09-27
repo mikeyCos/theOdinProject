@@ -3,6 +3,7 @@ import buildButton from '../components/buttons';
 import buildModalRemove from '../components/modal_remove';
 import buildTasksForm from '../components/tasks_form';
 import { pubSub } from '../containers/pubsub';
+import '../styles/tasks_list.css';
 
 export const tasksList = {
     removeSelection: null,
@@ -133,7 +134,6 @@ export const tasksList = {
     completeTask: function(e) {
         e.stopImmediatePropagation();
         console.log(`completetask() running from tasks_list.js`);
-        console.log(e.currentTarget.parentElement.parentElement);
         const listItem = e.currentTarget.parentElement.parentElement;
         this.removeSelection = listItem;
         this.removeTask();

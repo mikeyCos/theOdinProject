@@ -2,6 +2,13 @@ import { projectController } from '../containers/project-controller';
 import buildButton from './buttons';
 import buildModalRemove from './modal_remove';
 import { pubSub } from '../containers/pubsub';
+import IconInbox from '../assets/icons/inbox.svg';
+import IconToday from '../assets/icons/today.svg';
+import IconProject from '../assets/icons/circle.svg';
+import '../styles/projects.css';
+import '../styles/projects_list.css';
+
+// const icons = {inbox: IconInbox, today: IconToday };
 
 const buildProjectsList = (type, container, array) => {
     let state = {
@@ -13,6 +20,7 @@ const buildProjectsList = (type, container, array) => {
     return Object.assign(
         {},
         projectsList(state),
+        setIcons(state),
         )
 }
 
@@ -61,6 +69,7 @@ const projectsList = (state) => ({
     },
     bindEvents: function() {
         this.removeProject = this.removeProject.bind(this);
+        this.publish = this.publish.bind(this);
         pubSub.subscribe('removeProject', this.removeProject);
         this.btnDeleteProject.forEach(button => {
             button.addEventListener('click', this.removeProject);
@@ -76,23 +85,30 @@ const projectsList = (state) => ({
             const listItem = document.createElement('li');
             const anchor = document.createElement('a');
             const anchorSpan = document.createElement('span');
+            const anchorImg = new Image();
             anchorSpan.textContent = this.array[i].title;
             anchor.href = `#${this.array[i].title};`
 
             listItem.setAttribute('data-uuid', this.array[i].uuid);
             anchor.classList.add('nav_project');
             const buttonSpan = document.createElement('span');
+
+            if (Object.keys(this.icons).find(a => a === this.array[i].title.toLowerCase())) {
+                anchorImg.src = this.icons[Object.keys(this.icons).find(a => a === this.array[i].title.toLowerCase())]
+            } else {
+                anchorImg.src = this.icons['circle'];
+            }
             
+            anchor.appendChild(anchorImg);
+            anchor.appendChild(anchorSpan);
+            listItem.appendChild(anchor);
+
             if (state.type !== 'misc') {
-            // if (state.type === 'sidebar' || state.type === 'content') {
                 const deleteButton = buildButton('delete', 'project');
                 deleteButton.setAttribute('data-inbox-uuid', projectController.inbox[0].uuid);
                 buttonSpan.appendChild(deleteButton);
+                listItem.appendChild(buttonSpan);
             }
-
-            anchor.appendChild(anchorSpan);
-            listItem.appendChild(anchor);
-            listItem.appendChild(buttonSpan);
 
             listItems.appendChild(listItem);
         }
@@ -138,10 +154,14 @@ const projectsList = (state) => ({
         }
     },
     publish: function(e) {
-        // console.log(`publish() running`); // for debugging
+        e.preventDefault();
+        console.log(`publish() running from projects_ist.js`); // for debugging
         let className = e.target.parentElement.className;
         let projectUUID = e.target.parentElement.parentElement.dataset.uuid
         pubSub.publish('content', e.target.parentElement);
+        if (this.type === 'sidebar'|| this.type === 'misc') {
+            pubSub.publish('sidebar');
+        }
     },
     clearCache: function() {
         this.ulList = null;
@@ -151,3 +171,14 @@ const projectsList = (state) => ({
         this.btnDeleteProject = null;
     },
 })
+
+const setIcons = (state) => {
+    let icons = {}
+
+    if (state.type === 'misc') {
+        icons.icons = { inbox: IconInbox, today: IconToday };
+    } else {
+        icons.icons = { circle: IconProject };
+    }
+    return icons;
+}

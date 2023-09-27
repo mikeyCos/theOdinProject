@@ -32,13 +32,60 @@ body {
     height: 100%;
     width: 100%;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+}
+
+#sidebar.hide {
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: all 300ms ease-in-out;
+}
+
+#sidebar.show {
+    visibility: visible;
+    transform: translateX(0%);
+    transition: transform 300ms ease-in-out;
 }
 
 #sidebar > .container {
     height: inherit;
     width: 65%;
-    background-color: white;
+    background-color: lightcyan;
+    box-shadow: 2px 4px 6px -1px rgb(0, 0, 0);
+}
+
+#content {
+    display: grid;
+}
+
+#main_content {
+    justify-self: center;
+    padding: 3.25rem;
+}
+
+#main_content::after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    position: absolute;
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+}
+
+#main_content.dim::after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
 }
 
 @media screen and (min-width:768px) {

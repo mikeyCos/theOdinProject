@@ -1,6 +1,5 @@
 import importAll from '../utilities/import-all';
 import { pubSub } from '../containers/pubsub'; // connect .btn_home to mainContent.switchContent
-// import mainContent from '../components/main.js'; // testing
 import buildTasksForm from '../components/tasks_form';
 import '../styles/header.css';
 

@@ -1,0 +1,48 @@
+.projects_list > * {
+    display: grid;
+    list-style: none;
+}
+
+.projects_list > * > * {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.projects_list > * > *:hover span {
+    visibility: visible;
+}
+
+.projects_list > * > * > span {
+    justify-self: end;
+    visibility: hidden;
+}
+
+.projects_list > * > * > .nav_project {
+    display: grid;
+    grid-template-columns: 20px 1fr 1fr;
+    align-items: center;
+}
+
+.btn_add_project,
+.btn_delete_project {
+    display: grid;
+    background-color: transparent;
+    border: none;
+}
+
+.nav_project > img {
+    width: clamp(1.15rem, 4vw, 1.5rem);
+    justify-self: center;
+}
+
+.btn_add_project > img,
+.btn_add_project > .btn_img_wrapper > img,
+.btn_delete_project > img {
+    width: clamp(1.45rem, 4vw, 1.5rem);
+}
+
+.btn_add_project {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+}

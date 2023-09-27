@@ -11,6 +11,7 @@ export default function buildMain() {
     mainContent.bindEvents();
 
     pubSub.subscribe('content', mainContent.switchContent);
+    pubSub.subscribe('dim', mainContent.dimContent);
 
     return main;
 }
@@ -25,6 +26,7 @@ export const mainContent = {
     activeTab: null,
     cacheDOM: function(container) {
         this.main = container;
+        console.log(this.main);
     },
     render: function(key, uuid) {
         let content;
@@ -39,6 +41,7 @@ export const mainContent = {
     },
     bindEvents: function() {
         this.switchContent = this.switchContent.bind(this);
+        this.dimContent = this.dimContent.bind(this);
     },
     switchContent: function(e) {
         let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
@@ -77,5 +80,12 @@ export const mainContent = {
         }
         content.classList.add('active');
         this.activeContent = content;
-    }
+    },
+    dimContent: function() {
+        if (this.main.classList.contains('dim')) {
+            this.main.classList.remove('dim');
+        } else {
+            this.main.classList.add('dim');
+        }
+    },
 }

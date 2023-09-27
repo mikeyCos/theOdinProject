@@ -32,8 +32,7 @@ const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
 export const buildForm = {
     sections: [],
     add: function (type, form, button, buttonParent, dialogElement) {
-        // need to check if the section exists already
-        // if section exists, section update it's container
+        // if section type already exists, update it's container
         // prevents similar sections to be added
         if (this.find(type)) {
             this.find(type).closeForm();
@@ -101,6 +100,8 @@ const formTask = (state) => ({
     },
     render: function() {
         const container = document.createElement('div');
+        const formButtons = document.createElement('div');
+        formButtons.classList.add('form_buttons');
         for (let formChild in this.formChildren) {
             const formItem = document.createElement('div');
             formItem.classList.add('form_item');
@@ -134,25 +135,36 @@ const formTask = (state) => ({
 
                 formItem.appendChild(label);
                 formItem.appendChild(item);
-            } else {
-                const button = document.createElement('button');
-                const span = document.createElement('span');
-                Object.assign(button, this.formChildren[formChild]);
-                span.textContent = formChild;
+            } 
+            // else {
+            //     const button = document.createElement('button');
+            //     const span = document.createElement('span');
+            //     Object.assign(button, this.formChildren[formChild]);
+            //     span.textContent = formChild;
 
-                button.appendChild(span);
-                formItem.appendChild(button);
-            }
+            //     button.appendChild(span);
+            //     formItem.appendChild(button);
+            // }
             container.appendChild(formItem);
         }
+
+        for (let btn in this.formButtons) {
+            const button = document.createElement('button');
+            const span = document.createElement('span');
+            Object.assign(button, this.formButtons[btn]);
+            span.textContent = btn;
+
+            button.appendChild(span);
+            formButtons.appendChild(button);
+        }
+
+        container.appendChild(formButtons);
         
         return container;
     },
     submitForm: function(e) {
         e.preventDefault();
         if (!this.listItem) {
-            console.log(this.formInputs);
-            console.log(projectController.findActive())
             projectController.findActive().addTask(this.formInputs);
             if (this.dialogElement) {
                 this.closeForm();
@@ -162,9 +174,6 @@ const formTask = (state) => ({
         } else {
             this.closeForm();
             pubSub.publish('resetOldTask', this.button); // testing
-            console.log(this.listItem)
-            console.log(projectController.find(this.listItem.dataset.uuidProj))
-            console.log(projectController.inbox)
             projectController.find(this.listItem.dataset.uuidProj).updateTask(this.listItem.dataset.uuid, this.formInputs);
         }
     },
@@ -340,11 +349,17 @@ const formInputs = (state) => {
                     }
                 }
             },
+            // cancel: {
+            //     className: 'btn_cancel',
+            //     type: 'button',
+            // },
+        },
+        formButtons: {
             cancel: {
                 className: 'btn_cancel',
                 type: 'button',
             },
-        },
+        }
     }
 
     // if the button clicked has 'role' attribute
@@ -366,7 +381,8 @@ const formInputs = (state) => {
         }
 
         init();
-        Object.assign(inputs.formChildren, inputsEdit.button);
+        // Object.assign(inputs.formChildren, inputsEdit.button);
+        Object.assign(inputs.formButtons, inputsEdit.button);
         Object.assign(inputs, inputsEdit.prop);
     } else {
         const inputsAdd = {
@@ -376,7 +392,8 @@ const formInputs = (state) => {
             },
         }
 
-        Object.assign(inputs.formChildren, inputsAdd);
+        // Object.assign(inputs.formChildren, inputsAdd)
+        Object.assign(inputs.formButtons, inputsAdd);
     }
     return inputs;
 }
