@@ -135,16 +135,7 @@ const formTask = (state) => ({
 
                 formItem.appendChild(label);
                 formItem.appendChild(item);
-            } 
-            // else {
-            //     const button = document.createElement('button');
-            //     const span = document.createElement('span');
-            //     Object.assign(button, this.formChildren[formChild]);
-            //     span.textContent = formChild;
-
-            //     button.appendChild(span);
-            //     formItem.appendChild(button);
-            // }
+            }
             container.appendChild(formItem);
         }
 
@@ -180,9 +171,6 @@ const formTask = (state) => ({
     closeForm: function(e) {
         console.log(`closeForm() from tasks_from.js is running`); // for debugging
         if (!this.dialogElement) {
-            
-            console.log(this.form);
-            console.log(this.button);
             this.form.replaceWith(this.button);
             buildForm.remove(this.type);
         } else {
@@ -212,42 +200,32 @@ const modal = (state) => ({
 });
 
 const formInputs = (state) => {
-    const content = state.button ? state.button.firstChild.firstChild.childNodes : null;
+    const taskItem = state.button ? state.button.querySelector('.task_list_item') : null;
+    const project = taskItem ? projectController.find(taskItem.dataset.uuidProj) : null;
+    const task = taskItem? project.findTask(taskItem.dataset.uuid) : null;
+    
     const init = () => {
         for (let formChild in inputs.formChildren) {
             let attributes = inputs.formChildren[formChild].attributes;
-            if (attributes && find(attributes.name)) {
+            // finds task's key equal to input's id
+            let key = Object.keys(task).find(item => item === attributes.id);
+            if (attributes && key) {
                 if (!inputs.formChildren[formChild].options) {
                     let value;
                     if (formChild !== 'dueDate') {
-                        value = { value: find(attributes.name).textContent };
-                        console.log(value);
+                        value = { value: task[key] };
                     } else {
-                        value = { value: new Date(find(attributes.name).textContent).toISOString().split('T')[0] }
+                        value = { value: new Date(task[key]).toISOString().split('T')[0] }
                     }
                     Object.assign(attributes, value);
                 } else {
-                    const text = find(attributes.name).textContent;
-                    const number = parseInt(find(attributes.name).textContent.split(' ')[1]);
+                    const text = key;
+                    const number = task[key];
                     Object.assign(
                         inputs.formChildren[formChild].options,
                         { value: number }, { text: text }
                     )
                 }
-            }
-        }
-    }
-
-    // finds DOM element based on id attribute
-    const find = (name) => {
-        const element = [...content].find(element => element.className.includes(name));
-        if (element) {
-            if (element.childNodes.length === 1) {
-                return element;
-            } else {
-                const span = [...element.childNodes].find(child => child.className.includes(name));
-                return span;
-
             }
         }
     }
@@ -349,10 +327,6 @@ const formInputs = (state) => {
                     }
                 }
             },
-            // cancel: {
-            //     className: 'btn_cancel',
-            //     type: 'button',
-            // },
         },
         formButtons: {
             cancel: {
@@ -381,7 +355,6 @@ const formInputs = (state) => {
         }
 
         init();
-        // Object.assign(inputs.formChildren, inputsEdit.button);
         Object.assign(inputs.formButtons, inputsEdit.button);
         Object.assign(inputs, inputsEdit.prop);
     } else {
@@ -392,7 +365,6 @@ const formInputs = (state) => {
             },
         }
 
-        // Object.assign(inputs.formChildren, inputsAdd)
         Object.assign(inputs.formButtons, inputsAdd);
     }
     return inputs;

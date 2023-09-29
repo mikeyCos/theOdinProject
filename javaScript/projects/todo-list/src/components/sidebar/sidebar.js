@@ -9,6 +9,13 @@ import '../../styles/sidebar.css';
 export default function buildSidebar(content) {
     const sidebarWrapper = document.createElement('div');
     sidebarWrapper.id = 'sidebar';
+
+    if (window.innerWidth > 768) {
+        sidebarWrapper.classList.add('show');
+    } else {
+        sidebarWrapper.classList.add('hide');
+    }
+
     sidebarWrapper.appendChild(sidebar.render());
     sidebar.cacheDOM(sidebarWrapper);
     sidebar.bindEvents();
@@ -23,7 +30,6 @@ const assets = {
 
 const sidebar = {
     cacheDOM: function(container) {
-        
         // window.addEventListener('load', (e) => console.log(document.querySelector('#main_content')))
         this.sidebar = container;
         this.sidebarWrapper = this.sidebar.querySelector('.sidebar_wrapper');
@@ -40,7 +46,6 @@ const sidebar = {
         this.btnAddProject.addEventListener('click', buildProjectForm);
         this.anchorProjects.addEventListener('click', this.publish, { capture: true });
         this.sidebar.addEventListener('click', this.toggleSidebar);
-        // this.anchorInbox.addEventListener('click', this.publish);
     },
     render: function() {
         // const sidebarWrapper = document.createElement('div');
@@ -90,13 +95,12 @@ const sidebar = {
                 this.sidebar.classList.remove('hide');
                 this.sidebar.classList.add('show');
             }
-            pubSub.publish('dim');
+            pubSub.publish('dim', this.sidebar);
         }
     },
     publish: function(e) {
         e.stopImmediatePropagation();
         this.toggleSidebar();
-        console.log(e.currentTarget)
         pubSub.publish('content', e.currentTarget);
     }
 }

@@ -1,7 +1,43 @@
+.btn_add_task {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+}
+
+.btn_add_task > .btn_img_wrapper {
+    display: flex;
+}
+
+.btn_add_task > .btn_img_wrapper > img {
+    width: clamp(1.45rem, 4vw, 1.5rem);
+}
+
 .tasks_list {
     list-style: none;
 }
 
-.task_list_item > div {
+.task_list_item > .container {
     display: grid;
+}
+
+.task_list_item > .container > button {
+    background: transparent;
+    border: none;
+    border: 2px solid black;
+}
+
+.task_list_item > .container > button > img {
+    width: clamp(1.45rem, 4vw, 1.5rem);
+}
+
+.priority_1 {
+    /* background-color: #ffa500; */
+}
+
+.priority_2 {
+
+}
+
+.priority_3 {
+
 }

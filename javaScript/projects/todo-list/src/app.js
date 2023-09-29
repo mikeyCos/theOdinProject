@@ -2,12 +2,14 @@ import buildHeader from './components/header';
 import buildSideBar from './components/sidebar/sidebar';
 import buildMain from './components/main';
 import { setProjects } from './storage/storage';
+import buildOverlay from './components/overlay';
 import './app.css';
 
 const appController = (function() {
     const build = {
         header: buildHeader,
         sidebar: buildSideBar,
+        overlay: buildOverlay,
         main: buildMain,
     }
 
@@ -26,6 +28,7 @@ const appController = (function() {
             appContent.id = 'content';
 
             appWrapper.appendChild(build.header());
+            appContent.appendChild(build.overlay());
             appContent.appendChild(build.sidebar());
             appContent.appendChild(build.main());
             appWrapper.appendChild(appContent);

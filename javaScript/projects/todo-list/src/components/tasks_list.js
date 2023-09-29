@@ -49,72 +49,75 @@ export const tasksList = {
             // removes the button
     },
     render: function(task) {
-        // buttons to implement
-            // checkbox, appended before heading
-            // due date
-            // priority
         if (task) {
             const listItemWrapper = document.createElement('div');
-            const listItem = document.createElement('li');
             const listItemContainer = document.createElement('div');
+            const listItem = document.createElement('li');
+            const taskContent = document.createElement('div');
             const taskName = document.createElement('h3');
             const priority = document.createElement('p');
-            const radioTask = buildButton('radio', 'task');
+            const taskRadio = buildButton('radio', 'task');
+            
+            const taskActions = document.createElement('div');
 
-            listItemContainer.appendChild(radioTask);
             listItemWrapper.setAttribute('role', 'button');
             listItem.setAttribute('data-uuid', task.uuidTask);
             listItem.setAttribute('data-uuid-proj', task.uuidProj);
+            listItemContainer.classList.add('container');
+            taskContent.classList.add('task_list_item_content');
             listItem.classList.add('task_list_item');
+            taskActions.classList.add('task_actions');
             taskName.classList.add('task_name');
             taskName.textContent = task.name;
+
             priority.classList.add('task_priority');
             priority.textContent = `Priority ${task.priority}`;
-            listItemContainer.appendChild(taskName);
+
+            taskRadio.firstElementChild.classList.add(`priority_${task.priority}`)
+
+            listItemContainer.appendChild(taskRadio);
+            taskContent.appendChild(taskName);
             
             if (task.description !== undefined) {
                 const taskDescription = document.createElement('p');
                 taskDescription.classList.add('task_description');
                 taskDescription.textContent = task.description;
-                listItemContainer.appendChild(taskDescription);
+                taskContent.appendChild(taskDescription);
             }
 
             if (task.due_date !== undefined || task.due_time !== undefined) {
-                const dateTimeWrapper = document.createElement('p');
+                const dateTimeWrapper = document.createElement('div');
+                let dateTimeText;
+                const date = new Date(`${task.due_date}T00:00:00`);
+                const time = new Date(`1-2-1000 ${task.due_time}`)
+                const timeProperties = { hour: 'numeric', minute: 'numeric', hour12: true }
+                if (task.due_date && !task.due_time) {
+                    dateTimeText = date.toDateString();
+                } else if (!task.due_date && task.due_time) {
+                    dateTimeText = time.toLocaleString('en-us', timeProperties);
+                } else {
+                    dateTimeText = `${date.toDateString()} ${time.toLocaleString('en-us', timeProperties)}`;
+                }
                 dateTimeWrapper.classList.add('task_due_date_time')
-                // format MMM DD YYYY
-                    // from 2024-03-04 to Sun Mar 03 2024
-                    // Sun Mar 03 2024 10:00
-                if (task.due_date !== undefined) {
-                    const date = new Date(`${task.due_date}T00:00:00`);
-                    const dueDate = document.createElement('span');
-                    dueDate.classList.add('task_due_date');
-                    if (task.due_time === undefined) {
-                        dueDate.textContent = date.toDateString();
-                    } else {
-                        dueDate.textContent = `${date.toDateString()} `
-                    }
-                    dateTimeWrapper.appendChild(dueDate);
-                }
-
-                if (task.due_time !== undefined) {
-                    const dueTime = document.createElement('span');
-                    dueTime.classList.add('task_due_time');
-                    dueTime.textContent = task.due_time;
-                    dateTimeWrapper.appendChild(dueTime);
-                }
-                listItemContainer.appendChild(dateTimeWrapper);
+                const dateTimeButton = buildButton('date', 'task', dateTimeText)
+                dateTimeWrapper.appendChild(dateTimeButton);
+                taskContent.appendChild(dateTimeWrapper);
             }
 
+            // taskContent.appendChild(priority);
 
-            listItemContainer.appendChild(priority);
+            const buttonDelete = buildButton('delete', 'task');
+            const buttonEdit = buildButton('edit', 'task');
+            taskActions.appendChild(buttonDelete);
+            taskActions.appendChild(buttonEdit);
 
-            const button = buildButton('delete', 'task');
-            listItemContainer.appendChild(button);
+            listItemContainer.appendChild(taskContent);
+            listItemContainer.appendChild(taskActions);
             listItem.appendChild(listItemContainer);
+
             listItemWrapper.appendChild(listItem);
-            this.btnDeleteTask.push(button)
-            this.bindEvents(button, radioTask, listItemWrapper);
+            // this.btnDeleteTask.push(button)
+            this.bindEvents(buttonDelete, taskRadio, listItemWrapper);
 
             if (!this.oldTask) {
                 console.log(`this.oldTask = ${this.oldTask}`);
@@ -144,7 +147,7 @@ export const tasksList = {
         console.log(e);
         if (e instanceof MouseEvent) {
             e.stopImmediatePropagation();
-            const listItem = e.currentTarget.parentElement.parentElement;
+            const listItem = e.currentTarget.parentElement.parentElement.parentElement;
             this.removeSelection = listItem;
             let uuidTask = listItem.dataset.uuid;
             buildModalRemove(this.project.findTask(uuidTask));  

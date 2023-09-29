@@ -7,6 +7,10 @@ const getFormValues = (inputs) => {
     inputs.forEach(input => { 
         if (input.id === 'priority') {
             obj[input.id] = parseInt(input.value.slice(input.value.length - 1, input.value.length));
+        } else if (input.id === 'due_date' && input.value.length === 0 && [...inputs].find(item => item.id === 'due_time').value.length !== 0) {
+            // if time has a value and date does not have a value
+                // date set to today's date
+            obj[input.id] = new Date().toISOString().split('T')[0];
         } else if (input.value.length !== 0) {
             obj[input.id] = input.value
         }
