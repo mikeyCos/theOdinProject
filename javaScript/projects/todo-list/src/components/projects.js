@@ -2,6 +2,7 @@ import { buildList } from '../components/projects_list';
 import buildButton from '../components/buttons';
 import buildProjectForm from '../components/projects_form';
 import { projectController } from '../containers/project-controller';
+import '../styles/projects.css';
 
 export default function buildProjects() {
     console.log(`projects.js running`);

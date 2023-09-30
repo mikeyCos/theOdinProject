@@ -1,0 +1,16 @@
+#modal::backdrop  {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#modal {
+    margin: auto;
+    min-width: 70vw;
+    min-height: 50vh;
+    border-radius: 0.75rem;
+    border: none;
+}
+
+#modal .form_task.modal {
+    padding: 1rem;
+    display: grid;
+}

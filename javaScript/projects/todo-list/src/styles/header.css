@@ -19,11 +19,6 @@ header > #navbar > * > .container > * {
     border-radius: 0.2rem;
 }
 
-header > #navbar > * > .container > button {
-    background: transparent;
-    border: none;
-}
-
 .input_search {
     width: 100%;
     border: none;

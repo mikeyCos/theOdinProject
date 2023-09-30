@@ -1,33 +1,44 @@
 .projects_list > * {
-    display: grid;
+    /* display: grid; */
+    display: flex;
+    flex-direction: column;
     list-style: none;
 }
 
 .projects_list > * > * {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    border-radius: 0.75rem;
+    align-items: center;
 }
 
-.projects_list > * > *:hover span {
+.projects_list > * > li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.projects_list > * > li:hover span {
     visibility: visible;
 }
 
 .projects_list > * > * > span {
-    justify-self: end;
     visibility: hidden;
 }
 
 .projects_list > * > * > .nav_project {
-    display: grid;
-    grid-template-columns: 20px 1fr 1fr;
+    display: flex;
     align-items: center;
+    flex: 1;
+    padding: 0.5rem 1rem;
+}
+
+.projects_list > * > * > .nav_project > span {
+    flex: 1;
 }
 
 .btn_add_project,
 .btn_delete_project {
-    display: grid;
+    /* display: grid;
     background: transparent;
-    border: none;
+    border: none; */
 }
 
 .nav_project > img {
@@ -42,7 +53,7 @@
 }
 
 .btn_add_project {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    align-items: center;
+    /* display: grid; */
+    /* grid-template-columns: min-content 1fr; */
+    /* align-items: center; */
 }

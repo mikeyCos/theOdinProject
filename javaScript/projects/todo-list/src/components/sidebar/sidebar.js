@@ -46,6 +46,9 @@ const sidebar = {
         this.btnAddProject.addEventListener('click', buildProjectForm);
         this.anchorProjects.addEventListener('click', this.publish, { capture: true });
         this.sidebar.addEventListener('click', this.toggleSidebar);
+        
+        this.callDimOverlay = this.callDimOverlay.bind(this);
+        window.addEventListener('resize', this.callDimOverlay);
     },
     render: function() {
         // const sidebarWrapper = document.createElement('div');
@@ -95,12 +98,17 @@ const sidebar = {
                 this.sidebar.classList.remove('hide');
                 this.sidebar.classList.add('show');
             }
-            pubSub.publish('dim', this.sidebar);
+            // pubSub.publish('dim', this.sidebar);
+            this.callDimOverlay()
         }
     },
     publish: function(e) {
         e.stopImmediatePropagation();
         this.toggleSidebar();
         pubSub.publish('content', e.currentTarget);
-    }
+    },
+    callDimOverlay: function() {
+        pubSub.publish('dim', this.sidebar);
+    },
+
 }

@@ -1,19 +1,21 @@
 /* styles for list of projects on the content section */
-#main_content > div > div > .nav_projects > .btn_add_project {
+/* #main_content > div > div > .nav_projects > .btn_add_project {
     
+} */
+
+.projects >:last-child {
+    display: grid;
+    grid-auto-rows: min-content 1fr;
 }
 
-#main_content > div > div > .nav_projects > .btn_add_project > .btn_img_wrapper {
-    
+.projects >:last-child > .nav_projects {
+    justify-self: end;
 }
 
-#main_content > div > div > .nav_projects > .btn_add_project > .btn_img_wrapper > img,
-#main_content > div > div > .projects_list > div > * > .nav_project > img {
-
+.projects >:last-child > .nav_projects > .btn_add_project {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+    justify-items: flex-start;
+    min-width: 100%;
 }
-
-/* selects projects_list */
-#main_content > div > div > .projects_list > div > * > .nav_project {
-
-}
-

@@ -1,5 +1,6 @@
 import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
+import '../styles/tasks_form.css'
 
 const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
     let state = {

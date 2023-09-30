@@ -36,12 +36,29 @@
 }
 
 #projects_container > *:first-child {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     align-items: center;
 }
 
+#projects_container > *:first-child > .nav_projects {
+    flex: 1;
+    padding: 0.5rem 1rem;
+}
+
+#projects_container > *:first-child {
+    border-radius: 0.75rem;
+}
+
+#projects_container > *:first-child:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#sidebar > .container:hover .btn_add_project {
+    visibility: visible;
+}
+
 #projects_container > *:first-child > .btn_add_project {
+    visibility: hidden;
     justify-self: end;
 }
 
@@ -49,9 +66,11 @@
     #sidebar {
         visibility: visible;
         position: static;
+        width: inherit;
     }
 
     #sidebar.show {
+        width: 30%;
         display: block;
         animation: slide-in-right 300ms ease-in-out;
     }

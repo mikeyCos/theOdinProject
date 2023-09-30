@@ -19,12 +19,19 @@ const overlay = {
     bindEvents: function() {
         this.dimOverlay = this.dimOverlay.bind(this);
         pubSub.subscribe('dim', overlay.dimOverlay);
+    
+    },
+    unbindEvents: function() {
+        // pubSub.unsubscribe('dim', overlay.dimOverlay);
     },
     dimOverlay: function(e) {
-        if (e.classList.contains('hide')) {
+        if (e.classList.contains('hide') || window.innerWidth > 768) {
             this.overlay.classList.remove('dim');
         } else if (!e.classList.contains('hide')) {
             this.overlay.classList.add('dim');
         }
+    },
+    watchScreen: function() {
+        // this.getWindowWidth = this.getWindowWidth.bind(this);
     },
 }

@@ -7,7 +7,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 2. Update current url with respective anchor href; `window.location`.
 3. Change time representation from 24-hour clock to 12-hour clock.
 4. Button for editing date/time.
-5. 
+5. Edit project name.
 ---
 ### Questions
 1. How do we distinguish a single step versus a single responsibility?
@@ -18,6 +18,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
+- 29 SEP 2023: Applied multiple style properties to a variety of elements, `app.css` planned to have general styles for similar elements existing on different modules, moved window event listener on resize from `overlay.js` to `sidebar.js`, task form modal is now centered, form buttons temporarily do not have a background/border, and all buttons have a hover effect.  
 - 28 SEP 2023: Refactored `formInputs` in `tasks_form.js` and removed `find()`, `formInputs` gets task object when an existing task on the DOM is clicked on and gets/sets their values respective to the form inputs' id attribute, created `overlay.js` module to control dim effect over content, attempted to apply CSS transition effects when sidebar opens/closes and content opacity, imported and appeneded a calendar icon for task's due date/time, and task's due time is now displayed in 12 hour format.  
 - 27 SEP 2023: Implemented `dimContent` in `main.js` module to add/remove a class to apply a dim effect on the main content when the sidebar is opened, and refactored project/task list to append form buttons in one container.  
 - 25 SEP 2023: Refactored `switchContent()` in `main.js` module, `switchContent()` now finds respective renderKey based on the clicked element's classSubstring, begun implementing CSS properties, and the content behind the sidebar will be darken when the sidebar is toggled open.  

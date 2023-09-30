@@ -1,33 +1,64 @@
-.btn_add_task {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    align-items: center;
-}
-
-.btn_add_task > .btn_img_wrapper {
-    display: flex;
-}
-
-.btn_add_task > .btn_img_wrapper > img {
-    width: clamp(1.45rem, 4vw, 1.5rem);
-}
 
 .tasks_list {
+    /* width: 60%; */
+}
+
+.tasks_list > :first-child {
+    row-gap: 1rem;
+}
+
+.tasks_list > :first-child {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     list-style: none;
 }
 
+div[role=button]:hover {
+    cursor: pointer;
+}
+
 .task_list_item > .container {
-    display: grid;
+    display: flex;
+    border-bottom: 2px solid rgba(66, 66, 66, 0.5);
+    padding: 1rem 0.25rem;
+    column-gap: 0.5rem;
 }
 
-.task_list_item > .container > button {
-    background: transparent;
-    border: none;
-    border: 2px solid black;
+.task_list_item > .container > .btn_radio_task,
+.task_actions > *,
+.task_list_item > .container > .task_list_item_content > .task_due_date_time > * {
+    /* border: 2px solid black; */
 }
 
-.task_list_item > .container > button > img {
-    width: clamp(1.45rem, 4vw, 1.5rem);
+.btn_radio_task {
+    display: flex;
+}
+
+.task_list_item_content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.15rem;
+}
+
+.task_list_item_content > .task_name {
+    margin-bottom: 0.5rem;
+}
+
+div[role=button]:hover .task_actions{
+    visibility: visible;
+}
+
+.task_actions {
+    display: flex;
+    align-items: flex-start;
+    visibility: hidden;
+}
+
+.btn_date_task {
+    display: flex;
+    align-items: center;
 }
 
 .priority_1 {
@@ -40,4 +71,19 @@
 
 .priority_3 {
 
+}
+
+.btn_add_task {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    align-items: center;
+    justify-items: flex-start;
+}
+
+.btn_add_task > .btn_img_wrapper {
+    display: flex;
+}
+
+.btn_add_task > .btn_img_wrapper > img {
+    width: clamp(1.45rem, 4vw, 1.5rem);
 }
