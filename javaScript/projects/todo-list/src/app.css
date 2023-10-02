@@ -68,6 +68,9 @@ button {
 
 button:hover {
     cursor: pointer;
+}
+
+button:not(.btn_checkbox_task):not(.btn_date_task):hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
 

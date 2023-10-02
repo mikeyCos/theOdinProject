@@ -56,7 +56,7 @@ export const tasksList = {
             const taskContent = document.createElement('div');
             const taskName = document.createElement('h3');
             const priority = document.createElement('p');
-            const taskRadio = buildButton('radio', 'task');
+            const taskCheckbox = buildButton('checkbox', 'task'); // testing
             
             const taskActions = document.createElement('div');
 
@@ -70,12 +70,29 @@ export const tasksList = {
             taskName.classList.add('task_name');
             taskName.textContent = task.name;
 
+            // <button>
+            //     <svg>flag</svg>
+            //     <span>P4</span>
+            //     <svg>dropdown arrow</svg>
+            // </button>
+
+            // <dialog>
+            //     <div>
+            //         <ul>
+            //             <li><span><svg></svg></span>Priority 1</li>
+            //             <li>Priority 2</li>
+            //             <li>Priority 3</li>
+            //             <li>Priority 4</li>
+            //         </ul>
+            //     </div>
+            // </dialog>
             priority.classList.add('task_priority');
             priority.textContent = `Priority ${task.priority}`;
 
-            taskRadio.firstElementChild.classList.add(`priority_${task.priority}`)
+            taskCheckbox.firstElementChild.classList.add(`priority_${task.priority}`)
 
-            listItemContainer.appendChild(taskRadio);
+            // listItemContainer.appendChild(taskRadio);
+            listItemContainer.appendChild(taskCheckbox); // testing
             taskContent.appendChild(taskName);
             
             if (task.description !== undefined) {
@@ -117,7 +134,7 @@ export const tasksList = {
 
             listItemWrapper.appendChild(listItem);
             // this.btnDeleteTask.push(button)
-            this.bindEvents(buttonDelete, taskRadio, listItemWrapper);
+            this.bindEvents(buttonDelete, taskCheckbox, listItemWrapper);
 
             if (!this.oldTask) {
                 console.log(`this.oldTask = ${this.oldTask}`);

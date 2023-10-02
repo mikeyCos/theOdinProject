@@ -58,6 +58,7 @@ const header = {
                 } else {
                     const itemIcon = document.createElement(item.childElement);
                     itemIcon.src = item.src;
+                    itemIcon.setAttribute('onload', 'SVGInject(this)');
                     headerItem.appendChild(itemIcon);
                 }
                 headerContainer.appendChild(headerItem);
@@ -68,7 +69,7 @@ const header = {
         return headerElement;
     },
     publish: function(e) {
-        let className = e.target.parentElement.className;
+        let className = e.currentTarget.parentElement.className;
         let subscriber;
         if (className.includes('home')) {
             subscriber = 'content';

@@ -8,8 +8,6 @@ import IconProject from '../assets/icons/circle.svg';
 import '../styles/projects.css';
 import '../styles/projects_list.css';
 
-// const icons = {inbox: IconInbox, today: IconToday };
-
 const buildProjectsList = (type, container, array) => {
     let state = {
         container,
@@ -86,6 +84,7 @@ const projectsList = (state) => ({
             const anchor = document.createElement('a');
             const anchorSpan = document.createElement('span');
             const anchorImg = new Image();
+            anchorImg.setAttribute('onload', 'SVGInject(this)');
             anchorSpan.textContent = this.array[i].title;
             anchor.href = `#${this.array[i].title};`
 

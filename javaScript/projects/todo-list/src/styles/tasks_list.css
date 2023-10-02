@@ -16,6 +16,7 @@
 
 div[role=button]:hover {
     cursor: pointer;
+
 }
 
 .task_list_item > .container {
@@ -25,14 +26,53 @@ div[role=button]:hover {
     column-gap: 0.5rem;
 }
 
-.task_list_item > .container > .btn_radio_task,
-.task_actions > *,
-.task_list_item > .container > .task_list_item_content > .task_due_date_time > * {
-    /* border: 2px solid black; */
+.task_list_item > .container > .btn_checkbox_task {
+    position: relative;
+    display: flex;
+    align-self: flex-start;
 }
 
-.btn_radio_task {
+.btn_checkbox_task > .checkbox_circle {
     display: flex;
+    border: 3px solid;
+    border-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.btn_checkbox_task > .checkbox_circle > svg {
+    color: inherit;
+    opacity: 0;
+    fill: currentColor;
+    border-radius: 50%;
+}
+
+.task_list_item > .container > .btn_checkbox_task:hover >.checkbox_circle > svg {
+    opacity: 1;
+    background-color: color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.checkbox_circle.priority_1 {
+    color: #ff3700;
+    border: 3px solid currentColor;
+    background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.checkbox_circle.priority_2 {
+    color: #ffa500;;
+    border: 3px solid currentColor;
+    background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.checkbox_circle.priority_3 {
+    color: #1eff47;
+    border: 3px solid currentColor;
+    background-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.checkbox_circle.priority_4 {
+    color: #b8b8b8;
+    border: 3px solid currentColor;
+    /* background-color: color-mix(in srgb, currentColor 20%, transparent); */
 }
 
 .task_list_item_content {
@@ -61,18 +101,6 @@ div[role=button]:hover .task_actions{
     align-items: center;
 }
 
-.priority_1 {
-    /* background-color: #ffa500; */
-}
-
-.priority_2 {
-
-}
-
-.priority_3 {
-
-}
-
 .btn_add_task {
     display: grid;
     grid-template-columns: min-content 1fr;
@@ -82,8 +110,4 @@ div[role=button]:hover .task_actions{
 
 .btn_add_task > .btn_img_wrapper {
     display: flex;
-}
-
-.btn_add_task > .btn_img_wrapper > img {
-    width: clamp(1.45rem, 4vw, 1.5rem);
 }

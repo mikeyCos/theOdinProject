@@ -3,6 +3,10 @@ import buildSideBar from './components/sidebar/sidebar';
 import buildMain from './components/main';
 import { setProjects } from './storage/storage';
 import buildOverlay from './components/overlay';
+import SVGInject from '@iconfu/svg-inject'
+// SVGInject
+// https://www.npmjs.com/package/@iconfu/svg-inject
+
 import './app.css';
 
 const appController = (function() {

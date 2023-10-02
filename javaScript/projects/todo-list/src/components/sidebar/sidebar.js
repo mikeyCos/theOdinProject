@@ -110,5 +110,4 @@ const sidebar = {
     callDimOverlay: function() {
         pubSub.publish('dim', this.sidebar);
     },
-
 }

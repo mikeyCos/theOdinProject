@@ -273,6 +273,16 @@ const formInputs = (state) => {
                     placeholder: 'Time'
                 },
             },
+            // test: {
+            //     element: 'input',
+            //     attributes: {
+            //         id: 'test',
+            //         className: 'task_input',
+            //         name: 'priority',
+            //         placeholder: 'Placeholder',
+            //         type: 'button',
+            //     },
+            // },
             priority: {
                 element: 'select',
                 attributes: {
