@@ -16,7 +16,6 @@
 
 div[role=button]:hover {
     cursor: pointer;
-
 }
 
 .task_list_item > .container {
@@ -52,25 +51,25 @@ div[role=button]:hover {
 }
 
 .checkbox_circle.priority_1 {
-    color: #ff3700;
+    color: var(--priority-1-color);
     border: 3px solid currentColor;
     background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
 .checkbox_circle.priority_2 {
-    color: #ffa500;;
+    color: var(--priority-2-color);
     border: 3px solid currentColor;
     background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
 .checkbox_circle.priority_3 {
-    color: #1eff47;
+    color: var(--priority-3-color);
     border: 3px solid currentColor;
     background-color: color-mix(in srgb, currentColor 20%, transparent);
 }
 
 .checkbox_circle.priority_4 {
-    color: #b8b8b8;
+    color: var(--priority-4-color);
     border: 3px solid currentColor;
     /* background-color: color-mix(in srgb, currentColor 20%, transparent); */
 }

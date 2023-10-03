@@ -12,6 +12,10 @@
 :root {
     /* custom variables */
     --text-color-primary: rgb(32, 32, 32);
+    --priority-1-color: #ff3700;
+    --priority-2-color: #ffa500;
+    --priority-3-color: #1eff47;
+    --priority-4-color: #b8b8b8;
 }
 
 body {

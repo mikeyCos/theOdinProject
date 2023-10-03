@@ -19,7 +19,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
-- 02 OCT 2023: 
+- 02 OCT 2023: Created `tasks_priority.js` module to create a form/options-like element, a dialog element is appended to the document when `btn_priority` is clicked on, added `fill` property to an SVG file with the value `currentColor`, created custom color variables for each priority, priority options is closed when an option is selected and the button is updated with the selected option, and a check mark is rendered next to the selected option.  
 - 30 SEP 2023: Implemented SVGInject to replace all images to inline SVG elements, and implemented checkbox button and applied hover effects to display check inside the checkbox's circle.  
 - 29 SEP 2023: Applied multiple style properties to a variety of elements, `app.css` planned to have general styles for similar elements existing on different modules, moved window event listener on resize from `overlay.js` to `sidebar.js`, task form modal is now centered, form buttons temporarily do not have a background/border, and all buttons have a hover effect.  
 - 28 SEP 2023: Refactored `formInputs` in `tasks_form.js` and removed `find()`, `formInputs` gets task object when an existing task on the DOM is clicked on and gets/sets their values respective to the form inputs' id attribute, created `overlay.js` module to control dim effect over content, attempted to apply CSS transition effects when sidebar opens/closes and content opacity, imported and appeneded a calendar icon for task's due date/time, and task's due time is now displayed in 12 hour format.  

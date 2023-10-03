@@ -1,6 +1,9 @@
 import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
+import buildPriorityOptions from '../components/tasks_priority';
 import '../styles/tasks_form.css'
+import IconFlag from '../assets/icons/flag.svg';
+import IconChevronDown from '../assets/icons/chevron_down.svg';
 
 const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
     let state = {
@@ -85,12 +88,14 @@ const formTask = (state) => ({
         this.btnCancel = this.form.querySelector('.btn_cancel');
         this.btnSubmit = this.form.querySelector('.btn_submit_task') || this.form.querySelector('.btn_update_task');
         this.formInputs = this.form.querySelectorAll('.task_input');
+        this.btnPriority = this.form.querySelector('#btn_priority');
     },
     bindEvents: function() {
         this.submitForm = this.submitForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.form.addEventListener('submit', this.submitForm);
         this.btnCancel.addEventListener('click', this.closeForm);
+        this.btnPriority.addEventListener('click', buildPriorityOptions);
         if (this.dialogElement) {
             this.closeModal = this.closeModal.bind(this);
             this.dialogElement.addEventListener('click', this.closeModal);
@@ -132,10 +137,35 @@ const formTask = (state) => ({
 
                         item.appendChild(selectOption);
                     }
-                }
+                } 
 
                 formItem.appendChild(label);
                 formItem.appendChild(item);
+
+                if (this.formChildren[formChild].sibiling) {
+                    const button = document.createElement(this.formChildren[formChild].sibiling.element);
+                    const flagWrapper = document.createElement(this.formChildren[formChild].sibiling.children[0].element);
+                    const imageFlag = document.createElement(this.formChildren[formChild].sibiling.children[0].child.element);
+                    const span = document.createElement(this.formChildren[formChild].sibiling.children[1].element);
+                    const chevronWrapper = document.createElement(this.formChildren[formChild].sibiling.children[2].element);
+                    const imageChevron = document.createElement(this.formChildren[formChild].sibiling.children[2].child.element)
+                    Object.assign(button, this.formChildren[formChild].sibiling.attributes);
+                    Object.assign(flagWrapper, this.formChildren[formChild].sibiling.children[0].attributes)
+                    Object.assign(imageFlag, this.formChildren[formChild].sibiling.children[0].child.attributes);
+                    Object.assign(span, this.formChildren[formChild].sibiling.children[1].attributes);
+                    Object.assign(chevronWrapper, this.formChildren[formChild].sibiling.children[2].attributes);
+                    Object.assign(imageChevron, this.formChildren[formChild].sibiling.children[2].child.attributes);
+                    imageChevron.setAttribute('onload', 'SVGInject(this)');
+                    imageFlag.setAttribute('onload', 'SVGInject(this)');
+                    
+                    chevronWrapper.appendChild(imageChevron);
+                    flagWrapper.appendChild(imageFlag);
+                    button.appendChild(flagWrapper);
+                    button.appendChild(span);
+                    button.appendChild(chevronWrapper);
+                    formItem.appendChild(button);
+                }
+
             }
             container.appendChild(formItem);
         }
@@ -214,6 +244,10 @@ const formInputs = (state) => {
                 if (!inputs.formChildren[formChild].options) {
                     let value;
                     if (formChild !== 'dueDate') {
+                        if (formChild === 'priority') {
+                            inputs.formChildren[formChild].sibiling.children[0].child.attributes.className = `priority_${task.priority}`
+                            inputs.formChildren[formChild].sibiling.children[1].attributes.textContent = `P${task.priority}`;
+                        }
                         value = { value: task[key] };
                     } else {
                         value = { value: new Date(task[key]).toISOString().split('T')[0] }
@@ -273,45 +307,91 @@ const formInputs = (state) => {
                     placeholder: 'Time'
                 },
             },
-            // test: {
-            //     element: 'input',
-            //     attributes: {
-            //         id: 'test',
-            //         className: 'task_input',
-            //         name: 'priority',
-            //         placeholder: 'Placeholder',
-            //         type: 'button',
-            //     },
-            // },
             priority: {
-                element: 'select',
+                element: 'input',
                 attributes: {
                     id: 'priority',
                     className: 'task_input',
                     name: 'priority',
+                    type: 'hidden',
                     placeholder: 'Priority',
+                    value: 4,
                 },
-                options: {
-                    element: 'option',
-                    attributes: function(priority) {
-                        const newPriority = {
-                            value: priority,
-                            text: `Priority ${priority}`,
-                        }
-                        if (this.value) {
-                            if (this.value === newPriority.value) {
-                                return Object.assign(newPriority, { selected: true })
-                            } else {
-                                return newPriority
+                sibiling: {
+                    element: 'button',
+                    attributes: {
+                        id: 'btn_priority',
+                        className: 'task_input',
+                        placeholder: 'Priority',
+                        type: 'button',
+                    },
+                    children: [
+                    {
+                        element: 'div',
+                        attributes: {
+                            className: 'img_wrapper_flag',
+                        },
+                        child: { 
+                            element: 'img', 
+                            attributes: {
+                                src: IconFlag,
+                                className: 'priority_4',
                             }
-                        } else {
-                            // defaultSelected parameter MDN
-                            // https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#parameters
-                            return priority === 4? Object.assign(newPriority, { selected: true}, { defaultSelected : true}) : newPriority;
+                        }
+                    },
+                    {
+                        element: 'span',
+                        attributes: {
+                            className: 'task_priority',
+                            textContent: 'P4',
+                        }
+                    },
+                    {
+                        element: 'div',
+                        attributes: {
+                            className: 'img_wrapper_chevron',
+                        },
+                        child: {
+                            element: 'img',
+                            attributes: {
+                                src: IconChevronDown,
+                                className: 'chevron_down',
+                            }
                         }
                     }
-                },
+                    ],
+                }
+
             },
+            // priority: {
+            //     element: 'select',
+            //     attributes: {
+            //         id: 'priority',
+            //         className: 'task_input',
+            //         name: 'priority',
+            //         placeholder: 'Priority',
+            //     },
+            //     options: {
+            //         element: 'option',
+            //         attributes: function(priority) {
+            //             const newPriority = {
+            //                 value: priority,
+            //                 text: `Priority ${priority}`,
+            //             }
+            //             if (this.value) {
+            //                 if (this.value === newPriority.value) {
+            //                     return Object.assign(newPriority, { selected: true })
+            //                 } else {
+            //                     return newPriority
+            //                 }
+            //             } else {
+            //                 // defaultSelected parameter MDN
+            //                 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#parameters
+            //                 return priority === 4? Object.assign(newPriority, { selected: true}, { defaultSelected : true}) : newPriority;
+            //             }
+            //         }
+            //     },
+            // },
             project: {
                 element: 'select',
                 attributes: {
