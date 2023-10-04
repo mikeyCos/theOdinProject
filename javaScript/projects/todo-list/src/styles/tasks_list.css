@@ -1,6 +1,6 @@
 
 .tasks_list {
-    /* width: 60%; */
+    margin-top: 2rem
 }
 
 .tasks_list > :first-child {
@@ -14,13 +14,24 @@
     list-style: none;
 }
 
+.tasks_list > :first-child > div > .form_task {
+    margin-top: 1rem;
+}
+
+div[role=button] {
+    border-bottom: 2px solid rgba(66, 66, 66, 0.5);
+    padding: 0.5rem;
+}
+
 div[role=button]:hover {
     cursor: pointer;
+    box-shadow: 0 0 9px -3px rgba(0, 0, 0, 0.6);
+    border-radius: 0.45rem;
 }
 
 .task_list_item > .container {
     display: flex;
-    border-bottom: 2px solid rgba(66, 66, 66, 0.5);
+    /* border-bottom: 2px solid rgba(66, 66, 66, 0.5); */
     padding: 1rem 0.25rem;
     column-gap: 0.5rem;
 }
@@ -100,11 +111,11 @@ div[role=button]:hover .task_actions{
     align-items: center;
 }
 
-.btn_add_task {
-    display: grid;
-    grid-template-columns: min-content 1fr;
+li > .btn_add_task {
+    display: flex;
     align-items: center;
-    justify-items: flex-start;
+    padding: 0.5rem 1rem;
+    column-gap: 0.25rem;
 }
 
 .btn_add_task > .btn_img_wrapper {

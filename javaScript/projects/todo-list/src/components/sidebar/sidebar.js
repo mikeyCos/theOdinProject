@@ -30,15 +30,12 @@ const assets = {
 
 const sidebar = {
     cacheDOM: function(container) {
-        // window.addEventListener('load', (e) => console.log(document.querySelector('#main_content')))
         this.sidebar = container;
         this.sidebarWrapper = this.sidebar.querySelector('.sidebar_wrapper');
-        // need to append list_projects to this.projectsContainer
-
         this.projectsContainer = this.sidebar.querySelector('#projects_container');
         this.anchorProjects = this.projectsContainer.querySelector('.nav_projects');
         this.btnAddProject = container.querySelector('.btn_add_project');
-        // this.anchorInbox = this.sidebar.querySelector('.nav_inbox');
+
     },
     bindEvents: function() {
         this.toggleSidebar = this.toggleSidebar.bind(this);
@@ -46,12 +43,10 @@ const sidebar = {
         this.btnAddProject.addEventListener('click', buildProjectForm);
         this.anchorProjects.addEventListener('click', this.publish, { capture: true });
         this.sidebar.addEventListener('click', this.toggleSidebar);
-        
         this.callDimOverlay = this.callDimOverlay.bind(this);
         window.addEventListener('resize', this.callDimOverlay);
     },
     render: function() {
-        // const sidebarWrapper = document.createElement('div');
         const sidebarContainer = document.createElement('div');
 
         projectController.setMiscProjects();
@@ -81,9 +76,7 @@ const sidebar = {
 
         sidebarContainer.appendChild(navMisc);
         sidebarContainer.appendChild(projectsContainer);
-        // sidebarWrapper.appendChild(sidebarContainer);
         return sidebarContainer;
-        // return sidebarWrapper;
     },
     toggleSidebar: function(e) {
         if (e instanceof MouseEvent) {
@@ -98,7 +91,6 @@ const sidebar = {
                 this.sidebar.classList.remove('hide');
                 this.sidebar.classList.add('show');
             }
-            // pubSub.publish('dim', this.sidebar);
             this.callDimOverlay()
         }
     },

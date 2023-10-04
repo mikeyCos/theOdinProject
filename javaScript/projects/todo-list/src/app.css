@@ -53,7 +53,7 @@ body {
 
 #main_content {
     flex: 1;
-    padding: 5% 5% 0% 5%;
+    padding: 5% 5% 5% 5%;
     display: grid;
 }
 
@@ -66,8 +66,10 @@ body {
 
 /* general styles for similar elements existing on different modules */
 button {
+    display: flex;
     background: transparent;
     border: none;
+    border-radius: 0.5rem;
 }
 
 button:hover {
@@ -75,12 +77,49 @@ button:hover {
 }
 
 button:not(.btn_checkbox_task):not(.btn_date_task):hover {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+button > svg,
+button > * > svg {
+    height: auto;
+    width: clamp(1rem, 2.5vw, 2rem);
+}
+
+dialog:not(#task_priorities) {
+    margin: auto;
+    min-width: 30vw;
+    border-radius: 0.75rem;
+    border: none;
+}
+
+dialog:not(#task_priorities)::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form_buttons {
+    display: flex;
+    justify-content: end;
+    column-gap: 0.5rem;
+}
+
+.form_buttons > * {
+    background-color: rgba(0 0, 0, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+}
+
+.form_buttons > *:hover {
+    color: rgb(255, 255, 255);
+}
+
+.form_buttons > *:active {
+    box-shadow: 0px 2px 1px 1px rgba(0, 0, 0, 0.6);
 }
 
 @media screen and (min-width:768px) {
     #main_content {
-        padding: 5% 10% 0% 10%;
+
     }
 
     #main_content > :first-child {

@@ -13,9 +13,10 @@
 }
 
 .projects >:last-child > .nav_projects > .btn_add_project {
-    display: grid;
-    grid-template-columns: min-content 1fr;
+    display: flex;
     align-items: center;
     justify-items: flex-start;
     min-width: 100%;
+    padding: 0.5rem 1rem;
+    column-gap: 0.25rem;
 }

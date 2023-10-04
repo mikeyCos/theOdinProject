@@ -1,5 +1,4 @@
 import { pubSub } from '../containers/pubsub';
-import { projectController } from '../containers/project-controller';
 
 // mimics alert box confirming task/project removal
 export default function buildModalRemove(obj) {
@@ -106,7 +105,8 @@ const modal = (state) => ({
         } else {
             console.log(this.selection);
             console.log(this.selection.uuid);
-            pubSub.publish('removeProject', this.selection.uuid);
+            // pubSub.publish('removeProject', this.selection.uuid);
+            pubSub.publish('removeProject');
         }
         this.closeForm();
     },

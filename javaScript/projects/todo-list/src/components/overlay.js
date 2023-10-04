@@ -18,13 +18,8 @@ const overlay = {
     },
     bindEvents: function() {
         this.dimOverlay = this.dimOverlay.bind(this);
-        // this.watchScreen = this.watchScreen.bind(this);
-        // window.addEventListener('resize', this.watchScreen)
         pubSub.subscribe('dim', overlay.dimOverlay);
     
-    },
-    unbindEvents: function() {
-        // pubSub.unsubscribe('dim', overlay.dimOverlay);
     },
     dimOverlay: function(e) {
         if (e.classList.contains('hide') || window.innerWidth > 768) {
@@ -33,8 +28,4 @@ const overlay = {
             this.overlay.classList.add('dim');
         }
     },
-    // watchScreen: function() {
-    //     console.log(window.innerWidth);
-    //     // this.getWindowWidth = this.getWindowWidth.bind(this);
-    // },
 }

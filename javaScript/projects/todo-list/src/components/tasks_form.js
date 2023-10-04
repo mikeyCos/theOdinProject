@@ -59,11 +59,10 @@ export default function buildTasksForm(e) {
     const button = e.currentTarget;
     const buttonParent = button.parentElement;
     const form = document.createElement('form');
-    form.classList.add('form_task');
     if (!button.hasAttribute('role') && buttonParent.tagName !== 'LI') {
-        form.classList.add('modal');
+        form.classList.add('form');
         const dialogElement = document.createElement('dialog');
-        dialogElement.id = 'modal';
+        dialogElement.id = 'form_task';
         buildForm.add('modal', form, undefined, undefined, dialogElement);
 
         form.appendChild(buildForm.find(`modal`).render());
@@ -73,6 +72,7 @@ export default function buildTasksForm(e) {
         document.body.appendChild(dialogElement);
         dialogElement.showModal();
     } else {
+        form.classList.add('form_task');
         e.currentTarget.replaceWith(form);
         buildForm.add('default', form, button, buttonParent)
         form.appendChild(buildForm.find(`default`).render());
@@ -144,25 +144,16 @@ const formTask = (state) => ({
 
                 if (this.formChildren[formChild].sibiling) {
                     const button = document.createElement(this.formChildren[formChild].sibiling.element);
-                    const flagWrapper = document.createElement(this.formChildren[formChild].sibiling.children[0].element);
-                    const imageFlag = document.createElement(this.formChildren[formChild].sibiling.children[0].child.element);
-                    const span = document.createElement(this.formChildren[formChild].sibiling.children[1].element);
-                    const chevronWrapper = document.createElement(this.formChildren[formChild].sibiling.children[2].element);
-                    const imageChevron = document.createElement(this.formChildren[formChild].sibiling.children[2].child.element)
                     Object.assign(button, this.formChildren[formChild].sibiling.attributes);
-                    Object.assign(flagWrapper, this.formChildren[formChild].sibiling.children[0].attributes)
-                    Object.assign(imageFlag, this.formChildren[formChild].sibiling.children[0].child.attributes);
-                    Object.assign(span, this.formChildren[formChild].sibiling.children[1].attributes);
-                    Object.assign(chevronWrapper, this.formChildren[formChild].sibiling.children[2].attributes);
-                    Object.assign(imageChevron, this.formChildren[formChild].sibiling.children[2].child.attributes);
-                    imageChevron.setAttribute('onload', 'SVGInject(this)');
-                    imageFlag.setAttribute('onload', 'SVGInject(this)');
-                    
-                    chevronWrapper.appendChild(imageChevron);
-                    flagWrapper.appendChild(imageFlag);
-                    button.appendChild(flagWrapper);
-                    button.appendChild(span);
-                    button.appendChild(chevronWrapper);
+                    this.formChildren[formChild].sibiling.children.forEach(item => {
+                        const element = Object.assign(document.createElement(item.element), item.attributes);
+                        if (item.child) {
+                            const childElement = Object.assign(document.createElement(item.child.element), item.child.attributes)
+                            childElement.setAttribute('onload', 'SVGInject(this)');
+                            element.appendChild(childElement);
+                        }
+                        button.appendChild(element);
+                    })
                     formItem.appendChild(button);
                 }
 
@@ -219,7 +210,7 @@ const nonModal = (state) => ({
 const modal = (state) => ({
     dialogElement: state.dialogElement,
     closeModal: function(e) {
-        if (e.target.id === 'modal') {
+        if (e.target.id === 'form_task') {
             this.dialogElement.close();
             this.removeModal();
         }
@@ -363,35 +354,6 @@ const formInputs = (state) => {
                 }
 
             },
-            // priority: {
-            //     element: 'select',
-            //     attributes: {
-            //         id: 'priority',
-            //         className: 'task_input',
-            //         name: 'priority',
-            //         placeholder: 'Priority',
-            //     },
-            //     options: {
-            //         element: 'option',
-            //         attributes: function(priority) {
-            //             const newPriority = {
-            //                 value: priority,
-            //                 text: `Priority ${priority}`,
-            //             }
-            //             if (this.value) {
-            //                 if (this.value === newPriority.value) {
-            //                     return Object.assign(newPriority, { selected: true })
-            //                 } else {
-            //                     return newPriority
-            //                 }
-            //             } else {
-            //                 // defaultSelected parameter MDN
-            //                 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#parameters
-            //                 return priority === 4? Object.assign(newPriority, { selected: true}, { defaultSelected : true}) : newPriority;
-            //             }
-            //         }
-            //     },
-            // },
             project: {
                 element: 'select',
                 attributes: {

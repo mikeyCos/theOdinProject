@@ -21,6 +21,7 @@
 
 .projects_list > * > * > span {
     visibility: hidden;
+    margin-right: 0.5rem;
 }
 
 .projects_list > * > * > .nav_project {

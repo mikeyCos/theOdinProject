@@ -1,18 +1,6 @@
-#form_project {
-    margin: auto;
-    min-width: 70vw;
-    min-height: 50vh;
-    border-radius: 0.75rem;
-    border: none;
-}
-
-#form_project::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
 #form_project > #form {
     padding: 1rem;
-    display: grid;
+    /* display: grid;
     grid-template-areas: 
         'head head'
         'input input'
@@ -22,16 +10,15 @@
     min-width: inherit;
     min-height: inherit;
     grid-auto-rows: min-content;
+    grid-row-gap: 0.5rem; */
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
 }
 
 /* impacts form_item for tasks_form */
 .form_item {
     grid-area: input;
     display: grid;
-}
-
-.form_buttons {
-    grid-area: buttons;
-    justify-self: end;
 }
 

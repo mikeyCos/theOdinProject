@@ -1,7 +1,3 @@
-// module that will create buttons
-    // add project/task
-    // delete project/task
-    // edit task
     import IconAdd from '../assets/icons/add.svg';
     import IconDelete from '../assets/icons/delete.svg';
     import IconEdit from '../assets/icons/edit.svg';

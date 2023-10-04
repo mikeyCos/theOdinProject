@@ -1,21 +1,16 @@
 import IconFlag from '../assets/icons/flag.svg';
 import IconCheck from '../assets/icons/check_small.svg';
+import IconProject from '../assets/icons/circle.svg';
 import '../styles/tasks_priority.css';
 
 // creates a modal for priority options
 export default function buildPriorityOptions(e) {
-    console.log(e.currentTarget);
     priorityOptions.init(e);
-    const bounds = e.currentTarget.getBoundingClientRect()
-    console.log(bounds)
 
     const dialogElement = document.createElement('dialog');
     dialogElement.id = 'task_priorities';
     dialogElement.appendChild(priorityOptions.render());
 
-    dialogElement.style.width = bounds.width + 'px';
-    dialogElement.style.top = bounds.bottom + 'px';
-    dialogElement.style.left = bounds.x + 'px';
     document.body.appendChild(dialogElement);
 
     priorityOptions.cacheDOM();
@@ -28,12 +23,14 @@ const priorityOptions = {
     btnPriority: null,
     btnPriorityText: null,
     btnFlag: null,
+    observer: null,
+    media: window.matchMedia('(min-width: 768px)'),
     init: function(e) {
         this.btnPriority = e.currentTarget;
         this.btnPriorityText = this.btnPriority.querySelector('.task_priority');
         this.btnFlag = this.btnPriority.querySelector('.img_wrapper_flag').firstChild;
         this.priority = parseInt(e.currentTarget.parentElement.querySelector('#priority').value);
-        console.log(this.btnFlag.className)
+        this.formItem = this.btnPriority.parentElement;
     },
     cacheDOM: function() {
         this.dialogElement = document.querySelector('#task_priorities');
@@ -45,6 +42,15 @@ const priorityOptions = {
         this.select = this.select.bind(this);
         this.dialogElement.addEventListener('click', this.closeModal);
         this.options.forEach(option => option.addEventListener('click', this.select))
+        
+        this.callBack = this.callBack.bind(this);
+        this.observer = new ResizeObserver(this.callBack);
+        this.observer.observe(this.formItem);
+
+        this.media.addEventListener('change', () => {
+            this.removeModal();
+        })
+
     },
     render: function() {
         const optionsWrapper = document.createElement('div');
@@ -90,16 +96,28 @@ const priorityOptions = {
     },
     removeModal: function() {
         this.dialogElement.remove();
+        this.observer.unobserve(this.btnPriority);
     },
     select: function(e) {
-        console.log(e.currentTarget);
-        console.log(parseInt(e.currentTarget.dataset.value));
         this.inputPriority.value = parseInt(e.currentTarget.dataset.value);
         this.btnPriorityText.textContent = `P${this.inputPriority.value}`;
         this.btnFlag.className.baseVal = `priority_${this.inputPriority.value}`;
         this.removeModal();
     },
-    watchScreen: function() {
-        // run this.removeModal only once
+    callBack: function(entries) {
+        for (let entry of entries) {
+            if (entry.contentBoxSize) {
+                if (entry.contentBoxSize[0]) {
+                    const bounds = entry.target.getBoundingClientRect();
+                    this.dialogElement.style.width = bounds.width + 'px';
+                    if ((this.dialogElement.offsetHeight + bounds.bottom) > window.innerHeight) {
+                        // if the dialog's height and form item's bottom is greater than window height
+                        this.dialogElement.style.transform = `translate(${bounds.x}px, ${bounds.top - this.dialogElement.offsetHeight}px)`;
+                    } else {
+                        this.dialogElement.style.transform = `translate(${bounds.x}px, ${bounds.bottom}px)`;
+                    }
+                }
+            }
+        }
     },
 }
