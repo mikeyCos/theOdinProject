@@ -59,7 +59,7 @@
 
 #projects_container > *:first-child > .btn_add_project {
     visibility: hidden;
-    margin-right: 0.5rem
+    margin-right: 0.5rem;
 }
 
 @media screen and (min-width:768px) {

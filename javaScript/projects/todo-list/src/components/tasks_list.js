@@ -70,22 +70,6 @@ export const tasksList = {
             taskName.classList.add('task_name');
             taskName.textContent = task.name;
 
-            // <button>
-            //     <svg>flag</svg>
-            //     <span>P4</span>
-            //     <svg>dropdown arrow</svg>
-            // </button>
-
-            // <dialog>
-            //     <div>
-            //         <ul>
-            //             <li><span><svg></svg></span>Priority 1</li>
-            //             <li>Priority 2</li>
-            //             <li>Priority 3</li>
-            //             <li>Priority 4</li>
-            //         </ul>
-            //     </div>
-            // </dialog>
             priority.classList.add('task_priority');
             priority.textContent = `Priority ${task.priority}`;
 

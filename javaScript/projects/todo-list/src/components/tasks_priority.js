@@ -80,7 +80,6 @@ const priorityOptions = {
                 imgCheck.src = IconCheck;
                 imgCheck.classList.add('option_selected_checkmark');
                 imgCheck.setAttribute('onload', 'SVGInject(this)');
-
                 option.appendChild(imgCheck);
             }
             optionsList.appendChild(option);
