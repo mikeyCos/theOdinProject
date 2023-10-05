@@ -5,6 +5,7 @@ import '../styles/projects_form.css';
 
 // renders a form to create a project
 export default function buildProjectForm() {
+    projectController.setActive();
     const dialogElement = document.createElement('dialog');
     dialogElement.id = 'form_project';
     dialogElement.appendChild(formProject.render());

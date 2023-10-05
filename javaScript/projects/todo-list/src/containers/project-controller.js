@@ -144,7 +144,12 @@ export const projectController = {
         if (this.findActive()) {
             this.findActive().active = false;
         }
-        this.find(uuid).active = true;
+
+        if (uuid) {
+            this.find(uuid).active = true;
+        } else {
+            this.inbox.active = true;
+        }
     },
     findActive: function() {
         console.log(this.allProjects)
@@ -175,7 +180,6 @@ export const projectController = {
                 })
             }
         });
-        console.log(this.today)
     },
     init: function() {
         this.projects.forEach(obj => {

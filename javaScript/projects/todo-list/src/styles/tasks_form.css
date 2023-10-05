@@ -13,13 +13,16 @@
     row-gap: 0.5rem;
 }
 
-.form_item > #btn_priority {
+.form_item > #btn_priority,
+.form_item > #btn_project {
     display: flex;
     align-items: center;
     column-gap: 0.25rem;
+    padding: 0.5rem 1rem;
 }
 
-.form_item > #btn_priority > .task_priority {
+.form_item > #btn_priority > .task_priority,
+.form_item > #btn_project > .task_project {
     flex: 1;
     text-align: left;
 }

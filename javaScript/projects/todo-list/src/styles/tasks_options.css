@@ -1,21 +1,25 @@
 /* styles for priority options from tasks_priority.js module */
-#task_priorities {
+#task_select_priority_options,
+#task_select_project_options {
     border-radius: 1rem;
     border: none;
     box-shadow: 0px 0px 6px -2px rgb(0, 0, 0);
 }
 
-#task_priorities > .container > ul > li {
+#task_select_priority_options > .container > ul > li,
+#task_select_project_options > .container > ul > li {
     display: flex;
     align-items: center;
     column-gap: 0.25rem;
     padding: 0.5rem;
 }
 
-#task_priorities > .container > ul > li:hover {
+#task_select_priority_options > .container > ul > li:hover,
+#task_select_project_options > .container > ul > li:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+/* task priorities */
 .priority_1 {
     color: var(--priority-1-color);
 }

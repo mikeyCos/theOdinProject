@@ -9,6 +9,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 4. Button for editing date/time.
 5. Edit project name.
 6. Rewrite priority selection into a list with a hidden input.
+7. Undo task completed.
 ---
 ### Questions
 1. How do we distinguish a single step versus a single responsibility?
@@ -19,6 +20,7 @@ Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/p
 6. What is the point, if any, using an object literal pattern when using ES6 modules?
 ---
 ### Changelog
+- 04 OCT 2023: Renamed and refactored `tasks_priority.js` module to `tasks_options.js`, `task_options` will render options for priority and project options, replaced select element for projects with a custom select element using a button and a hidden input element, inbox icon is applied to it's respective project in the project options, the project button icon is changed to it's respective selection (if inbox is selected, the button icon will be for inbox and if any other project is selected the icon will be the default project icon), and restylized task form.   
 - 03 OCT 2023: Implemented a resizer observer in `tasks_priority.js` to position dialog to the top or bottom of the form item, the dialog element will also stay next to the form item when the window size horizontally changes, the dialog element is removed at window breakpoint (768px), refactored `render()` in `tasks_form.js` to loop through form input with a sibling property, and applied a variety of CSS properties.  
 - 02 OCT 2023: Created `tasks_priority.js` module to create a form/options-like element, a dialog element is appended to the document when `btn_priority` is clicked on, added `fill` property to an SVG file with the value `currentColor`, created custom color variables for each priority, priority options is closed when an option is selected and the button is updated with the selected option, and a check mark is rendered next to the selected option.  
 - 30 SEP 2023: Implemented SVGInject to replace all images to inline SVG elements, and implemented checkbox button and applied hover effects to display check inside the checkbox's circle.  

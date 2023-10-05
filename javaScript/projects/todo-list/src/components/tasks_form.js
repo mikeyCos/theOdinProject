@@ -1,9 +1,11 @@
 import { pubSub } from '../containers/pubsub';
 import { projectController } from '../containers/project-controller';
-import buildPriorityOptions from '../components/tasks_priority';
+import buildSelectOptions from '../components/tasks_options';
 import '../styles/tasks_form.css'
 import IconFlag from '../assets/icons/flag.svg';
 import IconChevronDown from '../assets/icons/chevron_down.svg';
+import IconCircle from '../assets/icons/circle.svg';
+import IconInbox from '../assets/icons/inbox.svg';
 
 const buildTaskForm = (type, form, button, buttonParent, dialogElement) => {
     let state = {
@@ -89,13 +91,15 @@ const formTask = (state) => ({
         this.btnSubmit = this.form.querySelector('.btn_submit_task') || this.form.querySelector('.btn_update_task');
         this.formInputs = this.form.querySelectorAll('.task_input');
         this.btnPriority = this.form.querySelector('#btn_priority');
+        this.btnProject = this.form.querySelector('#btn_project');
     },
     bindEvents: function() {
         this.submitForm = this.submitForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
         this.form.addEventListener('submit', this.submitForm);
         this.btnCancel.addEventListener('click', this.closeForm);
-        this.btnPriority.addEventListener('click', buildPriorityOptions);
+        this.btnPriority.addEventListener('click', buildSelectOptions);
+        this.btnProject.addEventListener('click', buildSelectOptions);
         if (this.dialogElement) {
             this.closeModal = this.closeModal.bind(this);
             this.dialogElement.addEventListener('click', this.closeModal);
@@ -120,24 +124,6 @@ const formTask = (state) => ({
 
                 label.htmlFor = this.formChildren[formChild].attributes.id;
                 label.textContent = this.formChildren[formChild].attributes.placeholder;
-
-                // idea, make separate module for options button
-                if (this.formChildren[formChild].options) {
-                    let length = 4;
-                    let i = 1;
-                    if (formChild === 'project') {
-                        length = projectController.projects.length;
-                        i = 0;
-                    }
-                    for (i; i <= length; i++) {
-                        const selectOption = Object.assign(
-                            document.createElement(this.formChildren[formChild].options.element),
-                            this.formChildren[formChild].options.attributes(i)
-                        )
-
-                        item.appendChild(selectOption);
-                    }
-                } 
 
                 formItem.appendChild(label);
                 formItem.appendChild(item);
@@ -232,25 +218,20 @@ const formInputs = (state) => {
             // finds task's key equal to input's id
             let key = Object.keys(task).find(item => item === attributes.id);
             if (attributes && key) {
-                if (!inputs.formChildren[formChild].options) {
+                if (!inputs.formChildren[formChild].sibiling) {
                     let value;
                     if (formChild !== 'dueDate') {
-                        if (formChild === 'priority') {
-                            inputs.formChildren[formChild].sibiling.children[0].child.attributes.className = `priority_${task.priority}`
-                            inputs.formChildren[formChild].sibiling.children[1].attributes.textContent = `P${task.priority}`;
-                        }
                         value = { value: task[key] };
                     } else {
                         value = { value: new Date(task[key]).toISOString().split('T')[0] }
                     }
                     Object.assign(attributes, value);
                 } else {
-                    const text = key;
-                    const number = task[key];
-                    Object.assign(
-                        inputs.formChildren[formChild].options,
-                        { value: number }, { text: text }
-                    )
+                    if (formChild === 'priority') {
+                        inputs.formChildren[formChild].sibiling.children[0].child.attributes.className = `priority_${task.priority}`
+                        inputs.formChildren[formChild].sibiling.children[1].attributes.textContent = `P${task.priority}`;
+                        inputs.formChildren[formChild].attributes.value = task.priority;
+                    }
                 }
             }
         }
@@ -320,7 +301,7 @@ const formInputs = (state) => {
                     {
                         element: 'div',
                         attributes: {
-                            className: 'img_wrapper_flag',
+                            className: 'img_wrapper',
                         },
                         child: { 
                             element: 'img', 
@@ -340,7 +321,7 @@ const formInputs = (state) => {
                     {
                         element: 'div',
                         attributes: {
-                            className: 'img_wrapper_chevron',
+                            className: 'img_wrapper',
                         },
                         child: {
                             element: 'img',
@@ -352,33 +333,61 @@ const formInputs = (state) => {
                     }
                     ],
                 }
-
             },
             project: {
-                element: 'select',
+                element: 'input',
                 attributes: {
                     id: 'project',
                     className: 'task_input',
-                    name: 'project',
-                    placeholder: 'Project'
+                    name: 'priority',
+                    type: 'hidden',
+                    placeholder: 'Project',
+                    value: projectController.findActive().uuid === projectController.today[0].uuid ? projectController.inbox[0].uuid : projectController.findActive().uuid,
                 },
-                options: {
-                    element: 'option',
-                    attributes: function(i) {
-                        const project = {
-                            value: projectController.allProjects[i].uuid,
-                            text: projectController.allProjects[i].title,
+                sibiling: {
+                    element: 'button',
+                    attributes: {
+                        id: 'btn_project',
+                        className: 'task_input',
+                        placeholder: 'Project',
+                        type: 'button',
+                    },
+                    children: [
+                    {
+                        element: 'div',
+                        attributes: {
+                            className: 'img_wrapper',
+                        },
+                        child: { 
+                            element: 'img', 
+                            attributes: {
+                                src: projectController.findActive().uuid === projectController.today[0].uuid ? IconInbox : IconCircle,
+                                className: 'project_circle',
+                            }
                         }
-                        if (state.button && projectController.find(state.button.firstChild.dataset.uuidProj)) {
-                            console.log(projectController.find(state.button.firstChild.dataset.uuidProj))
-                            return projectController.find(state.button.firstChild.dataset.uuidProj).uuid === projectController.allProjects[i].uuid ?
-                            Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
-                        } else {
-                            return projectController.findActive().uuid === projectController.allProjects[i].uuid ?
-                            Object.assign(project, { selected: true }, { defaultSelected : true}) : project;
+                    },
+                    {
+                        element: 'span',
+                        attributes: {
+                            className: 'task_project',
+                            textContent: projectController.findActive().uuid === projectController.today[0].uuid ? projectController.inbox[0].title : projectController.findActive().title,
+                        }
+                    },
+                    {
+                        element: 'div',
+                        attributes: {
+                            className: 'img_wrapper',
+                        },
+                        child: {
+                            element: 'img',
+                            attributes: {
+                                src: IconChevronDown,
+                                className: 'chevron_down',
+                            }
                         }
                     }
-                }
+                    ],
+                },
             },
         },
         formButtons: {

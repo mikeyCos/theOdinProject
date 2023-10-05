@@ -87,7 +87,7 @@ button > * > svg {
 }
 
 dialog:not(#task_priorities) {
-    margin: auto;
+    /* margin: auto; */
     min-width: 30vw;
     border-radius: 0.75rem;
     border: none;
