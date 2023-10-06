@@ -11,7 +11,7 @@ export default function buildProjects() {
     projectsContainer.classList.add('projects');
 
     const header = document.createElement('h1');
-    header.textContent = 'PROJECTS';
+    header.textContent = 'Projects';
 
     projectsContainer.appendChild(header);
     projectsContainer.appendChild(projects.render());

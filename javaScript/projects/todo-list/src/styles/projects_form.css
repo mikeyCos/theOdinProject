@@ -16,9 +16,3 @@
     row-gap: 0.5rem;
 }
 
-/* impacts form_item for tasks_form */
-.form_item {
-    grid-area: input;
-    display: grid;
-}
-

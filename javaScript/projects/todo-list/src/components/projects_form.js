@@ -19,6 +19,7 @@ const formProject = {
     formChildren: {
         name: {
             id: 'title',
+            className: 'project_input',
             name: 'title',
             type: 'text',
             placeholder: 'Enter Project Title',

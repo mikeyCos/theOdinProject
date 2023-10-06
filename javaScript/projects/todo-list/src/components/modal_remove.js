@@ -1,12 +1,12 @@
 import { pubSub } from '../containers/pubsub';
+import '../styles/modal_removal.css'
 
 // mimics alert box confirming task/project removal
 export default function buildModalRemove(obj) {
     console.log(`buildModalRemove() is running from mmodal_remove.js`);
     const dialogElement = document.createElement('dialog');
     const form = document.createElement('form');
-    
-    console.log(obj)
+
     dialogElement.id = 'modal';
     form.classList.add('form_removal');
 
@@ -16,7 +16,8 @@ export default function buildModalRemove(obj) {
     modal.bindEvents();
 
     dialogElement.appendChild(form);
-    document.body.appendChild(dialogElement);dialogElement.showModal();
+    document.body.appendChild(dialogElement);
+    dialogElement.showModal();
 }
 
 const buildModal = (dialogElement, form, obj) => {
@@ -70,31 +71,31 @@ const modal = (state) => ({
         this.dialogElement.addEventListener('click', this.closeModal);
     },
     render: function() {
-        // Delete?
-        // Are you sure you want to delete project
-        // Cancel and delete buttons
-
-        // Need project.title and task.name
         const container = document.createElement('div');
         const header = document.createElement('h4');
-        const confirmationMessage = document.createElement('p');
-        const uniqueText = document.createElement('span');
+        const message = document.createElement('p');
+        const itemForRemoval = document.createElement('strong');
 
-        header.textContent = 'Delete?'
-        confirmationMessage.textContent = `Are you sure you want to delete `;
-        uniqueText.textContent = this.selection.title ? this.selection.title : this.selection.name;
-        confirmationMessage.appendChild(uniqueText)
-        // <p>Are you sure you want to delete <span>${this.text}</span>?</p>
-
+        itemForRemoval.classList.add('item_for_removal');
+        header.textContent = 'Delete?';
+        itemForRemoval.textContent = this.selection.title ? this.selection.title : this.selection.name;
+        const messageBeginTextNode = document.createTextNode(`Are you sure you want to delete `);
+        const messageEndTextNode = document.createTextNode(`?`);
+        
+        message.appendChild(messageBeginTextNode)
+        message.appendChild(itemForRemoval);
+        message.appendChild(messageEndTextNode);
         container.appendChild(header);
-        container.appendChild(confirmationMessage);
+        container.appendChild(message);
 
+        const formButtons = document.createElement('div');
+        formButtons.classList.add('form_buttons');
         this.buttons.forEach(item => {
-            
             const button = Object.assign(document.createElement(item.element), item.attributes);
             button.textContent = item.text;
-            container.appendChild(button);
+            formButtons.appendChild(button);
         })
+        container.appendChild(formButtons);
 
         return container;
     },
@@ -103,8 +104,6 @@ const modal = (state) => ({
         if (this.type === 'task') {
             pubSub.publish('removeTask', this.selection.uuidTask);
         } else {
-            console.log(this.selection);
-            console.log(this.selection.uuid);
             // pubSub.publish('removeProject', this.selection.uuid);
             pubSub.publish('removeProject');
         }

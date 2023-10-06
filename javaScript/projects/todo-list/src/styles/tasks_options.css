@@ -17,6 +17,7 @@
 #task_select_priority_options > .container > ul > li:hover,
 #task_select_project_options > .container > ul > li:hover {
     background-color: rgba(0, 0, 0, 0.3);
+    padding: 0.8rem;
 }
 
 /* task priorities */

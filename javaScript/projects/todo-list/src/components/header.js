@@ -23,19 +23,55 @@ const header = {
     },
     bindEvents: function() {
         this.btnMenu.addEventListener('click', this.publish);
-        this.btnHome.addEventListener('click', this.publish); // testing
+        this.btnHome.addEventListener('click', this.publish);
         this.btnAddTask.addEventListener('click', buildTasksForm);
     },
     headerContent: {
         headerLeft: [
-            {element: 'button', class: 'btn_menu', childElement: 'img', src: assets.icons.files['menu.svg']},
-            {element: 'button', class: 'btn_home', childElement: 'img', src: assets.icons.files['home.svg']},
-            {element: 'input', class: 'input_search', placeholder: 'Search'}
+            {
+                element: 'button',
+                attributes: {
+                    className: 'btn_menu',
+                },
+                childElement: 'img',
+                src: assets.icons.files['menu.svg'],
+            },
+            {
+                element: 'button',
+                attributes: {
+                    className: 'btn_home',
+                },
+                childElement: 'img',
+                src: assets.icons.files['home.svg'],
+            },
+            {
+                element: 'input',
+                attributes: {
+                    className: 'input_search',
+                },
+                placeholder: 'Search',
+            }
         ],
         headerRight: [
-            {element: 'button', class: 'btn_add_task', childElement: 'img', src: assets.icons.files['add.svg']},
+            {
+                element: 'button',
+                attributes: {
+                    className: 'btn_add_task',
+                },
+                childElement: 'img',
+                src: assets.icons.files['add.svg']
+            },
             // {element: 'button', class: 'bt-settingsn', childElement: 'img, src: null},
-            {element: 'a', class: 'github', childElement: 'img', src: assets.icons.files['github-mark/github-mark-white.svg'], href: 'https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/todo-list', target: '_blank'}
+            {
+                element: 'a',
+                attributes: {
+                    className: 'github',
+                    href: 'https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/todo-list',
+                    target: '_blank',
+                },
+                childElement: 'img',
+                src: assets.icons.files['github-mark/github-mark-white.svg'],
+            }
         ],
     },
     render: function() {
@@ -52,7 +88,7 @@ const header = {
 
             this.headerContent[section].forEach((item) => {
                 const headerItem = document.createElement(item.element);
-                headerItem.classList.add(item.class);
+                Object.assign(headerItem, item.attributes);
                 if ('placeholder' in item) {
                     headerItem.setAttribute('placeholder', item.placeholder);
                 } else {
@@ -63,7 +99,7 @@ const header = {
                 }
                 headerContainer.appendChild(headerItem);
                 headerWrapper.appendChild(headerContainer);
-            })
+            });
             headerElement.appendChild(headerWrapper);
         }
         return headerElement;

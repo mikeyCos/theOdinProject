@@ -75,8 +75,7 @@ export const tasksList = {
 
             taskCheckbox.firstElementChild.classList.add(`priority_${task.priority}`)
 
-            // listItemContainer.appendChild(taskRadio);
-            listItemContainer.appendChild(taskCheckbox); // testing
+            listItemContainer.appendChild(taskCheckbox);
             taskContent.appendChild(taskName);
             
             if (task.description !== undefined) {
@@ -105,8 +104,6 @@ export const tasksList = {
                 taskContent.appendChild(dateTimeWrapper);
             }
 
-            // taskContent.appendChild(priority);
-
             const buttonDelete = buildButton('delete', 'task');
             const buttonEdit = buildButton('edit', 'task');
             taskActions.appendChild(buttonDelete);
@@ -117,23 +114,21 @@ export const tasksList = {
             listItem.appendChild(listItemContainer);
 
             listItemWrapper.appendChild(listItem);
-            // this.btnDeleteTask.push(button)
             this.bindEvents(buttonDelete, taskCheckbox, listItemWrapper);
 
             if (!this.oldTask) {
-                console.log(`this.oldTask = ${this.oldTask}`);
+                // appends new task
+                listItemWrapper.classList.add('task_new');
                 this.listContainer.appendChild(listItemWrapper);
+                this.stopAnimation(listItemWrapper);
             } else {
+                // appends updated task
                 this.oldTask.replaceWith(listItemWrapper);
                 this.oldTask = null;
             }
-            // updating task
-                // need to only append at that task's index
         } else {
             return document.createElement('div');
         }
-        // when the task form inside the list is open and a new task is added
-            // the task list grows while the task form is open
     },
     completeTask: function(e) {
         e.stopImmediatePropagation();
@@ -145,14 +140,12 @@ export const tasksList = {
     removeTask: function(e) {
         console.log(`removeTask() in tasks_list.js is running`)
         // create a modal to confirm removal
-        console.log(e);
         if (e instanceof MouseEvent) {
             e.stopImmediatePropagation();
             const listItem = e.currentTarget.parentElement.parentElement.parentElement;
             this.removeSelection = listItem;
             let uuidTask = listItem.dataset.uuid;
             buildModalRemove(this.project.findTask(uuidTask));  
-        // } else if (e) {
         } else if (this.removeSelection) {
             // this.project.removeTask(e);
             this.project.removeTask(this.removeSelection.dataset.uuid);
@@ -178,5 +171,10 @@ export const tasksList = {
         } else if (oldTask) {
             this.oldTask = oldTask;
         }
+    },
+    stopAnimation: function(e) {
+        setTimeout(() => {
+            e.classList.remove('task_new');
+        }, "200")
     }
 }

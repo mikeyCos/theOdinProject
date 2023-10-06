@@ -13,6 +13,11 @@
     row-gap: 0.5rem;
 }
 
+.form_item > #description {
+    resize: vertical;
+    max-height: 200px;
+}
+
 .form_item > #btn_priority,
 .form_item > #btn_project {
     display: flex;
@@ -43,8 +48,4 @@
     background-repeat: no-repeat;
     background-position-x: 100%;
     background-position-y: 50%;
-}
-
-.form_item > :last-child {
-    min-height: clamp(2rem, 2vw, 3rem);
 }

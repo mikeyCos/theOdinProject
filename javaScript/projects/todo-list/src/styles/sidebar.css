@@ -26,7 +26,7 @@
     padding: 1.25rem;
     background-color: rgb(245, 245, 245);
     box-shadow: 1px 4px 5px -1px rgba(0, 0, 0, 1);
-    width: 65%;
+    width: 75%;
 }
 
 .nav_project,
@@ -45,8 +45,9 @@
     padding: 0.5rem 1rem;
 }
 
-#projects_container > *:first-child {
+#projects_container >:first-child {
     border-radius: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 #projects_container > *:first-child:hover {
@@ -70,7 +71,7 @@
     }
 
     #sidebar.show {
-        width: 30%;
+        width: min(40%, 350px);
         display: block;
         animation: slide-in-right 300ms ease-in-out;
     }

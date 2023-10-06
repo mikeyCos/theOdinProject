@@ -1,5 +1,6 @@
 header {
     background-color: lightcoral;
+    animation: fade-in 400ms ease-in;
 }
 
 header > #navbar {

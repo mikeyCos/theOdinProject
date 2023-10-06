@@ -126,7 +126,9 @@ const projectsList = (state) => ({
     },
     removeProject: function(e) {
         if (e instanceof MouseEvent) {
-            const listItem = e.target.parentElement.parentElement.parentElement;
+            console.log(e.target);
+            console.log(e.currentTarget.parentElement.parentElement);
+            const listItem = e.currentTarget.parentElement.parentElement;
             
             buildList.modules.forEach(module => {
                 module.removeSelection = listItem;
@@ -134,9 +136,6 @@ const projectsList = (state) => ({
             this.removeSelection = listItem;
             const projectUUID = listItem.dataset.uuid;
             buildModalRemove(projectController.find(projectUUID));
-            console.log(this);
-            console.log(this.type);
-            console.log(this.removeSelection)
         } else {
             // if there is no active project
             // OR the project's uuid we want to remove is the same as the current active project's uuid

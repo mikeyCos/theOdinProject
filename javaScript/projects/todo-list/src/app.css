@@ -1,17 +1,27 @@
 @font-face {
-    font-family: 'Bebas Neue';
-    src: url('./assets/fonts/Bebas_Neue/BebasNeue-Regular.ttf');
+    /* https://fonts.google.com/specimen/Poppins */
+    font-family: 'Poppins';
+    src: url('./assets/fonts/Poppins/Poppins-Light.ttf'),
+        url('./assets/fonts/Poppins/Poppins-Medium.ttf'),
+        url('./assets/fonts/Poppins/Poppins-Regular.ttf'),
+        url('./assets/fonts/Poppins/Poppins-SemiBold.ttf'),
+        url('./assets/fonts/Poppins/Poppins-Bold.ttf'),
+        url('./assets/fonts/Poppins/Poppins-ExtraBold.ttf');
 }
 
 *, *::before, *::after {
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: var(--font-family-primary);
 }
 
 :root {
     /* custom variables */
-    --text-color-primary: rgb(32, 32, 32);
+    --font-family-primary: 'Poppins', Arial, sans-serif;
+    --text-color-primary: rgba(32, 32, 32, 1);
     --priority-1-color: #ff3700;
     --priority-2-color: #ffa500;
     --priority-3-color: #1eff47;
@@ -20,6 +30,7 @@
 
 body {
     min-height: 100vh;
+    animation: fade-in 200ms ease-in;
 }
 
 #todo_app {
@@ -53,7 +64,7 @@ body {
 
 #main_content {
     flex: 1;
-    padding: 5% 5% 5% 5%;
+    padding: 5%;
     display: grid;
 }
 
@@ -62,33 +73,17 @@ body {
     grid-auto-rows: min-content 1fr;
     justify-self: center;
     width: 100%;
+    animation: fade-in 300ms ease-in;
 }
 
 /* general styles for similar elements existing on different modules */
-button {
-    display: flex;
-    background: transparent;
-    border: none;
-    border-radius: 0.5rem;
+a:visited {
+    color: inherit;
 }
 
-button:hover {
-    cursor: pointer;
-}
-
-button:not(.btn_checkbox_task):not(.btn_date_task):hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-button > svg,
-button > * > svg {
-    height: auto;
-    width: clamp(1rem, 2.5vw, 2rem);
-}
-
-dialog:not(#task_priorities) {
-    /* margin: auto; */
-    min-width: 30vw;
+dialog:not(#task_select_project_options):not(#task_select_priority_options) {
+    margin: auto;
+    min-width: 60vw;
     border-radius: 0.75rem;
     border: none;
 }
@@ -97,29 +92,102 @@ dialog:not(#task_priorities)::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+button {
+    display: flex;
+    background: transparent;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.btn_img_wrapper {
+    display: flex;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:not(.btn_checkbox_task):not(.btn_date_task):hover,
+.form_item > .task_input:hover,
+.form_item > .project_input:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+button > svg,
+button > * > svg {
+    height: auto;
+    width: clamp(1rem, 2.5vw, 2rem);
+}
+
+.btn_delete_project > svg,
+.btn_delete_task > svg,
+.btn_edit_task > svg {
+    width: clamp(2rem, 2.5vw, 3rem);
+}
+
+.form_item {
+    display: flex;
+    flex-direction: column;
+    /* testing */
+    /* padding: 0.5rem 0rem; */
+    /* border-bottom: 2px solid black; */
+}
+
+.form_item::after {
+    content: '';
+    margin-top: 1rem;
+    width: 90%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    opacity: 0.4;
+    align-self: center;
+}
+
+.form_item > * {
+    display: flex;
+    /* flex: 1 1 45px; */
+    min-height: 50px;
+}
+
+.form_item > label {
+    align-items: center;
+}
+
+.form_item > .task_input,
+.form_item > .project_input {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    /* border-bottom: 2px solid rgba(0, 0, 0, 1); */
+    /* min-height: 52px; */
+}
+
+.form_item > .task_input:focus,
+.form_item > .project_input:focus {
+    background-color: rgba(255, 255, 255, 1);
+    outline: none;
+    box-shadow: 0px 0px 5px -1px inset rgba(0, 0, 0, 1);
+}
+
 .form_buttons {
     display: flex;
     justify-content: end;
     column-gap: 0.5rem;
+    margin-top: 1rem;
 }
 
 .form_buttons > * {
-    background-color: rgba(0 0, 0, 0.3);
+    background-color: rgba(0 0, 0, 0.2);
     padding: 0.5rem 1rem;
     border-radius: 2rem;
 }
 
-.form_buttons > *:hover {
-    color: rgb(255, 255, 255);
-}
-
 .form_buttons > *:active {
-    box-shadow: 0px 2px 1px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.8);
 }
 
 @media screen and (min-width:768px) {
     #main_content {
-
+        padding: 2% 2.5% 2% 2.5%;
     }
 
     #main_content > :first-child {
@@ -130,6 +198,14 @@ dialog:not(#task_priorities)::backdrop {
         position: static;
         display: flex;
     }
+}
 
+@keyframes fade-in {
+    0% {
+        opacity: 0%
+    }
 
+    100% {
+        opacity: 100%;
+    }
 }

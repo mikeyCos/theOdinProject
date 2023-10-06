@@ -80,6 +80,7 @@ export default function buildTasksForm(e) {
         form.appendChild(buildForm.find(`default`).render());
         buildForm.find(`default`).cacheDOM();
         buildForm.find(`default`).bindEvents();
+        form.scrollIntoView({ behavior: 'smooth'});
     }
 }
 
@@ -256,7 +257,7 @@ const formInputs = (state) => {
                     id: 'description',
                     className: 'task_input',
                     name: 'description',
-                    placeholder: 'Description'
+                    placeholder: 'Description',
                 }
             },
             dueDate: {
