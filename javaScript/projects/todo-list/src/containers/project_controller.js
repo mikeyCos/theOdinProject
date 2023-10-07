@@ -2,20 +2,18 @@ import { pubSub } from './pubsub';
 import { populateStorage } from '../storage/storage';
 
 const getFormValues = (inputs) => {
-    // tasks is empty with local storage
     const obj = {}
     inputs.forEach(input => { 
         if (input.id === 'priority') {
             obj[input.id] = parseInt(input.value.slice(input.value.length - 1, input.value.length));
         } else if (input.id === 'due_date' && input.value.length === 0 && [...inputs].find(item => item.id === 'due_time').value.length !== 0) {
-            // if time has a value and date does not have a value
+            // if time has a value and date has no value
                 // date set to today's date
             obj[input.id] = new Date().toISOString().split('T')[0];
         } else if (input.value.length !== 0) {
             obj[input.id] = input.value
         }
     });
-    console.log(obj)
     return obj;
 }
 
@@ -45,8 +43,6 @@ const project = (state) => ({
         const newTask = Object.assign(task(this.uuid), formValues);
 
         if (formValues.project && formValues.project !== newTask.uuidProj) {
-            console.log(`new uuid proj: ${formValues.project}`);
-            console.log(`old uuid proj: ${newTask.uuidProj}`);
             newTask.uuidProj = formValues.project;
             projectController.find(formValues.project).tasks.push(newTask);
             if (new Date(`${newTask.due_date}T00:00:00`).toDateString() === new Date().toDateString()) {
@@ -57,8 +53,6 @@ const project = (state) => ({
             pubSub.publish('addTask', newTask);
         }
         projectController.setAllProjects();
-        console.log(projectController.today)
-        // populateStorage();
     },
     removeTask: function(uuid) {
         // if the remove task is in today
@@ -68,7 +62,6 @@ const project = (state) => ({
         const task = this.findTask(uuid);
         this.tasks.splice(this.tasks.indexOf(task), 1);
         // removes task in respective project
-        // console.log(task.uuidProj);
         projectController.allProjects.forEach(project => {
             project.tasks.forEach(task => {
                 if (task.uuidTask === uuid) {
@@ -77,16 +70,10 @@ const project = (state) => ({
             })
         })
         projectController.setAllProjects();
-        // populateStorage();
     },
     updateTask: function(uuid, inputs) {
-        console.log(`updateTask() from project-controller.js is running`); // for debugging
         const formValues = getFormValues(inputs);
         const newTask = Object.assign(this.findTask(uuid), formValues);
-
-        console.log(formValues)
-        console.log(newTask.due_date);
-        debugger
         // if the project is change for a task
         if (formValues.project && formValues.project !== newTask.uuidProj) {
             this.removeTask(newTask.uuidTask);
@@ -110,7 +97,6 @@ const project = (state) => ({
             }
         }
         projectController.setAllProjects();
-        // populateStorage();
     },
     findTask: function(uuid) {
         return this.tasks.find(element => element.uuidTask === uuid);
@@ -128,19 +114,15 @@ export const projectController = {
         const formValues = getFormValues(inputs);
         this.projects.push(Object.assign(buildProject(), formValues));
         this.setAllProjects()
-        // populateStorage();
     },
     remove: function(uuid) {
         this.projects.splice(this.projects.indexOf(this.find(uuid)), 1);
-        this.setAllProjects();
-        // populateStorage();
+        this.setAllProjects()
     },
     find: function(uuid) {
-        // return this.projects.find(project => project.uuid === uuid);
         return this.allProjects.find(project => project.uuid === uuid);
     },
     setActive: function(uuid) {
-        console.log(`setActive() is running from project-controller.js`) // for debugging
         if (this.findActive()) {
             this.findActive().active = false;
         }
@@ -152,7 +134,6 @@ export const projectController = {
         }
     },
     findActive: function() {
-        console.log(this.allProjects)
         if (!this.allProjects.find(project => project.active === true)) {
             this.inbox[0].active = true;
             return this.inbox;

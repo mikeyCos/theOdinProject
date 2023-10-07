@@ -1,5 +1,5 @@
 header {
-    background-color: lightcoral;
+    background-color: var(--accent-primary);
     animation: fade-in 400ms ease-in;
 }
 
@@ -11,22 +11,27 @@ header > #navbar {
 
 header > #navbar > * > .container {
     display: flex;
-    column-gap: 0.35rem;
+    column-gap: var(--column-gap-small);
 }
 
 header > #navbar > * > .container > * {
     display: flex;
     align-items: center;
-    border-radius: 0.2rem;
+    border-radius: var(--button-radius);
+    padding: var(--button-no-text-padding);
+}
+
+#navbar > * > .container > button:hover {
+    color: var(--background-primary);
 }
 
 .input_search {
-    width: 100%;
+    width: min(350px, 50%);
     border: none;
     padding-left: 0.5rem;
 }
 
 header > #navbar > * > .container > * > svg {
     height: auto;
-    width: clamp(1.65rem, 4vw, 1.5rem);
+    width: clamp(1.75rem, 3vw, 2.5rem);
 }

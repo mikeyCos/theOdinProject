@@ -22,8 +22,8 @@
 .form_item > #btn_project {
     display: flex;
     align-items: center;
-    column-gap: 0.25rem;
-    padding: 0.5rem 1rem;
+    column-gap: var(--column-gap);
+    padding: var(--button-with-text-padding);
 }
 
 .form_item > #btn_priority > .task_priority,

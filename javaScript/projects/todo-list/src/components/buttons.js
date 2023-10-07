@@ -4,13 +4,6 @@
     import IconCircle from '../assets/icons/radio_button_unchecked.svg';
     import IconDate from '../assets/icons/date.svg';
     import IconCheck from '../assets/icons/check_small.svg';
-    // import IconInbox from '../assets/icons/inbox.svg';
-    // import IconToday from '../assets/icons/today.svg';
-    // import IconProject from '../assets/icons/circle.svg';
-
-    // import SVGInject from '@iconfu/svg-inject'
-    // returns a button element to create a project/task
-    // if spanText provided, then a span element is created
     const icons = { 
         add: IconAdd,
         delete: IconDelete,
@@ -35,7 +28,6 @@
             button.appendChild(imageWrapper);
             button.appendChild(span);
         } else if (type === 'checkbox') {
-            // const taskCheckCircle = document.createElement()
             const checkboxBorder = document.createElement('span');
             checkboxBorder.classList.add('checkbox_circle');
             checkboxBorder.appendChild(image);

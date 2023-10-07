@@ -24,9 +24,9 @@
     flex-direction: column;
     row-gap: 1rem;
     padding: 1.25rem;
-    background-color: rgb(245, 245, 245);
+    background-color: var(--accent-secondary);
     box-shadow: 1px 4px 5px -1px rgba(0, 0, 0, 1);
-    width: 75%;
+    width: min(75%, 350px);
 }
 
 .nav_project,
@@ -42,7 +42,7 @@
 
 #projects_container > *:first-child > .nav_projects {
     flex: 1;
-    padding: 0.5rem 1rem;
+    padding: var(--button-with-text-padding);
 }
 
 #projects_container >:first-child {
@@ -52,10 +52,12 @@
 
 #projects_container > *:first-child:hover {
     background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
 }
 
 #sidebar > .container:hover .btn_add_project {
     visibility: visible;
+    color: var(--accent-primary);
 }
 
 #projects_container > *:first-child > .btn_add_project {

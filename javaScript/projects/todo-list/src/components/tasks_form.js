@@ -1,5 +1,5 @@
 import { pubSub } from '../containers/pubsub';
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import buildSelectOptions from '../components/tasks_options';
 import '../styles/tasks_form.css'
 import IconFlag from '../assets/icons/flag.svg';
@@ -169,23 +169,47 @@ const formTask = (state) => ({
             if (this.dialogElement) {
                 this.closeForm();
             } else {
-                this.form.reset();
+                this.resetForm();
             }
         } else {
             this.closeForm();
-            pubSub.publish('resetOldTask', this.button); // testing
+            pubSub.publish('resetOldTask', this.button);
             projectController.find(this.listItem.dataset.uuidProj).updateTask(this.listItem.dataset.uuid, this.formInputs);
         }
     },
     closeForm: function(e) {
-        console.log(`closeForm() from tasks_from.js is running`); // for debugging
         if (!this.dialogElement) {
             this.form.replaceWith(this.button);
             buildForm.remove(this.type);
         } else {
             this.removeModal();
         }
-        pubSub.publish('resetOldTask'); // testing
+        pubSub.publish('resetOldTask');
+    },
+    resetForm: function() {
+        // resets all form inputs, type="hidden" included
+        // resets priority/project button content
+        for (let formChild in this.formChildren) {
+            const formInput = this.formChildren[formChild];
+            const attributes = formInput.attributes;
+            [...this.formInputs].find(input => input.id === attributes.id).value = attributes.value;
+            if (this.formChildren[formChild].sibiling) {
+                const element = [...this.formInputs].find(input =>
+                    formInput.sibiling.attributes.id === input.id && input.tagName === 'BUTTON'
+                );
+                let newIcon;
+                const btnSVG = element.firstChild.firstChild
+                if (btnSVG.className.baseVal !== '' && btnSVG.src !== formInput.sibiling.children[0].child.attributes.src) {
+                    newIcon = new Image()
+                    newIcon.setAttribute('onload', 'SVGInject(this)');
+                    newIcon.src = formInput.sibiling.children[0].child.attributes.src;
+                    btnSVG.parentElement.replaceChild(newIcon, btnSVG);
+                }
+                // need replace project if the current icon does not match default icon
+                newIcon.className = formInput.sibiling.children[0].child.attributes.className;
+                element.querySelector('span').textContent = formInput.sibiling.children[1].attributes.textContent;
+            }
+        }
     }
 });
 
@@ -249,6 +273,7 @@ const formInputs = (state) => {
                     type: 'text',
                     placeholder: 'Task name',
                     required: 'required',
+                    value: '',
                 }
             },
             description: {
@@ -258,6 +283,7 @@ const formInputs = (state) => {
                     className: 'task_input',
                     name: 'description',
                     placeholder: 'Description',
+                    value: '',
                 }
             },
             dueDate: {
@@ -268,6 +294,7 @@ const formInputs = (state) => {
                     name: 'date',
                     type: 'date',
                     placeholder: 'Due Date',
+                    value: '',
                 }
             },
             dueTime: {
@@ -277,7 +304,8 @@ const formInputs = (state) => {
                     className: 'task_input',
                     name: 'time',
                     type: 'time',
-                    placeholder: 'Time'
+                    placeholder: 'Time',
+                    value: '',
                 },
             },
             priority: {
@@ -362,8 +390,8 @@ const formInputs = (state) => {
                         child: { 
                             element: 'img', 
                             attributes: {
-                                src: projectController.findActive().uuid === projectController.today[0].uuid ? IconInbox : IconCircle,
-                                className: 'project_circle',
+                                src: projectController.findActive().uuid === projectController.today[0].uuid || projectController.findActive().uuid === projectController.inbox[0].uuid ? IconInbox : IconCircle,
+                                className: projectController.findActive().uuid === projectController.today[0].uuid || projectController.findActive().uuid === projectController.inbox[0].uuid ? 'project_inbox': 'project_circle',
                             }
                         }
                     },
@@ -408,8 +436,8 @@ const formInputs = (state) => {
         const inputsEdit = {
             button: {
                 save: {
-                className: 'btn_update_task',
-                type: 'submit',
+                    className: 'btn_update_task',
+                    type: 'submit',
                 },
             },
             prop: {

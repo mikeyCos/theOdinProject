@@ -1,8 +1,4 @@
 /* styles for list of projects on the content section */
-/* #main_content > div > div > .nav_projects > .btn_add_project {
-    
-} */
-
 .projects >:last-child {
     display: grid;
     grid-auto-rows: min-content 1fr;
@@ -10,13 +6,15 @@
 
 .projects >:last-child > .nav_projects {
     justify-self: end;
+    margin-bottom: 1rem;
 }
 
 .projects >:last-child > .nav_projects > .btn_add_project {
+    background-color: rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-items: flex-start;
     min-width: 100%;
-    padding: 0.5rem 1rem;
-    column-gap: 0.25rem;
+    padding: var(--button-with-text-padding);
+    column-gap: var(--column-gap-small);
 }

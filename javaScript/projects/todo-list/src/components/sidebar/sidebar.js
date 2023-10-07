@@ -1,7 +1,7 @@
 import importAll from '../../utilities/import-all';
 import buildButton from '../buttons';
 import buildProjectForm from '../projects_form';
-import { projectController } from '../../containers/project-controller';
+import { projectController } from '../../containers/project_controller';
 import { buildList } from '../projects_list';
 import { pubSub } from '../../containers/pubsub';
 import '../../styles/sidebar.css';
@@ -20,7 +20,7 @@ export default function buildSidebar(content) {
     sidebar.cacheDOM(sidebarWrapper);
     sidebar.bindEvents();
 
-    pubSub.subscribe('sidebar', sidebar.toggleSidebar);
+    pubSub.subscribe('sidebar', sidebar.toggleSidebar); // published from projects_list.js
     return sidebarWrapper;
 }
 
@@ -84,6 +84,7 @@ const sidebar = {
                 this.toggleSidebar();
             } 
         } else {
+            
             if (this.sidebar.classList.contains('show')) {
                 this.sidebar.classList.remove('show');
                 this.sidebar.classList.add('hide');
@@ -96,7 +97,9 @@ const sidebar = {
     },
     publish: function(e) {
         e.stopImmediatePropagation();
-        this.toggleSidebar();
+        if (window.innerWidth < 768) {
+            this.toggleSidebar();
+        }
         pubSub.publish('content', e.currentTarget);
     },
     callDimOverlay: function() {

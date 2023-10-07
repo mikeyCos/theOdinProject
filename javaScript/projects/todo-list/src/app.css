@@ -22,10 +22,19 @@
     /* custom variables */
     --font-family-primary: 'Poppins', Arial, sans-serif;
     --text-color-primary: rgba(32, 32, 32, 1);
-    --priority-1-color: #ff3700;
+    --background-primary: rgb(255, 255, 255);
+    --accent-primary: rgb(173, 77, 232);
+    --accent-secondary: rgb(241, 241, 241);
+    --accent-tertiary: #168DEE;
+    --priority-1-color: #F84125;
     --priority-2-color: #ffa500;
-    --priority-3-color: #1eff47;
-    --priority-4-color: #b8b8b8;
+    --priority-3-color: #14EBC0;
+    --priority-4-color: #9e9e9e;
+    --button-radius: 0.35rem;
+    --circle-radius: 50%;
+    --button-no-text-padding: 0.25rem;
+    --button-with-text-padding: 0.5rem 1rem;
+    --column-gap-small: 0.25rem;
 }
 
 body {
@@ -52,7 +61,7 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     opacity: 0;
     transition: opacity 200ms ease-in-out;
 }
@@ -66,6 +75,7 @@ body {
     flex: 1;
     padding: 5%;
     display: grid;
+    background-color: var(--background-primary);
 }
 
 #main_content > :first-child {
@@ -81,6 +91,10 @@ a:visited {
     color: inherit;
 }
 
+.img_wrapper {
+    display: flex;
+}
+
 dialog:not(#task_select_project_options):not(#task_select_priority_options) {
     margin: auto;
     min-width: 60vw;
@@ -88,15 +102,20 @@ dialog:not(#task_select_project_options):not(#task_select_priority_options) {
     border: none;
 }
 
-dialog:not(#task_priorities)::backdrop {
+dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.nav_project > svg,
+.project_circle {
+    color: rgb(70, 70, 70);
 }
 
 button {
     display: flex;
     background: transparent;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--button-radius);
 }
 
 .btn_img_wrapper {
@@ -107,30 +126,15 @@ button:hover {
     cursor: pointer;
 }
 
-button:not(.btn_checkbox_task):not(.btn_date_task):hover,
-.form_item > .task_input:hover,
-.form_item > .project_input:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
 button > svg,
 button > * > svg {
     height: auto;
-    width: clamp(1rem, 2.5vw, 2rem);
-}
-
-.btn_delete_project > svg,
-.btn_delete_task > svg,
-.btn_edit_task > svg {
-    width: clamp(2rem, 2.5vw, 3rem);
+    width: clamp(1.25rem, 2.5vw, 1.5rem);
 }
 
 .form_item {
     display: flex;
     flex-direction: column;
-    /* testing */
-    /* padding: 0.5rem 0rem; */
-    /* border-bottom: 2px solid black; */
 }
 
 .form_item::after {
@@ -144,7 +148,6 @@ button > * > svg {
 
 .form_item > * {
     display: flex;
-    /* flex: 1 1 45px; */
     min-height: 50px;
 }
 
@@ -157,8 +160,6 @@ button > * > svg {
     border: none;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
-    /* border-bottom: 2px solid rgba(0, 0, 0, 1); */
-    /* min-height: 52px; */
 }
 
 .form_item > .task_input:focus,
@@ -176,13 +177,36 @@ button > * > svg {
 }
 
 .form_buttons > * {
-    background-color: rgba(0 0, 0, 0.2);
+    background-color: rgb(226, 226, 226);
     padding: 0.5rem 1rem;
     border-radius: 2rem;
+    text-transform: capitalize;
+}
+
+.form_buttons > button[type="submit"] {
+    background-color: var(--accent-primary);
+}
+
+.form_buttons > button[type="submit"]:hover {
+    filter: brightness(0.85);
+}
+
+.form_buttons > button:hover {
+    filter: brightness(0.85);
 }
 
 .form_buttons > *:active {
     box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.8);
+}
+
+.form_item > .task_input:hover:not(:focus),
+.form_item > .project_input:hover:not(:focus),
+.projects >:last-child > .nav_projects > .btn_add_project:hover,
+.btn_add_project:hover,
+.btn_delete_project:hover,
+.task_actions > button:hover,
+#navbar > * > .container > button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (min-width:768px) {

@@ -1,4 +1,9 @@
 /* styles for priority options from tasks_priority.js module */
+#task_select_project_options::backdrop,
+#task_select_priority_options::backdrop {
+    background-color: transparent;
+}
+
 #task_select_priority_options,
 #task_select_project_options {
     border-radius: 1rem;
@@ -10,7 +15,7 @@
 #task_select_project_options > .container > ul > li {
     display: flex;
     align-items: center;
-    column-gap: 0.25rem;
+    column-gap: var(--column-gap-small);
     padding: 0.5rem;
 }
 

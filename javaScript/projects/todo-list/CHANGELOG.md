@@ -1,27 +1,5 @@
-# Todo List
----
-Live preview: [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/projects/todo-list/dist)
----
-### Ideas
-1. Form validator module.  
-2. Update current url with respective anchor href; `window.location`.
-3. :heav_check_mark: Change time representation from 24-hour clock to 12-hour clock.
-4. Button for editing date/time.
-5. Edit project name.
-6. :heav_check_mark: Rewrite priority selection into a list with a hidden input.
-7. Undo task completed.
-8. Render/show sidebar when screen is resized at breakpoint.
----
-### Questions
-1. How do we distinguish a single step versus a single responsibility?
-2. How to find the depth of object properties and use the depth value to tranverse through object properties?
-3. Is it worth creating modules for individual elements (ex, button elements)?
-4. Does exporting/importing a module use memory? If so, how?
-5. Is it less efficient removing/adding an element than updating the element's contents? For example, adding and removing `#projects_list`.  
-6. What is the point, if any, using an object literal pattern when using ES6 modules?
----
-### Changelog
-- 06 OCT 2023: Created a variety of custom CSS variables in the roo of `app.css` module, set sidebar container width with `min(75%, 350px)`, applied fill attributes in SVG files, priority/project options now correctly adds respective class names to the icons, removed `task-controller.js` and `home.js` modules, and removed `console.log()` throughout all modules.  
+# Changelog
+- 06 OCT 2023: Created a variety of custom CSS variables in the roo of `app.css` module, set sidebar container width with `min(75%, 350px)`, applied fill attributes in SVG files, priority/project options now correctly adds respective class names to the icons, removed `task-controller.js` and `home.js` modules, renamed `project-controller.js` to `project_controller.js`, removed `console.log()` throughout all modules, and created/moved Changelog from `README.md` to `CHANGELOG.md`.  
 - 05 OCT 2023: Refactored `header.js` module by adding attributes to the header objects and utilized `Object.assign()` in the forEach loop, utilized `document.createTextNode()` in `modal_remove.js` module to systematically create the confirmation message, included Google Font `Poppins` with Arial and sans-serif as fallback font families, added minor animations to elements, added tasks are given a className 'task_new' and removed after 200ms to run fade-in animation, and applied a `width: min(40%, 350px)` to the sidebar.  
 - 04 OCT 2023: Renamed and refactored `tasks_priority.js` module to `tasks_options.js`, `task_options` will render options for priority and project options, replaced select element for projects with a custom select element using a button and a hidden input element, inbox icon is applied to it's respective project in the project options, the project button icon is changed to it's respective selection (if inbox is selected, the button icon will be for inbox and if any other project is selected the icon will be the default project icon), and restylized task form.   
 - 03 OCT 2023: Implemented a resizer observer in `tasks_priority.js` to position dialog to the top or bottom of the form item, the dialog element will also stay next to the form item when the window size horizontally changes, the dialog element is removed at window breakpoint (768px), refactored `render()` in `tasks_form.js` to loop through form input with a sibling property, and applied a variety of CSS properties.  

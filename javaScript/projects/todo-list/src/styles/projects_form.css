@@ -1,18 +1,10 @@
 #form_project > #form {
     padding: 1rem;
-    /* display: grid;
-    grid-template-areas: 
-        'head head'
-        'input input'
-        '. buttons'
-    ;
-    position: relative;
-    min-width: inherit;
-    min-height: inherit;
-    grid-auto-rows: min-content;
-    grid-row-gap: 0.5rem; */
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;
 }
 
+#form_project > #form > .form_item > label {
+    text-transform: capitalize;
+}

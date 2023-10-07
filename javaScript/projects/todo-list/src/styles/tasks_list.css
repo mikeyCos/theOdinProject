@@ -37,7 +37,6 @@ div[role=button]:hover {
 
 .task_list_item > .container {
     display: flex;
-    /* border-bottom: 2px solid rgba(66, 66, 66, 0.5); */
     padding: 1rem 0.25rem;
     column-gap: 0.75rem;
 }
@@ -52,14 +51,14 @@ div[role=button]:hover {
     display: flex;
     border: 3px solid;
     border-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
+    border-radius: var(--circle-radius);
 }
 
 .btn_checkbox_task > .checkbox_circle > svg {
     color: inherit;
     opacity: 0;
     fill: currentColor;
-    border-radius: 50%;
+    border-radius: var(--circle-radius);
 }
 
 .task_list_item > .container > .btn_checkbox_task:hover >.checkbox_circle > svg {
@@ -88,7 +87,6 @@ div[role=button]:hover {
 .checkbox_circle.priority_4 {
     color: var(--priority-4-color);
     border: 3px solid currentColor;
-    /* background-color: color-mix(in srgb, currentColor 20%, transparent); */
 }
 
 .task_list_item_content {
@@ -112,6 +110,14 @@ div[role=button]:hover .task_actions{
     visibility: hidden;
 }
 
+.task_actions > button {
+    padding: var(--button-no-text-padding);
+}
+
+.task_actions > button > svg {
+    width: clamp(1.5rem, 3vw, 2rem);
+}
+
 .btn_date_task {
     display: flex;
     align-items: center;
@@ -119,15 +125,25 @@ div[role=button]:hover .task_actions{
 }
 
 .btn_date_task > span {
-    /* font-family: var(--font-family-primary); */
     word-spacing: 0.15rem;
 }
 
 li > .btn_add_task {
     display: flex;
     align-items: center;
-    padding: 0.5rem 1rem;
-    column-gap: 0.25rem;
+    padding: var(--button-with-text-padding);
+    column-gap: var(--column-gap-small);
+}
+
+li > button.btn_add_task:hover > div {
+    background-color: var(--accent-primary);
+    color: var(--background-primary);
+    border-radius: var(--circle-radius);
+}
+
+li > button.btn_add_task:hover > span {
+    color: var(--accent-primary);
+    font-weight: bold;
 }
 
 @keyframes fade-in-scale {

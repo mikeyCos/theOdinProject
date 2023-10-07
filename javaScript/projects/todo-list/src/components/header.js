@@ -105,13 +105,13 @@ const header = {
         return headerElement;
     },
     publish: function(e) {
-        let className = e.currentTarget.parentElement.className;
+        let className = e.currentTarget.className;
         let subscriber;
         if (className.includes('home')) {
             subscriber = 'content';
         } else {
             subscriber = 'sidebar'
         }
-        pubSub.publish(subscriber, e.target.parentElement);
+        pubSub.publish(subscriber, e.currentTarget);
     }
 }

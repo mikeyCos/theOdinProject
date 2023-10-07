@@ -13,7 +13,6 @@
     text-decoration: underline;
 }
 
-.form_buttons > .btn_submit_remove {
-    /* color: rgba(200, 0, 0, 0.6); */
+.form_buttons > button[type="submit"] {
     background-color: rgba(200, 0, 0, 0.6);
 }

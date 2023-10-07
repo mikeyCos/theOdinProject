@@ -1,4 +1,4 @@
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import buildButton from './buttons';
 import buildModalRemove from './modal_remove';
 import { pubSub } from '../containers/pubsub';
@@ -126,8 +126,6 @@ const projectsList = (state) => ({
     },
     removeProject: function(e) {
         if (e instanceof MouseEvent) {
-            console.log(e.target);
-            console.log(e.currentTarget.parentElement.parentElement);
             const listItem = e.currentTarget.parentElement.parentElement;
             
             buildList.modules.forEach(module => {
@@ -153,11 +151,8 @@ const projectsList = (state) => ({
     },
     publish: function(e) {
         e.preventDefault();
-        console.log(`publish() running from projects_ist.js`); // for debugging
-        let className = e.target.parentElement.className;
-        let projectUUID = e.target.parentElement.parentElement.dataset.uuid
-        pubSub.publish('content', e.target.parentElement);
-        if (this.type === 'sidebar'|| this.type === 'misc') {
+        pubSub.publish('content', e.currentTarget);
+        if ((this.type === 'sidebar'|| this.type === 'misc') && window.innerWidth < 768) {
             pubSub.publish('sidebar');
         }
     },

@@ -1,4 +1,4 @@
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import { buildList } from '../components/projects_list';
 import { pubSub } from '../containers/pubsub';
 import '../styles/projects_form.css';
@@ -48,7 +48,6 @@ const formProject = {
         this.removeModal = this.removeModal.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.dialogElement.addEventListener('click', this.closeModal);
-        this.dialogElement.addEventListener('cancel', this.removeModal)
         this.btnCancel.addEventListener('click', this.removeModal);
         this.form.addEventListener('submit', this.submitForm);
     },

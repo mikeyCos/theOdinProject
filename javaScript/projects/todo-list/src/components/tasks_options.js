@@ -1,9 +1,8 @@
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import IconFlag from '../assets/icons/flag.svg';
 import IconCheck from '../assets/icons/check_small.svg';
 import IconProject from '../assets/icons/circle.svg';
 import IconInbox from '../assets/icons/inbox.svg';
-
 import '../styles/tasks_options.css';
 
 const buildOptions = (type, button, dialog) => {
@@ -95,6 +94,9 @@ const options = (state) => ({
             if (this.type === 'project' && projects[i].title === 'Inbox') {
                 image.src = IconInbox;
             } else {
+                if (this.type === 'project') {
+                    image.classList.add('project_circle');
+                }
                 image.src = this.optionIcon;
             }
             image.setAttribute('onload', 'SVGInject(this)');
@@ -144,6 +146,7 @@ const options = (state) => ({
             this.btnSelectText.textContent = projectController.find(e.currentTarget.dataset.value).title;
             const newIcon = new Image()
             newIcon.src = e.currentTarget.dataset.value !== projectController.inbox[0].uuid ? IconProject : IconInbox;
+            newIcon.classList.add(e.currentTarget.dataset.value !== projectController.inbox[0].uuid ? 'project_circle' : 'project_inbox');
             newIcon.setAttribute('onload', 'SVGInject(this)');
             if (newIcon.src !== this.btnIcon.dataset.injectUrl) {
                 // if the new icon src and the current icon src are not the same

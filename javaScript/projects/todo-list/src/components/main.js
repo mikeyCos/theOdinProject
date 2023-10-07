@@ -1,6 +1,6 @@
 import buildProjects from '../components/projects';
 import buildProjectTasks from '../components/project_tasks';
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import { pubSub } from '../containers/pubsub';
 
 export default function buildMain() {
@@ -26,11 +26,15 @@ export const mainContent = {
     cacheDOM: function(container) {
         this.main = container;
         this.mainOverlay = container.querySelector('.overlay_main_content');
+        window.onload = () => {
+            this.anchors = document.querySelectorAll('a');
+        }
     },
     render: function(key, uuid) {
         let content;
         if (!key) {
             content = build['project'](projectController.today[0].uuid);
+
         } else {
             this.main.lastChild.remove();
             content = build[key](uuid);
@@ -42,11 +46,12 @@ export const mainContent = {
         this.switchContent = this.switchContent.bind(this);
     },
     switchContent: function(e) {
+        this.resetActiveTab();
+
         let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
         let uuid = e.parentElement.dataset.uuid || e.dataset.inboxUuid;
         let renderKey = Object.keys(build).find(key => key === classSubstring);
         let args = ['project', uuid];
-
         if (renderKey && uuid) {
             // renders respective project
             this.setActiveTab(e);
@@ -66,11 +71,21 @@ export const mainContent = {
         mainContent.render(args[0], args[1]);
     },
     setActiveTab: function(tab) {
-        if (this.activeTab) {
-            this.activeTab.classList.remove('active');
-        }
+        this.resetActiveTab();
         tab.classList.add('active');
-        this.activeTab = tab;
+        const sidebarAnchor = [...this.anchors].find(anchor => anchor.href === tab.href);
+        if (sidebarAnchor) {
+            sidebarAnchor.classList.add('active');
+            this.activeTab = [sidebarAnchor, tab];
+        } else {
+            this.activeTab = [tab];
+        }
+    },
+    resetActiveTab: function() {
+        if (this.activeTab) {
+            this.activeTab.forEach(anchor => anchor.classList.remove('active'));
+            this.activeTab = null
+        }
     },
     setActiveContent: function(content) {
         if (this.activeContent) {

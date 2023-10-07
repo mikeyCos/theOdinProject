@@ -1,5 +1,4 @@
-import { pubSub } from '../containers/pubsub';
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import buildButton from '../components/buttons';
 import buildTasksForm from '../components/tasks_form';
 import { tasksList } from '../components/tasks_list';
@@ -9,7 +8,6 @@ import { tasksList } from '../components/tasks_list';
     // we delete it from there or from the sidebar
         // change content to home
 export default function buildProjectTasks(uuid) {
-    console.log(`tasks.js running`); // for debugging
     projectController.setActive(uuid);
     const project = projectController.find(uuid);
     projectTasks.project = project;
@@ -29,32 +27,23 @@ export const projectTasks = {
     },
     bindEvents: function() {
         this.btnAddTask.addEventListener('click', buildTasksForm);
-        // this will need to generate a form
-            // removes the button
     },
     render: function() {
-        console.log(`render() in project_tasks.js is running`); // for debugging
         const projectsContainer = document.createElement('div');
         const header = document.createElement('h1');
         const list = document.createElement('ul');
-
-        // const taskList = document.createElement('div');
-        const listItem = document.createElement('li'); // rename?
+        const listItem = document.createElement('li');
         
         projectsContainer.classList.add('task');
         list.classList.add('tasks_list');
-
         header.textContent = this.project.title;
 
         projectsContainer.appendChild(header);
-
-        listItem.appendChild(tasksList.init()); // something fishing is going on
+        listItem.appendChild(tasksList.init());
         listItem.appendChild(buildButton('add', 'task', 'Add task'));
         list.appendChild(listItem);
 
         projectsContainer.appendChild(list);
-
-
         return projectsContainer
     },
 }

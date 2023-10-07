@@ -1,21 +1,18 @@
 import { buildList } from '../components/projects_list';
 import buildButton from '../components/buttons';
 import buildProjectForm from '../components/projects_form';
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import '../styles/projects.css';
 
 export default function buildProjects() {
-    console.log(`projects.js running`);
-
     const projectsContainer = document.createElement('div');
     projectsContainer.classList.add('projects');
-
     const header = document.createElement('h1');
+    
     header.textContent = 'Projects';
 
     projectsContainer.appendChild(header);
     projectsContainer.appendChild(projects.render());
-    
     projects.cacheDOM(projectsContainer);
     projects.bindEvents();
 

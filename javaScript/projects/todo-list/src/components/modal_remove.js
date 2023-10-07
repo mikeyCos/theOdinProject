@@ -3,7 +3,6 @@ import '../styles/modal_removal.css'
 
 // mimics alert box confirming task/project removal
 export default function buildModalRemove(obj) {
-    console.log(`buildModalRemove() is running from mmodal_remove.js`);
     const dialogElement = document.createElement('dialog');
     const form = document.createElement('form');
 
@@ -114,7 +113,6 @@ const modal = (state) => ({
         this.removeModal();
     },
     closeModal: function(e) {
-        console.log(`closeModal running from modal_remove.js`);
         if (e.target.id === 'modal') {
             this.dialogElement.close();
             this.removeModal();

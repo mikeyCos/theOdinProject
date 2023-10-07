@@ -1,4 +1,4 @@
-import { projectController } from '../containers/project-controller';
+import { projectController } from '../containers/project_controller';
 import buildButton from '../components/buttons';
 import buildModalRemove from '../components/modal_remove';
 import buildTasksForm from '../components/tasks_form';
@@ -27,7 +27,6 @@ export const tasksList = {
     project: null,
     cacheDOM: function() {
         this.listContainer = this.listContainer;
-        // this.btnDeleteTask = this.listContainer.querySelectorAll('.btn_delete_task');
         this.projectsListItems = this.listContainer.querySelectorAll('li');
     },
     bindEvents: function(...args) {
@@ -56,7 +55,7 @@ export const tasksList = {
             const taskContent = document.createElement('div');
             const taskName = document.createElement('h3');
             const priority = document.createElement('p');
-            const taskCheckbox = buildButton('checkbox', 'task'); // testing
+            const taskCheckbox = buildButton('checkbox', 'task');
             
             const taskActions = document.createElement('div');
 
@@ -132,13 +131,11 @@ export const tasksList = {
     },
     completeTask: function(e) {
         e.stopImmediatePropagation();
-        console.log(`completetask() running from tasks_list.js`);
         const listItem = e.currentTarget.parentElement.parentElement;
         this.removeSelection = listItem;
         this.removeTask();
     },
     removeTask: function(e) {
-        console.log(`removeTask() in tasks_list.js is running`)
         // create a modal to confirm removal
         if (e instanceof MouseEvent) {
             e.stopImmediatePropagation();
@@ -147,26 +144,20 @@ export const tasksList = {
             let uuidTask = listItem.dataset.uuid;
             buildModalRemove(this.project.findTask(uuidTask));  
         } else if (this.removeSelection) {
-            // this.project.removeTask(e);
             this.project.removeTask(this.removeSelection.dataset.uuid);
             this.removeSelection.parentElement.remove();
             this.removeSelection = null;
         } else {
-            // if (this.project.title !== 'Today') {
-                this.oldTask.remove();
-            // }
+            this.oldTask.remove();
             this.oldTask = null;
         }
     },
     editTask: function(e) {
-        console.log(`editTask() from tasks_list.js is running`);
         this.oldTask = e.currentTarget;
         buildTasksForm(e);
     },
     resetOldTask: function(oldTask) {
-        console.log(`resetOldTask() from tasks_list.js is running`);
         if (this.oldTask) {
-            // debugger
             this.oldTask = null
         } else if (oldTask) {
             this.oldTask = oldTask;
@@ -174,7 +165,7 @@ export const tasksList = {
     },
     stopAnimation: function(e) {
         setTimeout(() => {
-            e.classList.remove('task_new');
+            e.removeAttribute('class');
         }, "200")
     }
 }
