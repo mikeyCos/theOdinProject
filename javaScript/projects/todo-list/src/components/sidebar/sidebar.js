@@ -58,7 +58,6 @@ const sidebar = {
         const anchorWrapper = document.createElement('div');
         const projectsAnchor = document.createElement('a');
 
-        // sidebarWrapper.classList.add('sidebar_wrapper');
         sidebarContainer.classList.add('container');
         projectsContainer.id = 'projects_container';
         navMisc.classList.add('projects_misc_container');
@@ -84,7 +83,6 @@ const sidebar = {
                 this.toggleSidebar();
             } 
         } else {
-            
             if (this.sidebar.classList.contains('show')) {
                 this.sidebar.classList.remove('show');
                 this.sidebar.classList.add('hide');
@@ -93,6 +91,7 @@ const sidebar = {
                 this.sidebar.classList.add('show');
             }
             this.callDimOverlay()
+            pubSub.publish('animate_nav'); //testing
         }
     },
     publish: function(e) {

@@ -20,11 +20,16 @@ const header = {
         this.btnMenu = container.querySelector('.btn_menu');
         this.btnHome = container.querySelector('.btn_home');
         this.btnAddTask = container.querySelector('.btn_add_task');
+        this.inputSearch = container.querySelector('.input_search');
     },
     bindEvents: function() {
+        this.publish = this.publish.bind(this);
+        this.animateNav = this.animateNav.bind(this);
         this.btnMenu.addEventListener('click', this.publish);
         this.btnHome.addEventListener('click', this.publish);
         this.btnAddTask.addEventListener('click', buildTasksForm);
+        this.inputSearch.addEventListener('search', this.search);
+        pubSub.subscribe('animate_nav', this.animateNav); //testing
     },
     headerContent: {
         headerLeft: [
@@ -39,7 +44,7 @@ const header = {
             {
                 element: 'button',
                 attributes: {
-                    className: 'btn_home',
+                    className: 'btn_home today',
                 },
                 childElement: 'img',
                 src: assets.icons.files['home.svg'],
@@ -48,6 +53,7 @@ const header = {
                 element: 'input',
                 attributes: {
                     className: 'input_search',
+                    type: 'search',
                 },
                 placeholder: 'Search',
             }
@@ -105,13 +111,42 @@ const header = {
         return headerElement;
     },
     publish: function(e) {
-        let className = e.currentTarget.className;
+        const btn = e.currentTarget;
+        const className = e ? e.currentTarget.className : null;
         let subscriber;
-        if (className.includes('home')) {
+        if (className && className.includes('home')) {
             subscriber = 'content';
         } else {
+            // if (this.btnMenu.classList.contains('rotate')) {
+            //     this.btnMenu.classList.remove('rotate')
+            // } else {
+            //     this.btnMenu.classList.add('rotate');
+            // }
+            // btn.classList.add('rotate');
+            // setTimeout(() => {
+            //     btn.classList.remove('rotate');
+            // }, "300");
+            // this.animateMenu();
             subscriber = 'sidebar'
         }
         pubSub.publish(subscriber, e.currentTarget);
+    },
+    search: function() {
+        window.open(
+            'https://www.youtube.com/watch?v=UVA7MDQr1Nc',
+            '_blank'
+        );
+    },
+    animateNav: function(e) {
+        if (e) {
+
+        } else {
+            if (this.btnMenu.classList.contains('rotate')) {
+                this.btnMenu.classList.remove('rotate');
+            } else {
+                // setTimeout(() => this.btnMenu.classList.add('rotate'), 5000);
+                this.btnMenu.classList.add('rotate');
+            }
+        }
     }
 }

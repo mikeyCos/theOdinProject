@@ -1,6 +1,8 @@
 header {
     background-color: var(--accent-primary);
     animation: fade-in 400ms ease-in;
+    -webkit-animation: fade-in 400ms ease-in;
+    -moz-animation: fade-in 400ms ease-in;
 }
 
 header > #navbar {
@@ -9,9 +11,33 @@ header > #navbar {
     padding: 0.60rem 0.75rem;
 }
 
+header > #navbar > .nav_left > .container > .btn_menu {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transition: all 400ms ease-in-out;
+    -webkit-transition: all 400ms ease-in-out;
+    -moz-transition: all 400ms ease-in-out;
+    filter: invert(0);
+    -webkit-filter: invert(0);
+}
+
+header > #navbar > .nav_left > .container > .btn_menu.rotate {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transition: all 400ms ease-in-out;
+    -webkit-transition: all 400ms ease-in-out;
+    -moz-transition: all 400ms ease-in-out;
+    filter: invert(1);
+    -webkit-filter: invert(1);
+}
+
 header > #navbar > * > .container {
     display: flex;
     column-gap: var(--column-gap-small);
+    -webkit-column-gap: var(--column-gap-small);
+    -moz-column-gap: var(--column-gap-small);
 }
 
 header > #navbar > * > .container > * {
@@ -23,6 +49,11 @@ header > #navbar > * > .container > * {
 
 #navbar > * > .container > button:hover {
     color: var(--background-primary);
+}
+
+a.github:hover > svg {
+    filter: invert(1);
+    -webkit-filter: invert(1);
 }
 
 .input_search {

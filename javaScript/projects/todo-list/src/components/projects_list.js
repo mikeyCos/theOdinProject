@@ -86,7 +86,7 @@ const projectsList = (state) => ({
             const anchorImg = new Image();
             anchorImg.setAttribute('onload', 'SVGInject(this)');
             anchorSpan.textContent = this.array[i].title;
-            anchor.href = `#${this.array[i].title};`
+            anchor.href = `#${this.array[i].title.toLowerCase()}`;
 
             listItem.setAttribute('data-uuid', this.array[i].uuid);
             anchor.classList.add('nav_project');
@@ -130,7 +130,7 @@ const projectsList = (state) => ({
             
             buildList.modules.forEach(module => {
                 module.removeSelection = listItem;
-            })
+            });
             this.removeSelection = listItem;
             const projectUUID = listItem.dataset.uuid;
             buildModalRemove(projectController.find(projectUUID));
@@ -138,13 +138,17 @@ const projectsList = (state) => ({
             // if there is no active project
             // OR the project's uuid we want to remove is the same as the current active project's uuid
             // update the content to the inbox
-
             if (projectController.findActive() === undefined || e === projectController.findActive().uuid) {
                 pubSub.publish('content', this.removeSelection.lastChild.firstChild);
             }
             projectController.remove(e);
-            buildList.modules.forEach(module => module.render());
-
+            if (projectController.findActive().title === 'projects') {
+                buildList.modules.forEach(module => {
+                    if (module.type !== 'misc') {
+                        module.render()
+                    }
+                });
+            }
             this.removeSelection.remove();
             buildList.modules.forEach(module => module.removeSelection = null);
         }

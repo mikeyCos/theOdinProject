@@ -12,7 +12,3 @@
 .item_for_removal {
     text-decoration: underline;
 }
-
-.form_buttons > button[type="submit"] {
-    background-color: rgba(200, 0, 0, 0.6);
-}

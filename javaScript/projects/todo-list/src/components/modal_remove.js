@@ -103,8 +103,10 @@ const modal = (state) => ({
         if (this.type === 'task') {
             pubSub.publish('removeTask', this.selection.uuidTask);
         } else {
-            // pubSub.publish('removeProject', this.selection.uuid);
-            pubSub.publish('removeProject');
+            pubSub.publish('removeProject', this.selection.uuid);
+            if (window.innerWidth < 768) {
+                pubSub.publish('sidebar');
+            }
         }
         this.closeForm();
     },

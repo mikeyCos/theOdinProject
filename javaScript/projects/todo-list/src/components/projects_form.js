@@ -105,7 +105,9 @@ const formProject = {
         projectController.addProject(this.formInputs);
         // buildList.modules.forEach(module => module.render())
         buildList.find('sidebar').render(); // will render only the sidebar
-        pubSub.publish('sidebar');
+        if (window.innerWidth < 768) {
+            pubSub.publish('sidebar');
+        }
         this.removeModal();
     }
 }

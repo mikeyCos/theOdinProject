@@ -9,13 +9,21 @@
 #sidebar.hide {
     visibility: hidden;
     transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
     transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    -moz-transition: all 300ms ease-in-out;
 }
 
 #sidebar.show {
     visibility: visible;
     transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
     transition: transform 300ms ease-in-out;
+    -webkit-transition: transform 300ms ease-in-out;
+    -moz-transition: transform 300ms ease-in-out;
 }
 
 #sidebar > .container {
@@ -33,6 +41,8 @@
 .nav_projects {
     text-decoration: none;
     column-gap: 0.75rem;
+    -webkit-column-gap: 0.75rem;
+    -moz-column-gap: 0.75rem;
 }
 
 #projects_container > *:first-child {
@@ -76,6 +86,8 @@
         width: min(40%, 350px);
         display: block;
         animation: slide-in-right 300ms ease-in-out;
+        -webkit-animation: slide-in-right 300ms ease-in-out;
+        -moz-animation: slide-in-right 300ms ease-in-out;
     }
 
     #sidebar.hide {
@@ -91,9 +103,13 @@
 @keyframes slide-in-right {
     0% {
         transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
     }
 
     100% {
         transform: translateX(0%);
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
     }
 }

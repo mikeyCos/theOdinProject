@@ -22,6 +22,8 @@
 
 div[role=button].task_new {
     animation: fade-in-scale 200ms ease-in;
+    -webkit-animation: fade-in-scale 200ms ease-in;
+    -moz-animation: fade-in-scale 200ms ease-in;
 }
 
 div[role=button] {
@@ -39,6 +41,8 @@ div[role=button]:hover {
     display: flex;
     padding: 1rem 0.25rem;
     column-gap: 0.75rem;
+    -webkit-column-gap: 0.75rem;
+    -moz-column-gap: 0.75rem;
 }
 
 .task_list_item > .container > .btn_checkbox_task {
@@ -122,6 +126,8 @@ div[role=button]:hover .task_actions{
     display: flex;
     align-items: center;
     column-gap: 0.5rem;
+    -webkit-column-gap: 0.5rem;
+    -moz-column-gap: 0.5rem;
 }
 
 .btn_date_task > span {
@@ -133,6 +139,8 @@ li > .btn_add_task {
     align-items: center;
     padding: var(--button-with-text-padding);
     column-gap: var(--column-gap-small);
+    -webkit-column-gap: var(--column-gap-small);
+    -moz-column-gap: var(--column-gap-small);
 }
 
 li > button.btn_add_task:hover > div {
@@ -150,10 +158,14 @@ li > button.btn_add_task:hover > span {
     0% {
         opacity: 0;
         transform: scale(0);
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
     }
 
     100% {
         opacity: 1;
         transform: scale(1);
+        -webkit-transform: scale(1);
+        -webkit-transform: scale(1);
     }
 }

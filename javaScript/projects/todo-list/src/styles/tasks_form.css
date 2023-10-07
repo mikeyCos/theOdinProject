@@ -23,6 +23,8 @@
     display: flex;
     align-items: center;
     column-gap: var(--column-gap);
+    -webkit-column-gap: var(--column-gap-small);
+    -moz-column-gap: var(--column-gap-small);
     padding: var(--button-with-text-padding);
 }
 
@@ -41,8 +43,6 @@
 }
 
 .form_item > #project {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     background: transparent;
     background-image: url('../assets/icons/chevron_down.svg');
     background-repeat: no-repeat;

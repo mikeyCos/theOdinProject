@@ -6,6 +6,7 @@ import { pubSub } from '../containers/pubsub';
 export default function buildMain() {
     const main = document.createElement('main');
     main.id = 'main_content';
+    mainContent.init();
     mainContent.cacheDOM(main);
     mainContent.render();
     mainContent.bindEvents();
@@ -23,18 +24,20 @@ const build = {
 export const mainContent = {
     activeContent: null,
     activeTab: null,
+    init: function() {
+        window.onload = () => {
+            this.anchors = document.querySelectorAll('a');
+            this.setActiveTab([...this.anchors].find(anchor => anchor.href.includes(projectController.findActive().title.toLowerCase())));
+        }
+    },
     cacheDOM: function(container) {
         this.main = container;
         this.mainOverlay = container.querySelector('.overlay_main_content');
-        window.onload = () => {
-            this.anchors = document.querySelectorAll('a');
-        }
     },
     render: function(key, uuid) {
         let content;
         if (!key) {
             content = build['project'](projectController.today[0].uuid);
-
         } else {
             this.main.lastChild.remove();
             content = build[key](uuid);
@@ -47,33 +50,35 @@ export const mainContent = {
     },
     switchContent: function(e) {
         this.resetActiveTab();
-
         let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
         let uuid = e.parentElement.dataset.uuid || e.dataset.inboxUuid;
         let renderKey = Object.keys(build).find(key => key === classSubstring);
         let args = ['project', uuid];
         if (renderKey && uuid) {
             // renders respective project
-            this.setActiveTab(e);
             args[0] = renderKey;
+            this.setActiveTab(e);
         } else if (!renderKey && !uuid) {
             // if home button is clicked
                 // renders the today section
             args[1] = projectController.today[0].uuid;
+            this.setActiveTab(e);
         } else if (classSubstring === 'delete') {
             // if a project is the content and is deleted,
                 // renders the inbox section
             args[1] = projectController.inbox[0].uuid;
+            this.setActiveTab([...this.anchors].find(anchor => anchor.href.includes(projectController.inbox[0].title.toLowerCase())));
         } else {
-            this.setActiveTab(e);
             args[0] = 'projects';
+            this.setActiveTab(e);
         }
         mainContent.render(args[0], args[1]);
     },
     setActiveTab: function(tab) {
         this.resetActiveTab();
+        const sidebarAnchor = [...this.anchors].find(anchor => 
+            anchor.href === tab.href || anchor.href.includes(tab.className.split(' ')[1]));
         tab.classList.add('active');
-        const sidebarAnchor = [...this.anchors].find(anchor => anchor.href === tab.href);
         if (sidebarAnchor) {
             sidebarAnchor.classList.add('active');
             this.activeTab = [sidebarAnchor, tab];
