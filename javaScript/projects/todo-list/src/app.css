@@ -248,7 +248,7 @@ button > * > svg {
     }
 }
 
-@media (hover: hover) {
+@media (hover: none) {
     /* targets only devices that can hover */
     .form_item > .task_input:not(:focus),
     .form_item > .project_input:not(:focus),
@@ -256,5 +256,4 @@ button > * > svg {
     .btn_add_project {
         background-color: rgba(0, 0, 0, 0.2);
     }
-
 }

@@ -114,7 +114,7 @@
     }
 }
 
-@media (hover: hover) {
+@media (hover: none) {
     /* targets only devices that can hover */
     #projects_container > *:first-child {
         font-weight: bold;

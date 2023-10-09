@@ -44,7 +44,7 @@
     color: var(--priority-4-color);
 }
 
-@media (hover: hover) {
+@media (hover: none) {
     /* targets only devices that can hover */
     #task_select_priority_options > .container > ul > li,
     #task_select_project_options > .container > ul > li {

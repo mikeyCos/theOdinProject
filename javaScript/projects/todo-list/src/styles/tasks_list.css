@@ -160,10 +160,6 @@ li > button.btn_add_task:hover > span {
     font-weight: bold;
 }
 
-@media screen and (min-width:768px) {
-
-}
-
 @keyframes fade-in-scale {
     0% {
         opacity: 0;
@@ -180,8 +176,8 @@ li > button.btn_add_task:hover > span {
     }
 }
 
-@media (hover: hover) {
-    /* targets only devices that can hover */
+@media (hover: none) {
+    /* targets only devices that don't hover */
     .task_list_item > .container > .btn_checkbox_task >.checkbox_circle > svg {
         opacity: 1;
         background-color: color-mix(in srgb, currentColor 25%, transparent);
