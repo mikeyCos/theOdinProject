@@ -43,3 +43,11 @@
 .priority_4  {
     color: var(--priority-4-color);
 }
+
+@media (hover: hover) {
+    /* targets only devices that can hover */
+    #task_select_priority_options > .container > ul > li,
+    #task_select_project_options > .container > ul > li {
+        padding: 0.8rem;
+    }
+}

@@ -113,3 +113,15 @@
         -moz-transform: translateX(0%);
     }
 }
+
+@media (hover: hover) {
+    /* targets only devices that can hover */
+    #projects_container > *:first-child {
+        font-weight: bold;
+    }
+
+    #sidebar > .container:hover .btn_add_project {
+        visibility: visible;
+        color: var(--accent-primary);
+    }
+}

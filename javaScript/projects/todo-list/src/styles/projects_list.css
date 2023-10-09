@@ -44,3 +44,15 @@
 .btn_delete_project {
     padding: var(--button-no-text-padding);
 }
+
+@media (hover: hover) {
+    /* targets only devices that can hover */
+    .projects_list > * > li {
+        font-weight: bold;
+    }
+
+    .projects_list > * > li span,
+    .projects_list > * > li:has(> a.active) span {
+        visibility: visible;
+    }
+}

@@ -165,6 +165,7 @@ button > * > svg {
 
 .form_item > .task_input,
 .form_item > .project_input {
+    min-width: 100%;
     border: none;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
@@ -245,4 +246,15 @@ button > * > svg {
     100% {
         opacity: 100%;
     }
+}
+
+@media (hover: hover) {
+    /* targets only devices that can hover */
+    .form_item > .task_input:not(:focus),
+    .form_item > .project_input:not(:focus),
+    .projects >:last-child > .nav_projects > .btn_add_project,
+    .btn_add_project {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
 }
