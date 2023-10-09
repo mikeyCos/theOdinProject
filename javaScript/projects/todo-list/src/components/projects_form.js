@@ -5,7 +5,7 @@ import '../styles/projects_form.css';
 
 // renders a form to create a project
 export default function buildProjectForm() {
-    projectController.setActive();
+    // projectController.setActive();
     const dialogElement = document.createElement('dialog');
     dialogElement.id = 'form_project';
     dialogElement.appendChild(formProject.render());
@@ -101,12 +101,11 @@ const formProject = {
         // optional, form validation
             // if form is valid
                 // then addProject()
-        // addProject(this.formInputs);
         projectController.addProject(this.formInputs);
-        // buildList.modules.forEach(module => module.render())
         buildList.find('sidebar').render(); // will render only the sidebar
+        pubSub.publish('content', projectController.findActive());
         if (window.innerWidth < 768) {
-            pubSub.publish('sidebar');
+            pubSub.publish('hideSidebar');
         }
         this.removeModal();
     }

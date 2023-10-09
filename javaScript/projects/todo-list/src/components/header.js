@@ -67,7 +67,6 @@ const header = {
                 childElement: 'img',
                 src: assets.icons.files['add.svg']
             },
-            // {element: 'button', class: 'bt-settingsn', childElement: 'img, src: null},
             {
                 element: 'a',
                 attributes: {
@@ -117,17 +116,7 @@ const header = {
         if (className && className.includes('home')) {
             subscriber = 'content';
         } else {
-            // if (this.btnMenu.classList.contains('rotate')) {
-            //     this.btnMenu.classList.remove('rotate')
-            // } else {
-            //     this.btnMenu.classList.add('rotate');
-            // }
-            // btn.classList.add('rotate');
-            // setTimeout(() => {
-            //     btn.classList.remove('rotate');
-            // }, "300");
-            // this.animateMenu();
-            subscriber = 'sidebar'
+            subscriber = 'toggleSidebar'
         }
         pubSub.publish(subscriber, e.currentTarget);
     },
@@ -144,7 +133,6 @@ const header = {
             if (this.btnMenu.classList.contains('rotate')) {
                 this.btnMenu.classList.remove('rotate');
             } else {
-                // setTimeout(() => this.btnMenu.classList.add('rotate'), 5000);
                 this.btnMenu.classList.add('rotate');
             }
         }

@@ -112,10 +112,15 @@ export const projectController = {
     allProjects: [],
     addProject: function(inputs) {
         const formValues = getFormValues(inputs);
-        this.projects.push(Object.assign(buildProject(), formValues));
+        const newProject = buildProject();
+        this.projects.push(Object.assign(newProject, formValues));
         this.setAllProjects()
+        this.setActive(newProject.uuid);
     },
     remove: function(uuid) {
+        if (uuid === projectController.findActive().uuid) {
+            pubSub.publish('content', projectController.inbox[0].uuid);
+        }
         this.projects.splice(this.projects.indexOf(this.find(uuid)), 1);
         this.setAllProjects()
     },
@@ -129,7 +134,7 @@ export const projectController = {
 
         if (uuid) {
             this.find(uuid).active = true;
-        } else {
+        } else if (!uuid && typeof uuid === 'boolean') {
             this.inbox.active = true;
         }
     },

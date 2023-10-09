@@ -2,17 +2,18 @@ import buildProjects from '../components/projects';
 import buildProjectTasks from '../components/project_tasks';
 import { projectController } from '../containers/project_controller';
 import { pubSub } from '../containers/pubsub';
+import { buildList } from './projects_list';
 
 export default function buildMain() {
+    mainContent.init();
     const main = document.createElement('main');
     main.id = 'main_content';
-    mainContent.init();
     mainContent.cacheDOM(main);
     mainContent.render();
     mainContent.bindEvents();
 
     pubSub.subscribe('content', mainContent.switchContent);
-
+    pubSub.subscribe('updateTabs', mainContent.updateTabs);
     return main;
 }
 
@@ -24,11 +25,28 @@ const build = {
 export const mainContent = {
     activeContent: null,
     activeTab: null,
+    navTabs: {
+        getAllAnchors: function() {
+            return this.static.concat(this.dynamic);
+        },
+    },
     init: function() {
-        window.onload = () => {
-            this.anchors = document.querySelectorAll('a');
-            this.setActiveTab([...this.anchors].find(anchor => anchor.href.includes(projectController.findActive().title.toLowerCase())));
-        }
+        window.onload = () => { 
+            this.navTabs.static = [
+                document.querySelector(`a[href='#inbox']`),
+                document.querySelector(`a[href='#today']`),
+                document.querySelector(`.nav_projects`),
+            ];
+
+            this.navTabs.dynamic = [
+                ...buildList.find('sidebar').projectsListAnchors
+            ];
+            this.setActiveTab(this.navTabs.static[1]);
+        };
+    },
+    updateTabs: function(anchors) {
+        // updates navTabs.dynamic
+        this.navTabs.dynamic = [...anchors];
     },
     cacheDOM: function(container) {
         this.main = container;
@@ -42,55 +60,55 @@ export const mainContent = {
             this.main.lastChild.remove();
             content = build[key](uuid);
         }
+        
+        if (document.readyState === 'complete') {
+            this.setActiveTab(content);
+        }
+
         this.setActiveContent(content);
         this.main.appendChild(content);
     },
     bindEvents: function() {
+        this.updateTabs = this.updateTabs.bind(this);
         this.switchContent = this.switchContent.bind(this);
     },
     switchContent: function(e) {
-        this.resetActiveTab();
-        let classSubstring = e.className.includes('delete') ? e.className.substring(e.className.indexOf('_') + 1, e.className.lastIndexOf('_')) : e.className.substring(e.className.lastIndexOf('_') + 1);
-        let uuid = e.parentElement.dataset.uuid || e.dataset.inboxUuid;
-        let renderKey = Object.keys(build).find(key => key === classSubstring);
-        let args = ['project', uuid];
-        if (renderKey && uuid) {
-            // renders respective project
-            args[0] = renderKey;
-            this.setActiveTab(e);
-        } else if (!renderKey && !uuid) {
-            // if home button is clicked
-                // renders the today section
-            args[1] = projectController.today[0].uuid;
-            this.setActiveTab(e);
-        } else if (classSubstring === 'delete') {
-            // if a project is the content and is deleted,
-                // renders the inbox section
-            args[1] = projectController.inbox[0].uuid;
-            this.setActiveTab([...this.anchors].find(anchor => anchor.href.includes(projectController.inbox[0].title.toLowerCase())));
+        let renderKey = 'project';
+        let uuid = null;
+        if (e instanceof HTMLElement) {
+            if (e.className.includes('today')) {
+                // if home button is clicked
+                    // renders the today section
+                uuid = projectController.today[0].uuid;
+            } else if (e.dataset.inboxUuid) {
+                // if a project is the content and is deleted
+                    // renders the inbox section
+                uuid = e.dataset.inboxUuid;
+            } else if (e.parentElement.dataset.uuid) {
+                // renders respective project
+                uuid = e.parentElement.dataset.uuid;
+            } else {
+                // renders projects section
+                renderKey = 'projects';
+            }
+        } else if (e.uuid) {
+            // new project created
+            uuid = e.uuid;
         } else {
-            args[0] = 'projects';
-            this.setActiveTab(e);
+            uuid = projectController.inbox[0].uuid;
         }
-        mainContent.render(args[0], args[1]);
+        this.render(renderKey, uuid);
     },
     setActiveTab: function(tab) {
-        this.resetActiveTab();
-        const sidebarAnchor = [...this.anchors].find(anchor => 
-            anchor.href === tab.href || anchor.href.includes(tab.className.split(' ')[1]));
-        tab.classList.add('active');
-        if (sidebarAnchor) {
-            sidebarAnchor.classList.add('active');
-            this.activeTab = [sidebarAnchor, tab];
+        this.activeTab ? this.activeTab.classList.remove('active') : null;
+        if (tab.firstChild.tagName !== 'H1') {
+            this.activeTab = tab;
         } else {
-            this.activeTab = [tab];
+            this.activeTab = this.navTabs.getAllAnchors().find(anchor => 
+                anchor.href.split('#')[1].includes(tab.firstChild.textContent.toLowerCase())
+            );
         }
-    },
-    resetActiveTab: function() {
-        if (this.activeTab) {
-            this.activeTab.forEach(anchor => anchor.classList.remove('active'));
-            this.activeTab = null
-        }
+        this.activeTab.classList.add('active');
     },
     setActiveContent: function(content) {
         if (this.activeContent) {

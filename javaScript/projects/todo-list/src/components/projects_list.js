@@ -22,7 +22,6 @@ const buildProjectsList = (type, container, array) => {
         )
 }
 
-// rename to buildProjectsList (?)
 export const buildList = {
     modules: [],
     add: function (type, container, array) {
@@ -51,12 +50,10 @@ const projectsList = (state) => ({
     
         projectsContainer.classList.add('projects');
         list.classList.add('projects_list');
-
         list.appendChild(this.render())
         this.cacheDOM(list);
         this.bindEvents();
         this.container.appendChild(list);
-
     },
     cacheDOM: function(container)  {    
         this.ulList = container;
@@ -64,6 +61,9 @@ const projectsList = (state) => ({
         this.projectsListItems = this.ulList.querySelectorAll('li');
         this.projectsListAnchors = this.ulList.querySelectorAll('li a');
         this.btnDeleteProject = this.ulList.querySelectorAll('.btn_delete_project');
+        if (this.type === 'sidebar') {
+            pubSub.publish('updateTabs', this.projectsListAnchors);
+        }
     },
     bindEvents: function() {
         this.removeProject = this.removeProject.bind(this);
@@ -108,7 +108,6 @@ const projectsList = (state) => ({
                 buttonSpan.appendChild(deleteButton);
                 listItem.appendChild(buttonSpan);
             }
-
             listItems.appendChild(listItem);
         }
 
@@ -116,9 +115,6 @@ const projectsList = (state) => ({
             this.listContainer.remove();
             this.ulList.appendChild(listItems);
             // changes content to the newly project is added
-            if (this.projectsListItems.length < this.array.length && this.type === 'sidebar') {
-                pubSub.publish('content', [...listItems.children].splice(-1).pop().firstChild);
-            }
             this.cacheDOM(this.ulList);
             this.bindEvents();
         }
@@ -127,37 +123,32 @@ const projectsList = (state) => ({
     removeProject: function(e) {
         if (e instanceof MouseEvent) {
             const listItem = e.currentTarget.parentElement.parentElement;
-            
+            // sets removeSelection for 'sidebar' and 'content' modules
             buildList.modules.forEach(module => {
-                module.removeSelection = listItem;
+                if (module.type !== 'misc') {
+                    module.removeSelection = [...module.projectsListItems].find(item => item.dataset.uuid === listItem.dataset.uuid);
+                }
             });
-            this.removeSelection = listItem;
+
             const projectUUID = listItem.dataset.uuid;
             buildModalRemove(projectController.find(projectUUID));
         } else {
-            // if there is no active project
-            // OR the project's uuid we want to remove is the same as the current active project's uuid
-            // update the content to the inbox
-            if (projectController.findActive() === undefined || e === projectController.findActive().uuid) {
-                pubSub.publish('content', this.removeSelection.lastChild.firstChild);
-            }
             projectController.remove(e);
-            if (projectController.findActive().title === 'projects') {
-                buildList.modules.forEach(module => {
-                    if (module.type !== 'misc') {
-                        module.render()
-                    }
-                });
-            }
-            this.removeSelection.remove();
-            buildList.modules.forEach(module => module.removeSelection = null);
+            // removes and resets removeSelection for 'sidebar' and 'content' modules 
+            buildList.modules.forEach(module => {
+                if (module.type !== 'misc' && module.removeSelection) {
+                    module.removeSelection.remove();
+                    module.removeSelection = null;
+                }
+            });
         }
     },
     publish: function(e) {
         e.preventDefault();
+
         pubSub.publish('content', e.currentTarget);
         if ((this.type === 'sidebar'|| this.type === 'misc') && window.innerWidth < 768) {
-            pubSub.publish('sidebar');
+            pubSub.publish('hideSidebar');
         }
     },
     clearCache: function() {

@@ -5,6 +5,7 @@ import { projectController } from '../containers/project_controller';
 import '../styles/projects.css';
 
 export default function buildProjects() {
+    projectController.setActive();
     const projectsContainer = document.createElement('div');
     projectsContainer.classList.add('projects');
     const header = document.createElement('h1');

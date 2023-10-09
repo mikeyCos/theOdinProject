@@ -12,15 +12,20 @@ export default function buildSidebar(content) {
 
     if (window.innerWidth > 768) {
         sidebarWrapper.classList.add('show');
+        sidebar.on = true;
     } else {
         sidebarWrapper.classList.add('hide');
     }
 
     sidebarWrapper.appendChild(sidebar.render());
     sidebar.cacheDOM(sidebarWrapper);
+    touchController.init();
     sidebar.bindEvents();
 
-    pubSub.subscribe('sidebar', sidebar.toggleSidebar); // published from projects_list.js
+    // published in header.js
+    pubSub.subscribe('toggleSidebar', sidebar.toggleSidebar);
+    // published in projects_list.js, projects_form.js, modal_remove.js
+    pubSub.subscribe('hideSidebar', sidebar.hideSidebar);
     return sidebarWrapper;
 }
 
@@ -35,16 +40,19 @@ const sidebar = {
         this.projectsContainer = this.sidebar.querySelector('#projects_container');
         this.anchorProjects = this.projectsContainer.querySelector('.nav_projects');
         this.btnAddProject = container.querySelector('.btn_add_project');
-
     },
     bindEvents: function() {
         this.toggleSidebar = this.toggleSidebar.bind(this);
+        this.showSidebar = this.showSidebar.bind(this);
+        this.hideSidebar = this.hideSidebar.bind(this);
         this.publish = this.publish.bind(this);
+        this.callDimOverlay = this.callDimOverlay.bind(this);
         this.btnAddProject.addEventListener('click', buildProjectForm);
         this.anchorProjects.addEventListener('click', this.publish, { capture: true });
         this.sidebar.addEventListener('click', this.toggleSidebar);
-        this.callDimOverlay = this.callDimOverlay.bind(this);
         window.addEventListener('resize', this.callDimOverlay);
+        document.body.addEventListener('touchstart', touchController.setTouchStart, false);
+        document.body.addEventListener('touchend', touchController.setTouchEnd, false);
     },
     render: function() {
         const sidebarContainer = document.createElement('div');
@@ -84,24 +92,81 @@ const sidebar = {
             } 
         } else {
             if (this.sidebar.classList.contains('show')) {
-                this.sidebar.classList.remove('show');
-                this.sidebar.classList.add('hide');
+                this.hideSidebar();
             } else {
-                this.sidebar.classList.remove('hide');
-                this.sidebar.classList.add('show');
+                this.showSidebar();
             }
-            this.callDimOverlay()
-            pubSub.publish('animate_nav'); //testing
+        }
+    },
+    hideSidebar: function() {
+        if (this.sidebar.classList.contains('show')) {
+            this.sidebar.classList.remove('show');
+            this.sidebar.classList.add('hide');
+            this.callDimOverlay(); 
+            pubSub.publish('animate_nav');
+        }
+    },
+    showSidebar: function() {
+        if (!this.sidebar.classList.contains('show')) {
+            this.sidebar.classList.remove('hide');
+            this.sidebar.classList.add('show');
+            this.callDimOverlay();
+            pubSub.publish('animate_nav');
         }
     },
     publish: function(e) {
         e.stopImmediatePropagation();
+        e.preventDefault();
+        // when sidebar projects anchor is clicked
+        // change content to projects
+        // if window width is < 768px
+            //sidebar will close 
         if (window.innerWidth < 768) {
-            this.toggleSidebar();
+            this.hideSidebar();
         }
         pubSub.publish('content', e.currentTarget);
     },
     callDimOverlay: function() {
         pubSub.publish('dim', this.sidebar);
+    },
+}
+
+const touchController = {
+    touchStartX: null,
+    touchEndX: null,
+    touchStartY: null,
+    touchEndY: null,
+    init: function() {
+        this.swipe = this.swipe.bind(this);
+        this.setTouchStart = this.setTouchStart.bind(this);
+        this.setTouchEnd = this.setTouchEnd.bind(this);
+    },
+    setTouchStart: function(e) {
+        this.touchStartX = e.changedTouches[0].screenX;
+        this.touchStartY = e.changedTouches[0].screenY;
+    },
+    setTouchEnd: function(e) {
+        this.touchEndX = e.changedTouches[0].screenX;
+        this.touchEndY = e.changedTouches[0].screenY;
+        this.swipe();
+    },
+    swipe: function() {
+        if (this.touchEndX < this.touchStartX) {
+            // swipe left
+            sidebar.hideSidebar();
+        }
+
+        if (this.touchEndX > this.touchStartX) {
+            // swipe right
+            sidebar.showSidebar();
+        }
+
+        if (this.touchEndY < this.touchStartY) {
+            // swipe up
+        }
+
+        if (this.touchEndY > this.touchStartY) {
+            // swipe down
+        }
     },
 }

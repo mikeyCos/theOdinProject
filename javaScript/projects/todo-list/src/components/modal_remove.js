@@ -105,7 +105,7 @@ const modal = (state) => ({
         } else {
             pubSub.publish('removeProject', this.selection.uuid);
             if (window.innerWidth < 768) {
-                pubSub.publish('sidebar');
+                pubSub.publish('hideSidebar');
             }
         }
         this.closeForm();
