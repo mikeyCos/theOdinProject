@@ -8,13 +8,14 @@ export default {
   render() {
     const div = document.createElement('div');
     const paragraph = document.createElement('p');
+    const foo = 'test';
 
     const icon = new Image();
     icon.src = Icon;
-    paragraph.textContent = 'Lorem ipsum something something...'
+    paragraph.textContent = 'Lorem ipsum something something...';
 
     div.appendChild(icon);
     div.appendChild(paragraph);
     return div;
-  }
-}
+  },
+};
