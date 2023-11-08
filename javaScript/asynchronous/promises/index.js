@@ -28,25 +28,53 @@ watchTutorialPromise()
   });
 
 // testing...
+
 function meowPromise(foo) {
   return new Promise((resolve, reject) => {
-    // resolve('meow');
-    if (foo === 'meow') {
-      resolve(foo);
-    } else {
-      reject(foo);
-    }
+    setTimeout(() => {
+      if (foo === 'meow') {
+        resolve(foo);
+      } else {
+        reject(foo);
+      }
+    }, 5000);
   });
 }
 
-meowPromise('meow')
-  .then((message) => {
-    console.log(message);
-    return message;
-  })
-  .then((message) => {
-    console.log(`${message} ${message}`);
-  })
-  .catch((err) => {
-    console.log(`error: ${err}`);
-  });
+let bar;
+
+setTimeout(() => {
+  bar = 'meow';
+}, 5000);
+
+setTimeout(() => {
+  meowPromise(bar)
+    .then((message) => {
+      console.log(message);
+      return message;
+    })
+    .then((message) => {
+      console.log(`${message} ${message}`);
+      return 'From second then';
+    })
+    .then((message) => {
+      console.log(message);
+      console.log('Third then running');
+    })
+    .catch((err) => {
+      console.log(`error: ${err}`);
+    });
+}, 1000);
+
+// const promise = fetch('./data/cats.json', { mode: 'cors' })
+//   .then((resp) => resp.json())
+// // .then(getCats)
+// // .catch(handleError);
+
+// // function getCats(data) {
+// //   console.log(data);
+// // }
+
+// // function handleError(err) {
+// //   console.log(err);
+// }

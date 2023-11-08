@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Introduction</title>
+  </head>
+  <body>
+    <img src="" alt="cat gif" />
+    <label for="gif_search"></label>
+    <input
+      id="gif_search"
+      class="input_search"
+      type="search"
+      name="gif_search"
+    />
+    <button class="btn_search" type="button">Search</button>
+    <button class="btn_gif" type="button">Change GIF</button>
+    <script defer>
+      const img = document.querySelector('img');
+      const inputSearch = document.querySelector('.input_search');
+      const btnSearch = document.querySelector('.btn_search');
+      const btnGIF = document.querySelector('.btn_gif');
+      let searchValue = 'cats';
+
+      async function getGIF() {
+        try {
+          const response = await fetch(
+            `https://api.giphy.com/v1/gifs/translate?api_key=WVxy9vGvpIuh5j0KfAo0jT3nDmcQDlqM&s=${searchValue}`,
+            { mode: 'cors' }
+          );
+
+          console.log(response.status);
+
+          if (response.status === 404) {
+            throw new Error(response.status);
+          }
+
+          const responseData = await response.json();
+          updateImgSrc(responseData.data.images.original.url);
+        } catch (err) {
+          handleError(err);
+        }
+      }
+
+      function updateImgSrc(src) {
+        img.src = src;
+      }
+
+      function handleError(err) {
+        console.log(`handleError`);
+        console.log(`Error: ${err}`);
+        searchValue = 'cats';
+        getGIF();
+      }
+
+      function setSearchValue(e) {
+        searchValue = inputSearch.value;
+        console.log(searchValue);
+      }
+
+      btnGIF.addEventListener('click', (e) => {
+        getGIF();
+      });
+
+      inputSearch.addEventListener('change', setSearchValue);
+      inputSearch.addEventListener('search', getGIF);
+      btnSearch.addEventListener('click', getGIF);
+
+      getGIF();
+      console.log(inputSearch.value);
+      console.log(`async code is running still`);
+    </script>
+  </body>
+</html>
