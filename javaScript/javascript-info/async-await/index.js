@@ -139,15 +139,27 @@ async function loadJson(url) {
 // ---------------------------------------------------
 // --------------------MY SOLUTION--------------------
 async function wait() {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+  try {
+    const foo = await new Promise(
+      (resolve, reject) => setTimeout(resolve),
+      2000
+    );
+  } catch (error) {
+    throw 'Promise has been rejected!';
+  }
 
   return 10;
 }
 
 function f() {
-  wait().then((message) => {
-    console.log(message);
-  });
+  wait()
+    .then((message) => {
+      console.log(message);
+    })
+    .catch((err) => {
+      console.log(`Rejected: ${err}`);
+    });
   // ...what should you write here?
   // we need to call async wait() and wait to get 10
   // remember, we can't use "await"
