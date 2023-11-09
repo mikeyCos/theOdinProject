@@ -1,6 +1,6 @@
 # Readme
 ---
-## Live preview: [Project Name](https://mikeycos.github.io/)
+## Live preview: [Weather App](https://mikeycos.github.io/theOdinProject/javaScript/projects/weather-app/dist)
 ---
 ### Ideas
 1. Placeholder

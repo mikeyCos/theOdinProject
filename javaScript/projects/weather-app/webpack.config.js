@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   entry: {
-    index: './src/index.js',
+    index: './src/app.js',
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Module Webpack Starter',
+      title: 'Weather App',
     }),
   ],
   output: {
@@ -40,4 +40,4 @@ module.exports = {
   optimization: {
     runtimeChunk: 'single',
   },
-}
+};
