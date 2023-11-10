@@ -1,12 +1,37 @@
-import test from './components/test';
 import './app.css';
-import getData from './containers/api_controller';
+import SVGInject from '@iconfu/svg-inject';
+import createElement from './utilities/createElement';
+import buildHeader from './components/header/header';
+import getWeather from './containers/api_controller';
 
 // testing, global
-window.getData = getData;
+window.getWeather = getWeather;
 
-test.print();
-document.body.appendChild(test.render());
+(() => {
+  const build = {
+    header: buildHeader,
+  };
+
+  const app = {
+    init() {
+      console.log('app.init() running');
+      this.render();
+    },
+    render() {
+      const appWrapper = createElement('div');
+      const appContent = createElement('div');
+      appWrapper.id = 'weather_app';
+      appContent.id = 'content';
+
+      appWrapper.appendChild(build.header.render());
+      appWrapper.appendChild(appContent);
+
+      document.body.appendChild(appWrapper);
+    },
+  };
+
+  app.init();
+})();
 
 // getData('london');
 

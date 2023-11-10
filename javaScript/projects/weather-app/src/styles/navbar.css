@@ -1,0 +1,157 @@
+#navbar > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+#navbar > .container > * {
+  list-style: none;
+}
+
+#navbar > .container > * > li {
+  position: relative;
+  padding: 0.3rem;
+}
+
+#navbar > .container > * > li:first-of-type {
+  /* value needs to be equal to .nav_btn padding value */
+  margin-top: 0.3rem;
+}
+
+/* optional */
+#navbar > .container > *:not(.nav_left) > li::after,
+#navbar > .container > *:not(.nav_left) > li:hover::after {
+  position: absolute;
+  content: '';
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(255, 187, 69);
+  z-index: -1;
+}
+
+/* optional */
+#navbar > .container > *:not(.nav_left) > li::after {
+  width: 0%;
+  transform: skewX(0deg);
+  transition: all 500ms ease-in-out;
+}
+
+/* optional */
+#navbar > .container > *:not(.nav_left) > li:hover::after {
+  width: 100%;
+  transform: skewX(8deg) scaleX(1.03);
+  transition: all 200ms ease-in-out;
+}
+
+#navbar > .container > * > li > a {
+  display: flex;
+  align-items: center;
+}
+
+#navbar > .container > .nav_right {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(143, 103, 223);
+  padding: 1rem;
+  transform: translateY(-100%);
+}
+
+#navbar > .container > .nav_right.visible {
+  visibility: visible;
+  transform: translateY(0%);
+  transition: transform 200ms ease-in-out;
+}
+
+.nav_item,
+.nav_item:visited {
+  color: var(--primary-font-color, rgb(0, 0, 0));
+  text-decoration: none;
+}
+
+.nav_item > svg,
+.nav_btn > svg {
+  width: clamp(2rem, 3vw, 3.5rem);
+  height: auto;
+}
+
+.nav_btn {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0.3rem;
+  z-index: 1;
+}
+
+.nav_btn:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.nav_btn:hover > svg {
+  filter: invert(1);
+}
+
+@media screen and (min-width: 768px) {
+  #navbar > .container > * {
+    align-items: center;
+  }
+
+  #navbar > .container > .nav_right {
+    position: relative;
+    visibility: visible;
+    background-color: transparent;
+    padding: 0;
+    transform: translateY(0%);
+    display: flex;
+    height: inherit;
+    width: inherit;
+  }
+
+  #navbar > .container > *:not(.nav_left) > li:last-of-type:after,
+  #navbar > .container > *:not(.nav_left) > li:last-of-type:hover:after {
+    content: none;
+  }
+
+  #navbar > .container > *:not(.nav_left) > li:not(:last-child):after,
+  #navbar > .container > *:not(.nav_left) > li:not(:last-child):hover::after {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 1rem;
+  }
+
+  /* optional */
+  #navbar > .container > *:not(.nav_left) > li:not(:last-child):after {
+    width: 0%;
+    height: 0%;
+    transform: skewX(0deg);
+    transition: all 200ms ease-in-out;
+  }
+
+  /* optional */
+  #navbar > .container > *:not(.nav_left) > li:not(:last-child):hover::after {
+    width: 60%;
+    height: 12%;
+    transform: skewX(0deg) scaleX(1);
+    transition: all 200ms ease-in-out;
+  }
+
+  #navbar > .container > * > li:first-of-type {
+    margin-top: 0;
+  }
+
+  .nav_btn {
+    display: none;
+  }
+}
