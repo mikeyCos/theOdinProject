@@ -1,5 +1,8 @@
 # Changelog
 ---
+### 10 NOV 2023
+- Implemented publisher and subscriber, continued to structure component directories, initialized modules: `forecast.js`, `hourly.js`, and `today.js`, and city/postal code can now be entered in input and the weather data object is logged in the console.  
+---
 ### 09 NOV 2023
 - Removed `server.js` and uninstalled `webpack-dev-server`, a header including a navigation bar are rendered, `forecast` will now be the default API mode, initialized empty `pubSub.js` module, `createElement.js` is a utility module that will return elements with a valid `tagName`, each component will be in their own directory, and `setAttributes()` method will loop through attributes provided in a component's config file and `textContent` will be set if the property exists in the attributes object.  
 ---

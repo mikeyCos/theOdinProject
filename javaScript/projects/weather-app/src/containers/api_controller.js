@@ -1,3 +1,4 @@
+import pubSub from './pubSub';
 // use WeatherAPI
 // https://www.weatherapi.com/docs/
 // http://api.weatherapi.com/v1/current.json?key=84ac7310e56448a1896212731230611&q=London
@@ -19,6 +20,7 @@ export default async function getWeather(value) {
     );
 
     const weatherData = await response.json();
+    pubSub.publish('setWeather', !response.ok ? weatherData.error : weatherData);
     if (!response.ok) {
       console.log(weatherData);
       throw new Error(weatherData.error.message);
@@ -27,7 +29,11 @@ export default async function getWeather(value) {
     // code below the if block will only run if there are no errors
     console.log(weatherData);
     console.log(weatherData.current);
+
+    // pubSub.publish('setWeather', weatherData);
   } catch (err) {
     console.log(err);
   }
 }
+
+pubSub.subscribe('getWeather', getWeather);

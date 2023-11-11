@@ -1,15 +1,14 @@
 import './app.css';
-import SVGInject from '@iconfu/svg-inject';
+import '@iconfu/svg-inject';
 import createElement from './utilities/createElement';
-import buildHeader from './components/header/header';
-import getWeather from './containers/api_controller';
-
-// testing, global
-window.getWeather = getWeather;
+import headerBuilder from './components/header/header';
+import mainBuilder from './components/main/main';
+import './containers/api_controller';
 
 (() => {
   const build = {
-    header: buildHeader,
+    header: headerBuilder,
+    main: mainBuilder,
   };
 
   const app = {
@@ -23,7 +22,8 @@ window.getWeather = getWeather;
       appWrapper.id = 'weather_app';
       appContent.id = 'content';
 
-      appWrapper.appendChild(build.header.render());
+      appWrapper.appendChild(build.header());
+      appContent.appendChild(build.main());
       appWrapper.appendChild(appContent);
 
       document.body.appendChild(appWrapper);

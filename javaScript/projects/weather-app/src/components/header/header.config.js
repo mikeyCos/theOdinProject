@@ -21,6 +21,7 @@ export default [
           type: 'search',
           placeholder: 'Enter city or postal code',
         },
+        error: 'Enter a valid city or postal code',
       },
     ],
   },
