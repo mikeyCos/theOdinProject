@@ -11,10 +11,10 @@ export default {
       );
     }
   },
-  publish(subscriber, data) {
+  publish(subscriber, ...data) {
     if (this.subscribers[subscriber]) {
       this.subscribers[subscriber].forEach((fn) => {
-        fn(data);
+        fn(...data);
       });
     }
   },

@@ -1,9 +1,13 @@
 import pubSub from '../../containers/pubSub';
 import createElement from '../../utilities/createElement';
 import homeBuilder from '../home/home';
+import errorBuilder from '../error/error';
+import tabsBuilder from '../tabs/tabs';
 
 const build = {
   home: homeBuilder,
+  error: errorBuilder,
+  tabs: tabsBuilder,
 };
 
 const mainBuilder = {
@@ -12,43 +16,42 @@ const mainBuilder = {
   init() {
     console.log('init() methid running from main.js');
   },
-  setWeather(weatherData) {
-    this.weather = weatherData;
-    console.log(this.weather);
-  },
   cacheDOM(mainElement) {
     console.log('cacheDOM() running from main.js');
     this.main = mainElement;
   },
   bindEvents() {
     console.log('bindEvents() running from main.js');
-
-    this.setWeather = this.setWeather.bind(this);
     this.switchContent = this.switchContent.bind(this);
-    pubSub.subscribe('setWeather', this.setWeather);
+    pubSub.subscribe('switchContent', this.switchContent);
   },
-  render(key) {
+  render(key, data) {
     console.log('render() running from main.js');
 
     let content;
     if (!key) {
       // initial onload
-      const main = createElement('main');
-      main.id = 'main_content';
       content = build.home();
-      main.appendChild(content);
-
-      this.cacheDOM(main);
-      this.bindEvents();
-      return main;
+      // this.bindEvents();
     } else {
-      return 'test';
       // render today
+      content = build[key](data);
+      this.main.lastChild.remove();
     }
+    this.main.appendChild(content);
   },
   switchContent(e) {
+    let renderKey;
     console.log('switchContent() running from main.js');
     console.log(e);
+    if (e.error) {
+      console.log('fetch error');
+      renderKey = 'error';
+    } else {
+      console.log('fetch success');
+      renderKey = 'tabs';
+    }
+    this.render(renderKey, e);
   },
   setActiveTab(tab) {
     console.log('setActiveTab() running from main.js');
@@ -56,5 +59,11 @@ const mainBuilder = {
 };
 
 export default function buildMain() {
-  return mainBuilder.render();
+  // return mainBuilder.render();
+  const main = createElement('main');
+  main.id = 'main_content';
+  mainBuilder.cacheDOM(main);
+  mainBuilder.bindEvents();
+  mainBuilder.render();
+  return main;
 }

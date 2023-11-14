@@ -8,14 +8,14 @@ const homeBuilder = {
     console.log('bindEvents() running from home.js');
   },
   render() {
-    const home = createElement('div');
-    home.id = 'home';
+    const homeSection = createElement('section');
+    homeSection.id = 'home';
     const homeHeading = createElement('h1');
     homeHeading.setAttributes({ textContent: 'HOME' });
 
-    home.appendChild(homeHeading);
+    homeSection.appendChild(homeHeading);
 
-    return home;
+    return homeSection;
   },
 };
 

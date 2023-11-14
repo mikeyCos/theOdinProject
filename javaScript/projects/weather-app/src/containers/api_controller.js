@@ -11,24 +11,27 @@ export default async function getWeather(value) {
   try {
     const response = await fetch(
       // static value
-      // 'http://api.weatherapi.com/v1/current.json?key=84ac7310e56448a1896212731230611&q=London&days=1&aqi=no&alerts=no',
+      // 'https://api.weatherapi.com/v1/current.json?key=84ac7310e56448a1896212731230611&q=London&days=1&aqi=no&alerts=no',
       // dynamic value
-      `http://api.weatherapi.com/v1/forecast.json?key=84ac7310e56448a1896212731230611&q=${value}&days=3&aqi=no&alerts=no`,
+      `https://api.weatherapi.com/v1/forecast.json?key=84ac7310e56448a1896212731230611&q=${value}&days=3&aqi=no&alerts=no`,
       // error test
-      // `http://api.weatherapi.com/v1/forecas.json?key=84ac7310e56448a1896212731230611&q=${value}&days=3&aqi=no&alerts=no`,
+      // `https://api.weatherapi.com/v1/forecas.json?key=84ac7310e56448a1896212731230611&q=${value}&days=3&aqi=no&alerts=no`,
       { mode: 'cors' },
     );
 
     const weatherData = await response.json();
-    pubSub.publish('setWeather', !response.ok ? weatherData.error : weatherData);
+    // pubSub.publish('setWeather', weatherData);
+    pubSub.publish(
+      'switchContent',
+      !response.ok ? Object.assign(response, weatherData) : weatherData,
+    );
+    // pubSub.publish('setWeather', !response.ok ? weatherData.error : weatherData);
     if (!response.ok) {
-      console.log(weatherData);
-      throw new Error(weatherData.error.message);
+      throw new Error(`Code ${response.status}, ${weatherData.error.message}`);
     }
 
     // code below the if block will only run if there are no errors
     console.log(weatherData);
-    console.log(weatherData.current);
 
     // pubSub.publish('setWeather', weatherData);
   } catch (err) {

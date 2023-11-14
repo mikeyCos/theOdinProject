@@ -1,5 +1,8 @@
 # Changelog
 ---
+### 13 NOV 2023
+- 'Home' module is loaded on start, fixed API URL in `api_controller.js` from `http` to `https`, errors are now displayed on the DOM, created a navbar for tabs, tabs are displayed when a valid city or postal code is submitted, each tab: forecast/hourly/today can be switched and displayed on the DOM, and entering a new city or postal code will remove the previous content and render a new set of tabs.  
+---
 ### 10 NOV 2023
 - Implemented publisher and subscriber, continued to structure component directories, initialized modules: `forecast.js`, `hourly.js`, and `today.js`, and city/postal code can now be entered in input and the weather data object is logged in the console.  
 ---
