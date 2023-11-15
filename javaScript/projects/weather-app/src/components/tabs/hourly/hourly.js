@@ -19,6 +19,12 @@ const hourlyBuilder = {
   },
 };
 
-export default function buildHourly() {
+export default function buildHourly(weatherData) {
+  console.log(weatherData.forecast.forecastday[0].hour);
   return hourlyBuilder.render();
 }
+
+// Date
+// time | temp | condition | preciptation % | wind
+// example
+// 1:30 pm | 47° | Sunny | 1% | N 6 mph

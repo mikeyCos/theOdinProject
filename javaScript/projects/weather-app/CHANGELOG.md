@@ -1,5 +1,11 @@
 # Changelog
 ---
+### 15 NOV 2023
+- 
+---
+### 14 NOV 2023
+- A select few weather data properties render to the DOM for the today tab, created `today.config.js` module, and created `init()` method for `todayBuilder` that will initialized a value for `today.config.js`.  
+---
 ### 13 NOV 2023
 - 'Home' module is loaded on start, fixed API URL in `api_controller.js` from `http` to `https`, errors are now displayed on the DOM, created a navbar for tabs, tabs are displayed when a valid city or postal code is submitted, each tab: forecast/hourly/today can be switched and displayed on the DOM, and entering a new city or postal code will remove the previous content and render a new set of tabs.  
 ---

@@ -19,6 +19,11 @@ const forecastBuilder = {
   },
 };
 
-export default function buildForecast() {
+export default function buildForecast(weatherData) {
+  console.log(weatherData.forecast.forecastday);
   return forecastBuilder.render();
 }
+
+// date | temp high / low | condition | preciptation % | wind
+// example
+// Wed 20 | 60° / 47° | Sunny | 1% | NNE 6 mph
