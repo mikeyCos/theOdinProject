@@ -5,10 +5,13 @@ const todayBuilder = {
   init(weatherData) {
     today.forEach((obj) => {
       Object.keys(obj).forEach((key) => {
-        const value = weatherData.current[key]
-          ? weatherData.current[key]
-          : weatherData.forecast.forecastday[0].day[key];
-        Object.assign(obj, { value });
+        // is the conditional redundant?
+        if (weatherData.current[key] || weatherData.forecast.forecastday[0].day[key]) {
+          const value = weatherData.current[key]
+            ? weatherData.current[key]
+            : weatherData.forecast.forecastday[0].day[key];
+          Object.assign(obj, { value });
+        }
       });
     });
   },
@@ -29,18 +32,30 @@ const todayBuilder = {
     const todaySummary = createElement('section');
     const todaySummaryList = createElement('ul');
     todaySummary.id = 'today_summary';
+
+    const todayDetails = createElement('section');
+    const todayDetailsList = createElement('ul');
+    todayDetails.id = 'today_details';
     today.forEach((obj) => {
-      const todaySummaryListItem = createElement('li');
-      const text = [];
-      Object.values(obj).forEach((value) => {
-        text.push(value);
-      });
-      todaySummaryListItem.textContent = text.join(' ');
-      todaySummaryList.appendChild(todaySummaryListItem);
+      const todayDetailsListItem = createElement('li');
+      // please refactor me!
+      let text;
+      const prop = Object.keys(obj).at(0);
+      if (obj.unit) {
+        if (prop.includes('_f') || !prop.includes('_')) {
+          text = `${obj[prop]}: ${obj.value}${obj.unit}`;
+        } else {
+          text = `${obj[prop]}: ${obj.value} ${obj.unit}`;
+        }
+      } else {
+        text = `${obj[prop]}: ${obj.value}`;
+      }
+      todayDetailsListItem.textContent = text;
+      todayDetailsList.appendChild(todayDetailsListItem);
     });
 
-    todaySummary.appendChild(todaySummaryList);
-    todaySection.appendChild(todaySummary);
+    todayDetails.appendChild(todayDetailsList);
+    todaySection.appendChild(todayDetails);
     // temporary
 
     return todaySection;

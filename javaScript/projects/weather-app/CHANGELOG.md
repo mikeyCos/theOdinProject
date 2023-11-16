@@ -1,7 +1,7 @@
 # Changelog
 ---
 ### 15 NOV 2023
-- 
+- Initialized modules: `forecast.config.js`, `hourly.config.js`, `createContentRows.js`, and `formatDate.js` hourly weather is rendered, created a `helpers` directory, and the 3 day forecast is pushed into the property forecastday of `forecast.config.js`.  
 ---
 ### 14 NOV 2023
 - A select few weather data properties render to the DOM for the today tab, created `today.config.js` module, and created `init()` method for `todayBuilder` that will initialized a value for `today.config.js`.  

@@ -1,6 +1,21 @@
 import createElement from '../../../utilities/createElement';
+import forecast from './forecast.config';
+import createContentRows from '../../../helpers/createContentRows';
 
 const forecastBuilder = {
+  init(weatherData) {
+    Object.keys(forecast).forEach((key) => {
+      if (!(forecast[key] instanceof Array)) {
+        Object.keys(forecast[key]).forEach((subkey) => {
+          forecast[key][subkey] = weatherData[key][subkey];
+        });
+      } else {
+        weatherData.forecast.forecastday.forEach((item) => {
+          forecast.forecastday.push(item);
+        });
+      }
+    });
+  },
   cacheDOM() {
     console.log('cacheDOM() running from forecast.js');
   },
@@ -9,18 +24,40 @@ const forecastBuilder = {
   },
   render() {
     console.log('render() running from forecast.js');
+    console.log(forecast);
     const forecastSection = createElement('section');
     const forecastSectionHeading = createElement('h1');
-    forecastSection.id = 'today';
-    forecastSectionHeading.setAttributes({ textContent: 'FORECAST' });
+    forecastSection.id = 'forecast';
+    forecastSectionHeading.setAttributes({ textContent: '3 Day Weather' });
     forecastSection.appendChild(forecastSectionHeading);
+
+    // temporary
+    const forecastContent = createElement('section');
+    forecastContent.id = 'forecast_content';
+
+    const forecastContentList = createElement('ol');
+    forecast.forecastday.forEach((day) => {
+      console.log(day);
+
+      // forecastContentList.appendChild(
+      //   createContentRows(
+      //     createElement,
+      //     `${day.maxtemp_f} ${day.mintemp_f}`,
+      //     day.condition,
+      //     day.daily_chance_of_rain,
+      //   ),
+      // );
+    });
+    forecastContent.appendChild(forecastContentList);
+    forecastSection.appendChild(forecastContent);
+    // temporary
 
     return forecastSection;
   },
 };
 
 export default function buildForecast(weatherData) {
-  console.log(weatherData.forecast.forecastday);
+  forecastBuilder.init(weatherData);
   return forecastBuilder.render();
 }
 

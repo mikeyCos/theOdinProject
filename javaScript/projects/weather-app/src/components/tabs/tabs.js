@@ -29,7 +29,6 @@ const tabsBuilder = {
     this.tabsList.forEach((tab) => tab.addEventListener('click', this.switchTab));
   },
   render(key) {
-    console.log(key);
     let content;
     if (!key) {
       // if no key
