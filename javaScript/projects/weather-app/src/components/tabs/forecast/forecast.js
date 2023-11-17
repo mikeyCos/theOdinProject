@@ -37,16 +37,14 @@ const forecastBuilder = {
 
     const forecastContentList = createElement('ol');
     forecast.forecastday.forEach((day) => {
-      console.log(day);
-
-      // forecastContentList.appendChild(
-      //   createContentRows(
-      //     createElement,
-      //     `${day.maxtemp_f} ${day.mintemp_f}`,
-      //     day.condition,
-      //     day.daily_chance_of_rain,
-      //   ),
-      // );
+      forecastContentList.appendChild(
+        createContentRows(
+          createElement,
+          `${day.day.maxtemp_f}°/${day.day.mintemp_f}°`,
+          day.day.condition.text,
+          `${day.day.daily_chance_of_rain}`,
+        ),
+      );
     });
     forecastContent.appendChild(forecastContentList);
     forecastSection.appendChild(forecastContent);

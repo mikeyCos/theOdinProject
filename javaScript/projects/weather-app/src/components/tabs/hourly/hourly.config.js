@@ -5,7 +5,7 @@ export default {
   location: {
     name: null,
   },
-  hour: [],
+  forecastday: [],
 };
 
 // Date

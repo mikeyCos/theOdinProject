@@ -3,17 +3,20 @@ import today from './today.config';
 
 const todayBuilder = {
   init(weatherData) {
-    today.forEach((obj) => {
-      Object.keys(obj).forEach((key) => {
-        // is the conditional redundant?
-        if (weatherData.current[key] || weatherData.forecast.forecastday[0].day[key]) {
-          const value = weatherData.current[key]
-            ? weatherData.current[key]
-            : weatherData.forecast.forecastday[0].day[key];
-          Object.assign(obj, { value });
-        }
-      });
-    });
+    // Object.assign(today, weatherData);
+    // today.forEach((obj) => {
+    //   Object.keys(obj).forEach((key) => {
+    //     // is the conditional redundant?
+    //     if (weatherData.current[key] || weatherData.forecast.forecastday[0].day[key]) {
+    //       const value = weatherData.current[key]
+    //         ? weatherData.current[key]
+    //         : weatherData.forecast.forecastday[0].day[key];
+    //       Object.assign(obj, { value });
+    //     }
+    //   });
+    // });
+    today.setProperties('imperial', weatherData);
+    console.log(today);
   },
   cacheDOM() {
     console.log('cacheDOM() running from today.js');
@@ -21,7 +24,7 @@ const todayBuilder = {
   bindEvents() {
     console.log('bindEvents() running from today.js');
   },
-  render(weatherData) {
+  render() {
     const todaySection = createElement('section');
     const todaySectionHeading = createElement('h1');
     todaySection.id = 'today';
@@ -36,23 +39,23 @@ const todayBuilder = {
     const todayDetails = createElement('section');
     const todayDetailsList = createElement('ul');
     todayDetails.id = 'today_details';
-    today.forEach((obj) => {
-      const todayDetailsListItem = createElement('li');
-      // please refactor me!
-      let text;
-      const prop = Object.keys(obj).at(0);
-      if (obj.unit) {
-        if (prop.includes('_f') || !prop.includes('_')) {
-          text = `${obj[prop]}: ${obj.value}${obj.unit}`;
-        } else {
-          text = `${obj[prop]}: ${obj.value} ${obj.unit}`;
-        }
-      } else {
-        text = `${obj[prop]}: ${obj.value}`;
-      }
-      todayDetailsListItem.textContent = text;
-      todayDetailsList.appendChild(todayDetailsListItem);
-    });
+    // today.forEach((obj) => {
+    //   const todayDetailsListItem = createElement('li');
+    //   // please refactor me!
+    //   let text;
+    //   const prop = Object.keys(obj).at(0);
+    //   if (obj.unit) {
+    //     if (prop.includes('_f') || !prop.includes('_')) {
+    //       text = `${obj[prop]}: ${obj.value}${obj.unit}`;
+    //     } else {
+    //       text = `${obj[prop]}: ${obj.value} ${obj.unit}`;
+    //     }
+    //   } else {
+    //     text = `${obj[prop]}: ${obj.value}`;
+    //   }
+    //   todayDetailsListItem.textContent = text;
+    //   todayDetailsList.appendChild(todayDetailsListItem);
+    // });
 
     todayDetails.appendChild(todayDetailsList);
     todaySection.appendChild(todayDetails);

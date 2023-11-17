@@ -1,7 +1,10 @@
 # Changelog
 ---
+### 16 NOV 2023
+- Created helper module `formatTime.js` that will return a string of time formatted to 12 hour clock, object properties are 'called' directly in the `forecast.js` `render()` method, fixed `CHANGELOG.md` punctuation, and in the process of refactoring modules: `today.js` and `today.config.js`.  
+---
 ### 15 NOV 2023
-- Initialized modules: `forecast.config.js`, `hourly.config.js`, `createContentRows.js`, and `formatDate.js` hourly weather is rendered, created a `helpers` directory, and the 3 day forecast is pushed into the property forecastday of `forecast.config.js`.  
+- Initialized modules: `forecast.config.js`, `hourly.config.js`, `createContentRows.js`, and `formatDate.js`, hourly weather is rendered, created a `helpers` directory, and the 3 day forecast is pushed into the property forecastday of `forecast.config.js`.  
 ---
 ### 14 NOV 2023
 - A select few weather data properties render to the DOM for the today tab, created `today.config.js` module, and created `init()` method for `todayBuilder` that will initialized a value for `today.config.js`.  

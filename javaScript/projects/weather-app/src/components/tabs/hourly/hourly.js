@@ -1,6 +1,7 @@
 import createElement from '../../../utilities/createElement';
 import hourly from './hourly.config';
 import formatDate from '../../../helpers/formatDate';
+import formatTime from '../../../helpers/formatTime';
 import createContentRows from '../../../helpers/createContentRows';
 
 const hourlyBuilder = {
@@ -12,12 +13,14 @@ const hourlyBuilder = {
           hourly[key][subkey] = weatherData[key][subkey];
         });
       } else {
-        const date1 = new Date(hourly.current.last_updated);
-        weatherData.forecast.forecastday[0][key].forEach((item) => {
-          const date2 = new Date(item.time);
-          if (date1.getTime() < date2.getTime()) {
-            hourly[key].push(item);
-          }
+        weatherData.forecast[key].forEach((day, i) => {
+          const date1 = new Date(hourly.current.last_updated);
+          hourly[key] = weatherData.forecast[key];
+          const newHours = day.hour.filter((hour) => {
+            const date2 = new Date(hour.time);
+            return date1.getTime() < date2.getTime();
+          });
+          hourly[key][i].hour = newHours;
         });
       }
     });
@@ -39,26 +42,28 @@ const hourlyBuilder = {
 
     // temporary
     const hourlyContent = createElement('section');
-    const hourlyContentHeading = createElement('h2');
     hourlyContent.id = 'hourly_content';
-    hourlyContentHeading.textContent = formatDate(hourly.current.last_updated);
-    hourlyContent.appendChild(hourlyContentHeading);
 
-    const hourlyContentList = createElement('ol');
-    hourly.hour.forEach((hour) => {
-      hourlyContentList.appendChild(
-        createContentRows(
-          createElement,
-          hour.time.split(' ')[1],
-          `${hour.temp_f}°`,
-          hour.condition.text,
-          `${hour.chance_of_rain}%`,
-          `${hour.wind_dir} ${hour.wind_mph} mph`,
-        ),
-      );
+    hourly.forecastday.forEach((day) => {
+      const hourlyContentList = createElement('ol');
+      const hourlyContentHeading = createElement('h2');
+      hourlyContentHeading.textContent = formatDate(day.date);
+      hourlyContentList.appendChild(hourlyContentHeading);
+      day.hour.forEach((hour) => {
+        hourlyContentList.appendChild(
+          createContentRows(
+            createElement,
+            formatTime(hour.time.split(' ')[1]),
+            `${hour.temp_f}°`,
+            hour.condition.text,
+            `${hour.chance_of_rain}%`,
+            `${hour.wind_dir} ${hour.wind_mph} mph`,
+          ),
+        );
+      });
+      hourlyContent.appendChild(hourlyContentList);
     });
 
-    hourlyContent.appendChild(hourlyContentList);
     hourlySection.appendChild(hourlyContent);
     // temporary
     return hourlySection;
