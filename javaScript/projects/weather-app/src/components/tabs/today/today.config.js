@@ -1,123 +1,3 @@
-// export default [
-//   {
-//     temp_f: 'Temperature',
-//     unit: '°F',
-//   },
-//   {
-//     feelslike_f: 'Feels like',
-//     unit: '°F',
-//   },
-//   {
-//     maxtemp_f: 'High',
-//     unit: '°F',
-//   },
-//   {
-//     mintemp_f: 'Low',
-//     unit: '°F',
-//   },
-//   {
-//     humidity: 'Humidity',
-//     unit: '%',
-//   },
-//   {
-//     pressure_in: 'Pressure',
-//     unit: 'in',
-//   },
-//   {
-//     vis_miles: 'Visibility',
-//     unit: 'mi',
-//   },
-//   {
-//     wind_mph: 'Wind',
-//     unit: 'mph',
-//   },
-//   // {
-//   //   wind_degree: 'Wind degree',
-//   // },
-//   {
-//     wind_dir: 'Wind direction',
-//   },
-// ];
-const unitSystems = {
-  imperial: {
-    temp_f: {
-      unit: 'f',
-    },
-    feelslike_f: {
-      unit: 'f',
-    },
-    maxtemp_f: {
-      unit: 'f',
-    },
-    mintemp_f: {
-      unit: 'f',
-    },
-    humidity: {
-      unit: '%',
-    },
-    pressure_in: {
-      unit: 'in',
-    },
-    vis_miles: {
-      unit: 'mi',
-    },
-    wind_mph: {
-      unit: 'mph',
-    },
-    wind_dir: {},
-  },
-
-  metric: {
-    temp_c: {
-      unit: 'c',
-    },
-    feelslike_c: {
-      unit: 'c',
-    },
-    maxtemp_c: {
-      unit: 'c',
-    },
-    mintemp_c: {
-      unit: 'c',
-    },
-    humidity: {
-      unit: '%',
-    },
-    pressure_mb: {
-      unit: 'mb',
-    },
-    vis_km: {
-      unit: 'km',
-    },
-    wind_kph: {
-      unit: 'kph',
-    },
-    wind_dir: {},
-  },
-};
-
-export default {
-  setProperties(unitSystem, weatherData) {
-    const obj = {};
-    console.log(unitSystems[unitSystem]);
-    Object.keys(unitSystems[unitSystem]).forEach((key) => {
-      console.log(key);
-      let value;
-      if (weatherData.current[key]) {
-        value = weatherData.current[key];
-      } else if (weatherData.forecast.forecastday[0].day[key]) {
-        value = weatherData.forecast.forecastday[0].day[key];
-      }
-      value = Number.isNaN(+value) ? value : Math.round(value);
-      unitSystems[unitSystem][key].value = value;
-      console.log({ [`${key}`]: unitSystems[unitSystem][key] });
-      Object.assign(obj, { [`${key}`]: unitSystems[unitSystem][key] });
-    });
-    console.log(obj);
-    Object.assign(this, { data: obj }, { location: weatherData.location });
-  },
-};
-
 // current.temp_f
 // current.feelslike_f
 // forecast.forecastday[0].day.maxtemp_f
@@ -127,3 +7,107 @@ export default {
 // current.vis_miles
 // current.wind_mph
 // current.wind_dir
+
+const unitSystems = {
+  imperial: {
+    // temp_f: {
+    //   unit: 'f',
+    //   text: 'temperature',
+    // },
+    feelslike_f: {
+      unit: 'f',
+      text: 'feels like',
+    },
+    minmaxtemp_f: {
+      maxtemp_f: {
+        unit: 'f',
+        text: 'high',
+      },
+      mintemp_f: {
+        unit: 'f',
+        text: 'low',
+      },
+      setLabel() {
+        return `${this.maxtemp_f.text} / ${this.mintemp_f.text}`;
+      },
+      setText() {
+        return `${this.maxtemp_f.value}${this.maxtemp_f.unit} / ${this.mintemp_f.value}${this.mintemp_f.unit} `;
+      },
+    },
+    humidity: {
+      text: 'humidity',
+      humidity: {
+        unit: '%',
+      },
+      setText() {
+        return `${this.humidity.value}${this.humidity.unit}`;
+      },
+    },
+    pressure_in: {
+      unit: 'in',
+      text: 'pressure',
+    },
+    vis_miles: {
+      unit: 'mi',
+      text: 'visibility',
+    },
+    wind: {
+      text: 'wind',
+      wind_mph: {
+        unit: 'mph',
+      },
+      wind_dir: {},
+      setText() {
+        return `${this.wind_dir.value} ${this.wind_mph.value} ${this.wind_mph.unit}`;
+      },
+    },
+  },
+};
+
+export default {
+  setProperties(unitSystem, weatherData) {
+    // this is DISGUSTING
+    const objData = {};
+
+    Object.entries(unitSystems[unitSystem]).forEach(([key, obj]) => {
+      let value;
+      if (!Object.values(obj).every((subObj) => !(subObj instanceof Object))) {
+        Object.keys(obj).forEach((subKey) => {
+          if (
+            !(obj[subKey] instanceof Function) &&
+            (weatherData.current[subKey] || weatherData.forecast.forecastday[0].day[subKey])
+          ) {
+            if (weatherData.current[subKey]) {
+              value = weatherData.current[subKey];
+            } else if (weatherData.forecast.forecastday[0].day[subKey]) {
+              value = weatherData.forecast.forecastday[0].day[subKey];
+            }
+            value = Number.isNaN(+value) ? value : Math.round(value);
+            unitSystems[unitSystem][key][subKey].value = value;
+            Object.assign(objData, { [`${key}`]: unitSystems[unitSystem][key] });
+          }
+        });
+      } else {
+        const objTemp = {
+          setText() {
+            return `${this.value} ${this.unit}`;
+          },
+        };
+
+        if (weatherData.current[key]) {
+          value = weatherData.current[key];
+        } else if (weatherData.forecast.forecastday[0].day[key]) {
+          value = weatherData.forecast.forecastday[0].day[key];
+        }
+
+        value = Number.isNaN(+value) ? value : Math.round(value);
+        unitSystems[unitSystem][key].value = value;
+        if (!unitSystems[unitSystem][key].setText) {
+          unitSystems[unitSystem][key].setText = objTemp.setText;
+        }
+        Object.assign(objData, { [`${key}`]: unitSystems[unitSystem][key] });
+      }
+    });
+    Object.assign(this, { data: objData }, { location: weatherData.location });
+  },
+};

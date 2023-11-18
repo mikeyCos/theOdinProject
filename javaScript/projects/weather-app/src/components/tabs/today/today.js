@@ -1,23 +1,9 @@
 import createElement from '../../../utilities/createElement';
+import createContentRows from '../../../helpers/createContentRows';
 import today from './today.config';
 
 const todayBuilder = {
-  init(weatherData) {
-    // Object.assign(today, weatherData);
-    // today.forEach((obj) => {
-    //   Object.keys(obj).forEach((key) => {
-    //     // is the conditional redundant?
-    //     if (weatherData.current[key] || weatherData.forecast.forecastday[0].day[key]) {
-    //       const value = weatherData.current[key]
-    //         ? weatherData.current[key]
-    //         : weatherData.forecast.forecastday[0].day[key];
-    //       Object.assign(obj, { value });
-    //     }
-    //   });
-    // });
-    today.setProperties('imperial', weatherData);
-    console.log(today);
-  },
+  init() {},
   cacheDOM() {
     console.log('cacheDOM() running from today.js');
   },
@@ -25,6 +11,8 @@ const todayBuilder = {
     console.log('bindEvents() running from today.js');
   },
   render() {
+    console.log(today);
+    console.log(today.print());
     const todaySection = createElement('section');
     const todaySectionHeading = createElement('h1');
     todaySection.id = 'today';
@@ -37,27 +25,16 @@ const todayBuilder = {
     todaySummary.id = 'today_summary';
 
     const todayDetails = createElement('section');
-    const todayDetailsList = createElement('ul');
-    todayDetails.id = 'today_details';
-    // today.forEach((obj) => {
-    //   const todayDetailsListItem = createElement('li');
-    //   // please refactor me!
-    //   let text;
-    //   const prop = Object.keys(obj).at(0);
-    //   if (obj.unit) {
-    //     if (prop.includes('_f') || !prop.includes('_')) {
-    //       text = `${obj[prop]}: ${obj.value}${obj.unit}`;
-    //     } else {
-    //       text = `${obj[prop]}: ${obj.value} ${obj.unit}`;
-    //     }
-    //   } else {
-    //     text = `${obj[prop]}: ${obj.value}`;
-    //   }
-    //   todayDetailsListItem.textContent = text;
-    //   todayDetailsList.appendChild(todayDetailsListItem);
-    // });
+    Object.keys(today.data).forEach((key) => {
+      todayDetails.appendChild(
+        createContentRows(
+          createElement,
+          today.data[key].setLabel ? today.data[key].setLabel() : today.data[key].text,
+          today.data[key].setText(),
+        ),
+      );
+    });
 
-    todayDetails.appendChild(todayDetailsList);
     todaySection.appendChild(todayDetails);
     // temporary
 
@@ -66,7 +43,7 @@ const todayBuilder = {
 };
 
 export default function buildToday(weatherData) {
-  todayBuilder.init(weatherData);
+  today.setProperties('imperial', weatherData);
   return todayBuilder.render(weatherData);
 }
 

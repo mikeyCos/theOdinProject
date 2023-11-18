@@ -1,5 +1,8 @@
 # Changelog
 ---
+### 17 NOV 2023
+- Continued refactoring module `today.config.js`, `setProperties()` method in `today.config.js` sets properties one and two node-levels in objects, properties that exist in `UnitSystems` and `weatherData` objects will have a `setText()` method, min/max temperatures and wind details are displayed on one line, and numbered values are rounded up/down.  
+---
 ### 16 NOV 2023
 - Created helper module `formatTime.js` that will return a string of time formatted to 12 hour clock, object properties are 'called' directly in the `forecast.js` `render()` method, fixed `CHANGELOG.md` punctuation, and in the process of refactoring modules: `today.js` and `today.config.js`.  
 ---
