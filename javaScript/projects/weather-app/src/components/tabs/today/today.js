@@ -12,7 +12,6 @@ const todayBuilder = {
   },
   render() {
     console.log(today);
-    console.log(today.print());
     const todaySection = createElement('section');
     const todaySectionHeading = createElement('h1');
     todaySection.id = 'today';
@@ -43,7 +42,7 @@ const todayBuilder = {
 };
 
 export default function buildToday(weatherData) {
-  today.setProperties('imperial', weatherData);
+  today.init('imperial', weatherData);
   return todayBuilder.render(weatherData);
 }
 

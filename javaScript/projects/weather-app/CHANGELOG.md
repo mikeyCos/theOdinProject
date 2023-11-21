@@ -1,5 +1,11 @@
 # Changelog
 ---
+### 21 NOV 2023
+- 
+---
+### 20 NOV 2023
+- Attempted refactoring `today.config.js` module, `setText()` method not available for all object properties, and commented out starting code for `setProperties()`.  
+---
 ### 17 NOV 2023
 - Continued refactoring module `today.config.js`, `setProperties()` method in `today.config.js` sets properties one and two node-levels in objects, properties that exist in `UnitSystems` and `weatherData` objects will have a `setText()` method, min/max temperatures and wind details are displayed on one line, and numbered values are rounded up/down.  
 ---
