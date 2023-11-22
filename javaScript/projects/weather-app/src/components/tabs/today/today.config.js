@@ -67,102 +67,65 @@ const unitSystems = {
   },
 };
 
-export default {
+const todayController = {
   init(unitSystem, weatherData) {
     this.weatherData = weatherData;
     this.unitSystem = unitSystem;
-    this.setProperties();
+    Object.entries(unitSystems[this.unitSystem]).forEach(([key, obj]) => {
+      this.findObjects(key, obj);
+    });
   },
-  setValues() {
-    // if (this.weatherData.current[key]) {
-    //   value = this.weatherData.current[key];
-    // } else if (this.weatherData.forecast.forecastday[0].day[key]) {
-    //   value = this.weatherData.forecast.forecastday[0].day[key];
-    // }
+  setValues(key, obj, subKey) {
+    // sets value properties from 'this.weatherData...'
+    // to respective 'unitSystems[this.unitSystem]' objects
+    const objCopy = obj;
+    const objData = {};
+    const weatherDataCurrent = subKey
+      ? this.weatherData.current[subKey]
+      : this.weatherData.current[key];
+    const weatherDataForecast = subKey
+      ? this.weatherData.forecast.forecastday[0].day[subKey]
+      : this.weatherData.forecast.forecastday[0].day[key];
+
+    if (!subKey && !objCopy.setText) {
+      const objTemp = {
+        setText() {
+          return `${this.value} ${this.unit}`;
+        },
+      };
+      Object.assign(objCopy, objTemp);
+    }
+
+    let value = !weatherDataCurrent ? weatherDataForecast : weatherDataCurrent;
+    value = Number.isNaN(+value) ? value : Math.round(value);
+    objCopy.value = value;
+
+    Object.assign(objData, { [`${key}`]: objCopy });
   },
   findObjects(key, obj) {
-    let objects = [];
-
+    // finds object properties only and calls 'this.setValues'
     if (Object.values(obj).find((item) => item instanceof Object && !(item instanceof Function))) {
-      Object.entries(obj).forEach((item) => {
-        if (item[1] instanceof Object && !(item[1] instanceof Function)) {
-          objects = [...objects, { [`${item[0]}`]: item[1] }];
+      Object.entries(obj).forEach(([subKey, subObj]) => {
+        if (subObj instanceof Object && !(subObj instanceof Function)) {
+          this.setValues(key, subObj, subKey);
         }
       });
     } else {
-      objects = { [`${key}`]: obj };
+      this.setValues(key, obj);
     }
-    return objects;
+  },
+};
+
+export default {
+  init(unitSystem, weatherData) {
+    todayController.init(unitSystem, weatherData);
+    this.setProperties();
   },
   setProperties() {
-    // this is DISGUSTING
-    const objData = {};
-    const objTemp = {
-      setText() {
-        return `${this.value} ${this.unit}`;
-      },
-    };
-
-    const objectProperties = Object.entries(unitSystems[this.unitSystem])
-      .map(([key, obj]) => this.findObjects(key, obj))
-      .flat(1);
-
-    Object.values(objectProperties).forEach((obj) => {
-      Object.entries(obj).forEach(([key, prop]) => {
-        let value;
-        const object = obj;
-        if (this.weatherData.current[key]) {
-          value = this.weatherData.current[key];
-        } else if (this.weatherData.forecast.forecastday[0].day[key]) {
-          value = this.weatherData.forecast.forecastday[0].day[key];
-        }
-
-        value = Number.isNaN(+value) ? value : Math.round(value);
-        object[key].value = value;
-
-        // if (!object.setText) {
-        //   object[key].setText = objTemp.setText;
-        // }
-        Object.assign(objData, { [`${key}`]: obj[key] });
-      });
-    });
-
-    // Object.entries(unitSystems[this.unitSystem]).forEach(([key, obj]) => {
-    //   let value;
-    //   if (
-    //     Object.values(obj).find((item) => item instanceof Object && !(item instanceof Function))
-    //   ) {
-    //     Object.keys(obj).forEach((subKey) => {
-    //       if (
-    //         !(obj[subKey] instanceof Function) &&
-    //         (this.weatherData.current[subKey] ||
-    //           this.weatherData.forecast.forecastday[0].day[subKey])
-    //       ) {
-    //         if (this.weatherData.current[subKey]) {
-    //           value = this.weatherData.current[subKey];
-    //         } else if (this.weatherData.forecast.forecastday[0].day[subKey]) {
-    //           value = this.weatherData.forecast.forecastday[0].day[subKey];
-    //         }
-    //         value = Number.isNaN(+value) ? value : Math.round(value);
-    //         unitSystems[this.unitSystem][key][subKey].value = value;
-    //         Object.assign(objData, { [`${key}`]: unitSystems[this.unitSystem][key] });
-    //       }
-    //     });
-    //   } else {
-    //     if (this.weatherData.current[key]) {
-    //       value = this.weatherData.current[key];
-    //     } else if (this.weatherData.forecast.forecastday[0].day[key]) {
-    //       value = this.weatherData.forecast.forecastday[0].day[key];
-    //     }
-
-    //     value = Number.isNaN(+value) ? value : Math.round(value);
-    //     unitSystems[this.unitSystem][key].value = value;
-    //     if (!unitSystems[this.unitSystem][key].setText) {
-    //       unitSystems[this.unitSystem][key].setText = objTemp.setText;
-    //     }
-    //     Object.assign(objData, { [`${key}`]: unitSystems[this.unitSystem][key] });
-    //   }
-    // });
-    Object.assign(this, { data: objData }, { location: this.weatherData.location });
+    Object.assign(
+      this,
+      { data: unitSystems[todayController.unitSystem] },
+      { location: todayController.weatherData.location },
+    );
   },
 };

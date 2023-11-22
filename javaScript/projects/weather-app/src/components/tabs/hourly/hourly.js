@@ -47,12 +47,14 @@ const hourlyBuilder = {
     hourly.forecastday.forEach((day) => {
       const hourlyContentList = createElement('ol');
       const hourlyContentHeading = createElement('h2');
+      hourlyContentList.className = 'day';
       hourlyContentHeading.textContent = formatDate(day.date);
       hourlyContentList.appendChild(hourlyContentHeading);
       day.hour.forEach((hour) => {
         hourlyContentList.appendChild(
           createContentRows(
             createElement,
+            [{ class: 'hour' }, { class: 'hourly_item' }],
             formatTime(hour.time.split(' ')[1]),
             `${hour.temp_f}°`,
             hour.condition.text,

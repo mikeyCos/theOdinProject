@@ -3,19 +3,7 @@ import forecast from './forecast.config';
 import createContentRows from '../../../helpers/createContentRows';
 
 const forecastBuilder = {
-  init(weatherData) {
-    Object.keys(forecast).forEach((key) => {
-      if (!(forecast[key] instanceof Array)) {
-        Object.keys(forecast[key]).forEach((subkey) => {
-          forecast[key][subkey] = weatherData[key][subkey];
-        });
-      } else {
-        weatherData.forecast.forecastday.forEach((item) => {
-          forecast.forecastday.push(item);
-        });
-      }
-    });
-  },
+  init() {},
   cacheDOM() {
     console.log('cacheDOM() running from forecast.js');
   },
@@ -36,13 +24,14 @@ const forecastBuilder = {
     forecastContent.id = 'forecast_content';
 
     const forecastContentList = createElement('ol');
-    forecast.forecastday.forEach((day) => {
+    forecast.data.forecastday.forEach((day) => {
       forecastContentList.appendChild(
         createContentRows(
           createElement,
+          [{ class: 'forecast_day' }, { class: 'forecast_day_item' }],
           `${day.day.maxtemp_f}°/${day.day.mintemp_f}°`,
           day.day.condition.text,
-          `${day.day.daily_chance_of_rain}`,
+          `${day.day.daily_chance_of_rain}%`,
         ),
       );
     });
@@ -55,7 +44,7 @@ const forecastBuilder = {
 };
 
 export default function buildForecast(weatherData) {
-  forecastBuilder.init(weatherData);
+  forecast.init('imperial', weatherData);
   return forecastBuilder.render();
 }
 

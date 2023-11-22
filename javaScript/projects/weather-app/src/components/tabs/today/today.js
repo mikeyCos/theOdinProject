@@ -28,6 +28,7 @@ const todayBuilder = {
       todayDetails.appendChild(
         createContentRows(
           createElement,
+          null,
           today.data[key].setLabel ? today.data[key].setLabel() : today.data[key].text,
           today.data[key].setText(),
         ),

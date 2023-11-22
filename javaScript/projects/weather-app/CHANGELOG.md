@@ -1,7 +1,7 @@
 # Changelog
 ---
 ### 21 NOV 2023
-- 
+- Created `todayController` inside `today.config.js` module to initialize object/properties and find/set object property values, currently the default exported object from `today.config.js` will have the following properties: `data`/`init()`/`location`/`setProperties()`, somewhat completed refactoring `today.config.js` module, added an `attributes` parameter to `createContentRows()`, and started refactoring `forecast.js` module to mirror `today.config.js` module.  
 ---
 ### 20 NOV 2023
 - Attempted refactoring `today.config.js` module, `setText()` method not available for all object properties, and commented out starting code for `setProperties()`.  
