@@ -7,34 +7,37 @@
 // current.vis_miles
 // current.wind_mph
 // current.wind_dir
-
+import importAll from '../../../helpers/importAll';
+const icons = importAll(require.context('../../../assets/icons', true, /\.svg$/));
 const unitSystems = {
   imperial: {
-    // temp_f: {
-    //   unit: 'f',
-    //   text: 'temperature',
-    // },
-    feelslike_f: {
-      unit: 'f',
-      text: 'feels like',
-      test() {
-        console.log('bar');
+    condition: {
+      setText() {
+        return `${this.text}`;
       },
     },
-    minmaxtemp_f: {
+    temp_f: {
+      unit: '°',
+      // text: 'temperature',
+    },
+    feelslike_f: {
+      unit: '°',
+      text: 'feels like',
+    },
+    minmaxtemp: {
       maxtemp_f: {
-        unit: 'f',
+        unit: '°',
         text: 'high',
       },
       mintemp_f: {
-        unit: 'f',
+        unit: '°',
         text: 'low',
       },
       setLabel() {
         return `${this.maxtemp_f.text} / ${this.mintemp_f.text}`;
       },
       setText() {
-        return `${this.maxtemp_f.value}${this.maxtemp_f.unit} / ${this.mintemp_f.value}${this.mintemp_f.unit} `;
+        return `${this.maxtemp_f.value}° / ${this.mintemp_f.value}°`;
       },
     },
     humidity: {
@@ -47,21 +50,27 @@ const unitSystems = {
       },
     },
     pressure_in: {
-      unit: 'in',
+      unit: ' in',
       text: 'pressure',
     },
     vis_miles: {
-      unit: 'mi',
+      unit: ' mi',
       text: 'visibility',
     },
     wind: {
       text: 'wind',
       wind_mph: {
-        unit: 'mph',
+        unit: ' mph',
       },
       wind_dir: {},
       setText() {
         return `${this.wind_dir.value} ${this.wind_mph.value} ${this.wind_mph.unit}`;
+      },
+    },
+    uv: {
+      text: 'UV Index',
+      setText() {
+        return `${this.value} of 11`;
       },
     },
   },
@@ -76,6 +85,14 @@ const todayController = {
     });
   },
   setValues(key, obj, subKey) {
+    console.log(key);
+    console.log(obj);
+    console.log(
+      Object.keys(icons.files).find(
+        (iconKey) => iconKey.includes(key) || iconKey.includes(obj.text),
+      ),
+    );
+
     // sets value properties from 'this.weatherData...'
     // to respective 'unitSystems[this.unitSystem]' objects
     const objCopy = obj;
@@ -90,7 +107,7 @@ const todayController = {
     if (!subKey && !objCopy.setText) {
       const objTemp = {
         setText() {
-          return `${this.value} ${this.unit}`;
+          return `${this.value}${this.unit}`;
         },
       };
       Object.assign(objCopy, objTemp);
@@ -98,7 +115,12 @@ const todayController = {
 
     let value = !weatherDataCurrent ? weatherDataForecast : weatherDataCurrent;
     value = Number.isNaN(+value) ? value : Math.round(value);
-    objCopy.value = value;
+    if (!(value instanceof Object)) {
+      objCopy.value = value;
+    } else {
+      console.log(value);
+      Object.assign(objCopy, value);
+    }
 
     Object.assign(objData, { [`${key}`]: objCopy });
   },

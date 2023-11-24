@@ -1,5 +1,8 @@
 # Changelog
 ---
+### 23 NOV 2023
+- Created `loading` module to render a loading screen while fetching data from [WeatherAPI](https://https://www.weatherapi.com/docs/), created `importAll.js` to import all icons from `/assets/icons`, added `condition` and `uv` object properties to `today.config.js` module, and loaded a variety of different Google symbols/icons.  
+---
 ### 21 NOV 2023
 - Created `todayController` inside `today.config.js` module to initialize object/properties and find/set object property values, currently the default exported object from `today.config.js` will have the following properties: `data`/`init()`/`location`/`setProperties()`, somewhat completed refactoring `today.config.js` module, added an `attributes` parameter to `createContentRows()`, and started refactoring `forecast.js` module to mirror `today.config.js` module.  
 ---

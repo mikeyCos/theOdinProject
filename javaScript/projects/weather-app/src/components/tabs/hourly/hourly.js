@@ -1,4 +1,4 @@
-import createElement from '../../../utilities/createElement';
+import createElement from '../../../helpers/createElement';
 import hourly from './hourly.config';
 import formatDate from '../../../helpers/formatDate';
 import formatTime from '../../../helpers/formatTime';
@@ -56,10 +56,10 @@ const hourlyBuilder = {
             createElement,
             [{ class: 'hour' }, { class: 'hourly_item' }],
             formatTime(hour.time.split(' ')[1]),
-            `${hour.temp_f}°`,
+            `${Math.round(hour.temp_f)}°`,
             hour.condition.text,
             `${hour.chance_of_rain}%`,
-            `${hour.wind_dir} ${hour.wind_mph} mph`,
+            `${hour.wind_dir} ${Math.round(hour.wind_mph)} mph`,
           ),
         );
       });

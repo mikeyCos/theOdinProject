@@ -1,4 +1,4 @@
-import createElement from '../../utilities/createElement';
+import createElement from '../../helpers/createElement';
 import buildTabsNavbar from './tabs_navbar/tabs_navbar';
 import buildToday from './today/today';
 import buildHourly from './hourly/hourly';

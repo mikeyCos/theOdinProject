@@ -7,7 +7,7 @@ export default async function getWeather(value) {
   // *note, value does NOT need to be evaluated before fetch
   // postal code, number or string
   // city, uppercase or lowercase;
-
+  pubSub.publish('switchContent', 'loading');
   try {
     const response = await fetch(
       // static value

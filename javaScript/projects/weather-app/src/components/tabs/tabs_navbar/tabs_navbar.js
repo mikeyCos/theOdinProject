@@ -1,4 +1,4 @@
-import createElement from '../../../utilities/createElement';
+import createElement from '../../../helpers/createElement';
 import tabs from './tabs_navbar.config';
 
 const tabsNavbarBuilder = {

@@ -1,8 +1,16 @@
 // forecastday.date |
-//   (forecastday.day.maxtemp_f / forecastday.day.mintemp_f) |
-//   forecastday.day.condition |
-//   forecastday.day.daily_chance_of_rain |
-//   wind?
+// (forecastday.day.maxtemp_f / forecastday.day.mintemp_f)
+// forecastday.day.condition
+// forecastday.day.daily_chance_of_rain |
+// wind
+// NW, NNW, N, NNE, NE
+// ENE, E, ESE
+// SE, SSE, S, SSW, SW
+// WSW, W, WNW
+const unitSystems = {
+  imperial: [],
+  metric: [],
+};
 
 const forecast = {
   current: {
@@ -18,20 +26,27 @@ const forecastController = {
   init(unitSystem, weatherData) {
     this.weatherData = weatherData;
     this.unitSystem = unitSystem;
-    Object.keys(forecast).forEach((key) => {
-      if (!(forecast[key] instanceof Array)) {
-        Object.keys(forecast[key]).forEach((subKey) => {
-          forecast[key][subKey] = weatherData[key][subKey];
-        });
-      } else {
-        weatherData.forecast.forecastday.forEach((item) => {
-          forecast.forecastday.push(item);
-        });
-      }
-    });
+    this.findObjects = this.findObjects.bind(this);
+    Object.keys(forecast).forEach(this.findObjects);
   },
-  setValues(key, obj, subKey) {},
-  findObjects(key, obj) {},
+  setValues(key, subKey, item) {
+    if (item) {
+      forecast[key].push(item);
+    } else {
+      forecast[key][subKey] = this.weatherData[key][subKey];
+    }
+  },
+  findObjects(key) {
+    if (!(forecast[key] instanceof Array)) {
+      Object.keys(forecast[key]).forEach((subKey) => {
+        this.setValues(key, subKey);
+      });
+    } else {
+      this.weatherData.forecast[key].forEach((item) => {
+        this.setValues(key, null, item);
+      });
+    }
+  },
 };
 
 export default {
@@ -40,6 +55,6 @@ export default {
     this.setProperties();
   },
   setProperties() {
-    Object.assign(this, { data: forecast }, { location: forecastController.weatherData.location });
+    Object.assign(this, { ...forecast }, { location: forecastController.weatherData.location });
   },
 };

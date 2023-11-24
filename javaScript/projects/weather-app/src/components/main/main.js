@@ -1,13 +1,15 @@
 import pubSub from '../../containers/pubSub';
-import createElement from '../../utilities/createElement';
+import createElement from '../../helpers/createElement';
 import homeBuilder from '../home/home';
 import errorBuilder from '../error/error';
 import tabsBuilder from '../tabs/tabs';
+import loadingBuilder from '../loading/loading';
 
 const build = {
   home: homeBuilder,
   error: errorBuilder,
   tabs: tabsBuilder,
+  loading: loadingBuilder,
 };
 
 const mainBuilder = {
@@ -45,8 +47,9 @@ const mainBuilder = {
     console.log('switchContent() running from main.js');
     console.log(e);
     if (e.error) {
-      console.log('fetch error');
       renderKey = 'error';
+    } else if (e === 'loading') {
+      renderKey = 'loading';
     } else {
       console.log('fetch success');
       renderKey = 'tabs';

@@ -3,7 +3,8 @@
 ## Live preview: [Weather App](https://mikeycos.github.io/theOdinProject/javaScript/projects/weather-app/dist)
 ---
 ### Ideas
-1. Placeholder
+1. Calculate average wind speed and direction.
+2. A way to toggle metric and imperial.
 ---
 ### Notes
 * Use this as a template repository.

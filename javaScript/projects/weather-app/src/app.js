@@ -1,6 +1,6 @@
 import './app.css';
 import '@iconfu/svg-inject';
-import createElement from './utilities/createElement';
+import createElement from './helpers/createElement';
 import headerBuilder from './components/header/header';
 import mainBuilder from './components/main/main';
 import './containers/api_controller';

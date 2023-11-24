@@ -1,4 +1,4 @@
-import createElement from '../../../utilities/createElement';
+import createElement from '../../../helpers/createElement';
 import createContentRows from '../../../helpers/createContentRows';
 import today from './today.config';
 
@@ -20,21 +20,29 @@ const todayBuilder = {
 
     // temporary
     const todaySummary = createElement('section');
-    const todaySummaryList = createElement('ul');
     todaySummary.id = 'today_summary';
 
-    const todayDetails = createElement('section');
-    Object.keys(today.data).forEach((key) => {
-      todayDetails.appendChild(
-        createContentRows(
-          createElement,
-          null,
-          today.data[key].setLabel ? today.data[key].setLabel() : today.data[key].text,
-          today.data[key].setText(),
-        ),
-      );
+    ['temp_f', 'condition'].forEach((item) => {
+      todaySummary.appendChild(createContentRows(createElement, null, today.data[item].setText()));
     });
 
+    const todayDetails = createElement('section');
+    todayDetails.id = 'today_details';
+    Object.keys(today.data).forEach((key, i) => {
+      if (i > 1) {
+        console.log(key);
+        todayDetails.appendChild(
+          createContentRows(
+            createElement,
+            null,
+            today.data[key].setLabel ? today.data[key].setLabel() : today.data[key].text,
+            today.data[key].setText(),
+          ),
+        );
+      }
+    });
+
+    todaySection.appendChild(todaySummary);
     todaySection.appendChild(todayDetails);
     // temporary
 

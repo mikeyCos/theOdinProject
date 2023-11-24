@@ -1,6 +1,6 @@
 import '../../styles/navbar.css';
 import navbar from './navbar.config';
-import createElement from '../../utilities/createElement';
+import createElement from '../../helpers/createElement';
 
 export default {
   cacheDOM(navElement) {

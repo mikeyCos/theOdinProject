@@ -1,4 +1,4 @@
-import createElement from '../../utilities/createElement';
+import createElement from '../../helpers/createElement';
 import pubSub from '../../containers/pubSub';
 import header from './header.config';
 import buildNavbar from '../navbar/navbar';

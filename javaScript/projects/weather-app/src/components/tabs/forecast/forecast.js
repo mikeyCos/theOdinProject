@@ -1,4 +1,4 @@
-import createElement from '../../../utilities/createElement';
+import createElement from '../../../helpers/createElement';
 import forecast from './forecast.config';
 import createContentRows from '../../../helpers/createContentRows';
 
@@ -24,7 +24,7 @@ const forecastBuilder = {
     forecastContent.id = 'forecast_content';
 
     const forecastContentList = createElement('ol');
-    forecast.data.forecastday.forEach((day) => {
+    forecast.forecastday.forEach((day) => {
       forecastContentList.appendChild(
         createContentRows(
           createElement,
