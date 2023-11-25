@@ -1,5 +1,8 @@
 # Changelog
 ---
+### 24 NOV 2023
+- Continued refactoring `hourly.config.js` module, the majority of object properties in `hourly.config.js` module are directly set with dot notation, `setValues()` in `hourly.config.js` only sets the values for the objects pushed into an array, and the array currently does not reset.  
+---
 ### 23 NOV 2023
 - Created `loading` module to render a loading screen while fetching data from [WeatherAPI](https://https://www.weatherapi.com/docs/), created `importAll.js` to import all icons from `/assets/icons`, added `condition` and `uv` object properties to `today.config.js` module, and loaded a variety of different Google symbols/icons.  
 ---

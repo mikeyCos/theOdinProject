@@ -8,7 +8,8 @@
 // current.wind_mph
 // current.wind_dir
 import importAll from '../../../helpers/importAll';
-const icons = importAll(require.context('../../../assets/icons', true, /\.svg$/));
+
+const icons = importAll(require.context('../../../assets/icons', false, /\.svg$/));
 const unitSystems = {
   imperial: {
     condition: {
@@ -82,20 +83,24 @@ const todayController = {
     this.unitSystem = unitSystem;
     Object.entries(unitSystems[this.unitSystem]).forEach(([key, obj]) => {
       this.findObjects(key, obj);
+      this.setIcons(key, obj);
     });
   },
-  setValues(key, obj, subKey) {
-    console.log(key);
-    console.log(obj);
-    console.log(
-      Object.keys(icons.files).find(
-        (iconKey) => iconKey.includes(key) || iconKey.includes(obj.text),
-      ),
-    );
+  setIcons(key, obj) {
+    const objIcon = {
+      icon: icons.files[
+        Object.keys(icons.files).find(
+          (iconKey) => iconKey.includes(key) || iconKey.includes(obj.text),
+        )
+      ],
+    };
 
+    if (objIcon.icon) Object.assign(obj, objIcon);
+  },
+  setValues(key, obj, subObj, subKey) {
     // sets value properties from 'this.weatherData...'
     // to respective 'unitSystems[this.unitSystem]' objects
-    const objCopy = obj;
+    const objCopy = !subKey ? obj : subObj;
     const objData = {};
     const weatherDataCurrent = subKey
       ? this.weatherData.current[subKey]
@@ -118,7 +123,6 @@ const todayController = {
     if (!(value instanceof Object)) {
       objCopy.value = value;
     } else {
-      console.log(value);
       Object.assign(objCopy, value);
     }
 
@@ -129,7 +133,7 @@ const todayController = {
     if (Object.values(obj).find((item) => item instanceof Object && !(item instanceof Function))) {
       Object.entries(obj).forEach(([subKey, subObj]) => {
         if (subObj instanceof Object && !(subObj instanceof Function)) {
-          this.setValues(key, subObj, subKey);
+          this.setValues(key, obj, subObj, subKey);
         }
       });
     } else {

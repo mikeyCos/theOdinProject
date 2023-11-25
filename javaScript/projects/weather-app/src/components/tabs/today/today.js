@@ -23,18 +23,25 @@ const todayBuilder = {
     todaySummary.id = 'today_summary';
 
     ['temp_f', 'condition'].forEach((item) => {
-      todaySummary.appendChild(createContentRows(createElement, null, today.data[item].setText()));
+      todaySummary.appendChild(
+        createContentRows(
+          createElement,
+          false,
+          today.data[item].icon ? today.data[item].icon : false,
+          today.data[item].setText(),
+        ),
+      );
     });
 
     const todayDetails = createElement('section');
     todayDetails.id = 'today_details';
     Object.keys(today.data).forEach((key, i) => {
       if (i > 1) {
-        console.log(key);
         todayDetails.appendChild(
           createContentRows(
             createElement,
             null,
+            today.data[key].icon ? today.data[key].icon : false,
             today.data[key].setLabel ? today.data[key].setLabel() : today.data[key].text,
             today.data[key].setText(),
           ),
@@ -52,7 +59,7 @@ const todayBuilder = {
 
 export default function buildToday(weatherData) {
   today.init('imperial', weatherData);
-  return todayBuilder.render(weatherData);
+  return todayBuilder.render();
 }
 
 // High / Low
