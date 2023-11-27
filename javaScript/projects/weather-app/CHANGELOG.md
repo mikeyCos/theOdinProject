@@ -1,5 +1,8 @@
 # Changelog
 ---
+### 27 NOV 2023
+- Restarting project in new branch, 
+---
 ### 24 NOV 2023
 - Continued refactoring `hourly.config.js` module, the majority of object properties in `hourly.config.js` module are directly set with dot notation, `setValues()` in `hourly.config.js` only sets the values for the objects pushed into an array, and the array currently does not reset.  
 ---

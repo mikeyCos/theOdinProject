@@ -5,26 +5,7 @@ import formatTime from '../../../helpers/formatTime';
 import createContentRows from '../../../helpers/createContentRows';
 
 const hourlyBuilder = {
-  init(weatherData) {
-    // copying specific object properties from weatherData to hourly
-    // Object.keys(hourly).forEach((key) => {
-    //   if (!(hourly[key] instanceof Array)) {
-    //     Object.keys(hourly[key]).forEach((subkey) => {
-    //       hourly[key][subkey] = weatherData[key][subkey];
-    //     });
-    //   } else {
-    //     weatherData.forecast[key].forEach((day, i) => {
-    //       const date1 = new Date(hourly.current.last_updated);
-    //       hourly[key] = weatherData.forecast[key];
-    //       const newHours = day.hour.filter((hour) => {
-    //         const date2 = new Date(hour.time);
-    //         return date1.getTime() < date2.getTime();
-    //       });
-    //       hourly[key][i].hour = newHours;
-    //     });
-    //   }
-    // });
-  },
+  init(weatherData) {},
   cacheDOM() {
     console.log('cacheDOM() running from hourly.js');
   },
@@ -44,7 +25,7 @@ const hourlyBuilder = {
     const hourlyContent = createElement('section');
     hourlyContent.id = 'hourly_content';
 
-    // hourly.forecastday.forEach((day) => {
+    // hourly.data.forecastday.forEach((day) => {
     //   const hourlyContentList = createElement('ol');
     //   const hourlyContentHeading = createElement('h2');
     //   hourlyContentList.className = 'day';
