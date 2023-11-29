@@ -27,7 +27,7 @@ const mainBuilder = {
     this.switchContent = this.switchContent.bind(this);
     pubSub.subscribe('switchContent', this.switchContent);
   },
-  render(key, data) {
+  render(key, data, tabKey) {
     console.log('render() running from main.js');
 
     let content;
@@ -37,12 +37,12 @@ const mainBuilder = {
       // this.bindEvents();
     } else {
       // render today
-      content = build[key](data);
+      content = build[key](data, tabKey);
       this.main.lastChild.remove();
     }
     this.main.appendChild(content);
   },
-  switchContent(e) {
+  switchContent(e, tabKey) {
     let renderKey;
     console.log('switchContent() running from main.js');
     console.log(e);
@@ -54,7 +54,7 @@ const mainBuilder = {
       console.log('fetch success');
       renderKey = 'tabs';
     }
-    this.render(renderKey, e);
+    this.render(renderKey, e, tabKey);
   },
   setActiveTab(tab) {
     console.log('setActiveTab() running from main.js');

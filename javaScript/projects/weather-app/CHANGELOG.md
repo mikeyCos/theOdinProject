@@ -1,7 +1,13 @@
 # Changelog
 ---
+### 29 NOV 2023
+- 
+---
+### 28 NOV 2023
+- Downloaded a progress activity icon to be used in loading module, hourly and today configuration modules now utilize state, object properities are now directly set in their respective object/variable properties, and `setArray()` in `hourly.config.js` now iterates with the reduce method and returns an array.  
+---
 ### 27 NOV 2023
-- Restarting project in new branch, 
+- Restarting project in new branch named `restart-weather-app`, and the `getWeather()` function in `api_controller.js` will run each time a different tab is clicked on (in other words, the weather data is updated each time a a tab is clicked on). 
 ---
 ### 24 NOV 2023
 - Continued refactoring `hourly.config.js` module, the majority of object properties in `hourly.config.js` module are directly set with dot notation, `setValues()` in `hourly.config.js` only sets the values for the objects pushed into an array, and the array currently does not reset.  

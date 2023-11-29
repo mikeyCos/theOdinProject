@@ -1,146 +1,160 @@
+// current.last_updated
+// forecast.forecastday[0].hour.time
+// forecast.forecastday[0].hour.temp_f
+// forecast.forecastday[0].hour.condition.text
+// forecast.forecastday[0].hour.chance_of_rain
+// (forecast.forecastday[0].hour.wind_dir
+// forecast.forecastday[0].hour.wind_mph)
+
 import importAll from '../../../helpers/importAll';
+import formatTime from '../../../helpers/formatTime';
 
 const icons = importAll(require.context('../../../assets/icons', false, /\.svg$/));
-
 const unitSystems = {
+  metric: {
+    temp: 'c',
+    speed: 'kph',
+    precipitation: 'mm',
+    pressure: 'mb',
+    distance: 'km',
+  },
   imperial: {
-    current: {
-      last_updated: null,
-    },
-    // location: {
-    //   name: null,
-    // },
-    forecastday: [],
+    temp: 'f',
+    speed: 'mph',
+    precipitation: 'in',
+    pressure: 'in',
+    distance: 'miles',
+  },
+  get(key) {
+    return this.unitSystem[key];
+  },
+  setIcon(key) {
+    return icons.files[Object.keys(icons.files).find((iconKey) => iconKey.includes(key))];
+  },
+  roundValue(value) {
+    return Math.round(value);
+  },
+  setValue(obj, ...args) {
+    return this.roundValue(obj[`${args[0]}${this.get(args[1])}`]);
   },
 };
 
+const data = (state) => ({
+  condition: {
+    label: state.condition.text,
+    icon: state.condition.icon,
+    setText() {
+      return `${this.label}`;
+    },
+  },
+  time: {
+    value: state.time,
+    setText() {
+      return `${this.value}`;
+    },
+  },
+  temp: {
+    value: state.setValue(state, 'temp_', 'temp'),
+    unit: '°',
+    setText() {
+      return `${this.value}${this.unit}`;
+    },
+  },
+  precip: {
+    value: state.chance_of_rain,
+    unit: '%',
+    icon: state.setIcon('rain'),
+  },
+  wind: {
+    value: state.setValue(state, 'wind_', 'speed'),
+    unit: state.get('speed'),
+    label: 'wind',
+    icon: state.setIcon('wind'),
+    dir: {
+      value: state.wind_dir,
+    },
+    setText() {
+      return `${this.dir.value} ${this.value} ${this.unit}`;
+    },
+  },
+});
+
+const date = (state) => ({
+  date: state.date,
+});
+
+const location = (state) => ({
+  location: state.location,
+  last_updated: state.current.last_updated,
+});
+
 const hourlyController = {
-  init(unitSystem, weatherData) {
+  init(weatherData, unitSystem) {
     this.weatherData = weatherData;
     this.unitSystem = unitSystem;
-    if (unitSystems[this.unitSystem].forecastday.length > 0) {
-      unitSystems[this.unitSystem].forecastday = [];
-    }
-    Object.entries(unitSystems[this.unitSystem]).forEach(([key, obj]) => {
-      this.findObjects(key, obj);
-      // this.setIcons(key, obj);
-    });
+    this.setArray = this.setArray.bind(this);
+    this.setHours = this.setHours.bind(this);
+    const forecastday = weatherData.forecast.forecastday.map(this.setArray);
+    console.log(forecastday);
+
+    const state = {
+      ...weatherData,
+      //   get: unitSystems.get,
+      //   setIcon: unitSystems.setIcon,
+      //   setValue: unitSystems.setValue,
+      //   roundValue: unitSystems.roundValue,
+      //   unitSystem: unitSystems[unitSystem],
+    };
+    console.log(state);
+    // forecast.forecastday[0]
+    // console.log(state);
+    return { ...location(state), forecastday };
   },
-  setIcons(key, obj) {
-    const objIcon = {
-      icon: icons.files[
-        Object.keys(icons.files).find(
-          (iconKey) => iconKey.includes(key) || iconKey.includes(obj.text),
-        )
-      ],
+  setArray(obj) {
+    console.log(obj);
+    const hours = obj.hour.reduce(this.setHours, []);
+    console.log(hours);
+    const state = {
+      ...obj,
     };
 
-    if (objIcon.icon) Object.assign(obj, objIcon);
+    return { ...date(state), hours };
   },
-  setValues(key, obj) {
-    const date1 = new Date(unitSystems[this.unitSystem].current.last_updated);
-    const date2 = new Date(obj.time);
+  setHours(filtered, hour) {
+    const date1 = new Date(this.weatherData.current.last_updated);
+    const date2 = new Date(hour.time);
+
     if (date1.getTime() < date2.getTime()) {
-      const objTemp = {
-        time: obj.time,
-        temp_f: {
-          unit: '°',
-          value: obj.temp_f,
-          setText() {
-            return `${this.value}${this.unit}`;
-          },
-        },
-        condition: {
-          icon: obj.condition.icon,
-          text: obj.condition.text,
-        },
-        chance_of_rain: {
-          icon: null,
-          unit: '%',
-          value: obj.chance_of_rain,
-          setText() {
-            return `${this.value}${this.unit}`;
-          },
-        },
-        wind: {
-          icon: null,
-          wind_dir: {
-            value: obj.wind_dir,
-          },
-          wind_mph: {
-            unit: 'mph',
-            value: Math.round(obj.wind_mph),
-          },
-          setText() {
-            return `${this.wind_dir.value} ${this.wind_mph.value} ${this.wind_mph.unit}`;
-          },
-        },
+      const state = {
+        get: unitSystems.get,
+        setIcon: unitSystems.setIcon,
+        setValue: unitSystems.setValue,
+        roundValue: unitSystems.roundValue,
+        unitSystem: unitSystems[this.unitSystem],
+        ...hour,
       };
-      Object.entries(objTemp).forEach(([objTempKey, objProp]) =>
-        this.setIcons(objTempKey, objProp),
-      );
 
-      unitSystems[this.unitSystem][key].push(objTemp);
-    }
-  },
-  findObjects(key, obj) {
-    if (!(obj instanceof Array)) {
-      Object.keys(obj).forEach((subKey) => {
-        const objCopy = obj;
-        objCopy[subKey] = this.weatherData[key][subKey];
-      });
-    } else {
-      this.weatherData.forecast[key].forEach((day, i) => {
-        day.hour.forEach((hourItem) => {
-          this.setValues(key, hourItem);
-        });
-      });
-      console.log(this.weatherData.forecast[key]);
-      console.log(unitSystems[this.unitSystem][key]);
+      filtered.push({ ...data(state) });
     }
 
-    // Object.keys(hourly).forEach((key) => {
-    //   if (!(hourly[key] instanceof Array)) {
-    //     Object.keys(hourly[key]).forEach((subkey) => {
-    //       hourly[key][subkey] = weatherData[key][subkey];
-    //     });
-    //   } else {
-    //     weatherData.forecast[key].forEach((day, i) => {
-    //       const date1 = new Date(hourly.current.last_updated);
-    //       hourly[key] = weatherData.forecast[key];
-    //       const newHours = day.hour.filter((hour) => {
-    //         const date2 = new Date(hour.time);
-    //         return date1.getTime() < date2.getTime();
-    //       });
-    //       hourly[key][i].hour = newHours;
-    //     });
-    //   }
-    // });
+    return filtered;
   },
 };
 
 export default {
-  init(unitSystem, weatherData) {
-    hourlyController.init(unitSystem, weatherData);
-    this.setProperties();
-    console.log(this);
+  init(weatherData, unitSystem, timeStamp) {
+    // const foo = hourlyController.init(weatherData, unitSystem);
+    this.setProperties(hourlyController.init(weatherData, unitSystem));
+    // console.log(hourlyController.init(weatherData, unitSystem));
+    console.log(weatherData);
+    console.log(timeStamp);
+    // this.setProperties(hourlyController.init(weatherData, unitSystem));
   },
-  setProperties() {
-    Object.assign(
-      this,
-      { data: unitSystems[hourlyController.unitSystem] },
-      { location: hourlyController.weatherData.location },
-    );
+  setProperties(obj) {
+    Object.assign(this, obj);
   },
 };
 // Date
 // time | temp | condition | preciptation % | wind
 // example
 // 1:30 pm | 47° | Sunny | 1% | N 6 mph
-
-// current.last_updated
-// forecast.forecastday[0].hour.time |
-//   forecast.forecastday[0].hour.temp_f |
-//   forecast.forecastday[0].hour.condition.text |
-//   forecast.forecastday[0].hour.chance_of_rain |
-//   (forecast.forecastday[0].hour.wind_dir + forecast.forecastday[0].hour.wind_mph)

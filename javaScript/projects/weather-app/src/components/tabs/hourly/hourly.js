@@ -20,42 +20,12 @@ const hourlyBuilder = {
     hourlySection.id = 'hourly';
     hourlySectionHeading.textContent = 'Hourly weather';
     hourlySection.appendChild(hourlySectionHeading);
-
-    // temporary
-    const hourlyContent = createElement('section');
-    hourlyContent.id = 'hourly_content';
-
-    // hourly.data.forecastday.forEach((day) => {
-    //   const hourlyContentList = createElement('ol');
-    //   const hourlyContentHeading = createElement('h2');
-    //   hourlyContentList.className = 'day';
-    //   hourlyContentHeading.textContent = formatDate(day.date);
-    //   hourlyContentList.appendChild(hourlyContentHeading);
-    //   day.hour.forEach((hour) => {
-    //     hourlyContentList.appendChild(
-    //       createContentRows(
-    //         createElement,
-    //         [{ class: 'hour' }, { class: 'hourly_item' }],
-    //         formatTime(hour.time.split(' ')[1]),
-    //         `${Math.round(hour.temp_f)}°`,
-    //         hour.condition.icon,
-    //         hour.condition.text,
-    //         `${hour.chance_of_rain}%`,
-    //         `${hour.wind_dir} ${Math.round(hour.wind_mph)} mph`,
-    //       ),
-    //     );
-    //   });
-    //   hourlyContent.appendChild(hourlyContentList);
-    // });
-
-    hourlySection.appendChild(hourlyContent);
-    // temporary
     return hourlySection;
   },
 };
 
-export default function buildHourly(weatherData) {
-  hourly.init('imperial', weatherData);
+export default function buildHourly(weatherData, timeStamp) {
+  hourly.init(weatherData, 'imperial', timeStamp);
   return hourlyBuilder.render();
 }
 

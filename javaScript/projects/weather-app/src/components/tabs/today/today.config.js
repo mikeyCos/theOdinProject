@@ -11,147 +11,150 @@ import importAll from '../../../helpers/importAll';
 
 const icons = importAll(require.context('../../../assets/icons', false, /\.svg$/));
 const unitSystems = {
+  metric: {
+    temp: 'c',
+    speed: 'kph',
+    precipitation: 'mm',
+    pressure: 'mb',
+    distance: 'km',
+  },
   imperial: {
+    temp: 'f',
+    speed: 'mph',
+    precipitation: 'in',
+    pressure: 'in',
+    distance: 'miles',
+  },
+  get(key) {
+    return this.unitSystem[key];
+  },
+  setIcon(key) {
+    return icons.files[Object.keys(icons.files).find((iconKey) => iconKey.includes(key))];
+  },
+  roundValue(value) {
+    return Math.round(value);
+  },
+  setValue(obj, ...args) {
+    return this.roundValue(obj[`${args[0]}${this.get(args[1])}`]);
+  },
+};
+
+const data = (state) => ({
+  summary: {
     condition: {
+      label: state.current.condition.text,
+      icon: state.current.condition.icon,
       setText() {
-        return `${this.text}`;
+        return `${this.label}`;
       },
     },
-    temp_f: {
+    temp: {
       unit: '°',
-      // text: 'temperature',
+      value: state.setValue(state.current, 'temp_', 'temp'),
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
     },
-    feelslike_f: {
+    feelslike: {
       unit: '°',
-      text: 'feels like',
+      value: state.setValue(state.current, 'feelslike_', 'temp'),
+      label: 'feels like',
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
     },
+  },
+  details: {
     minmaxtemp: {
-      maxtemp_f: {
-        unit: '°',
-        text: 'high',
+      min: {
+        value: state.setValue(state.forecast.forecastday[0].day, 'mintemp_', 'temp'),
+        label: 'low',
       },
-      mintemp_f: {
-        unit: '°',
-        text: 'low',
+      max: {
+        value: state.setValue(state.forecast.forecastday[0].day, 'maxtemp_', 'temp'),
+        label: 'high',
       },
-      setLabel() {
-        return `${this.maxtemp_f.text} / ${this.mintemp_f.text}`;
-      },
+      unit: '°',
+      label: `high / low`,
+      icon: state.setIcon('minmaxtemp'),
       setText() {
-        return `${this.maxtemp_f.value}° / ${this.mintemp_f.value}°`;
+        return `${this.max.value}${this.unit} / ${this.min.value}${this.unit}`;
       },
     },
     humidity: {
-      text: 'humidity',
-      humidity: {
-        unit: '%',
-      },
+      value: state.current.humidity,
+      unit: '%',
+      label: 'humidity',
+      icon: state.setIcon('humidity'),
       setText() {
-        return `${this.humidity.value}${this.humidity.unit}`;
+        return `${this.value}${this.unit}`;
       },
     },
-    pressure_in: {
-      unit: ' in',
-      text: 'pressure',
+    pressure: {
+      value: state.setValue(state.current, 'pressure_', 'pressure'),
+      unit: state.get('pressure'),
+      label: 'pressure',
+      icon: state.setIcon('pressure'),
+      setText() {
+        return `${this.value} ${this.unit}`;
+      },
     },
-    vis_miles: {
-      unit: ' mi',
-      text: 'visibility',
+    vis: {
+      value: state.setValue(state.current, 'vis_', 'distance'),
+      unit: state.get('distance'),
+      label: 'visibility',
+      icon: state.setIcon('visibility'),
+      setText() {
+        return `${this.value} ${this.unit}`;
+      },
     },
     wind: {
-      text: 'wind',
-      wind_mph: {
-        unit: ' mph',
+      value: state.setValue(state.current, 'wind_', 'speed'),
+      unit: state.get('speed'),
+      label: 'wind',
+      icon: state.setIcon('wind'),
+      dir: {
+        value: state.current.wind_dir,
       },
-      wind_dir: {},
       setText() {
-        return `${this.wind_dir.value} ${this.wind_mph.value} ${this.wind_mph.unit}`;
+        return `${this.dir.value} ${this.value} ${this.unit}`;
       },
     },
     uv: {
-      text: 'UV Index',
+      value: state.current.uv,
+      label: 'UV Index',
+      icon: state.setIcon('uv'),
       setText() {
         return `${this.value} of 11`;
       },
     },
   },
-};
+});
 
 const todayController = {
-  init(unitSystem, weatherData) {
+  init(weatherData, unitSystem) {
     this.weatherData = weatherData;
     this.unitSystem = unitSystem;
-    Object.entries(unitSystems[this.unitSystem]).forEach(([key, obj]) => {
-      this.findObjects(key, obj);
-      this.setIcons(key, obj);
-    });
-  },
-  setIcons(key, obj) {
-    const objIcon = {
-      icon: icons.files[
-        Object.keys(icons.files).find(
-          (iconKey) => iconKey.includes(key) || iconKey.includes(obj.text),
-        )
-      ],
+    const state = {
+      get: unitSystems.get,
+      setIcon: unitSystems.setIcon,
+      setValue: unitSystems.setValue,
+      roundValue: unitSystems.roundValue,
+      unitSystem: unitSystems[unitSystem],
+      ...weatherData,
     };
-
-    if (objIcon.icon) Object.assign(obj, objIcon);
-  },
-  setValues(key, obj, subObj, subKey) {
-    // sets value properties from 'this.weatherData...'
-    // to respective 'unitSystems[this.unitSystem]' objects
-    const objCopy = !subKey ? obj : subObj;
-    const objData = {};
-    const weatherDataCurrent = subKey
-      ? this.weatherData.current[subKey]
-      : this.weatherData.current[key];
-    const weatherDataForecast = subKey
-      ? this.weatherData.forecast.forecastday[0].day[subKey]
-      : this.weatherData.forecast.forecastday[0].day[key];
-
-    if (!subKey && !objCopy.setText) {
-      const objTemp = {
-        setText() {
-          return `${this.value}${this.unit}`;
-        },
-      };
-      Object.assign(objCopy, objTemp);
-    }
-
-    let value = !weatherDataCurrent ? weatherDataForecast : weatherDataCurrent;
-    value = Number.isNaN(+value) ? value : Math.round(value);
-    if (!(value instanceof Object)) {
-      objCopy.value = value;
-    } else {
-      Object.assign(objCopy, value);
-    }
-
-    Object.assign(objData, { [`${key}`]: objCopy });
-  },
-  findObjects(key, obj) {
-    // finds object properties only and calls 'this.setValues'
-    if (Object.values(obj).find((item) => item instanceof Object && !(item instanceof Function))) {
-      Object.entries(obj).forEach(([subKey, subObj]) => {
-        if (subObj instanceof Object && !(subObj instanceof Function)) {
-          this.setValues(key, obj, subObj, subKey);
-        }
-      });
-    } else {
-      this.setValues(key, obj);
-    }
+    return { ...data(state) };
   },
 };
 
 export default {
-  init(unitSystem, weatherData) {
-    todayController.init(unitSystem, weatherData);
-    this.setProperties();
+  init(weatherData, unitSystem, timeStamp) {
+    // console.log(todayController.init(weatherData, unitSystem));
+    console.log(weatherData);
+    console.log(timeStamp);
+    this.setProperties(todayController.init(weatherData, unitSystem));
   },
-  setProperties() {
-    Object.assign(
-      this,
-      { data: unitSystems[todayController.unitSystem] },
-      { location: todayController.weatherData.location },
-    );
+  setProperties(obj) {
+    Object.assign(this, obj);
   },
 };

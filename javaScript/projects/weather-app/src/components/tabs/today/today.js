@@ -19,37 +19,23 @@ const todayBuilder = {
     todaySection.appendChild(todaySectionHeading);
 
     // temporary
-    const todaySummary = createElement('section');
-    todaySummary.id = 'today_summary';
+    const todayDetails = createElement('section');
+    todayDetails.id = 'today_details';
 
-    ['temp_f', 'condition'].forEach((item) => {
-      todaySummary.appendChild(
+    Object.keys(today.details).forEach((key, i) => {
+      todayDetails.appendChild(
         createContentRows(
           createElement,
-          false,
-          today.data[item].icon ? today.data[item].icon : false,
-          today.data[item].setText(),
+          null,
+          today.details[key].icon,
+          today.details[key].setLabel,
+          today.details[key].setText(),
         ),
       );
     });
 
-    const todayDetails = createElement('section');
-    todayDetails.id = 'today_details';
-    Object.keys(today.data).forEach((key, i) => {
-      if (i > 1) {
-        todayDetails.appendChild(
-          createContentRows(
-            createElement,
-            null,
-            today.data[key].icon ? today.data[key].icon : false,
-            today.data[key].setLabel ? today.data[key].setLabel() : today.data[key].text,
-            today.data[key].setText(),
-          ),
-        );
-      }
-    });
-
-    todaySection.appendChild(todaySummary);
+    // todaySection.appendChild(todaySummary);
+    // todayDetails.appendChild(todayDetailsList);
     todaySection.appendChild(todayDetails);
     // temporary
 
@@ -57,8 +43,9 @@ const todayBuilder = {
   },
 };
 
-export default function buildToday(weatherData) {
-  today.init('imperial', weatherData);
+export default function buildToday(weatherData, timeStamp) {
+  console.log(timeStamp);
+  today.init(weatherData, 'imperial', timeStamp);
   return todayBuilder.render();
 }
 

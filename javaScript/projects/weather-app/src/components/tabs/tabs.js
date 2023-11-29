@@ -3,6 +3,7 @@ import buildTabsNavbar from './tabs_navbar/tabs_navbar';
 import buildToday from './today/today';
 import buildHourly from './hourly/hourly';
 import buildForecast from './forecast/forecast';
+import pubSub from '../../containers/pubSub';
 
 const build = {
   tabsNavbar: buildTabsNavbar,
@@ -14,41 +15,64 @@ const build = {
 const tabsBuilder = {
   init(weatherData) {
     this.setWeather(weatherData);
+    this.switchTab = this.switchTab.bind(this);
+    pubSub.subscribe('switchTab', this.switchTab);
   },
   setWeather(weatherData) {
     this.weatherData = weatherData;
+    this.location = weatherData.location.name;
+    this.apiLastUpdated = weatherData.current.last_updated_epoch;
+    // this.timeStamp = weatherData.current.last_updated_epoch;
+    this.timeStamp = Math.floor(Date.now() / 1000);
+
+    console.log(this.timeStamp);
+    console.log(this.apiLastUpdated);
   },
   cacheDOM(tabsSection) {
     this.tabsSection = tabsSection;
     this.tabsList = tabsSection.querySelectorAll('.tabs_list_item > a');
-    console.log(this.tabsSection);
-    console.log(this.tabsList);
   },
   bindEvents() {
     this.switchTab = this.switchTab.bind(this);
     this.tabsList.forEach((tab) => tab.addEventListener('click', this.switchTab));
   },
-  render(key) {
+  render(key, update) {
+    // debugger;
     let content;
-    if (!key) {
-      // if no key
-      content = build.today(this.weatherData);
+    if (!update) {
+      if (!key) {
+        // if no key
+        content = build.today(this.weatherData, this.timeStamp);
+      } else {
+        content = build[key](this.weatherData, this.timeStamp);
+        this.tabsSection.lastChild.remove();
+      }
+      this.tabsSection.appendChild(content);
     } else {
-      content = build[key](this.weatherData);
-      this.tabsSection.lastChild.remove();
+      console.log('update exists');
+      pubSub.publish('getWeather', this.location, key);
     }
-    console.log(content);
-    this.tabsSection.appendChild(content);
   },
-  switchTab(e) {
-    const { className: elementClassName } = e.currentTarget;
-    const renderKey = elementClassName;
-    this.render(renderKey);
+  switchTab(e, tabKey) {
+    let renderKey;
+    let update = true;
+    if (tabKey) {
+      renderKey = tabKey;
+      update = false;
+    } else {
+      const { className: elementClassName } = e.currentTarget;
+      renderKey = elementClassName;
+    }
+    this.render(renderKey, update);
   },
 };
 
-export default function buildTabs(weatherData) {
-  tabsBuilder.init(weatherData);
+export default function buildTabs(weatherData, tabKey) {
+  console.log(tabKey);
+  if (!tabKey) {
+    tabsBuilder.init(weatherData);
+  }
+
   const tabsSection = createElement('section');
   const tabsHeading = createElement('h1');
   tabsSection.id = 'tabs';
@@ -59,5 +83,10 @@ export default function buildTabs(weatherData) {
   tabsBuilder.cacheDOM(tabsSection);
   tabsBuilder.render();
   tabsBuilder.bindEvents();
+  if (tabKey) {
+    console.log('tabsBuilder.render() running once more');
+    tabsBuilder.setWeather(weatherData);
+    tabsBuilder.render(tabKey);
+  }
   return tabsSection;
 }

@@ -12,39 +12,17 @@ const forecastBuilder = {
   },
   render() {
     console.log('render() running from forecast.js');
-    console.log(forecast);
     const forecastSection = createElement('section');
     const forecastSectionHeading = createElement('h1');
     forecastSection.id = 'forecast';
     forecastSectionHeading.setAttributes({ textContent: '3 Day Weather' });
     forecastSection.appendChild(forecastSectionHeading);
 
-    // temporary
-    const forecastContent = createElement('section');
-    forecastContent.id = 'forecast_content';
-
-    const forecastContentList = createElement('ol');
-    forecast.forecastday.forEach((day) => {
-      forecastContentList.appendChild(
-        createContentRows(
-          createElement,
-          [{ class: 'forecast_day' }, { class: 'forecast_day_item' }],
-          `${day.day.maxtemp_f}°/${day.day.mintemp_f}°`,
-          day.day.condition.text,
-          `${day.day.daily_chance_of_rain}%`,
-        ),
-      );
-    });
-    forecastContent.appendChild(forecastContentList);
-    forecastSection.appendChild(forecastContent);
-    // temporary
-
     return forecastSection;
   },
 };
 
 export default function buildForecast(weatherData) {
-  forecast.init('imperial', weatherData);
   return forecastBuilder.render();
 }
 
