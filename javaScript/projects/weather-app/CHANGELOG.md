@@ -1,7 +1,7 @@
 # Changelog
 ---
 ### 29 NOV 2023
-- 
+- Tab modules: today, hourly and forecast all initialize through object state, each tab module will gather and render specific values on the DOM, date is displayed one day off when time is close to the end of day, today module renders two sections: summary and details, all tab modules render the time stamp when the API data was last updated and the location, and `location.region` will occasionally return an empty string.  
 ---
 ### 28 NOV 2023
 - Downloaded a progress activity icon to be used in loading module, hourly and today configuration modules now utilize state, object properities are now directly set in their respective object/variable properties, and `setArray()` in `hourly.config.js` now iterates with the reduce method and returns an array.  

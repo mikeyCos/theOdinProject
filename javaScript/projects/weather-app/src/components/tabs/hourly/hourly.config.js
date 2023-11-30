@@ -9,8 +9,8 @@
 import importAll from '../../../helpers/importAll';
 import formatTime from '../../../helpers/formatTime';
 
-const icons = importAll(require.context('../../../assets/icons', false, /\.svg$/));
 const unitSystems = {
+  icons: importAll(require.context('../../../assets/icons', false, /\.svg$/)),
   metric: {
     temp: 'c',
     speed: 'kph',
@@ -29,7 +29,7 @@ const unitSystems = {
     return this.unitSystem[key];
   },
   setIcon(key) {
-    return icons.files[Object.keys(icons.files).find((iconKey) => iconKey.includes(key))];
+    return this.icons.files[Object.keys(this.icons.files).find((iconKey) => iconKey.includes(key))];
   },
   roundValue(value) {
     return Math.round(value);
@@ -39,33 +39,41 @@ const unitSystems = {
   },
 };
 
-const data = (state) => ({
-  condition: {
-    label: state.condition.text,
-    icon: state.condition.icon,
-    setText() {
-      return `${this.label}`;
-    },
-  },
-  time: {
+const data = (state) => [
+  {
+    name: 'time',
     value: state.time,
     setText() {
-      return `${this.value}`;
+      return `${formatTime(this.value)}`;
     },
   },
-  temp: {
+  {
+    name: 'temp',
     value: state.setValue(state, 'temp_', 'temp'),
     unit: '°',
     setText() {
       return `${this.value}${this.unit}`;
     },
   },
-  precip: {
+  {
+    name: 'condition',
+    label: state.condition.text,
+    icon: state.condition.icon,
+    setText() {
+      return `${this.label}`;
+    },
+  },
+  {
+    name: 'precip',
     value: state.chance_of_rain,
     unit: '%',
     icon: state.setIcon('rain'),
+    setText() {
+      return `${this.value}${this.unit}`;
+    },
   },
-  wind: {
+  {
+    name: 'wind',
     value: state.setValue(state, 'wind_', 'speed'),
     unit: state.get('speed'),
     label: 'wind',
@@ -77,15 +85,24 @@ const data = (state) => ({
       return `${this.dir.value} ${this.value} ${this.unit}`;
     },
   },
-});
+];
 
 const date = (state) => ({
   date: state.date,
 });
 
 const location = (state) => ({
-  location: state.location,
-  last_updated: state.current.last_updated,
+  location: {
+    country: state.country,
+    localtime: state.localtime,
+    name: state.name,
+    region: state.region,
+    setText() {
+      return `${this.name}, ${
+        this.region.length === 0 || this.region === this.name ? this.country : this.region
+      }`;
+    },
+  },
 });
 
 const hourlyController = {
@@ -99,19 +116,16 @@ const hourlyController = {
 
     const state = {
       ...weatherData,
-      //   get: unitSystems.get,
-      //   setIcon: unitSystems.setIcon,
-      //   setValue: unitSystems.setValue,
-      //   roundValue: unitSystems.roundValue,
-      //   unitSystem: unitSystems[unitSystem],
+      ...weatherData.location,
     };
     console.log(state);
-    // forecast.forecastday[0]
-    // console.log(state);
-    return { ...location(state), forecastday };
+    return {
+      ...location(state),
+      forecastday,
+      last_updated: formatTime(state.current.last_updated).toLowerCase(),
+    };
   },
   setArray(obj) {
-    console.log(obj);
     const hours = obj.hour.reduce(this.setHours, []);
     console.log(hours);
     const state = {
@@ -126,6 +140,7 @@ const hourlyController = {
 
     if (date1.getTime() < date2.getTime()) {
       const state = {
+        icons: unitSystems.icons,
         get: unitSystems.get,
         setIcon: unitSystems.setIcon,
         setValue: unitSystems.setValue,
@@ -133,7 +148,7 @@ const hourlyController = {
         unitSystem: unitSystems[this.unitSystem],
         ...hour,
       };
-
+      console.log(data(state));
       filtered.push({ ...data(state) });
     }
 
@@ -143,9 +158,7 @@ const hourlyController = {
 
 export default {
   init(weatherData, unitSystem, timeStamp) {
-    // const foo = hourlyController.init(weatherData, unitSystem);
     this.setProperties(hourlyController.init(weatherData, unitSystem));
-    // console.log(hourlyController.init(weatherData, unitSystem));
     console.log(weatherData);
     console.log(timeStamp);
     // this.setProperties(hourlyController.init(weatherData, unitSystem));

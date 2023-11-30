@@ -1,6 +1,7 @@
 import createElement from '../../../helpers/createElement';
 import createContentRows from '../../../helpers/createContentRows';
 import today from './today.config';
+import formatTime from '../../../helpers/formatTime';
 
 const todayBuilder = {
   init() {},
@@ -13,29 +14,42 @@ const todayBuilder = {
   render() {
     console.log(today);
     const todaySection = createElement('section');
-    const todaySectionHeading = createElement('h1');
+
     todaySection.id = 'today';
-    todaySectionHeading.setAttributes({ textContent: 'TODAY' });
-    todaySection.appendChild(todaySectionHeading);
 
     // temporary
-    const todayDetails = createElement('section');
-    todayDetails.id = 'today_details';
+    const todaySummary = createElement('section');
+    const todayHeader = createElement('header');
+    const todaySectionHeading = createElement('h2');
+    const todayLocation = createElement('span');
+    const todayTimeStamp = createElement('p');
 
-    Object.keys(today.details).forEach((key, i) => {
-      todayDetails.appendChild(
-        createContentRows(
-          createElement,
-          null,
-          today.details[key].icon,
-          today.details[key].setLabel,
-          today.details[key].setText(),
-        ),
+    todaySummary.id = 'today_summary';
+    todaySectionHeading.setAttributes({ textContent: 'TODAY' });
+    todayLocation.textContent = ` - ${today.location.setText()}`;
+    todayTimeStamp.textContent = `As of ${today.last_updated}`;
+
+    todaySectionHeading.appendChild(todayLocation);
+    todayHeader.appendChild(todaySectionHeading);
+    todayHeader.appendChild(todayTimeStamp);
+    todaySummary.appendChild(todayHeader);
+
+    today.summary.forEach((detail) => {
+      todaySummary.appendChild(
+        createContentRows(createElement, null, detail.icon, detail.setText()),
       );
     });
 
-    // todaySection.appendChild(todaySummary);
-    // todayDetails.appendChild(todayDetailsList);
+    const todayDetails = createElement('section');
+    todayDetails.id = 'today_details';
+
+    today.details.forEach((detail) => {
+      todayDetails.appendChild(
+        createContentRows(createElement, null, detail.icon, detail.label, detail.setText()),
+      );
+    });
+
+    todaySection.appendChild(todaySummary);
     todaySection.appendChild(todayDetails);
     // temporary
 

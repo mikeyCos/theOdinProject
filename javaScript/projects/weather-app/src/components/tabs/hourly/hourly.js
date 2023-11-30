@@ -16,10 +16,44 @@ const hourlyBuilder = {
     console.log('render() running from hourly.js');
     console.log(hourly);
     const hourlySection = createElement('section');
-    const hourlySectionHeading = createElement('h1');
+    const hourlySectionHeader = createElement('header');
+    const hourlySectionHeading = createElement('h2');
+    const hourlyLocation = createElement('span');
+    const hourlyTimeStamp = createElement('p');
+
     hourlySection.id = 'hourly';
     hourlySectionHeading.textContent = 'Hourly weather';
-    hourlySection.appendChild(hourlySectionHeading);
+    hourlyLocation.textContent = ` - ${hourly.location.setText()}`;
+    hourlyTimeStamp.textContent = `As of ${hourly.last_updated}`;
+
+    hourlySectionHeading.appendChild(hourlyLocation);
+    hourlySectionHeader.appendChild(hourlySectionHeading);
+    hourlySectionHeader.appendChild(hourlyTimeStamp);
+    hourlySection.appendChild(hourlySectionHeader);
+
+    // temporary
+    const hourlyDetails = createElement('section');
+    hourlyDetails.id = 'hourly_details';
+
+    hourly.forecastday.forEach((day) => {
+      console.log(day);
+      const hourlyDay = createElement('ol');
+      const hourlyDayHeading = createElement('h3');
+      hourlyDay.className = 'day';
+      hourlyDayHeading.textContent = formatDate(day.date);
+      hourlyDay.appendChild(hourlyDayHeading);
+      day.hours.forEach((hour) => {
+        Object.values(hour).forEach((detail) => {
+          hourlyDay.appendChild(
+            createContentRows(createElement, null, detail.icon, detail.setText()),
+          );
+        });
+      });
+      hourlyDetails.appendChild(hourlyDay);
+    });
+
+    hourlySection.appendChild(hourlyDetails);
+    // temporary
     return hourlySection;
   },
 };
