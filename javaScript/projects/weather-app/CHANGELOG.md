@@ -1,5 +1,11 @@
 # Changelog
 ---
+### 01 DEC 2023
+- 
+---
+### 30 NOV 2023
+- Replaced `getDate()`/`getMonth()`/`getDate()` with `getUTC...` equivalents in `formatDate.js` module, created `unitsystems.js` module and imported for all three tab configuration files, created buttons for celsius (metric) and fahrenheit (imperial) on the navbar, created a placeholder method in `navbar.js` that records what button is clicked, and temporarily included sunrise and sunset properties in `today.config.js` module.  
+---
 ### 29 NOV 2023
 - Tab modules: today, hourly and forecast all initialize through object state, each tab module will gather and render specific values on the DOM, date is displayed one day off when time is close to the end of day, today module renders two sections: summary and details, all tab modules render the time stamp when the API data was last updated and the location, and `location.region` will occasionally return an empty string.  
 ---

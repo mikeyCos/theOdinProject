@@ -8,37 +8,8 @@
 // current.wind_mph
 // current.wind_dir
 import formatTime from '../../../helpers/formatTime';
-import importAll from '../../../helpers/importAll';
-
-const unitSystems = {
-  icons: importAll(require.context('../../../assets/icons', false, /\.svg$/)),
-  metric: {
-    temp: 'c',
-    speed: 'kph',
-    precipitation: 'mm',
-    pressure: 'mb',
-    distance: 'km',
-  },
-  imperial: {
-    temp: 'f',
-    speed: 'mph',
-    precipitation: 'in',
-    pressure: 'in',
-    distance: 'miles',
-  },
-  get(key) {
-    return this.unitSystem[key];
-  },
-  setIcon(key) {
-    return this.icons.files[Object.keys(this.icons.files).find((iconKey) => iconKey.includes(key))];
-  },
-  roundValue(value) {
-    return Math.round(value);
-  },
-  setValue(obj, ...args) {
-    return this.roundValue(obj[`${args[0]}${this.get(args[1])}`]);
-  },
-};
+// import importAll from '../../../helpers/importAll';
+import unitSystems from '../unitsystems';
 
 const data = (state) => ({
   summary: [
@@ -67,6 +38,24 @@ const data = (state) => ({
       label: 'feels like',
       setText() {
         return `${this.value}${this.unit}`;
+      },
+    },
+    {
+      key: 'sunrise',
+      value: state.sunrise,
+      label: 'sunrise',
+      icon: state.setIcon('sunrise'),
+      setText() {
+        return `${this.value}`;
+      },
+    },
+    {
+      key: 'sunset',
+      value: state.sunset,
+      label: 'sunset',
+      icon: state.setIcon('sunset'),
+      setText() {
+        return `${this.value}`;
       },
     },
     {
@@ -164,8 +153,9 @@ const todayController = {
       setValue: unitSystems.setValue,
       roundValue: unitSystems.roundValue,
       unitSystem: unitSystems[unitSystem],
-      ...weatherData.current,
       ...weatherData.forecast.forecastday[0],
+      ...weatherData.forecast.forecastday[0].astro,
+      ...weatherData.current,
       ...weatherData.location,
     };
     return {

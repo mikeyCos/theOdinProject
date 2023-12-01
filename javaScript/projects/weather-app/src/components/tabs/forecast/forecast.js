@@ -35,11 +35,12 @@ const forecastBuilder = {
     forecastDetails.id = 'forecast_details';
 
     forecast.forecastday.forEach((day) => {
+      const forecastday = createElement('div');
+      forecastday.className = 'day';
       Object.values(day).forEach((detail) => {
-        forecastDetails.append(
-          createContentRows(createElement, null, detail.icon, detail.setText()),
-        );
+        forecastday.append(createContentRows(createElement, null, detail.icon, detail.setText()));
       });
+      forecastDetails.appendChild(forecastday);
     });
     // temporary
     forecastSection.appendChild(forecastDetails);

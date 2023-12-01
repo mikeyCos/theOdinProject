@@ -6,86 +6,119 @@
 // (forecast.forecastday[0].hour.wind_dir
 // forecast.forecastday[0].hour.wind_mph)
 
-import importAll from '../../../helpers/importAll';
 import formatTime from '../../../helpers/formatTime';
+import unitSystems from '../unitsystems';
 
-const unitSystems = {
-  icons: importAll(require.context('../../../assets/icons', false, /\.svg$/)),
-  metric: {
-    temp: 'c',
-    speed: 'kph',
-    precipitation: 'mm',
-    pressure: 'mb',
-    distance: 'km',
-  },
-  imperial: {
-    temp: 'f',
-    speed: 'mph',
-    precipitation: 'in',
-    pressure: 'in',
-    distance: 'miles',
-  },
-  get(key) {
-    return this.unitSystem[key];
-  },
-  setIcon(key) {
-    return this.icons.files[Object.keys(this.icons.files).find((iconKey) => iconKey.includes(key))];
-  },
-  roundValue(value) {
-    return Math.round(value);
-  },
-  setValue(obj, ...args) {
-    return this.roundValue(obj[`${args[0]}${this.get(args[1])}`]);
-  },
-};
-
-const data = (state) => [
-  {
-    name: 'time',
-    value: state.time,
-    setText() {
-      return `${formatTime(this.value)}`;
+const data = (state) => ({
+  summary: [
+    {
+      name: 'time',
+      value: state.time,
+      setText() {
+        return `${formatTime(this.value)}`;
+      },
     },
-  },
-  {
-    name: 'temp',
-    value: state.setValue(state, 'temp_', 'temp'),
-    unit: '°',
-    setText() {
-      return `${this.value}${this.unit}`;
+    {
+      name: 'temp',
+      value: state.setValue(state, 'temp_', 'temp'),
+      unit: '°',
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
     },
-  },
-  {
-    name: 'condition',
-    label: state.condition.text,
-    icon: state.condition.icon,
-    setText() {
-      return `${this.label}`;
+    {
+      name: 'condition',
+      label: state.condition.text,
+      icon: state.condition.icon,
+      setText() {
+        return `${this.label}`;
+      },
     },
-  },
-  {
-    name: 'precip',
-    value: state.chance_of_rain,
-    unit: '%',
-    icon: state.setIcon('rain'),
-    setText() {
-      return `${this.value}${this.unit}`;
+    {
+      name: 'precip',
+      value: state.chance_of_rain,
+      unit: '%',
+      icon: state.setIcon('rain'),
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
     },
-  },
-  {
-    name: 'wind',
-    value: state.setValue(state, 'wind_', 'speed'),
-    unit: state.get('speed'),
-    label: 'wind',
-    icon: state.setIcon('wind'),
-    dir: {
-      value: state.wind_dir,
+    {
+      name: 'wind',
+      value: state.setValue(state, 'wind_', 'speed'),
+      unit: state.get('speed'),
+      label: 'wind',
+      icon: state.setIcon('wind'),
+      dir: {
+        value: state.wind_dir,
+      },
+      setText() {
+        return `${this.dir.value} ${this.value} ${this.unit}`;
+      },
     },
-    setText() {
-      return `${this.dir.value} ${this.value} ${this.unit}`;
+  ],
+  details: [
+    {
+      key: 'feelslike',
+      unit: '°',
+      value: state.setValue(state, 'feelslike_', 'temp'),
+      label: 'feels like',
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
     },
-  },
-];
+    {
+      key: 'wind',
+      value: state.setValue(state, 'wind_', 'speed'),
+      unit: state.get('speed'),
+      label: 'wind',
+      icon: state.setIcon('wind'),
+      dir: {
+        value: state.wind_dir,
+      },
+      setText() {
+        return `${this.dir.value} ${this.value} ${this.unit}`;
+      },
+    },
+    {
+      key: 'humidity',
+      value: state.humidity,
+      unit: '%',
+      label: 'humidity',
+      icon: state.setIcon('humidity'),
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
+    },
+    {
+      key: 'uv',
+      value: state.uv,
+      label: 'UV Index',
+      icon: state.setIcon('uv'),
+      setText() {
+        return `${this.value} of 11`;
+      },
+    },
+    {
+      key: 'cloud',
+      value: state.cloud,
+      unit: '%',
+      label: 'cloud cover',
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
+    },
+    {
+      key: 'precip',
+      value: state.precip_in,
+      unit: state.get('precip'),
+      label: 'precip amount',
+      setText() {
+        return `${this.value}${this.unit}`;
+      },
+    },
+  ],
+});
 
 const date = (state) => ({
   date: state.date,
@@ -118,7 +151,7 @@ const hourlyController = {
       ...weatherData,
       ...weatherData.location,
     };
-    console.log(state);
+
     return {
       ...location(state),
       forecastday,
@@ -127,10 +160,7 @@ const hourlyController = {
   },
   setArray(obj) {
     const hours = obj.hour.reduce(this.setHours, []);
-    console.log(hours);
-    const state = {
-      ...obj,
-    };
+    const state = { ...obj };
 
     return { ...date(state), hours };
   },

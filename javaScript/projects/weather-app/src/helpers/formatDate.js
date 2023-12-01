@@ -18,5 +18,7 @@ export default function formatDate(dateString) {
   ];
 
   const date = new Date(dateString);
-  return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
+  console.log(date);
+  console.log(dateString);
+  return `${days[date.getUTCDay()]}, ${months[date.getUTCMonth()]} ${date.getUTCDate()}`;
 }

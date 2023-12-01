@@ -43,11 +43,17 @@ const hourlyBuilder = {
       hourlyDayHeading.textContent = formatDate(day.date);
       hourlyDay.appendChild(hourlyDayHeading);
       day.hours.forEach((hour) => {
-        Object.values(hour).forEach((detail) => {
-          hourlyDay.appendChild(
+        console.log(hour.summary);
+
+        const hourContainer = createElement('div');
+        hourContainer.className = 'hour';
+        Object.values(hour.summary).forEach((detail) => {
+          hourContainer.appendChild(
             createContentRows(createElement, null, detail.icon, detail.setText()),
           );
         });
+
+        hourlyDay.appendChild(hourContainer);
       });
       hourlyDetails.appendChild(hourlyDay);
     });

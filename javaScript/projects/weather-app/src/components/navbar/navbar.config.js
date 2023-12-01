@@ -29,6 +29,34 @@ export default {
   ],
   navRight: [
     {
+      element: 'div',
+      attributes: {
+        class: 'unit_systems_buttons',
+      },
+      children: [
+        {
+          element: 'button',
+          attributes: {
+            id: 'imperial',
+            class: 'unit_systems_button',
+            type: 'button',
+            value: 'imperial',
+            textContent: '°F',
+          },
+        },
+        {
+          element: 'button',
+          attributes: {
+            id: 'metric',
+            class: 'unit_systems_button',
+            type: 'button',
+            value: 'metric',
+            textContent: '°C',
+          },
+        },
+      ],
+    },
+    {
       element: 'a',
       attributes: {
         href: '#',

@@ -1,6 +1,7 @@
 import '../../styles/navbar.css';
 import navbar from './navbar.config';
 import createElement from '../../helpers/createElement';
+import pubSub from '../../containers/pubSub';
 
 export default {
   cacheDOM(navElement) {
@@ -8,10 +9,13 @@ export default {
     this.navRight = navElement.querySelector('.nav_right');
     this.navLinks = navElement.querySelectorAll('.nav_item');
     this.navBtn = navElement.querySelector('.nav_btn');
+    this.unitSystemsBtns = navElement.querySelectorAll('.unit_systems_button');
   },
   bindEvents() {
     this.toggleNav = this.toggleNav.bind(this);
     this.navBtn.addEventListener('click', this.toggleNav);
+    this.unitSystemsBtns.forEach((btn) => btn.addEventListener('click', this.placeholder));
+    console.log(this.unitSystemsBtns);
   },
   render() {
     const navElement = createElement('nav');
@@ -62,5 +66,8 @@ export default {
     } else {
       this.navRight.classList.add('visible');
     }
+  },
+  placeholder(e) {
+    console.log(e.currentTarget);
   },
 };
