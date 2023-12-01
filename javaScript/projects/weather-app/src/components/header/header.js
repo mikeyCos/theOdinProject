@@ -2,17 +2,21 @@ import createElement from '../../helpers/createElement';
 import pubSub from '../../containers/pubSub';
 import header from './header.config';
 import buildNavbar from '../navbar/navbar';
+import { setUnitSystem } from '../tabs/unitsystems';
 
 const headerBuilder = {
   cacheDOM(headerElement) {
     this.header = headerElement;
     this.form = headerElement.querySelector('#form');
     this.inputSearch = headerElement.querySelector('#location');
+    this.inputUnitsystem = headerElement.querySelector('#unitsystem');
     this.inputErrors = headerElement.querySelectorAll('.validity_error');
   },
   bindEvents() {
     this.submitForm = this.submitForm.bind(this);
     this.form.addEventListener('submit', this.submitForm);
+    this.setUnitSystem = this.setUnitSystem.bind(this);
+    pubSub.subscribe('setUnitSystem', this.setUnitSystem);
   },
   render() {
     const headerElement = createElement('header');
@@ -41,9 +45,9 @@ const headerBuilder = {
           });
           formItem.setAttributes({ class: 'form_item' });
 
-          formItem.appendChild(inputLabel);
+          if (input.error) formItem.appendChild(inputLabel);
           formItem.appendChild(formInput);
-          formItem.appendChild(inputError);
+          if (input.error) formItem.appendChild(inputError);
           headerItem.appendChild(formItem);
         });
       }
@@ -56,9 +60,17 @@ const headerBuilder = {
     return headerElement;
   },
   submitForm(e) {
-    e.preventDefault();
-    console.log(this.inputSearch.value);
-    pubSub.publish('getWeather', this.inputSearch.value);
+    if (e) e.preventDefault();
+    setUnitSystem(this.inputUnitsystem.value);
+    console.log(pubSub.publish('getActiveTab'));
+    pubSub.publish('getWeather', this.inputSearch.value, pubSub.publish('getActiveTab'));
+  },
+  setUnitSystem(selection) {
+    this.inputUnitsystem.value = selection;
+    if (this.inputSearch.value.length !== 0) {
+      // this.form.submit();
+      this.submitForm();
+    }
   },
 };
 

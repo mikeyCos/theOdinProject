@@ -1,5 +1,6 @@
 import createElement from '../../../helpers/createElement';
 import forecast from './forecast.config';
+import '../../../styles/tabs/forecast.css';
 import createContentRows from '../../../helpers/createContentRows';
 import formatTime from '../../../helpers/formatTime';
 
@@ -49,7 +50,7 @@ const forecastBuilder = {
 };
 
 export default function buildForecast(weatherData, timeStamp) {
-  forecast.init(weatherData, 'imperial', timeStamp);
+  forecast.init(weatherData, timeStamp);
   return forecastBuilder.render();
 }
 

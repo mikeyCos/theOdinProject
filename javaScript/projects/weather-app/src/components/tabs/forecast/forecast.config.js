@@ -11,7 +11,7 @@
 // import importAll from '../../../helpers/importAll';
 import formatTime from '../../../helpers/formatTime';
 import formatDate from '../../../helpers/formatDate';
-import unitSystems from '../unitsystems';
+import { unitSystem } from '../unitsystems';
 
 const data = (state) => [
   {
@@ -71,9 +71,8 @@ const location = (state) => ({
 });
 
 const forecastController = {
-  init(weatherData, unitSystem) {
+  init(weatherData) {
     this.weatherData = weatherData;
-    this.unitSystem = unitSystem;
     this.setDay = this.setDay.bind(this);
     const forecastday = weatherData.forecast.forecastday.map(this.setDay);
     const state = {
@@ -89,12 +88,7 @@ const forecastController = {
   setDay(obj) {
     const days = obj;
     const state = {
-      icons: unitSystems.icons,
-      get: unitSystems.get,
-      setIcon: unitSystems.setIcon,
-      setValue: unitSystems.setValue,
-      roundValue: unitSystems.roundValue,
-      unitSystem: unitSystems[this.unitSystem],
+      ...unitSystem,
       ...obj.day,
       ...obj,
     };
@@ -104,8 +98,8 @@ const forecastController = {
 };
 
 export default {
-  init(weatherData, unitSystem, timeStamp) {
-    this.setProperties(forecastController.init(weatherData, unitSystem));
+  init(weatherData, timeStamp) {
+    this.setProperties(forecastController.init(weatherData));
   },
   setProperties(obj) {
     Object.assign(this, obj);

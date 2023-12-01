@@ -45,13 +45,12 @@ const mainBuilder = {
   switchContent(e, tabKey) {
     let renderKey;
     console.log('switchContent() running from main.js');
-    console.log(e);
     if (e.error) {
       renderKey = 'error';
     } else if (e === 'loading') {
       renderKey = 'loading';
     } else {
-      console.log('fetch success');
+      // console.log('fetch success');
       renderKey = 'tabs';
     }
     this.render(renderKey, e, tabKey);

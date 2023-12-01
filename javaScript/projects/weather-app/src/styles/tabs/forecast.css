@@ -1,0 +1,14 @@
+#forecast_details > .day {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+#forecast_details > .day > ul {
+  list-style: none;
+}
+
+#forecast_details > .day > ul,
+#forecast_details > .day > ul > li {
+  display: flex;
+  align-items: center;
+}

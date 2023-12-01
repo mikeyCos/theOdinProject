@@ -1,0 +1,12 @@
+#hourly_details > .day > .hour {
+  background-color: red;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+}
+
+#hourly_details > .day > .hour > ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}

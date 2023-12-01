@@ -1,0 +1,32 @@
+#today_summary > ul {
+  list-style: none;
+}
+
+#today_details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+#today_details > ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: min-content 1fr max-content;
+}
+
+#today_details > ul:first-child {
+  background-color: red;
+  grid-template-columns: 1fr;
+}
+
+#today_details > ul:nth-child(n + 2):nth-child(-n + 3) {
+  /* selects sunrise and sunset */
+  background-color: bisque;
+}
+
+#today_details > ul:nth-child(n + 3) + * {
+  /* selects rest of ul after sunset */
+  background-color: rgb(214, 138, 17);
+}
+
+@media screen and (min-width: 768px) {
+}

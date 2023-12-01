@@ -7,7 +7,7 @@
 // forecast.forecastday[0].hour.wind_mph)
 
 import formatTime from '../../../helpers/formatTime';
-import unitSystems from '../unitsystems';
+import { unitSystem } from '../unitsystems';
 
 const data = (state) => ({
   summary: [
@@ -139,13 +139,11 @@ const location = (state) => ({
 });
 
 const hourlyController = {
-  init(weatherData, unitSystem) {
+  init(weatherData) {
     this.weatherData = weatherData;
-    this.unitSystem = unitSystem;
     this.setArray = this.setArray.bind(this);
     this.setHours = this.setHours.bind(this);
     const forecastday = weatherData.forecast.forecastday.map(this.setArray);
-    console.log(forecastday);
 
     const state = {
       ...weatherData,
@@ -170,15 +168,9 @@ const hourlyController = {
 
     if (date1.getTime() < date2.getTime()) {
       const state = {
-        icons: unitSystems.icons,
-        get: unitSystems.get,
-        setIcon: unitSystems.setIcon,
-        setValue: unitSystems.setValue,
-        roundValue: unitSystems.roundValue,
-        unitSystem: unitSystems[this.unitSystem],
+        ...unitSystem,
         ...hour,
       };
-      console.log(data(state));
       filtered.push({ ...data(state) });
     }
 
@@ -187,9 +179,9 @@ const hourlyController = {
 };
 
 export default {
-  init(weatherData, unitSystem, timeStamp) {
-    this.setProperties(hourlyController.init(weatherData, unitSystem));
-    console.log(weatherData);
+  init(weatherData, timeStamp) {
+    this.setProperties(hourlyController.init(weatherData));
+
     console.log(timeStamp);
     // this.setProperties(hourlyController.init(weatherData, unitSystem));
   },

@@ -23,6 +23,17 @@ export default [
         },
         error: 'Enter a valid city or postal code',
       },
+      {
+        element: 'input',
+        attributes: {
+          id: 'unitsystem',
+          class: 'form_input',
+          name: 'unitsystem',
+          type: 'hidden',
+          placeholder: `Enter 'imperial' or 'metric'`,
+          value: 'imperial',
+        },
+      },
     ],
   },
 ];

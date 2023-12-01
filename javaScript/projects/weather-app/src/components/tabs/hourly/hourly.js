@@ -1,5 +1,6 @@
 import createElement from '../../../helpers/createElement';
 import hourly from './hourly.config';
+import '../../../styles/tabs/hourly.css';
 import formatDate from '../../../helpers/formatDate';
 import formatTime from '../../../helpers/formatTime';
 import createContentRows from '../../../helpers/createContentRows';
@@ -36,15 +37,12 @@ const hourlyBuilder = {
     hourlyDetails.id = 'hourly_details';
 
     hourly.forecastday.forEach((day) => {
-      console.log(day);
       const hourlyDay = createElement('ol');
       const hourlyDayHeading = createElement('h3');
       hourlyDay.className = 'day';
       hourlyDayHeading.textContent = formatDate(day.date);
       hourlyDay.appendChild(hourlyDayHeading);
       day.hours.forEach((hour) => {
-        console.log(hour.summary);
-
         const hourContainer = createElement('div');
         hourContainer.className = 'hour';
         Object.values(hour.summary).forEach((detail) => {
@@ -65,7 +63,7 @@ const hourlyBuilder = {
 };
 
 export default function buildHourly(weatherData, timeStamp) {
-  hourly.init(weatherData, 'imperial', timeStamp);
+  hourly.init(weatherData, timeStamp);
   return hourlyBuilder.render();
 }
 

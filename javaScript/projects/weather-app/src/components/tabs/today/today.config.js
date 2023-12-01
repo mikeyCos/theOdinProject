@@ -8,8 +8,7 @@
 // current.wind_mph
 // current.wind_dir
 import formatTime from '../../../helpers/formatTime';
-// import importAll from '../../../helpers/importAll';
-import unitSystems from '../unitsystems';
+import { unitSystem } from '../unitsystems';
 
 const data = (state) => ({
   summary: [
@@ -143,16 +142,15 @@ const location = (state) => ({
 });
 
 const todayController = {
-  init(weatherData, unitSystem) {
+  init(weatherData) {
     this.weatherData = weatherData;
-    this.unitSystem = unitSystem;
     const state = {
-      icons: unitSystems.icons,
-      get: unitSystems.get,
-      setIcon: unitSystems.setIcon,
-      setValue: unitSystems.setValue,
-      roundValue: unitSystems.roundValue,
-      unitSystem: unitSystems[unitSystem],
+      // icons: unitSystem.icons,
+      // get: unitSystem.get,
+      // setIcon: unitSystem.setIcon,
+      // setValue: unitSystem.setValue,
+      // roundValue: unitSystem.roundValue,
+      ...unitSystem,
       ...weatherData.forecast.forecastday[0],
       ...weatherData.forecast.forecastday[0].astro,
       ...weatherData.current,
@@ -167,11 +165,10 @@ const todayController = {
 };
 
 export default {
-  init(weatherData, unitSystem, timeStamp) {
+  init(weatherData, timeStamp) {
     // console.log(todayController.init(weatherData, unitSystem));
-    console.log(weatherData);
     console.log(timeStamp);
-    this.setProperties(todayController.init(weatherData, unitSystem));
+    this.setProperties(todayController.init(weatherData));
   },
   setProperties(obj) {
     Object.assign(this, obj);

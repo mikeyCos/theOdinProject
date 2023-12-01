@@ -1,6 +1,7 @@
 import createElement from '../../../helpers/createElement';
 import createContentRows from '../../../helpers/createContentRows';
 import today from './today.config';
+import '../../../styles/tabs/today.css';
 import formatTime from '../../../helpers/formatTime';
 
 const todayBuilder = {
@@ -59,7 +60,7 @@ const todayBuilder = {
 
 export default function buildToday(weatherData, timeStamp) {
   console.log(timeStamp);
-  today.init(weatherData, 'imperial', timeStamp);
+  today.init(weatherData, timeStamp);
   return todayBuilder.render();
 }
 

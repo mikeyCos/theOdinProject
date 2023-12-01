@@ -15,7 +15,6 @@ export default {
     this.toggleNav = this.toggleNav.bind(this);
     this.navBtn.addEventListener('click', this.toggleNav);
     this.unitSystemsBtns.forEach((btn) => btn.addEventListener('click', this.placeholder));
-    console.log(this.unitSystemsBtns);
   },
   render() {
     const navElement = createElement('nav');
@@ -68,6 +67,6 @@ export default {
     }
   },
   placeholder(e) {
-    console.log(e.currentTarget);
+    pubSub.publish('setUnitSystem', e.currentTarget.value);
   },
 };

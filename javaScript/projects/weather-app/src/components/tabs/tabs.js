@@ -4,6 +4,7 @@ import buildToday from './today/today';
 import buildHourly from './hourly/hourly';
 import buildForecast from './forecast/forecast';
 import pubSub from '../../containers/pubSub';
+import '../../styles/tabs/tabs.css';
 
 const build = {
   tabsNavbar: buildTabsNavbar,
@@ -14,19 +15,17 @@ const build = {
 
 const tabsBuilder = {
   init(weatherData) {
+    this.timeStamp = Math.floor(Date.now() / 1000);
     this.setWeather(weatherData);
     this.switchTab = this.switchTab.bind(this);
-    pubSub.subscribe('switchTab', this.switchTab);
+    this.getActiveTab = this.getActiveTab.bind(this);
+    // pubSub.subscribe('switchTab', this.switchTab);
+    pubSub.subscribe('getActiveTab', this.getActiveTab);
   },
   setWeather(weatherData) {
     this.weatherData = weatherData;
     this.location = weatherData.location.name;
     this.apiLastUpdated = weatherData.current.last_updated_epoch;
-    // this.timeStamp = weatherData.current.last_updated_epoch;
-    this.timeStamp = Math.floor(Date.now() / 1000);
-
-    console.log(this.timeStamp);
-    console.log(this.apiLastUpdated);
   },
   cacheDOM(tabsSection) {
     this.tabsSection = tabsSection;
@@ -37,7 +36,6 @@ const tabsBuilder = {
     this.tabsList.forEach((tab) => tab.addEventListener('click', this.switchTab));
   },
   render(key, update) {
-    // debugger;
     let content;
     if (!update) {
       if (!key) {
@@ -47,6 +45,7 @@ const tabsBuilder = {
         content = build[key](this.weatherData, this.timeStamp);
         this.tabsSection.lastChild.remove();
       }
+      console.log(content);
       this.tabsSection.appendChild(content);
     } else {
       console.log('update exists');
@@ -54,6 +53,7 @@ const tabsBuilder = {
     }
   },
   switchTab(e, tabKey) {
+    console.log(tabKey);
     let renderKey;
     let update = true;
     if (tabKey) {
@@ -63,7 +63,15 @@ const tabsBuilder = {
       const { className: elementClassName } = e.currentTarget;
       renderKey = elementClassName;
     }
+
     this.render(renderKey, update);
+  },
+  setActiveTab(renderKey) {
+    this.activeKey = renderKey;
+    console.log(this.activeKey);
+  },
+  getActiveTab() {
+    return this.activeKey;
   },
 };
 
@@ -82,11 +90,13 @@ export default function buildTabs(weatherData, tabKey) {
   tabsSection.appendChild(build.tabsNavbar());
   tabsBuilder.cacheDOM(tabsSection);
   tabsBuilder.render();
+  // tabsBuilder.switchTab(null, tabKey);
   tabsBuilder.bindEvents();
   if (tabKey) {
-    console.log('tabsBuilder.render() running once more');
+    //   console.log('tabsBuilder.render() running once more');
     tabsBuilder.setWeather(weatherData);
-    tabsBuilder.render(tabKey);
+    //   tabsBuilder.render(tabKey);
+    tabsBuilder.switchTab(null, tabKey);
   }
   return tabsSection;
 }

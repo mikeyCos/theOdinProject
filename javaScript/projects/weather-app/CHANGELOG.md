@@ -1,7 +1,10 @@
 # Changelog
 ---
-### 01 DEC 2023
+### DEC 2023
 - 
+---
+### 01 DEC 2023
+- Applied basic CSS layout properties for all tabs' stylesheets, buttons of class `.unit_systems_button` changes the unit system respectively, removed default export from `unitsystems.js` module, created `setUnitSystem()` function and `unitSystem` object in `unitsystems.js`, `setUnitSystem()` is called each time `submitForm()` runs in `header.js`, and the today tab currently renders whenever the 'metric/imperial' buttons are activated.  
 ---
 ### 30 NOV 2023
 - Replaced `getDate()`/`getMonth()`/`getDate()` with `getUTC...` equivalents in `formatDate.js` module, created `unitsystems.js` module and imported for all three tab configuration files, created buttons for celsius (metric) and fahrenheit (imperial) on the navbar, created a placeholder method in `navbar.js` that records what button is clicked, and temporarily included sunrise and sunset properties in `today.config.js` module.  

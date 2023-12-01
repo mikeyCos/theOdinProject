@@ -38,7 +38,7 @@ export default {
           element: 'button',
           attributes: {
             id: 'imperial',
-            class: 'unit_systems_button',
+            class: 'unit_systems_button selected',
             type: 'button',
             value: 'imperial',
             textContent: '°F',
