@@ -17,7 +17,6 @@ export default async function getWeather(value, tabKey) {
     );
 
     const weatherData = await response.json();
-
     pubSub.publish(
       'switchContent',
       !response.ok ? Object.assign(response, weatherData) : weatherData,

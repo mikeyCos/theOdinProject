@@ -1,0 +1,201 @@
+/* includes selectors for navbar.js and header.js */
+#header > #navbar > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+#header > #navbar > .container > * {
+  list-style: none;
+}
+
+#header > #navbar > .container > * > li {
+  position: relative;
+  padding: 0.3rem;
+}
+
+#header > #navbar > .container > * > li:first-of-type {
+  /* value needs to be equal to .nav_btn padding value */
+  margin-top: 0.3rem;
+}
+
+/* optional */
+#header > #navbar > .container > .nav_right > *:not(:first-child)::after,
+#header > #navbar > .container > .nav_right > *:not(:first-child):hover::after {
+  position: absolute;
+  content: '';
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(255, 187, 69);
+  z-index: -1;
+}
+
+/* optional */
+#header > #navbar > .container > .nav_right > li::after {
+  width: 0%;
+  transform: skewX(0deg);
+  transition: all 500ms ease-in-out;
+}
+
+/* optional */
+#header > #navbar > .container > .nav_right > li:hover::after {
+  width: 100%;
+  transform: skewX(8deg) scaleX(1.03);
+  transition: all 200ms ease-in-out;
+}
+
+#header > #navbar > .container > * > li > a {
+  display: flex;
+  align-items: center;
+}
+
+#header > #navbar > .container > .nav_right {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(143, 103, 223);
+  padding: 1rem;
+  transform: translateY(-100%);
+}
+
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons {
+  width: max-content;
+  border-radius: 0.75rem;
+  background-color: rgb(155, 155, 155);
+}
+
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > * {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  background-color: transparent;
+}
+
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > *.selected {
+  background-color: rgb(19, 102, 19);
+}
+
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > *:hover {
+  cursor: pointer;
+}
+
+#header > #navbar > .container > .nav_right.visible {
+  visibility: visible;
+  transform: translateY(0%);
+  transition: transform 200ms ease-in-out;
+}
+
+.nav_item,
+.nav_item:visited {
+  color: var(--primary-font-color, rgb(0, 0, 0));
+  text-decoration: none;
+}
+
+.nav_item > svg,
+.nav_btn > svg {
+  width: clamp(2rem, 3vw, 3.5rem);
+  height: auto;
+}
+
+.nav_btn {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0.3rem;
+  z-index: 1;
+}
+
+.nav_btn:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.nav_btn:hover > svg {
+  filter: invert(1);
+}
+
+/* form styles */
+#header > #form {
+  padding: 1rem;
+}
+
+#header > #form > .form_item:first-child {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+}
+
+#header > #form > .form_item:first-child > input {
+  background: rgb(0, 132, 255);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.75rem;
+}
+
+#header > #form > .form_item:first-child > .validity_error {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  #header > #navbar > .container > * {
+    align-items: center;
+  }
+
+  #header > #navbar > .container > .nav_right {
+    position: relative;
+    visibility: visible;
+    background-color: transparent;
+    padding: 0;
+    transform: translateY(0%);
+    display: flex;
+    height: inherit;
+    width: inherit;
+  }
+
+  #header > #navbar > .container > *:not(.nav_left) > li:last-of-type:after,
+  #header > #navbar > .container > *:not(.nav_left) > li:last-of-type:hover:after {
+    content: none;
+  }
+
+  #header > #navbar > .container > *:not(.nav_left) > li:not(:last-child):after,
+  #header > #navbar > .container > *:not(.nav_left) > li:not(:last-child):hover::after {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 1rem;
+  }
+
+  /* optional */
+  #header > #navbar > .container > *:not(.nav_left) > li:not(:last-child):after {
+    width: 0%;
+    height: 0%;
+    transform: skewX(0deg);
+    transition: all 200ms ease-in-out;
+  }
+
+  /* optional */
+  #header > #navbar > .container > *:not(.nav_left) > li:not(:last-child):hover::after {
+    width: 60%;
+    height: 12%;
+    transform: skewX(0deg) scaleX(1);
+    transition: all 200ms ease-in-out;
+  }
+
+  #header > #navbar > .container > * > li:first-of-type {
+    margin-top: 0;
+  }
+
+  .nav_btn {
+    display: none;
+  }
+}

@@ -3,6 +3,7 @@ import pubSub from '../../containers/pubSub';
 import header from './header.config';
 import buildNavbar from '../navbar/navbar';
 import { setUnitSystem } from '../tabs/unitsystems';
+import '../../styles/header.css';
 
 const headerBuilder = {
   cacheDOM(headerElement) {
@@ -14,9 +15,11 @@ const headerBuilder = {
   },
   bindEvents() {
     this.submitForm = this.submitForm.bind(this);
-    this.form.addEventListener('submit', this.submitForm);
     this.setUnitSystem = this.setUnitSystem.bind(this);
+    this.setActiveTab = this.setActiveTab.bind(this);
+    this.form.addEventListener('submit', this.submitForm);
     pubSub.subscribe('setUnitSystem', this.setUnitSystem);
+    pubSub.subscribe('setActiveTab', this.setActiveTab);
   },
   render() {
     const headerElement = createElement('header');
@@ -62,15 +65,17 @@ const headerBuilder = {
   submitForm(e) {
     if (e) e.preventDefault();
     setUnitSystem(this.inputUnitsystem.value);
-    console.log(pubSub.publish('getActiveTab'));
-    pubSub.publish('getWeather', this.inputSearch.value, pubSub.publish('getActiveTab'));
+    console.log(pubSub.publish('getActiveTab', 'foo'));
+    pubSub.publish('getWeather', this.inputSearch.value, this.activeTab);
   },
   setUnitSystem(selection) {
     this.inputUnitsystem.value = selection;
     if (this.inputSearch.value.length !== 0) {
-      // this.form.submit();
       this.submitForm();
     }
+  },
+  setActiveTab(key) {
+    this.activeTab = key;
   },
 };
 

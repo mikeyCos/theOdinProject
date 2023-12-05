@@ -19,7 +19,7 @@ export default {
           },
         },
         {
-          element: 'span',
+          element: 'h1',
           attributes: {
             textContent: 'Weather App',
           },

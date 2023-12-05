@@ -1,31 +1,100 @@
+#today_summary {
+  background-color: magenta;
+  padding: 2rem;
+}
+
 #today_summary > ul {
   list-style: none;
 }
 
-#today_details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+#today_summary > ul > :first-child {
+  font-size: 1.5rem;
 }
 
-#today_details > ul {
+#today_summary > header > h3 {
+  font-size: 1.75rem;
+}
+
+#today_summary > header > h3 > span {
+  font-size: 1rem;
+  text-wrap: nowrap;
+}
+
+#today_summary > ul:last-of-type {
+  display: flex;
+  flex-direction: column-reverse;
+  position: relative;
+}
+
+#today_summary > ul:last-of-type > :first-child {
+  display: flex;
+  position: absolute;
+  right: 0;
+}
+
+#today_details > * > * {
   list-style: none;
-  display: grid;
-  grid-template-columns: min-content 1fr max-content;
 }
 
-#today_details > ul:first-child {
-  background-color: red;
-  grid-template-columns: 1fr;
+#today_details > .today_details_header {
+  padding: 0.5rem;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-#today_details > ul:nth-child(n + 2):nth-child(-n + 3) {
-  /* selects sunrise and sunset */
-  background-color: bisque;
+#today_details > .today_details_header > :first-child {
+  flex: 1;
 }
 
-#today_details > ul:nth-child(n + 3) + * {
-  /* selects rest of ul after sunset */
-  background-color: rgb(214, 138, 17);
+#today_details > .today_details_header > :first-child > :first-child {
+  text-wrap: nowrap;
+  text-transform: capitalize;
+}
+
+#today_details > .today_details_header > :first-child > :last-child {
+  font-size: 1.5rem;
+}
+
+#today_details > .today_details_header > .today_details_sun {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: end;
+  column-gap: 1rem;
+}
+
+#today_details > .today_details_header > .today_details_sun > * {
+  list-style: none;
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+/* selects li's that wrap an icon */
+#today_details > .today_details_header > .today_details_sun > * > li {
+  display: flex;
+}
+
+#today_details > .today_details_container {
+  padding: 0.5rem;
+  background-color: darkorange;
+  display: flex;
+  flex-direction: column;
+}
+
+#today_details > .today_details_container > ul {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+/* selects li's that wrap an icon */
+#today_details > .today_details_container > ul > :first-child {
+  display: flex;
+}
+
+#today_details > .today_details_container > ul > :nth-child(2) {
+  flex: 1;
+  text-transform: capitalize;
 }
 
 @media screen and (min-width: 768px) {

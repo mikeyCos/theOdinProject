@@ -182,7 +182,7 @@ export default {
   init(weatherData, timeStamp) {
     this.setProperties(hourlyController.init(weatherData));
 
-    console.log(timeStamp);
+    // console.log(timeStamp);
     // this.setProperties(hourlyController.init(weatherData, unitSystem));
   },
   setProperties(obj) {

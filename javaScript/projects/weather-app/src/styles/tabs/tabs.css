@@ -1,4 +1,32 @@
-/* stylesheet for tabs.js */
+/* stylesheet for tabs.js, and tabs_navbar.js */
+#tabs_navbar {
+  border: 2px solid green;
+}
+
+#tabs_navbar > ul {
+  display: flex;
+  list-style: none;
+  column-gap: 1rem;
+}
+
+.tabs_list_item {
+  padding: 0.5rem;
+}
+
+/* #tabs_navbar anchors */
+.tabs_list_item > * {
+  text-decoration: none;
+  color: white;
+}
+
+.tabs_list_item > *:hover {
+  border-bottom: 2px solid white;
+}
+
+.tabs_list_item > [data-active='true'] {
+  border-bottom: 2px solid white;
+}
+
 #tabs:last-child {
   border: 2px solid pink;
 }

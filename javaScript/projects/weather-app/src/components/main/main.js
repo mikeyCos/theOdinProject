@@ -4,6 +4,7 @@ import homeBuilder from '../home/home';
 import errorBuilder from '../error/error';
 import tabsBuilder from '../tabs/tabs';
 import loadingBuilder from '../loading/loading';
+import '../../styles/content.css';
 
 const build = {
   home: homeBuilder,
@@ -27,7 +28,7 @@ const mainBuilder = {
     this.switchContent = this.switchContent.bind(this);
     pubSub.subscribe('switchContent', this.switchContent);
   },
-  render(key, data, tabKey) {
+  render(key, data, renderKey) {
     console.log('render() running from main.js');
 
     let content;
@@ -37,23 +38,23 @@ const mainBuilder = {
       // this.bindEvents();
     } else {
       // render today
-      content = build[key](data, tabKey);
+      content = build[key](data, renderKey);
       this.main.lastChild.remove();
     }
     this.main.appendChild(content);
   },
-  switchContent(e, tabKey) {
-    let renderKey;
+  switchContent(weatherData, renderKey) {
+    let contentKey;
     console.log('switchContent() running from main.js');
-    if (e.error) {
-      renderKey = 'error';
-    } else if (e === 'loading') {
-      renderKey = 'loading';
+    if (weatherData.error) {
+      contentKey = 'error';
+    } else if (weatherData === 'loading') {
+      contentKey = 'loading';
     } else {
       // console.log('fetch success');
-      renderKey = 'tabs';
+      contentKey = 'tabs';
     }
-    this.render(renderKey, e, tabKey);
+    this.render(contentKey, weatherData, renderKey);
   },
   setActiveTab(tab) {
     console.log('setActiveTab() running from main.js');

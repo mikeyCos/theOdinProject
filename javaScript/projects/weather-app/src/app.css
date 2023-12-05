@@ -6,7 +6,9 @@
   font-style: normal;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -15,6 +17,11 @@
 body {
   background-color: aqua;
   font-family: 'Roboto Condensed', Arial;
-  font-family: 'Roboto Condensed';
-  font-family: Arial;
+  min-height: 100dvh;
+}
+
+body > #weather_app {
+  min-height: inherit;
+  display: grid;
+  grid-template-rows: min-content 1fr;
 }

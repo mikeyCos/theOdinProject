@@ -1,4 +1,4 @@
-import '../../styles/navbar.css';
+import '../../styles/header.css';
 import navbar from './navbar.config';
 import createElement from '../../helpers/createElement';
 import pubSub from '../../containers/pubSub';
@@ -13,8 +13,9 @@ export default {
   },
   bindEvents() {
     this.toggleNav = this.toggleNav.bind(this);
+    this.setUnitSystem = this.setUnitSystem.bind(this);
     this.navBtn.addEventListener('click', this.toggleNav);
-    this.unitSystemsBtns.forEach((btn) => btn.addEventListener('click', this.placeholder));
+    this.unitSystemsBtns.forEach((btn) => btn.addEventListener('click', this.setUnitSystem));
   },
   render() {
     const navElement = createElement('nav');
@@ -66,7 +67,12 @@ export default {
       this.navRight.classList.add('visible');
     }
   },
-  placeholder(e) {
-    pubSub.publish('setUnitSystem', e.currentTarget.value);
+  setUnitSystem(e) {
+    const element = e.currentTarget;
+    [...this.unitSystemsBtns]
+      .find((btn) => btn.classList.contains('selected'))
+      .classList.remove('selected');
+    element.classList.add('selected');
+    pubSub.publish('setUnitSystem', element.value);
   },
 };

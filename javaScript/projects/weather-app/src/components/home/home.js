@@ -1,4 +1,5 @@
 import createElement from '../../helpers/createElement';
+import '../../styles/home.css';
 
 const homeBuilder = {
   cacheDOM() {
