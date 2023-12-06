@@ -7,11 +7,12 @@
 }
 
 :root {
-  --temp-one: #f06543;
-  --color-background-primary: #e8e9eb;
-  --temp-three: #e0dfd5;
-  --temp-four: #313638;
-  --temp-five: #f09d51;
+  --color-font-primary: #000000;
+  --color-font-secondary: #e8e9eb;
+  --color-background-primary: #313638;
+  --color-background-secondary: #f06543;
+  --color-background-default: #ffffff;
+  --color-accent: #f09d51;
 }
 
 *,
@@ -24,6 +25,7 @@
 
 body {
   background-color: var(--color-background-primary);
+  color: var(--color-font-secondary);
   font-family: 'Roboto Condensed', Arial;
   min-height: 100dvh;
 }

@@ -10,6 +10,7 @@ export default async function getWeather(value, tabKey) {
   // postal code, number or string
   // city, uppercase or lowercase;
   pubSub.publish('switchContent', 'loading');
+
   try {
     const response = await fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=84ac7310e56448a1896212731230611&q=${value}&days=3&aqi=no&alerts=no`,

@@ -1,7 +1,7 @@
 # Changelog
 ---
 ### 06 DEC 2023
-- 
+- Created `footer.js` module to return a rendered node, created stylesheets for footer/error/loading modules, added slide left/right animations the unit systems buttons, updated the loading module to render a image instead of a heading, applied custom color variables throughout stylesheets, hovering over tab anchors will render feedback to users, the current tab will be in a different font color, and separated selectors for navbar images.  
 ---
 ### 05 DEC 2023
 - The first `forecastday.hours` array is of length 0 when it is near the end of day, searched for a color palette and defined a root selector in `app.css`, removed `text-wrap: nowrap` from list item with weather condition text, and `formatDate()` can now return a 'shorten' date when a boolean is passed into the function.  

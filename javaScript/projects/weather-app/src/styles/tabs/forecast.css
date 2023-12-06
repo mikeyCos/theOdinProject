@@ -1,5 +1,4 @@
 #forecast > header {
-  background-color: magenta;
   padding: 2rem;
 }
 
@@ -21,7 +20,10 @@
   align-items: center;
   padding: 1rem 2rem;
   font-size: clamp(1.5rem, 2vw, 2rem);
-  border: 2px solid black;
+}
+
+#forecast_details > .day:not(:last-child) {
+  border-bottom: 0.35rem solid;
 }
 
 #forecast_details > .day > ul {

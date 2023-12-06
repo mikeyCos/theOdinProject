@@ -1,4 +1,8 @@
 /* includes selectors for navbar.js and header.js */
+#header {
+  background-color: var(--color-background-secondary);
+}
+
 #header > #navbar > .container {
   display: flex;
   justify-content: space-between;
@@ -51,6 +55,10 @@
   align-items: center;
 }
 
+#header > #navbar > .container > * > li > .nav_logo > svg {
+  width: clamp(5rem, 3vw, 5.5rem);
+}
+
 #header > #navbar > .container > .nav_right {
   visibility: hidden;
   position: fixed;
@@ -58,7 +66,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgb(143, 103, 223);
+  background-color: var(--color-background-secondary);
   padding: 1rem;
   transform: translateY(-100%);
 }
@@ -66,10 +74,12 @@
 #header > #navbar > .container > .nav_right > li > .unit_systems_buttons {
   width: max-content;
   border-radius: 0.75rem;
-  background-color: rgb(220, 220, 220);
+  background-color: var(--color-accent);
+  box-shadow: inset 0px 0px 5px 0px var(--color-font-primary);
+  padding: 0.05rem;
 }
 
-#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > * {
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > *:not(span) {
   border: none;
   padding: 0.5rem;
   border-radius: 0.75rem;
@@ -80,6 +90,18 @@
   background-color: rgb(25, 216, 25);
 }
 
+/* left button */
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > #imperial.selected {
+  box-shadow: -2px 0px 3px -1px var(--color-font-primary);
+  animation: slide_left 500ms ease-out;
+}
+
+/* right button */
+#header > #navbar > .container > .nav_right > li > .unit_systems_buttons > #metric.selected {
+  box-shadow: 2px 0px 3px -1px var(--color-font-primary);
+  animation: slide_right 500ms ease-out;
+}
+
 #header > #navbar > .container > .nav_right > li > .unit_systems_buttons > *:hover {
   cursor: pointer;
 }
@@ -88,6 +110,7 @@
   visibility: visible;
   transform: translateY(0%);
   transition: transform 200ms ease-in-out;
+  z-index: 2;
 }
 
 .nav_item,
@@ -96,9 +119,8 @@
   text-decoration: none;
 }
 
-.nav_item > svg,
-.nav_btn > svg {
-  width: clamp(2rem, 3vw, 3.5rem);
+.nav_item > svg {
+  width: clamp(1.5rem, 3vw, 2.5rem);
   height: auto;
 }
 
@@ -109,7 +131,12 @@
   border: none;
   border-radius: 0.35rem;
   padding: 0.3rem;
-  z-index: 1;
+  z-index: 2;
+}
+
+.nav_btn > svg {
+  width: 2rem;
+  height: auto;
 }
 
 .nav_btn:hover {
@@ -138,10 +165,20 @@
 
 #header > #form > .form_item:first-child > input {
   font-size: 1.5rem;
-  background: rgb(0, 132, 255);
   border: none;
   border-radius: 1rem;
   padding: 0.75rem;
+  width: 100%;
+}
+
+#header > #form > .form_item:first-child > input:focus {
+  outline: none;
+  box-shadow: inset 0px 0px 5px 2px var(--color-font-primary);
+  padding-left: 2rem;
+}
+
+#header > #form > .form_item:first-child > input:focus::placeholder {
+  visibility: hidden;
 }
 
 #header > #form > .form_item:first-child > .validity_error {
@@ -215,6 +252,26 @@
   }
 
   #header > #form > .form_item:first-child > input {
-    min-width: 50%;
+    width: 50%;
+  }
+}
+
+@keyframes slide_left {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slide_right {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
   }
 }

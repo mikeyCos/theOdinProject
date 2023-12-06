@@ -1,4 +1,5 @@
 import createElement from '../../helpers/createElement';
+import '../../styles/error.css';
 
 const errorBuilder = {
   init(weatherError) {
@@ -13,7 +14,7 @@ const errorBuilder = {
   bindEvents() {},
   render() {
     const errorSection = createElement('section');
-    const errorHeading = createElement('h1');
+    const errorHeading = createElement('h2');
     errorSection.id = 'error';
     errorHeading.setAttributes({ textContent: this.errorMessage });
 

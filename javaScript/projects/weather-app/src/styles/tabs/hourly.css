@@ -1,5 +1,4 @@
 #hourly > header {
-  background-color: magenta;
   padding: 2rem;
 }
 
@@ -17,18 +16,22 @@
 
 #hourly_details > .day > h3 {
   font-size: clamp(1.5rem, 2vw, 2rem);
-  background-color: darksalmon;
+  color: var(--color-background-primary);
+  background-color: var(--color-background-default);
   padding: 2rem;
   text-wrap: balance;
 }
 
 #hourly_details > .day > .hour {
-  background-color: red;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+#hourly_details > .day > .hour:not(:last-child) {
+  border-bottom: 0.35rem solid;
 }
 
 #hourly_details > .day > .hour > ul {

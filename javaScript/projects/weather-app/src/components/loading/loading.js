@@ -1,4 +1,6 @@
 import createElement from '../../helpers/createElement';
+import '../../styles/loading.css';
+import LoadingIcon from '../../assets/icons/progress_activity.svg';
 
 const loadingBuilder = {
   cacheDOM() {
@@ -9,11 +11,11 @@ const loadingBuilder = {
   },
   render() {
     const loadingSection = createElement('section');
+    const loadingImage = createElement('img');
     loadingSection.id = 'loading';
-    const loadingHeading = createElement('h1');
-    loadingHeading.setAttributes({ textContent: 'LOADING...' });
+    loadingImage.setAttributes({ onload: 'SVGInject(this)', src: LoadingIcon, id: 'loading_img' });
 
-    loadingSection.appendChild(loadingHeading);
+    loadingSection.appendChild(loadingImage);
 
     return loadingSection;
   },

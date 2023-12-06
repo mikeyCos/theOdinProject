@@ -1,5 +1,6 @@
 import createElement from '../../helpers/createElement';
 import '../../styles/home.css';
+import home from './home.config';
 
 const homeBuilder = {
   cacheDOM() {
@@ -11,10 +12,19 @@ const homeBuilder = {
   render() {
     const homeSection = createElement('section');
     homeSection.id = 'home';
-    const homeHeading = createElement('h1');
-    homeHeading.setAttributes({ textContent: 'HOME' });
+    home.forEach((item) => {
+      const section = createElement(item.element);
+      section.setAttributes(item.attributes);
 
-    homeSection.appendChild(homeHeading);
+      if (item.children) {
+        item.children.forEach((subItem) => {
+          const subSection = createElement(subItem.element);
+          subSection.setAttributes(subItem.attributes);
+          section.appendChild(subSection);
+        });
+      }
+      homeSection.appendChild(section);
+    });
 
     return homeSection;
   },

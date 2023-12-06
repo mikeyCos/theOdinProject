@@ -1,0 +1,21 @@
+#loading {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+#loading > #loading_img {
+  width: clamp(5rem, 3vw, 10rem);
+  height: auto;
+  animation: rotate_cw 1s infinite linear;
+}
+
+@keyframes rotate_cw {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

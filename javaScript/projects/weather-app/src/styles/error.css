@@ -1,0 +1,7 @@
+#error {
+  padding: 1rem;
+}
+
+#error > h2 {
+  font-size: clamp(3rem, 3vw, 5rem);
+}

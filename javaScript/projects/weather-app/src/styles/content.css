@@ -3,9 +3,9 @@
   height: 100%;
 }
 
-#main_content > :first-child {
+#main_content > :first-child:not(#loading):not(#home) {
   height: inherit;
-  background-color: var(--temp-five);
+  /* background-color: var(--color-background-primary); */
   display: grid;
   grid-template-rows: min-content 1fr;
 }
