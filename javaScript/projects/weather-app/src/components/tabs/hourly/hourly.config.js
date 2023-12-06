@@ -166,7 +166,8 @@ const hourlyController = {
     const date1 = new Date(this.weatherData.current.last_updated);
     const date2 = new Date(hour.time);
 
-    if (date1.getTime() < date2.getTime()) {
+    console.log(date1.getUTCMilliseconds() <= date2.getUTCMilliseconds());
+    if (date1.getTime() <= date2.getTime()) {
       const state = {
         ...unitSystem,
         ...hour,

@@ -15,10 +15,10 @@ import { unitSystem } from '../unitsystems';
 
 const data = (state) => [
   {
-    key: 'name',
+    key: 'date',
     value: state.date,
     setText() {
-      return `${formatDate(this.value)}`;
+      return `${formatDate(this.value, true)}`;
     },
   },
   {

@@ -66,7 +66,7 @@
 #header > #navbar > .container > .nav_right > li > .unit_systems_buttons {
   width: max-content;
   border-radius: 0.75rem;
-  background-color: rgb(155, 155, 155);
+  background-color: rgb(220, 220, 220);
 }
 
 #header > #navbar > .container > .nav_right > li > .unit_systems_buttons > * {
@@ -77,7 +77,7 @@
 }
 
 #header > #navbar > .container > .nav_right > li > .unit_systems_buttons > *.selected {
-  background-color: rgb(19, 102, 19);
+  background-color: rgb(25, 216, 25);
 }
 
 #header > #navbar > .container > .nav_right > li > .unit_systems_buttons > *:hover {
@@ -132,7 +132,12 @@
   row-gap: 0.5rem;
 }
 
+#header > #form > .form_item:first-child > label {
+  font-size: clamp(2rem, 2vw, 3rem);
+}
+
 #header > #form > .form_item:first-child > input {
+  font-size: 1.5rem;
   background: rgb(0, 132, 255);
   border: none;
   border-radius: 1rem;
@@ -197,5 +202,19 @@
 
   .nav_btn {
     display: none;
+  }
+
+  #header > #form > .form_item:first-child {
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+  }
+
+  #header > #form > .form_item:first-child > label {
+    font-size: clamp(1rem, 1vw, 1.25rem);
+  }
+
+  #header > #form > .form_item:first-child > input {
+    min-width: 50%;
   }
 }

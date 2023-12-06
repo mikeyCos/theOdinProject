@@ -1,14 +1,60 @@
+#forecast > header {
+  background-color: magenta;
+  padding: 2rem;
+}
+
+#forecast > header > h2 {
+  font-size: clamp(2rem, 2vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+#forecast > header > h2 > span {
+  font-size: 1rem;
+  text-wrap: nowrap;
+}
+
 #forecast_details > .day {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  border: 2px solid black;
 }
 
 #forecast_details > .day > ul {
   list-style: none;
-}
-
-#forecast_details > .day > ul,
-#forecast_details > .day > ul > li {
   display: flex;
   align-items: center;
+  flex: 1 0 0px;
+  column-gap: 0.5rem;
+}
+
+#forecast_details > .day > ul:nth-child(3) > :first-child,
+#forecast_details > .day > ul:last-of-type > :first-child {
+  display: flex;
+}
+
+#forecast_details > .day > ul:nth-of-type(3) > :last-child {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  #forecast_details > .day {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 2rem 3rem;
+    justify-items: center;
+  }
+
+  #forecast_details > .day > ul:nth-of-type(3) {
+    justify-self: flex-start;
+  }
+
+  #forecast_details > .day > ul:nth-of-type(3) > :last-child {
+    display: block;
+    text-wrap: balance;
+  }
 }

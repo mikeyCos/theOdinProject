@@ -1,7 +1,10 @@
 # Changelog
 ---
-### 05 DEC 2023
+### 06 DEC 2023
 - 
+---
+### 05 DEC 2023
+- The first `forecastday.hours` array is of length 0 when it is near the end of day, searched for a color palette and defined a root selector in `app.css`, removed `text-wrap: nowrap` from list item with weather condition text, and `formatDate()` can now return a 'shorten' date when a boolean is passed into the function.  
 ---
 ### 04 DEC 2023
 - Refactored `tabs.js`/`main.js`/`header.js` modules to update `unitsystems.js` with the appropriate unit system and updated weather data when `.unit_systems_button` buttons are pressed or when a tab is clicked on, created CSS files `content`/`header`/`home`, added ternary operator to `formatTime.js` that checks if time string includes a dash, replaced `display: grid` with `display: flex` in `today.css`, stylized buttons of class `.unit_systems_button` to look like a toggle button, and added `text-wrap: nowrap` to specific container elements such as the span element containing the text `As of...`.  

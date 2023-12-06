@@ -6,6 +6,14 @@
   font-style: normal;
 }
 
+:root {
+  --temp-one: #f06543;
+  --color-background-primary: #e8e9eb;
+  --temp-three: #e0dfd5;
+  --temp-four: #313638;
+  --temp-five: #f09d51;
+}
+
 *,
 *::before,
 *::after {
@@ -15,7 +23,7 @@
 }
 
 body {
-  background-color: aqua;
+  background-color: var(--color-background-primary);
   font-family: 'Roboto Condensed', Arial;
   min-height: 100dvh;
 }

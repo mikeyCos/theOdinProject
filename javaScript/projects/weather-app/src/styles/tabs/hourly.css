@@ -1,12 +1,72 @@
+#hourly > header {
+  background-color: magenta;
+  padding: 2rem;
+}
+
+#hourly > header > h2 {
+  font-size: clamp(2rem, 2vw, 3rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+#hourly > header > h2 > span {
+  font-size: 1rem;
+  text-wrap: nowrap;
+}
+
+#hourly_details > .day > h3 {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  background-color: darksalmon;
+  padding: 2rem;
+  text-wrap: balance;
+}
+
 #hourly_details > .day > .hour {
   background-color: red;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem 2rem;
+  font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
 #hourly_details > .day > .hour > ul {
   list-style: none;
   display: flex;
   align-items: center;
+  column-gap: 0.5rem;
+}
+
+#hourly_details > .day > .hour > ul > * {
+  display: flex;
+}
+
+/* selects the li with time */
+#hourly_details > .day > .hour > ul:first-of-type > li {
+  text-transform: lowercase;
+}
+
+#hourly_details > .day > .hour > ul:nth-of-type(3) > :last-child,
+#hourly_details > .day > .hour > ul:last-of-type {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  #hourly_details > .day > .hour {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 2rem 3rem;
+    justify-items: center;
+  }
+
+  #hourly_details > .day > .hour > ul:nth-of-type(3) {
+    /* flex: 0.5; */
+    justify-self: flex-start;
+  }
+
+  #hourly_details > .day > .hour > ul:nth-of-type(3) > :last-child,
+  #hourly_details > .day > .hour > ul:last-of-type {
+    display: flex;
+  }
 }

@@ -1,5 +1,6 @@
 #today_summary {
-  background-color: magenta;
+  /* background-color: magenta; */
+  border: 4px solid rgb(0, 51, 128);
   padding: 2rem;
 }
 
@@ -8,11 +9,11 @@
 }
 
 #today_summary > ul > :first-child {
-  font-size: 1.5rem;
+  font-size: clamp(2rem, 2vw, 3rem);
 }
 
 #today_summary > header > h3 {
-  font-size: 1.75rem;
+  font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
 #today_summary > header > h3 > span {
@@ -26,6 +27,10 @@
   position: relative;
 }
 
+#today_summary > ul:last-of-type > :last-child {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
 #today_summary > ul:last-of-type > :first-child {
   display: flex;
   position: absolute;
@@ -37,7 +42,7 @@
 }
 
 #today_details > .today_details_header {
-  padding: 0.5rem;
+  padding: 2rem;
   background-color: white;
   display: flex;
   flex-wrap: wrap;
@@ -47,13 +52,15 @@
   flex: 1;
 }
 
+/* selects li with "feels like" */
 #today_details > .today_details_header > :first-child > :first-child {
   text-wrap: nowrap;
   text-transform: capitalize;
+  font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
 #today_details > .today_details_header > :first-child > :last-child {
-  font-size: 1.5rem;
+  font-size: clamp(2rem, 2vw, 2.5rem);
 }
 
 #today_details > .today_details_header > .today_details_sun {
@@ -70,21 +77,36 @@
 }
 
 /* selects li's that wrap an icon */
+#today_details > .today_details_header > .today_details_sun > * > :first-child > svg {
+  width: clamp(1.75rem, 2vw, 3rem);
+  height: auto;
+}
+
 #today_details > .today_details_header > .today_details_sun > * > li {
   display: flex;
+  font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
 #today_details > .today_details_container {
-  padding: 0.5rem;
-  background-color: darkorange;
+  padding: 1rem;
+  /* background-color: darkorange; */
   display: flex;
   flex-direction: column;
+  row-gap: 0.25rem;
 }
 
 #today_details > .today_details_container > ul {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
+  padding: 1.25rem;
+  border: 2px solid black;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#today_details > .today_details_container > ul > * {
+  font-size: clamp(1.5rem, 2vw, 2rem);
 }
 
 /* selects li's that wrap an icon */
@@ -92,10 +114,33 @@
   display: flex;
 }
 
+#today_details > .today_details_container > ul > :first-child > svg {
+  width: clamp(1.75rem, 2vw, 2rem);
+  height: auto;
+}
+
 #today_details > .today_details_container > ul > :nth-child(2) {
   flex: 1;
   text-transform: capitalize;
+  text-wrap: nowrap;
 }
 
 @media screen and (min-width: 768px) {
+  #today_details > .today_details_header > :first-child {
+    /* flex: none; */
+    /* optional */
+  }
+
+  #today_details > .today_details_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 1rem;
+    padding: 2rem;
+  }
+
+  #today_details > .today_details_container > ul {
+    column-gap: 1.5rem;
+    padding: 2rem;
+  }
 }

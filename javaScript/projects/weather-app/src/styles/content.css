@@ -5,8 +5,7 @@
 
 #main_content > :first-child {
   height: inherit;
-  background-color: red;
+  background-color: var(--temp-five);
   display: grid;
-  grid-template-rows: min-content min-content 1fr;
-  padding: 0.5rem;
+  grid-template-rows: min-content 1fr;
 }

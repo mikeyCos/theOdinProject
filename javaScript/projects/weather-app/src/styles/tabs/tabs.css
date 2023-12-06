@@ -1,6 +1,7 @@
 /* stylesheet for tabs.js, and tabs_navbar.js */
 #tabs_navbar {
-  border: 2px solid green;
+  border: 4px solid rgb(255, 225, 2);
+  padding: 1rem;
 }
 
 #tabs_navbar > ul {
@@ -16,7 +17,10 @@
 /* #tabs_navbar anchors */
 .tabs_list_item > * {
   text-decoration: none;
+  text-wrap: nowrap;
   color: white;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  padding: 1rem;
 }
 
 .tabs_list_item > *:hover {
@@ -29,4 +33,10 @@
 
 #tabs:last-child {
   border: 2px solid pink;
+}
+
+@media screen and (min-width: 768px) {
+  .tabs_list_item > * {
+    padding: 1rem;
+  }
 }
