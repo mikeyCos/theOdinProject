@@ -1,5 +1,11 @@
 # Changelog
 ---
+### 08 DEC 2023
+- 
+---
+### 07 DEC 2023
+- Created three `font-face` at rules with three different font-weights, and refactored unit system buttons into one button.  
+---
 ### 06 DEC 2023
 - Created `footer.js` module to return a rendered node, created stylesheets for footer/error/loading modules, added slide left/right animations the unit systems buttons, updated the loading module to render a image instead of a heading, applied custom color variables throughout stylesheets, hovering over tab anchors will render feedback to users, the current tab will be in a different font color, and separated selectors for navbar images.  
 ---

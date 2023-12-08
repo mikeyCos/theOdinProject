@@ -9,13 +9,16 @@ export default {
     this.navRight = navElement.querySelector('.nav_right');
     this.navLinks = navElement.querySelectorAll('.nav_item');
     this.navBtn = navElement.querySelector('.nav_btn');
-    this.unitSystemsBtns = navElement.querySelectorAll('.unit_systems_button');
+    // this.unitSystemsBtns = navElement.querySelectorAll('.unit_systems_button');
+    this.unitSystemsBtn = navElement.querySelector('#unit_systems_button');
   },
   bindEvents() {
     this.toggleNav = this.toggleNav.bind(this);
-    this.setUnitSystem = this.setUnitSystem.bind(this);
+    // this.setUnitSystem = this.setUnitSystem.bind(this);
     this.navBtn.addEventListener('click', this.toggleNav);
-    this.unitSystemsBtns.forEach((btn) => btn.addEventListener('click', this.setUnitSystem));
+    // this.unitSystemsBtns.forEach((btn) => btn.addEventListener('click', this.setUnitSystem));
+    this.toggleUnitSystem = this.toggleUnitSystem.bind(this);
+    this.unitSystemsBtn.addEventListener('click', this.toggleUnitSystem);
   },
   render() {
     const navElement = createElement('nav');
@@ -67,12 +70,26 @@ export default {
       this.navRight.classList.add('visible');
     }
   },
-  setUnitSystem(e) {
+  // setUnitSystem(e) {
+  //   const element = e.currentTarget;
+  //   [...this.unitSystemsBtns]
+  //     .find((btn) => btn.classList.contains('selected'))
+  //     .classList.remove('selected');
+  //   element.classList.add('selected');
+  //   pubSub.publish('setUnitSystem', element.value);
+  // },
+  toggleUnitSystem(e) {
     const element = e.currentTarget;
-    [...this.unitSystemsBtns]
-      .find((btn) => btn.classList.contains('selected'))
-      .classList.remove('selected');
-    element.classList.add('selected');
-    pubSub.publish('setUnitSystem', element.value);
+    console.log(element);
+    console.log(typeof element.value);
+    let newValue = true;
+    let unitSystem = 'imperial';
+    if (element.value === 'true') {
+      newValue = false;
+      unitSystem = 'metric';
+    }
+    element.value = newValue;
+    pubSub.publish('setUnitSystem', unitSystem);
+    // pubSub.publish('setUnitSystem', element.value);
   },
 };

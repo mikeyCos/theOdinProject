@@ -28,29 +28,53 @@ export default {
     },
   ],
   navRight: [
+    //   {
+    //     element: 'div',
+    //     attributes: {
+    //       class: 'unit_systems_buttons',
+    //     },
+    //     children: [
+    //       {
+    //         element: 'button',
+    //         attributes: {
+    //           id: 'imperial',
+    //           class: 'unit_systems_button selected',
+    //           type: 'button',
+    //           value: 'imperial',
+    //           // textContent: '°F',
+    //         },
+    //       },
+    //       {
+    //         element: 'button',
+    //         attributes: {
+    //           id: 'metric',
+    //           class: 'unit_systems_button',
+    //           type: 'button',
+    //           value: 'metric',
+    //           // textContent: '°C',
+    //         },
+    //       },
+    //     ],
+    //   },
     {
-      element: 'div',
+      element: 'button',
       attributes: {
-        class: 'unit_systems_buttons',
+        id: 'unit_systems_button',
+        type: 'button',
+        value: true,
       },
       children: [
         {
-          element: 'button',
+          element: 'span',
           attributes: {
-            id: 'imperial',
-            class: 'unit_systems_button selected',
-            type: 'button',
-            value: 'imperial',
+            class: 'imperial',
             textContent: '°F',
           },
         },
         {
-          element: 'button',
+          element: 'span',
           attributes: {
-            id: 'metric',
-            class: 'unit_systems_button',
-            type: 'button',
-            value: 'metric',
+            class: 'metric',
             textContent: '°C',
           },
         },

@@ -3,9 +3,10 @@
   padding: 0.5rem;
   display: flex;
   justify-content: center;
-  box-shadow: 0px 0px 6px -1px #000000;
+  box-shadow: 0px 0px 6px -1px var(--color-box-shadow);
 }
 
 #footer > div > a:visited {
+  color: var(--color-font-primary);
   color: var(--color-background-primary);
 }

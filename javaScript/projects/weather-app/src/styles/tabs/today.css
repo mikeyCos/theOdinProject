@@ -17,7 +17,9 @@
 
 #today_summary > header > h3 > span {
   font-size: 1rem;
+  font-weight: 300;
   text-wrap: nowrap;
+  margin-left: 0.5rem;
 }
 
 #today_summary > ul:last-of-type {
