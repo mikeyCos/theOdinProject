@@ -5,7 +5,6 @@
 
 #main_content > :first-child:not(#loading):not(#home) {
   height: inherit;
-  /* background-color: var(--color-background-primary); */
   display: grid;
   grid-template-rows: min-content 1fr;
 }

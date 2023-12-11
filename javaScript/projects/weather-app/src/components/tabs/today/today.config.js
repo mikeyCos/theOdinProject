@@ -1,12 +1,3 @@
-// current.temp_f
-// current.feelslike_f
-// forecast.forecastday[0].day.maxtemp_f
-// forecast.forecastday[0].day.mintemp_f
-// current.humidity
-// current.pressure_in
-// current.vis_miles
-// current.wind_mph
-// current.wind_dir
 import formatTime from '../../../helpers/formatTime';
 import { unitSystem } from '../unitsystems';
 
@@ -149,11 +140,6 @@ const todayController = {
   init(weatherData) {
     this.weatherData = weatherData;
     const state = {
-      // icons: unitSystem.icons,
-      // get: unitSystem.get,
-      // setIcon: unitSystem.setIcon,
-      // setValue: unitSystem.setValue,
-      // roundValue: unitSystem.roundValue,
       ...unitSystem,
       ...weatherData.forecast.forecastday[0],
       ...weatherData.forecast.forecastday[0].astro,
@@ -170,7 +156,6 @@ const todayController = {
 
 export default {
   init(weatherData, timeStamp) {
-    // console.log(todayController.init(weatherData, unitSystem));
     console.log(timeStamp);
     this.setProperties(todayController.init(weatherData));
   },

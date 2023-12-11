@@ -36,51 +36,32 @@ const tabsBuilder = {
   render(key) {
     let content;
     if (!key) {
-      // if no key
       content = build.today(this.weatherData, this.timeStamp);
     } else {
       content = build[key](this.weatherData, this.timeStamp);
-      // this.tabsSection.lastChild.remove();
     }
     this.setActiveTab(content.id);
     this.tabsSection.appendChild(content);
   },
-  switchTab(e, tabKey) {
-    console.log(e.currentTarget);
-    console.log(tabKey);
+  switchTab(e) {
     const { className: elementClassName } = e.currentTarget;
     const renderKey = elementClassName;
 
     pubSub.publish('getWeather', this.location, renderKey);
   },
   setActiveTab(id) {
-    console.log(id);
-    console.log(this.tabsList);
-    console.log([...this.tabsList].find((anchor) => anchor.classList.contains(id)));
-    // if (this.activeTab) this.activeTab.classList.remove('active');
     this.activeTab = [...this.tabsList].find((anchor) => anchor.classList.contains(id));
-    // this.activeTab.classList.add('active');
     this.activeTab.setAttributes({ 'data-active': true });
     this.activeKey = id;
-    console.log(`activeKey: ${this.activeKey}`);
     pubSub.publish('setActiveTab', id);
     // sends id to setActiveTab in header.js module
   },
-  // updateData(weatherData, key) {
-  //   this.weatherData = weatherData;
-  //   this.render(key);
-  // },
 };
 
 export default function buildTabs(weatherData, renderKey) {
-  console.log(renderKey);
   tabsBuilder.init(weatherData);
   const tabsSection = createElement('section');
-  // const tabsHeading = createElement('h1');
   tabsSection.id = 'tabs';
-  // tabsHeading.setAttributes({ textContent: 'TABS' });
-
-  // tabsSection.appendChild(tabsHeading);
   tabsSection.appendChild(build.tabsNavbar());
   tabsBuilder.cacheDOM(tabsSection);
   if (renderKey) {

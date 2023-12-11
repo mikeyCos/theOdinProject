@@ -1,7 +1,7 @@
 # Changelog
 ---
 ### 08 DEC 2023
-- 
+- Updated README.md and removed the majority of `console.log()` throughout project.
 ---
 ### 07 DEC 2023
 - Created three `font-face` at rules with three different font-weights, and refactored unit system buttons into one button.  

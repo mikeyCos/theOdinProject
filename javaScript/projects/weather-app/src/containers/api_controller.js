@@ -4,8 +4,6 @@ import pubSub from './pubSub';
 // http://api.weatherapi.com/v1/current.json?key=84ac7310e56448a1896212731230611&q=London
 
 export default async function getWeather(value, tabKey) {
-  console.log(value);
-  console.log(tabKey);
   // *note, value does NOT need to be evaluated before fetch
   // postal code, number or string
   // city, uppercase or lowercase;

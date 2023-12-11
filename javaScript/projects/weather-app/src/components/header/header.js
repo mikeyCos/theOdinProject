@@ -65,7 +65,6 @@ const headerBuilder = {
   submitForm(e) {
     if (e) e.preventDefault();
     setUnitSystem(this.inputUnitsystem.value);
-    console.log(pubSub.publish('getActiveTab', 'foo'));
     pubSub.publish('getWeather', this.inputSearch.value, this.activeTab);
   },
   setUnitSystem(selection) {

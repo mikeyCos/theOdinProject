@@ -70,7 +70,6 @@
   }
 
   #hourly_details > .day > .hour > ul:nth-of-type(3) {
-    /* flex: 0.5; */
     justify-self: flex-start;
   }
 

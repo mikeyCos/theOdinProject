@@ -3,12 +3,8 @@ import '../../styles/loading.css';
 import LoadingIcon from '../../assets/icons/progress_activity.svg';
 
 const loadingBuilder = {
-  cacheDOM() {
-    console.log('cacheDOM() running from loading.js');
-  },
-  bindEvents() {
-    console.log('bindEvents() running from loading.js');
-  },
+  cacheDOM() {},
+  bindEvents() {},
   render() {
     const loadingSection = createElement('section');
     const loadingImage = createElement('img');

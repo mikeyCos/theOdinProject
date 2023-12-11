@@ -1,11 +1,4 @@
 export default [
-  // {
-  //   element: 'h1',
-  //   attributes: {
-  //     id: 'hero',
-  //     textContent: 'weather app',
-  //   },
-  // },
   {
     element: 'form',
     attributes: {

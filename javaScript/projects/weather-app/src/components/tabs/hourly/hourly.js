@@ -7,15 +7,9 @@ import createContentRows from '../../../helpers/createContentRows';
 
 const hourlyBuilder = {
   init(weatherData) {},
-  cacheDOM() {
-    console.log('cacheDOM() running from hourly.js');
-  },
-  bindEvents() {
-    console.log('bindEvents() running from hourly.js');
-  },
+  cacheDOM() {},
+  bindEvents() {},
   render() {
-    console.log('render() running from hourly.js');
-    console.log(hourly);
     const hourlySection = createElement('section');
     const hourlySectionHeader = createElement('header');
     const hourlySectionHeading = createElement('h2');
@@ -32,7 +26,6 @@ const hourlyBuilder = {
     hourlySectionHeader.appendChild(hourlyTimeStamp);
     hourlySection.appendChild(hourlySectionHeader);
 
-    // temporary
     const hourlyDetails = createElement('section');
     hourlyDetails.id = 'hourly_details';
 
@@ -57,7 +50,6 @@ const hourlyBuilder = {
     });
 
     hourlySection.appendChild(hourlyDetails);
-    // temporary
     return hourlySection;
   },
 };
@@ -66,8 +58,3 @@ export default function buildHourly(weatherData, timeStamp) {
   hourly.init(weatherData, timeStamp);
   return hourlyBuilder.render();
 }
-
-// Date
-// time | temp | condition | preciptation % | wind
-// example
-// 1:30 pm | 47° | Sunny | 1% | N 6 mph

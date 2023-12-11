@@ -1,5 +1,4 @@
 #today_summary {
-  /* background-color: magenta; */
   padding: 2rem;
 }
 
@@ -91,7 +90,6 @@
 
 #today_details > .today_details_container {
   padding: 1rem;
-  /* background-color: darkorange; */
   display: flex;
   flex-direction: column;
   row-gap: 0.25rem;
@@ -128,11 +126,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  #today_details > .today_details_header > :first-child {
-    /* flex: none; */
-    /* optional */
-  }
-
   #today_details > .today_details_container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

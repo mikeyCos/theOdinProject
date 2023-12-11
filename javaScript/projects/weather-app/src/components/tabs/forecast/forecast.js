@@ -6,15 +6,9 @@ import formatTime from '../../../helpers/formatTime';
 
 const forecastBuilder = {
   init() {},
-  cacheDOM() {
-    console.log('cacheDOM() running from forecast.js');
-  },
-  bindEvents() {
-    console.log('bindEvents() running from forecast.js');
-  },
+  cacheDOM() {},
+  bindEvents() {},
   render() {
-    console.log('render() running from forecast.js');
-    console.log(forecast);
     const forecastSection = createElement('section');
     const forecastSectionHeader = createElement('header');
     const forecastSectionHeading = createElement('h2');
@@ -31,7 +25,6 @@ const forecastBuilder = {
     forecastSectionHeader.appendChild(forecastTimeStamp);
     forecastSection.appendChild(forecastSectionHeader);
 
-    // temporary
     const forecastDetails = createElement('section');
     forecastDetails.id = 'forecast_details';
 
@@ -43,7 +36,7 @@ const forecastBuilder = {
       });
       forecastDetails.appendChild(forecastday);
     });
-    // temporary
+
     forecastSection.appendChild(forecastDetails);
     return forecastSection;
   },
@@ -53,7 +46,3 @@ export default function buildForecast(weatherData, timeStamp) {
   forecast.init(weatherData, timeStamp);
   return forecastBuilder.render();
 }
-
-// date | temp high / low | condition | preciptation % | wind
-// example
-// Wed 20 | 60° / 47° | Sunny | 1% | NNE 6 mph

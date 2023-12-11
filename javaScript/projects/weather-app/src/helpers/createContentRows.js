@@ -7,9 +7,6 @@ export default function createContentRows(fn, attributes, ...args) {
     container.setAttributes(containerAttributes);
   }
   args.forEach((item) => {
-    // /\.(svg|png)$/
-    // console.log(item.split(/\.(svg|png)$/));
-
     if (item) {
       const listItem = fn('li');
       if (itemAttributes) item.setAttributes(itemAttributes);

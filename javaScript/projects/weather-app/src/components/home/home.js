@@ -3,12 +3,8 @@ import '../../styles/home.css';
 import home from './home.config';
 
 const homeBuilder = {
-  cacheDOM() {
-    console.log('cacheDOM() running from home.js');
-  },
-  bindEvents() {
-    console.log('bindEvents() running from home.js');
-  },
+  cacheDOM() {},
+  bindEvents() {},
   render() {
     const homeSection = createElement('section');
     homeSection.id = 'home';

@@ -47,12 +47,7 @@
   transform: scaleX(1) scaleY(1.25);
 }
 
-.tabs_list_item > *:hover {
-  /* border-bottom: 2px solid rgb(255, 0, 0); */
-}
-
 .tabs_list_item > [data-active='true'] {
-  /* box-shadow: inset 0px 0px 4px 2px black; */
   color: var(--color-background-secondary);
 }
 
