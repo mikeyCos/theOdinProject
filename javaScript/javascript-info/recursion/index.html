@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./index.js" defer></script>
+    <title>Recursion and stack</title>
+  </head>
+  <body>
+    <a href="https://javascript.info/recursion">Javascript.info Recursion</a>
+
+    <div class="container">
+      <h2>Sum all numbers till the given one</h2>
+      <p>Write a function sumTo(n) that calculates the sum of numbers 1 + 2 + ... + n.</p>
+      <pre>
+        <code>
+          sumTo(1) = 1
+          sumTo(2) = 2 + 1 = 3
+          sumTo(3) = 3 + 2 + 1 = 6
+          sumTo(4) = 4 + 3 + 2 + 1 = 10
+          ...
+          sumTo(100) = 100 + 99 + ... + 2 + 1 = 5050
+        </code>
+      </pre>
+
+      <p>Make 3 solution variants:</p>
+      <ol>
+        <li>Using a for loop.</li>
+        <li>Using a recursion, cause sumTo(n) = n + sumTo(n-1) for n > 1.</li>
+        <li>Using the arithmetic progression formula.</li>
+      </ol>
+
+    </div>
+
+    <div class="container">
+      <h2>Calculate factorial</h2>
+      <p>The factorial of a natural number is a number multiplied by "number minus one", then by "number minus two", and so on till 1. The factorial of n is denoted as n!</p>
+      <pre>
+        <code>
+          1! = 1
+          2! = 2 * 1 = 2
+          3! = 3 * 2 * 1 = 6
+          4! = 4 * 3 * 2 * 1 = 24
+          5! = 5 * 4 * 3 * 2 * 1 = 120
+        </code>
+      </pre>
+      <p>The task is to write a function factorial(n) that calculates n! using recursive calls.</p>
+      <p>P.S. Hint: n! can be written as n * (n-1)! For instance: 3! = 3*2! = 3*2*1! = 6</p>
+    </div>
+
+    <div class="container">
+      <h2>Fibonacci numbers</h2>
+
+      <p>The sequence of Fibonacci numbers has the formula Fn = Fn-1 + Fn-2. In other words, the next number is a sum of the two preceding ones.</p>
+      <p>First two numbers are 1, then 2(1+1), then 3(1+2), 5(2+3) and so on: 1, 1, 2, 3, 5, 8, 13, 21....</p>
+      <p>Fibonacci numbers are related to the Golden ratio and many natural phenomena around us.</p>
+      <p>Write a function fib(n) that returns the n-th Fibonacci number.</p>
+      <p>An example of work:</p>
+      <pre>
+        <code>
+          function fib(n) { /* your code */ }
+
+          alert(fib(3)); // 2
+          alert(fib(7)); // 13
+          alert(fib(77)); // 5527939700884757
+        </code>
+      </pre>
+      <p>P.S. The function should be fast. The call to fib(77) should take no more than a fraction of a second.</p>
+    </div>
+
+    <div class="container">
+      <h2>Output a single-linked list</h2>
+      <p>Let’s say we have a single-linked list (as described in the chapter Recursion and stack):</p>
+      <pre>
+        <code>
+          let list = {
+            value: 1,
+            next: {
+              value: 2,
+              next: {
+                value: 3,
+                next: {
+                  value: 4,
+                  next: null
+                }
+              }
+            }
+          };
+        </code>
+      </pre>
+      <p>Write a function printList(list) that outputs list items one-by-one.</p>
+      <p>Make two variants of the solution: using a loop and using recursion.</p>
+      <p>What’s better: with recursion or without it?</p>
+    </div>
+
+    <div class="container">
+      <h2>Output a single-linked list in the reverse order</h2>
+      <p>Output a single-linked list from the previous task Output a single-linked list in the reverse order.</p>
+      <p>Make two solutions: using a loop and using a recursion.</p>
+    </div>
+  </body>
+</html>
