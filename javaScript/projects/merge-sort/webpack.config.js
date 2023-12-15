@@ -12,7 +12,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Module Webpack Starter',
+      title: 'Merge Sort',
     }),
   ],
   output: {
@@ -40,4 +40,4 @@ module.exports = {
   optimization: {
     runtimeChunk: 'single',
   },
-}
+};
