@@ -3,6 +3,9 @@
 ### 01 JAN 2024
 - Completed assignment 1 for recursion project.
 - Function `fibs(n)` now works recursively by calling `fibs(n - 1)`.
+- Removed `server.js`.
+- Removed script `"script": node server.js`.
+- Updated `README.md`.
 ---
 ### 18 DEC 2023
 - Initialized/completed `sumMultiples.js` module.
