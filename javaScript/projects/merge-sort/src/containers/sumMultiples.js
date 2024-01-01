@@ -22,13 +22,14 @@ export default function sumMultiples(num) {
   //   }
   //   return sumMultiples(num - 1);
   // }
+
   // recursively CORRECT
   const newNum = num - 1;
   if (newNum === 0) {
     return newNum;
   }
+
   if (newNum % 3 === 0 || newNum % 5 === 0) {
-    console.log(newNum);
     return newNum + sumMultiples(newNum);
   }
   return sumMultiples(newNum);
