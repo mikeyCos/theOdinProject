@@ -1,6 +1,6 @@
 # Readme
 ---
-## Live preview: [Merge-Sort](https://mikeycos.github.io/theOdinProject/javaScript/projects/merge-sort/dist)
+## Live preview: [Merge-Sort](https://mikeycos.github.io/theOdinProject/javaScript/projects/merge-sort/dist/)
 ---
 ### Ideas
 1. Placeholder

@@ -6,6 +6,7 @@
 - Removed `server.js`.
 - Removed script `"server": node server.js`.
 - Removed `webpack-dev-middleware` from devDependencies.
+- Removed `publicPath: '/'` in `webpack.config.js`.
 - Updated `README.md`.
 ---
 ### 18 DEC 2023
