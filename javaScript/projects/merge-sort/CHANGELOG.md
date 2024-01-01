@@ -4,7 +4,8 @@
 - Completed assignment 1 for recursion project.
 - Function `fibs(n)` now works recursively by calling `fibs(n - 1)`.
 - Removed `server.js`.
-- Removed script `"script": node server.js`.
+- Removed script `"server": node server.js`.
+- Removed `webpack-dev-middleware` from devDependencies.
 - Updated `README.md`.
 ---
 ### 18 DEC 2023
