@@ -60,3 +60,13 @@ export default function fibs(n) {
       sequence = [0, 1, 1, 2]
   */
 }
+
+// different version
+// function fibsAgain(n, sequence = [0, 1]) {
+//   if (n <= 0) return [];
+//   if (n === 1) return [0];
+//   if (n === 2) return sequence;
+//   const nextNum = sequence[sequence.length - 1] + sequence[sequence.length - 2]
+//   sequence.push(nextNum)
+//   return fibsAgain(n - 1, sequence)
+// }
