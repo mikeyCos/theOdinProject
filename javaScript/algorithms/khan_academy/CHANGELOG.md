@@ -1,5 +1,9 @@
 # Changelog
 ---
+### 09 JAN 2023
+- Created `palindrome`/`power` modules and exported their respective default functions.
+
+---
 ### 08 JAN 2024
 - Initial commit for `/khan_academy`.
 - Ran `git subtree add -P javaScript/algorithms/khan_academy/ git@github.com:mikeyCos/module-webpack-starter.git main` in terminal in the parent directory `/theOdinProject/`.
