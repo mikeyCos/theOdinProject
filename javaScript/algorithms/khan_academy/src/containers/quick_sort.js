@@ -27,11 +27,11 @@ const partition = (arr, p, r) => {
   return q;
 };
 
-const quickSortCheck = (arr, p, r) => {
+const quickSortCheck = (arr, p = 0, r = arr.length - 1) => {
   let sortedArr = arr;
-  console.log(`p: ${p}`);
-  console.log(`r: ${r}`);
-  console.log(sortedArr);
+  // console.log(`p: ${p}`);
+  // console.log(`r: ${r}`);
+  // console.log(sortedArr);
   if (p < r) {
     // const pivotIndex = partition(arr, p, r);
     let q = p;
@@ -50,7 +50,7 @@ const quickSortCheck = (arr, p, r) => {
 };
 
 const quickSort = (arr) => {
-  return quickSortCheck(arr, 0, arr.length - 1);
+  return quickSortCheck(arr);
 };
 
 export default quickSort;
