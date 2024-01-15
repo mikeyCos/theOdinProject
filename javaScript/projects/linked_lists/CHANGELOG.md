@@ -1,6 +1,14 @@
 # Changelog
 ---
 ### 00 JAN 2024
+- 
+---
+### 14 JAN 2024
+- The `find` method will return the index of the query if found and null if the query is not found.
+- The `toString` method will print out the structure of the linked list; for example, a linked list of size 3: `( value ) -> ( value ) -> ( value ) -> null` and a linked list of size 0: `null`.
+- The `insertAt` method can insert nodes in between nodes and in the beginning, but not yet insert nodes at the end.
+- The `removeAt` method removes a node at given index.
+- The `prepend` method will point the linked list's tail to the newly created node.
 ---
 ### 12 JAN 2024
 - Implemented private properties: `head`/`tail`/`size`.
