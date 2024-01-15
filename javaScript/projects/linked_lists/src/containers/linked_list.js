@@ -25,9 +25,7 @@ export default class LinkedList {
     const tmp = this.#head;
     const newNode = new Node(value, tmp);
     this.#head = newNode;
-    if (this.#size === 0) {
-      this.#tail = newNode;
-    }
+    if (this.#size === 0) this.#tail = newNode;
     this.#size += 1;
   }
 
@@ -50,8 +48,11 @@ export default class LinkedList {
     // returns the node at the given index
     let node = !this.#head ? 'Linked List is empty' : this.#head;
     let index = 0;
-    while (node.next) {
+    while (node) {
       if (index === n) {
+        break;
+      } else if (!node.next) {
+        node = `No node found at index ${n}`;
         break;
       }
       node = node.next;
@@ -77,28 +78,8 @@ export default class LinkedList {
   }
 
   contains(query) {
-    // contains(query, obj = this.#head) {
     // returns true if the passed in value is in the list and otherwise returns false.
-
     return this.find(query) !== null;
-    // if (obj) {
-    //   return Object.values(obj).some((value) => {
-    //     if (value === query) return true;
-    //     if (value instanceof Object) return this.contains(value, query);
-    //   });
-    // }
-    // return false;
-
-    // if (obj) {
-    //   for (let i = 0; i < Object.keys(obj).length; i += 1) {
-    //     if (obj[Object.keys(obj)[i]] === query) return true;
-
-    //     if (obj[Object.keys(obj)[i]] instanceof Object && this.contains(query, obj.next)) {
-    //       return true;
-    //     }
-    //   }
-    // }
-    // return false;
   }
 
   find(query) {
@@ -142,44 +123,47 @@ export default class LinkedList {
   // Some of the nodes will need their nextNode link updated.
   insertAt(value, index) {
     // inserts a new node with the provided value at the given index
-    // does NOT work when index is greater than this.#size
-    if ((index + 1 > this.#size && this.#size !== 0) || index < 0) {
-      // if index is out of bounds of linkedList
-      return;
-    }
-
-    if (index === 0) {
-      this.prepend(value);
-    } else if (index + 1 === this.#size) {
-      this.append(value);
-    } else {
-      const newNode = new Node(value);
-      const left = this.atIndex(index - 1);
-      const right = this.atIndex(index + 1);
-      left.next = newNode;
-      newNode.next = right;
-      this.#size += 1;
+    if (index <= this.#size && index >= 0) {
+      // checks if the index is within the linked list's size
+      // index can never be less than 0
+      // index can never be greater than the linked list's size
+      if (index === 0) {
+        // insert node at the beginning of the list
+        this.prepend(value);
+      } else if (index === this.#size) {
+        // insert node at the end of the list
+        this.append(value);
+      } else {
+        // insert nodes in between nodes
+        const left = this.atIndex(index - 1);
+        const right = this.atIndex(index);
+        const newNode = new Node(value, right);
+        left.next = newNode;
+        this.#size += 1;
+      }
     }
   }
 
   removeAt(index) {
     // that removes the node at the given index
-    // if index + 1 === size or size === 1, call this.pop();
-    // if size > 1 and index === 0
-    //  this.#head = this.atIndex(index + 1)
-    if (index + 1 === this.#size || this.#size === 1) {
-      this.pop();
-      return;
-    }
+    if (index < this.#size && index >= 0) {
+      // checks if the index is within the linked list's size
+      // index can never be less than 0
+      // index can never be greater than the linked list's size
+      if (index + 1 === this.#size || this.#size === 1) {
+        this.pop();
+        return;
+      }
 
-    if (this.#size > 1 && index === 0) {
-      this.#head = this.atIndex(index + 1);
-    } else {
-      const left = this.atIndex(index - 1);
-      const right = this.atIndex(index + 1);
-      left.next = right;
-    }
+      if (this.#size > 1 && index === 0) {
+        this.#head = this.atIndex(index + 1);
+      } else {
+        const left = this.atIndex(index - 1);
+        const right = this.atIndex(index + 1);
+        left.next = right;
+      }
 
-    this.#size -= 1;
+      this.#size -= 1;
+    }
   }
 }

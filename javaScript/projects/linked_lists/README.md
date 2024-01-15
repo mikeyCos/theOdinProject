@@ -1,29 +1,28 @@
 # Readme
 ---
-## Live preview: [Project Name](https://mikeycos.github.io/)
+## Live preview: [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist/)
 ---
 ### Ideas
-1. Placeholder
+1. Implement a user interface.
 ---
 ### Notes
-* Use this as a template repository.
-* This is a starter package for initializing vanilla JS/CSS projects.
-* This includes webpack ESLint and Prettier.
-* ESLint `env` set as folllows:
-    ```
-    "browser": true,
-    "commonjs": true,
-    "es2021": true
-    ```
-* Commands `npm run build`, `npm run start`, and `npm run server` will work.
+* 
 ---
 ### Instructions
-1. Use this as a template from GitHub.
-    * To use this template in a subfolder in a different repository:
-    * `git subtree add -P <prefix> <repo> <rev>` (e.g. git subtree add -P new/repo/name_this git@github.com:username/reponame.git HEAD).
-2. Use `npm install` in terminal.
-3. Update `live preview` section in `README.md` as needed.
-4. Update plugin title in `webpack.config.js` as needed.
-5. Update `.prettier.json` as needed; [Prettier Options](https://prettier.io/docs/en/options.html).
-6. Update `.eslintrc.json` as needed; [ESLint Options](https://eslint.org/docs/latest/rules/).
-7. Set VSCode's `Editor: Default Formatter` to `Prettier - Code formatter`.
+1. Click on [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist/).
+2. Open browser's DevTools and go to the console.
+3. In the browser's console:
+    * Enter `const variableName = new LinkedList()`
+    * The current available LinkedList methods:
+        * `.append(value)`, adds a new node containing value to the end of the list.
+        * `.prepend(value)`, adds a new node containing value to the start of the list.
+        * `.size()`, returns the total number of nodes in the list.
+        * `.head()`, returns the first node in the list.
+        * `.tail()`, returns the last node in the list.
+        * `.atIndex(index)`, returns the node at the given index.
+        * `.pop()`, removes the last element from the list.
+        * `.contains(value)`, returns true if the passed in value is in the list and otherwise returns false.
+        * `.find(value)`, returns the index of the node containing value, or null if not found.
+        * `.toString()`, returns your LinkedList objects as strings, so you can print them out and preview them in the console. For example, `( value ) -> ( value ) -> ( value ) -> null`.
+        * `.insertAt(value, index)`, that inserts a new node with the provided value at the given index.
+        * `.removeAt(index)`, that removes the node at the given index.
