@@ -6,7 +6,7 @@
 1. Implement a user interface.
 ---
 ### Notes
-* 
+* Lorem ipsum
 ---
 ### Instructions
 1. Click on [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist/).

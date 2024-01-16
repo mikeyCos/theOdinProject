@@ -5,6 +5,7 @@
 - The provided index for `insertAt`and `removeAt` methods cannot be less than 0, and never be greater than a linked list's size.
 - It is optional for the methods, `insertAt`/`removeAt`/`pop`/ to return an error message due to the conditional wrapper inside each method.
 - Changed instructions in `README.md`.
+- Changed directory from `linked_lists` to `linked-lists`.
 ---
 ### 14 JAN 2024
 - The `find` method will return the index of the query if found and null if the query is not found.
