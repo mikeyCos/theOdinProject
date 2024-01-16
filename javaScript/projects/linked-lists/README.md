@@ -1,6 +1,6 @@
 # Readme
 ---
-## Live preview: [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist)
+## Live preview: [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked-lists/dist)
 ---
 ### Ideas
 1. Implement a user interface.
@@ -9,7 +9,7 @@
 * Lorem ipsum
 ---
 ### Instructions
-1. Click on [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist/).
+1. Click on [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked-lists/dist/).
 2. Open browser's DevTools and go to the console.
 3. In the browser's console:
     * Enter `const variableName = new LinkedList()`
