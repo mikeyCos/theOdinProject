@@ -10,9 +10,9 @@
 
 ---
 
-### Projects
+## Projects
 
-# Foundations
+### Foundations
 
 - Live preview: [Recipes](https://mikeycos.github.io/theOdinProject/foundations/odin-recipes/index.html)
   - [Repository](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/odin-recipes)
@@ -25,14 +25,22 @@
 - Live preview: [Calculator](https://mikeycos.github.io/theOdinProject/foundations/calculator/index.html)
   - [Repository](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/calculator)
 
-# Intermediate HTML and CSS
+| Live Preview                                                                                                | Repository                                                                                   |
+| ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [Recipes](https://mikeycos.github.io/theOdinProject/foundations/odin-recipes/index.html)                    | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/odin-recipes)        |
+| [Landing Page](https://mikeycos.github.io/theOdinProject/foundations/landing-page/index.html)               | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/landing-page)        |
+| [Rock Paper Scissors](https://mikeycos.github.io/theOdinProject/foundations/rock-paper-scissors/index.html) | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/rock-paper-scissors) |
+| [Etch-a-Sketch](https://mikeycos.github.io/theOdinProject/foundations/etch-a-sketch/index.html)             | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/etch-a-sketch)       |
+| [Calculator](https://mikeycos.github.io/theOdinProject/foundations/calculator/index.html)                   | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/calculator)          |
+
+### Intermediate HTML and CSS
 
 - Live preview: [Sign-up Form](https://mikeycos.github.io/theOdinProject/intermediate-html-and-css/projects/sign-up-form/)
   - [Repository](https://github.com/mikeyCos/theOdinProject/tree/main/intermediate-html-and-css/projects/sign-up-form)
 - Live preview: [Admin Dashboard](https://mikeycos.github.io/theOdinProject/intermediate-html-and-css/projects/admin-dashboard/)
   - [Repository](https://github.com/mikeyCos/theOdinProject/tree/main/intermediate-html-and-css/projects/admin-dashboard)
 
-# JavaScript
+### JavaScript
 
 - Live preview: [Library](https://mikeycos.github.io/theOdinProject/javaScript/projects/library/)
   - [Repository](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/library)
@@ -51,12 +59,12 @@
 
 ---
 
-### How to navigate this repository
+# How to navigate this repository
 
 1. Lorem ipsum
 
 ---
 
-### Todo
+# Todo
 
 1. Lorem ipsum
