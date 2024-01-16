@@ -25,7 +25,7 @@
         3. Click on `Create a new repository`.
     * Subfolder in an existing GitHub repository:
         1. In the CLI, run `git subtree add -P <prefix> <repo> <rev>` (e.g. `git subtree add -P new/repo/name_this git@github.com:username/reponame.git HEAD`).
-        * For example, the existing repository is `theOdinProject/javaScript/projects/` then, in the CLI, run `git subtree add -P theOdinProject/javaScript/projects/NEW_PROJECT_NAME git@github.com:mikeyCos/module-webpack-starter.git HEAD`.
+        * For example, the existing repository is `theOdinProject/javaScript/projects/`, navigate to `theOdinProject/`, then, in the CLI, run `git subtree add -P git subtree add -P javaScript/projects/merge-sort git@github.com:mikeyCos/module-webpack-starter.git main`.
 2. Use `npm install` in terminal.
 3. Update `live preview` section in `README.md` as needed.
 4. Update plugin title in `webpack.config.js` as needed.

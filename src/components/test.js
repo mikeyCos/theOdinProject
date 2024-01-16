@@ -8,7 +8,7 @@ export default {
   render() {
     const div = document.createElement('div');
     const paragraph = document.createElement('p');
-    const foo = 'test';
+    const foo = "test";
 
     const icon = new Image();
     icon.src = Icon;
