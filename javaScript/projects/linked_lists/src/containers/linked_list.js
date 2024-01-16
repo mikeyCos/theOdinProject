@@ -85,20 +85,16 @@ export default class LinkedList {
   find(query) {
     // returns the index of the node containing value, or null if not found
     let node = this.#head;
-    let index = !this.#head ? null : 0;
+    let index = 0;
     while (node) {
       if (node.value === query) {
-        break;
-      } else if (!node.next) {
-        // if query does not exist in linkedList
-        index = null;
-        break;
+        return index;
       }
 
       node = node.next;
       index += 1;
     }
-    return index;
+    return null;
   }
 
   toString() {
@@ -150,7 +146,7 @@ export default class LinkedList {
       // checks if the index is within the linked list's size
       // index can never be less than 0
       // index can never be greater than the linked list's size
-      if (index + 1 === this.#size || this.#size === 1) {
+      if (index + 1 === this.#size) {
         this.pop();
         return;
       }

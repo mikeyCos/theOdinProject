@@ -1,15 +1,15 @@
 # Changelog
 ---
-### 11 JAN 2023
+### 11 JAN 2024
 - 
 ---
-### 10 JAN 2023
+### 10 JAN 2024
 - The `quickSort()` is a wrapper function that takes one parameter.
 - The `quickSortCheck()` takes three parameters.
 - Merged `partition()` body into `quickSortCheck()`.
 - The `swap()` and `quickSortCheck` both return an array.
 ---
-### 09 JAN 2023
+### 09 JAN 2024
 - Created `palindrome`/`power`/`fibonacci`/`quick_sort` modules and exported their respective default functions.
 - Recursive functions `pow` and `fibonacci` use memoization.
 ---

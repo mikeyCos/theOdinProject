@@ -1,6 +1,6 @@
 # Readme
 ---
-## Live preview: [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist/)
+## Live preview: [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked_lists/dist)
 ---
 ### Ideas
 1. Implement a user interface.
