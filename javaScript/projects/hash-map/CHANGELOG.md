@@ -1,7 +1,14 @@
 # Changelog
 ---
-### 17 JAN 2024
+### 18 JAN 2024
 - 
+---
+### 17 JAN 2024
+- Implemented a private `grow` method, that will grow the hash map's capacity and copy the nodes into a new hash map.
+- Implemented `clear` method that will pop each bucket's nodes.
+- Implemented `keys` method that will return an array of all the keys inside the hash map.
+- Implemented `values` method that will return an array of all values inside the hash map.
+- Temporarily implemented `indexOf` method that takes a key parameter to return the result of `hash(key)`.
 ---
 ### 16 JAN 2024
 - Created `linked_list` and `node` modules, and imported them into the `hashmap` module.

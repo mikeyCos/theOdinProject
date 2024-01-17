@@ -1,13 +1,13 @@
 import LinkedList from './linked_list';
 
 const Hashmap = () => {
-  const capacity = 16;
+  // let growing = false;
+  let capacity = 16;
   const threshold = 0.75;
   let numEntries = 0;
-  const loadFactor = numEntries / capacity;
-  const arr = new Array(capacity).fill().map(() => new LinkedList());
+  let loadFactor = numEntries / capacity;
+  let arr = new Array(capacity).fill().map(() => new LinkedList());
   console.log(arr);
-  console.log(arr[0]);
   const hash = (key) => {
     // takes a value and produces a hash code with it.
     let hashCode = 0;
@@ -18,22 +18,64 @@ const Hashmap = () => {
     }
 
     return hashCode % capacity;
+
+    // console.log(Math.floor(capacity * (capacity * ((hashCode * 0.5) % 1))));
+    // return Math.floor(capacity * (capacity * ((hashCode * 0.5) % 1)));
+  };
+
+  const entries = () => {
+    // returns an array that contains each key, value pair.
+    // Example: [[firstKey, firstValue], [secondKey, secondValue]]
+    const entriesArr = [];
+    arr.forEach((item) => {
+      if (item.size() > 0) {
+        let node = item.head();
+        while (node) {
+          entriesArr.push([node.key, node.value]);
+          // optional, an array of objects with key/value properties
+          // entriesArr.push({ key: node.key, value: node.value });
+          node = node.next;
+        }
+      }
+    });
+
+    return entriesArr;
+  };
+
+  const grow = (callback) => {
+    capacity *= 2;
+    numEntries = 0;
+    const entriesArr = entries();
+    arr = new Array(capacity).fill().map(() => new LinkedList());
+    entriesArr.forEach((item) => {
+      callback(item[0], item[1]);
+      // optional, when using an array of objects with key/value properties
+      // set(item.key, item.value);
+    });
   };
 
   const set = (key, value) => {
     // takes two arguments, the first is a key and the second is a value that is assigned to this key.
     // If a key already exists, then the old value is overwritten.
     // grow your buckets size when it needs to, by calculating if your bucket has reached the load factor.
-    // when to grow capacity?
     const index = hash(key);
     const bucket = arr[index];
     const linkedListIndex = bucket.find(key);
     if (bucket.size() === 0 || linkedListIndex === null) {
       bucket.append(key, value);
       numEntries += 1;
+      loadFactor = numEntries / capacity;
     } else {
       const node = bucket.atIndex(linkedListIndex);
       node.value = value;
+    }
+
+    if (loadFactor > threshold) {
+      // To grow our buckets,
+      // we create a new buckets list that is double the size of the old buckets list,
+      // then we copy all nodes over to the new buckets.
+      console.log(`GROWING`);
+      grow(set);
     }
   };
 
@@ -71,23 +113,52 @@ const Hashmap = () => {
 
   const length = () => {
     // returns the number of stored keys in the hash map.
+    return numEntries;
   };
 
   const clear = () => {
     // removes all entries in the hash map
+    arr.forEach((item) => {
+      while (item.size() > 0) {
+        item.pop();
+      }
+    });
   };
 
   const keys = () => {
     // returns an array containing all the keys inside the hash map.
+    const keysArr = [];
+    arr.forEach((item) => {
+      if (item.size() > 0) {
+        let node = item.head();
+        while (node) {
+          keysArr.push(node.key);
+          node = node.next;
+        }
+      }
+    });
+
+    return keysArr;
   };
 
   const values = () => {
     // returns an array containing all the values
+    const valuesArr = [];
+    arr.forEach((item) => {
+      if (item.size() > 0) {
+        let node = item.head();
+        while (node) {
+          valuesArr.push(node.value);
+          node = node.next;
+        }
+      }
+    });
+
+    return valuesArr;
   };
 
-  const entries = () => {
-    // returns an array that contains each key, value pair.
-    // Example: [[firstKey, firstValue], [secondKey, secondValue]]
+  const indexOf = (key) => {
+    return hash(key);
   };
 
   const print = () => {
@@ -100,7 +171,13 @@ const Hashmap = () => {
     get,
     has,
     remove,
+    length,
+    clear,
+    keys,
+    values,
+    entries,
     print,
+    indexOf,
   };
 };
 
