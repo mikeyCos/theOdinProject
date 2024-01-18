@@ -7,20 +7,25 @@ const Hashmap = () => {
   let numEntries = 0;
   let loadFactor = numEntries / capacity;
   let arr = new Array(capacity).fill().map(() => new LinkedList());
-  console.log(arr);
   const hash = (key) => {
     // takes a value and produces a hash code with it.
     let hashCode = 0;
 
     const primeNumber = 31;
     for (let i = 0; i < key.length; i += 1) {
-      hashCode = primeNumber * hashCode + key.charCodeAt(i);
+      // hashCode = (primeNumber * hashCode + key.charCodeAt(i)) % capacity;
+      hashCode = BigInt(primeNumber) * BigInt(hashCode) + BigInt(key.charCodeAt(i));
     }
 
-    return hashCode % capacity;
+    const capacityBigInt = BigInt(capacity);
+    hashCode = Number(hashCode % capacityBigInt);
 
-    // console.log(Math.floor(capacity * (capacity * ((hashCode * 0.5) % 1))));
-    // return Math.floor(capacity * (capacity * ((hashCode * 0.5) % 1)));
+    if (hashCode < 0 || hashCode >= capacityBigInt) {
+      throw new Error('Trying to access index out of bound');
+    }
+
+    return hashCode;
+    // return hashCode;
   };
 
   const entries = () => {
@@ -50,7 +55,7 @@ const Hashmap = () => {
     entriesArr.forEach((item) => {
       callback(item[0], item[1]);
       // optional, when using an array of objects with key/value properties
-      // set(item.key, item.value);
+      // callback(item.key, item.value);
     });
   };
 
@@ -74,7 +79,6 @@ const Hashmap = () => {
       // To grow our buckets,
       // we create a new buckets list that is double the size of the old buckets list,
       // then we copy all nodes over to the new buckets.
-      console.log(`GROWING`);
       grow(set);
     }
   };
@@ -158,7 +162,9 @@ const Hashmap = () => {
   };
 
   const indexOf = (key) => {
-    return hash(key);
+    // returns the index of the bucket that the key belongs to
+    const index = hash(key);
+    return has(key) ? index : 'Key does not exist';
   };
 
   const print = () => {

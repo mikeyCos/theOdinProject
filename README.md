@@ -40,6 +40,7 @@
 | [Weather App](https://mikeycos.github.io/theOdinProject/javaScript/projects/weather-app/dist/)         |     [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/weather-app) |
 | [Merge Sort](https://mikeycos.github.io/theOdinProject/javaScript/projects/merge-sort/dist/)           |      [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/merge-sort) |
 | [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked-lists/dist/)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/linked-lists) |
+| [Hash Map](https://mikeycos.github.io/theOdinProject/javaScript/projects/hash-map/dist)                |        [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/hash-map) |
 
 ---
 
