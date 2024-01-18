@@ -1,7 +1,6 @@
 import LinkedList from './linked_list';
 
-const Hashmap = () => {
-  // let growing = false;
+const HashMap = () => {
   let capacity = 16;
   const threshold = 0.75;
   let numEntries = 0;
@@ -187,4 +186,4 @@ const Hashmap = () => {
   };
 };
 
-export default Hashmap;
+export default HashMap;

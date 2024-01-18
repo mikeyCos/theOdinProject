@@ -1,10 +1,15 @@
-import Hashmap from './containers/hashmap';
+import HashMap from './containers/hashmap';
+import HashSet from './containers/hashset';
 import test from './components/test';
 import './index.css';
 
-window.Hashmap = Hashmap;
-window.foo = Hashmap();
+window.HashMap = HashMap;
+window.foo = HashMap();
 console.log(window.foo);
+
+window.HashSet = HashSet;
+window.bar = new HashSet();
+console.log(window.bar);
 
 const entries = [
   {
@@ -15,7 +20,6 @@ const entries = [
     key: 'secondKey',
     value: 'secondValue',
   },
-  // { key: 'Aniruddha', value: '1' },
   { key: 'thirdKey', value: 'thirdValue' },
   { key: 'fourthKey', value: 'fourtValue' },
   { key: 'fifthKey', value: 'fifthValue' },
@@ -32,6 +36,8 @@ const entries = [
 
 entries.forEach((item) => window.foo.set(item.key, item.value));
 window.foo.print();
+entries.forEach((item) => window.bar.set(item.key, item.value));
+window.bar.print();
 
 test.print();
 document.body.appendChild(test.render());

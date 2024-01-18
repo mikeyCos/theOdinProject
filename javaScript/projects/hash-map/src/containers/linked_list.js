@@ -20,15 +20,6 @@ export default class LinkedList {
     this.#size += 1;
   }
 
-  prepend(value) {
-    // adds a new node containing value to the start of the list
-    const tmp = this.#head;
-    const newNode = new Node(value, tmp);
-    this.#head = newNode;
-    if (this.#size === 0) this.#tail = newNode;
-    this.#size += 1;
-  }
-
   size() {
     // returns the total number of nodes in the list
     return this.#size;
@@ -111,32 +102,6 @@ export default class LinkedList {
       node = node.next;
     }
     return string;
-  }
-
-  // Extra Credit Tip: When you insert or remove a node,
-  // consider how it will affect the existing nodes.
-  // Some of the nodes will need their nextNode link updated.
-  insertAt(value, index) {
-    // inserts a new node with the provided value at the given index
-    if (index <= this.#size && index >= 0) {
-      // checks if the index is within the linked list's size
-      // index can never be less than 0
-      // index can never be greater than the linked list's size
-      if (index === 0) {
-        // insert node at the beginning of the list
-        this.prepend(value);
-      } else if (index === this.#size) {
-        // insert node at the end of the list
-        this.append(value);
-      } else {
-        // insert nodes in between nodes
-        const left = this.atIndex(index - 1);
-        const right = this.atIndex(index);
-        const newNode = new Node(value, right);
-        left.next = newNode;
-        this.#size += 1;
-      }
-    }
   }
 
   removeAt(index) {

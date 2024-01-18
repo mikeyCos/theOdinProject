@@ -6,6 +6,10 @@
 - Added optional code inside the `entries` method to create an array of objects instead; this will impact the `grow` method.
 - Updated `indexOf` method to return the index of the bucket that the key belongs to, otherwise return `Key does not exist`.
 - Updated the `LinkedList` class to use keys and values.
+- Changed name of factory function `Hashmap` to `HashMap`.
+- Created `hashset` module with `HashSet` class exported.
+- Reconfigured the constructor for `Node` class to only initiate a `value` property when value is defined.
+- Removed `prepend` and `insertAt` methods from the `LinkedList` class.
 ---
 ### 17 JAN 2024
 - Implemented a private `grow` method, that will grow the hash map's capacity and copy the nodes into a new hash map.
