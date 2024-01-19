@@ -1,4 +1,5 @@
 import LinkedList from './linked_list';
+import HashMap from './hashmap';
 
 export default class HashSet {
   #capacity = 16;
