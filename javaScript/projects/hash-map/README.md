@@ -51,6 +51,7 @@ As far as the extra credit goes, I used `class` instead of a factory function, r
 I am glad this project got me to go on a rabbit hole for numbers in JavaScript, dynamically grow a data structure, remind me what can happen with arrow functions, and build upon a previous project. 
 
 To failing forward, cheers!
+
 ---
 ### Notes
 * This HashMap object handles keys of type strings.
