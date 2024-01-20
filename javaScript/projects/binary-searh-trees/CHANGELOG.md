@@ -1,5 +1,12 @@
 # Changelog
 ---
+### 19 JAN 2024
+- Initiated `binary-search-trees` subdirectory.
+- Created `tree` and `node` modules.
+- `Tree` object is returned by using a factory function.
+- Initiated `buildTree`/`insertNode`/`deleteNode`/`find`/`levelOrder`/`inOrder`/`preOrder`/`postOrder`/`height`/`depth`/`isBalanced`/`rebalance`/`prettyPrint` methods for the `Tree` object.
+- The method `buildTree` current creates an unbalanced binary search tree.
+---
 ### 14 JAN 2024
 - Reformatted `CHANGELOG.md`.
 - Updated instructions in `README.md`.
