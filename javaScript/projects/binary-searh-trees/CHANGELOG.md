@@ -1,5 +1,12 @@
 # Changelog
 ---
+### 20 JAN 2024
+- Created `mergesort` module and imported it into the `tree` module.
+- An array passed into the `Tree` factory function will be sorted before running `buildTree`.
+- A balanced binary search tree can now be created.
+- Created a `predecessor` method that will return a predecessor node that will be utilized in the `delete` method.
+- The `inOrder` method currently returns an ordered array.
+---
 ### 19 JAN 2024
 - Initiated `binary-search-trees` subdirectory.
 - Created `tree` and `node` modules.
