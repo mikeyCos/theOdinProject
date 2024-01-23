@@ -1,5 +1,14 @@
 # Changelog
 ---
+### 23 JAN 2024
+- 
+---
+### 22 JAN 2024
+- Fixed `inOrder`/`preOrder`/`postOrder` methods to perform callback function that is passed in; if there is no callback function, an array is returned with values placed in their respective order, otherwise `undefined` is returned.
+- The method `levelOrder` appears to work as intended and makes use of a queue to traverse the tree in breadth-first level order.
+- Implemented the `depth` method to count the number of edges from the root node.
+- Configured `buildTree` into a wrapper function, so that any array passed in will be sorted first; `sortedArrayToBST` method does the tree building.
+---
 ### 20 JAN 2024
 - Created `mergesort` module and imported it into the `tree` module.
 - An array passed into the `Tree` factory function will be sorted before running `buildTree`.

@@ -4,25 +4,50 @@ import Node from './node';
 const Tree = (array) => {
   // Accepts an array when initialized.
   // The Tree class should have a root attribute, which uses the return value of buildTree
-  const sortedArray = mergeSort(array);
   let root;
   let memo = {};
-  const buildTree = (arr, start, end) => {
-    // Takes an array of data (e.g., [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-    // Turns it into a balanced binary tree full of Node objects appropriately placed
-    // (don’t forget to sort and remove duplicates!).
-    // The buildTree function should return the level-0 root node.
+
+  const sortedArrayToBST = (arr, start, end) => {
     if (start > end) return null;
 
     const midPoint = Math.floor((start + end) / 2);
     const rootNode = new Node(arr[midPoint]);
-    rootNode.leftNode = buildTree(arr, start, midPoint - 1);
-    rootNode.rightNode = buildTree(arr, midPoint + 1, end);
+    rootNode.leftNode = sortedArrayToBST(arr, start, midPoint - 1);
+    rootNode.rightNode = sortedArrayToBST(arr, midPoint + 1, end);
+    // const childNodeOne = sortedArrayToBST(arr, start, midPoint - 1);
+    // const childNodeTwo = sortedArrayToBST(arr, midPoint + 1, end);
+
+    // if (childNodeOne) {
+    //   if (rootNode.data < childNodeOne.data) {
+    //     rootNode.rightNode = childNodeOne;
+    //   } else if (rootNode.data > childNodeOne.data) {
+    //     rootNode.leftNode = childNodeOne;
+    //   }
+    // }
+    // console.log(rootNode);
+    // if (childNodeTwo) {
+    //   if (rootNode.data < childNodeTwo.data) {
+    //     rootNode.rightNode = childNodeTwo;
+    //   } else if (rootNode.data > childNodeTwo.data) {
+    //     rootNode.leftNode = childNodeTwo;
+    //   }
+    // }
 
     return rootNode;
   };
 
+  const buildTree = (arr) => {
+    // Takes an array of data (e.g., [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+    // Turns it into a balanced binary tree full of Node objects appropriately placed
+    // (don’t forget to sort and remove duplicates!).
+    // The buildTree function should return the level-0 root node.
+    const sortedArr = mergeSort(arr);
+    return sortedArrayToBST(sortedArr, 0, sortedArr.length - 1);
+    // return sortedArrayToBST(arr, 0, arr.length - 1);
+  };
+
   const insertNode = (value) => {
+    // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
     let node = root;
     const newNode = new Node(value);
     while (node) {
@@ -45,7 +70,6 @@ const Tree = (array) => {
         break;
       }
     }
-    // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
   };
 
   const find = (value) => {
@@ -94,8 +118,13 @@ const Tree = (array) => {
   const deleteNode = (value) => {
     // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
     // There will be several cases for delete, such as when a node has children or not.
-    const targetNode = find(value);
+
+    let targetNode = find(value);
     const parentNode = predecessor(value);
+    // let nodeLink =
+    //   parentNode.leftNode && parentNode.leftNode.value === value
+    //     ? parentNode.leftNode
+    //     : parentNode.rightNode;
     const { leftNode } = targetNode;
     const { rightNode } = targetNode;
     console.log(targetNode);
@@ -108,16 +137,32 @@ const Tree = (array) => {
     } else {
       // no children
       console.log(`targetNode has no children`);
+      targetNode = null;
     }
   };
 
-  const levelOrder = (callback, node = root, arr = []) => {
+  const levelOrder = (callback) => {
     // Accepts a random OPTIONAL callback function as its parameter
     // Traverse the tree in breadth-first level order and provide each node as an argument to the callback.
     // The callback will perform an operation on each node following the order in which they are traversed.
     // The method should return an array of values if no callback is given as an argument.
     // You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list
-    return `levelOrder()`;
+    const arr = [];
+    const queue = [];
+    if (root) queue.push(root);
+    while (queue.length > 0) {
+      const dequeue = queue.splice(0, 1)[0];
+      if (callback) {
+        callback(dequeue);
+      } else {
+        arr.push(dequeue.data);
+      }
+
+      if (dequeue.leftNode) queue.push(dequeue.leftNode);
+      if (dequeue.rightNode) queue.push(dequeue.rightNode);
+    }
+
+    return callback ? undefined : arr;
   };
 
   const inOrder = (callback, node = root, arr = []) => {
@@ -129,25 +174,54 @@ const Tree = (array) => {
 
     if (node) {
       inOrder(callback, node.leftNode, arr);
-      arr.push(node.data);
+      if (callback) {
+        callback(node);
+      } else {
+        arr.push(node.data);
+      }
       inOrder(callback, node.rightNode, arr);
     }
 
-    return arr;
+    return callback ? undefined : arr;
   };
 
-  const preOrder = (callback) => {
+  const preOrder = (callback, node = root, arr = []) => {
     // root => left => right
     // Accepts a random optional callback as a parameter.
     // Traverse the tree in their respective depth-first order and yield each node to the provided callback.
     // Return an array of values if no callback is given as an argument.
+
+    if (node) {
+      if (callback) {
+        callback(node);
+      } else {
+        arr.push(node.data);
+      }
+
+      preOrder(callback, node.leftNode, arr);
+      preOrder(callback, node.rightNode, arr);
+    }
+
+    return callback ? undefined : arr;
   };
 
-  const postOrder = (callback) => {
+  const postOrder = (callback, node = root, arr = []) => {
     // left => right => root
     // Accepts a random optional callback as a parameter.
     // Traverse the tree in their respective depth-first order and yield each node to the provided callback.
     // Return an array of values if no callback is given as an argument.
+
+    if (node) {
+      postOrder(callback, node.leftNode, arr);
+      postOrder(callback, node.rightNode, arr);
+      if (callback) {
+        callback(node);
+      } else {
+        arr.push(node.data);
+      }
+    }
+
+    return callback ? undefined : arr;
   };
 
   const height = (node) => {
@@ -158,6 +232,24 @@ const Tree = (array) => {
   const depth = (node) => {
     // Accepts a node and returns its depth.
     // Depth is defined as the number of edges in the path from a given node to the tree’s root node.
+    let nextNode = root;
+    let depthNum = 0;
+    while (nextNode) {
+      if (nextNode.data !== node.data) {
+        depthNum += 1;
+        if (nextNode.data > node.data) {
+          // go left
+          nextNode = nextNode.leftNode;
+        } else {
+          // go right
+          nextNode = nextNode.rightNode;
+        }
+      } else {
+        break;
+      }
+    }
+
+    return depthNum;
   };
 
   const isBalanced = () => {
@@ -183,14 +275,19 @@ const Tree = (array) => {
     }
   };
 
-  root = buildTree(sortedArray, 0, sortedArray.length - 1);
+  // root = buildTree(sortedArray, 0, sortedArray.length - 1);
+  root = buildTree(array);
   return {
     root,
     buildTree,
     insertNode,
     deleteNode,
     find,
+    levelOrder,
     inOrder,
+    preOrder,
+    postOrder,
+    depth,
     prettyPrint,
   };
 };
