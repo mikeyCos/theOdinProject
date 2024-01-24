@@ -1,7 +1,12 @@
 # Changelog
 ---
-### 23 JAN 2024
+### 24 JAN 2024
 - 
+---
+### 23 JAN 2024
+- Fixed live preview link in `README.md`.
+- Changed base case in `mergeSort()` function from `arr.length === 1` to `arr.length <= 1`.
+- Reconfigured the `find`/`#predecessor` methods into recursive methods with a default parameter.
 ---
 ### 22 JAN 2024
 - Fixed `inOrder`/`preOrder`/`postOrder` methods to perform callback function that is passed in; if there is no callback function, an array is returned with values placed in their respective order, otherwise `undefined` is returned.
