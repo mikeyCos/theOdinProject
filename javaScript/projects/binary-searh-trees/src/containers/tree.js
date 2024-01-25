@@ -64,34 +64,49 @@ export default class Tree {
     // return sortedArrayToBST(arr, 0, arr.length - 1);
   };
 
-  insertNode = (value) => {
+  insertNode = (value, node = this.root) => {
     // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
-    const newNode = new Node(value);
-    if (this.root === null) {
-      this.#setRoot(newNode);
-    } else {
-      let node = this.root;
-      while (node) {
-        if (node.data < value) {
-          // go right
-          if (node.rightNode === null) {
-            node.rightNode = newNode;
-          } else {
-            node = node.rightNode;
-          }
-        } else if (node.data > value) {
-          // go left
-          if (node.leftNode === null) {
-            node.leftNode = newNode;
-          } else {
-            node = node.leftNode;
-          }
-        } else {
-          // duplicate found
-          break;
-        }
-      }
+    let newNode = node;
+    if (node === null) {
+      newNode = new Node(value);
+      if (!this.root) this.root = newNode;
+      return newNode;
     }
+
+    if (node.data < value) {
+      newNode.rightNode = this.insertNode(value, node.rightNode);
+    } else if (node.data > value) {
+      newNode.leftNode = this.insertNode(value, node.leftNode);
+    }
+
+    return newNode;
+    // iterative approach
+    // const newNode = new Node(value);
+    // if (this.root === null) {
+    //   this.#setRoot(newNode);
+    // } else {
+    //   let node = this.root;
+    //   while (node) {
+    //     if (node.data < value) {
+    //       // go right
+    //       if (node.rightNode === null) {
+    //         node.rightNode = newNode;
+    //       } else {
+    //         node = node.rightNode;
+    //       }
+    //     } else if (node.data > value) {
+    //       // go left
+    //       if (node.leftNode === null) {
+    //         node.leftNode = newNode;
+    //       } else {
+    //         node = node.leftNode;
+    //       }
+    //     } else {
+    //       // duplicate found
+    //       break;
+    //     }
+    //   }
+    // }
   };
 
   find = (value, node = this.root) => {
@@ -121,25 +136,6 @@ export default class Tree {
     if (node.data < value) nextNode = this.#predecessor(value, nextNode.rightNode);
 
     return nextNode;
-    // if (this.root.data === value) return this.root;
-    // let node = this.root;
-    // while (node) {
-    //   if (
-    //     (node.leftNode && node.leftNode.data === value) ||
-    //     (node.rightNode && node.rightNode.data === value)
-    //   ) {
-    //     break;
-    //   }
-
-    //   if (node.data > value) {
-    //     // go left
-    //     node = node.leftNode;
-    //   } else if (node.data < value) {
-    //     // go right
-    //     node = node.rightNode;
-    //   }
-    // }
-    // return node;
   };
 
   deleteNode = (value) => {
@@ -150,72 +146,86 @@ export default class Tree {
       const { leftNode } = targetNode;
       const { rightNode } = targetNode;
       const parentNode = this.#predecessor(value);
-      console.log(parentNode);
       if (leftNode && rightNode) {
         // has 2 children
-        console.log(`targetNode has 2 children`);
-        let successor = targetNode.rightNode;
+        let successor = rightNode;
         while (successor) {
+          // finds successor
           if (!successor.leftNode) break;
           successor = successor.leftNode;
         }
+
+        const parentSuccessor = this.#predecessor(successor.data);
+        successor.leftNode = leftNode;
         console.log(successor);
-        // successor.leftNode = leftNode;
-        // const parentSuccessor = this.#predecessor(successor.data);
 
-        // const tmp = parentSuccessor;
-        // tmp.leftNode = null;
-        // successor.rightNode = tmp;
-        // console.log(parentSuccessor);
-        // console.log(successor);
-        // console.log(tmp);
-        // if (parentNode.rightNode && parentNode.rightNode.data === value) {
-        //   parentNode.rightNode = successor;
-        // }
+        if (parentSuccessor.data !== value) {
+          const tmp = successor.rightNode;
+          parentSuccessor.leftNode = !tmp ? null : tmp;
+          successor.rightNode = parentSuccessor;
+        }
 
-        // if (parentNode.leftNode && parentNode.leftNode.data === value) {
-        //   parentNode.leftNode = successor;
-        // }
+        if (parentNode.rightNode && parentNode.rightNode.data === value) {
+          parentNode.rightNode = successor;
+        } else if (parentNode.leftNode && parentNode.leftNode.data === value) {
+          parentNode.leftNode = successor;
+        } else {
+          console.log(rightNode);
+          this.root = successor;
+        }
       } else if (leftNode || rightNode) {
         // has 1 child
-        console.log(`targetNode has 1 child`);
-        // if (parentNode.rightNode && parentNode.rightNode.data === value)
-        //   parentNode.rightNode = !leftNode ? rightNode : leftNode;
-        // if (parentNode.leftNode && parentNode.leftNode.data === value)
-        //   parentNode.leftNode = !rightNode ? leftNode : rightNode;
+        if (parentNode.rightNode && parentNode.rightNode.data === value)
+          parentNode.rightNode = !leftNode ? rightNode : leftNode;
+        if (parentNode.leftNode && parentNode.leftNode.data === value)
+          parentNode.leftNode = !rightNode ? leftNode : rightNode;
+        if (this.root.data === value) this.root = rightNode;
       } else {
         // leaf node, no children
-        console.log(`targetNode has no children`);
-        // if (parentNode.rightNode && parentNode.rightNode.data === value) parentNode.rightNode = null;
-        // if (parentNode.leftNode && parentNode.leftNode.data === value) parentNode.leftNode = null;
-        // if (this.root.data === value) this.root = null;
+        if (parentNode.rightNode && parentNode.rightNode.data === value)
+          parentNode.rightNode = null;
+        if (parentNode.leftNode && parentNode.leftNode.data === value) parentNode.leftNode = null;
+        if (this.root.data === value) this.root = null;
       }
     }
     this.prettyPrint(this.root);
   };
 
-  levelOrder = (callback) => {
+  levelOrder = (callback, arr = [], queue = [this.root]) => {
     // Accepts a random OPTIONAL callback function as its parameter
     // Traverse the tree in breadth-first level order and provide each node as an argument to the callback.
     // The callback will perform an operation on each node following the order in which they are traversed.
     // The method should return an array of values if no callback is given as an argument.
     // You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list
-    const arr = [];
-    const queue = [];
-    if (this.root) queue.push(this.root);
-    while (queue.length > 0) {
-      const dequeue = queue.splice(0, 1)[0];
-      if (callback) {
-        callback(dequeue);
-      } else {
-        arr.push(dequeue.data);
-      }
-
-      if (dequeue.leftNode) queue.push(dequeue.leftNode);
-      if (dequeue.rightNode) queue.push(dequeue.rightNode);
+    if (this.root === null || queue.length === 0) return arr;
+    const dequeue = queue.shift();
+    if (callback) {
+      callback(dequeue);
+    } else {
+      arr.push(dequeue.data);
     }
 
+    if (dequeue.leftNode) queue.push(dequeue.leftNode);
+    if (dequeue.rightNode) queue.push(dequeue.rightNode);
+
+    this.levelOrder(callback, arr, queue);
     return callback ? undefined : arr;
+
+    // iterative approach
+    // const arr = [];
+    // const queue = [];
+    // if (this.root) queue.push(this.root);
+    // while (queue.length > 0) {
+    //   const dequeue = queue.splice(0, 1)[0];
+    //   if (callback) {
+    //     callback(dequeue);
+    //   } else {
+    //     arr.push(dequeue.data);
+    //   }
+    //   if (dequeue.leftNode) queue.push(dequeue.leftNode);
+    //   if (dequeue.rightNode) queue.push(dequeue.rightNode);
+    // }
+    // return callback ? undefined : arr;
   };
 
   inOrder = (callback, node = this.root, arr = []) => {
@@ -280,40 +290,45 @@ export default class Tree {
   height = (node) => {
     // Accepts a node and returns its height.
     // Height is defined as the number of edges in the longest path from a given node to a leaf node.
+    if (node === null) return -1;
+
+    const leftNodeHeight = this.height(node.leftNode);
+    const rightNodeHeight = this.height(node.rightNode);
+
+    return Math.max(leftNodeHeight, rightNodeHeight) + 1;
   };
 
-  depth = (node) => {
+  depth = (node, nextNode = this.root) => {
     // Accepts a node and returns its depth.
     // Depth is defined as the number of edges in the path from a given node to the tree’s root node.
-    let nextNode = this.root;
+    if (nextNode.data === node.data) return 0;
     let depthNum = 0;
-    while (nextNode) {
-      if (nextNode.data !== node.data) {
-        depthNum += 1;
-        if (nextNode.data > node.data) {
-          // go left
-          nextNode = nextNode.leftNode;
-        } else {
-          // go right
-          nextNode = nextNode.rightNode;
-        }
-      } else {
-        break;
-      }
-    }
+    if (node.data < nextNode.data) depthNum = this.depth(node, nextNode.leftNode) + 1;
+    if (node.data > nextNode.data) depthNum = this.depth(node, nextNode.rightNode) + 1;
 
     return depthNum;
   };
 
-  isBalanced = () => {
+  isBalanced = (node = this.root) => {
     // Checks if the tree is balanced.
-    // A balanced tree is one where the difference between heights of the left subtree and the right subtree of every node is not more than 1.
+    // A balanced tree is one where the difference between heights of the left subtree
+    // and the right subtree of every node is not more than 1.
+    if (node === null) {
+      return true;
+    }
+    const leftSubtreeHeight = this.height(node.leftNode);
+    const rightSubtreeHeight = this.height(node.rightNode);
+    const difference = leftSubtreeHeight - rightSubtreeHeight;
+    if (difference <= 1 && difference >= -1) {
+      return this.isBalanced(node.leftNode) && this.isBalanced(node.rightNode);
+    }
+    return false;
   };
 
   rebalance = () => {
     // Rebalances an unbalanced tree.
     // You’ll want to use a traversal method to provide a new array to the buildTree function.
+    const sortedArray = this.inOrder();
+    this.root = this.buildTree(sortedArray);
   };
-
-  // root = buildTree(sortedArray, 0, sortedArray.length - 1);
 }

@@ -1,7 +1,15 @@
 # Changelog
 ---
-### 24 JAN 2024
+### 25 JAN 2024
 - 
+---
+### 24 JAN 2024
+- Implemented the `height`/`isBalanced`/`rebalanced` methods.
+- The `isBalanced` method utilizes the `height` method in it's body.
+- The `rebalanced` method utilizes the `inOrder` method to rebuild a tree with an in-order array.
+- Reconfigured the `depth`/`levelOrder` methods into recursive methods with a default parameter.
+- The `delete` method currently does not work for deleting a node with two children.
+- Created `arr` module create an array of `n` element filled with pseudo-random numbers.  
 ---
 ### 23 JAN 2024
 - Fixed live preview link in `README.md`.

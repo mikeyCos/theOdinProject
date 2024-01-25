@@ -1,5 +1,4 @@
 const mergeSort = (arr) => {
-  // console.log(arr);
   if (arr.length <= 1) return arr;
   const midPoint = Math.floor(arr.length / 2);
 
