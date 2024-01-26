@@ -139,13 +139,13 @@ export default class Tree {
   deleteNode = (value) => {
     // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
     // There will be several cases for delete, such as when a node has children or not.
-    console.log(value);
     if (value === undefined) throw new Error('Argument undefined');
     const targetNode = this.find(value);
     if (targetNode) {
       const { leftNode } = targetNode;
       const { rightNode } = targetNode;
       const parentNode = this.#predecessor(value);
+
       if (leftNode && rightNode) {
         // has 2 children
         let successor = rightNode;
@@ -158,11 +158,9 @@ export default class Tree {
         const successorRightNode = successor.rightNode;
         const parentSuccessor = this.#predecessor(successor.data);
         parentSuccessor.leftNode = null;
-        console.log(parentSuccessor);
         if (!successor.leftNode && successor.rightNode) {
-          console.log(`!successor.leftNode && successor.rightNode`);
           if (parentSuccessor.data === value) {
-            // if parentSuccessor is the targetNode
+            // if parentSuccessor is the node to delete
             successor.rightNode = successorRightNode;
           } else {
             parentSuccessor.leftNode = successorRightNode;
@@ -171,42 +169,48 @@ export default class Tree {
         }
 
         if (!successor.leftNode && !successor.rightNode) {
-          console.log(`!successor.leftNode && !successor.rightNode`);
+          // if successor is a leaf node
           successor.rightNode = parentSuccessor.data === value ? null : rightNode;
-          // successor.rightNode = null;
+          // if parentSuccessor is the node to delete
+          //  set the successor's rightNode to null
         }
 
         successor.leftNode = leftNode;
-        console.log(parentNode);
-        console.log(successor);
 
         if (parentNode.rightNode && parentNode.rightNode.data === value) {
-          console.log(`parentNode.rightNode && parentNode.rightNode.data === value`);
+          // if node to delete is to the right of the parentNode
           parentNode.rightNode = successor;
         } else if (parentNode.leftNode && parentNode.leftNode.data === value) {
-          console.log(`parentNode.leftNode && parentNode.leftNode.data === value`);
+          // if node to delete is to the left of the parentNode
           parentNode.leftNode = successor;
         } else {
+          // node to delete is the root node
           this.root = successor;
         }
       } else if (leftNode || rightNode) {
-        // has 1 child
-        if (parentNode.rightNode && parentNode.rightNode.data === value)
+        // node to delete has 1 child
+        if (parentNode.rightNode && parentNode.rightNode.data === value) {
           parentNode.rightNode = !leftNode ? rightNode : leftNode;
-        if (parentNode.leftNode && parentNode.leftNode.data === value)
+        } else if (parentNode.leftNode && parentNode.leftNode.data === value) {
           parentNode.leftNode = !rightNode ? leftNode : rightNode;
-        if (this.root.data === value) this.root = !rightNode ? leftNode : rightNode;
-      } else {
-        // leaf node, no children
-        if (parentNode.rightNode && parentNode.rightNode.data === value)
+        } else {
+          this.root = !rightNode ? leftNode : rightNode;
+        }
+        // if (this.root.data === value) this.root = !rightNode ? leftNode : rightNode;
+      } else if (!rightNode && !leftNode) {
+        // node to delete is a leaf node, no children
+        if (parentNode.rightNode && parentNode.rightNode.data === value) {
           parentNode.rightNode = null;
-        if (parentNode.leftNode && parentNode.leftNode.data === value) parentNode.leftNode = null;
-        if (this.root.data === value) this.root = null;
+        } else if (parentNode.leftNode && parentNode.leftNode.data === value) {
+          parentNode.leftNode = null;
+        } else {
+          // (this.root.data === value)
+          this.root = null;
+        }
       }
     } else {
       throw new Error('Value does not exist in tree.');
     }
-    this.prettyPrint(this.root);
   };
 
   levelOrder = (callback, arr = [], queue = [this.root]) => {
