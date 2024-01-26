@@ -1,5 +1,10 @@
 # Changelog
 ---
+### 26 JAN 2024
+- Changed `if` statements into `else if` clauses.
+- Added additional comments in `tree` module.
+- Added `console.log` inside each of the `forEach` loops in the `index` module for deleting all nodes in breadth-first-search and/or depth-first-search ordered arrays.
+---
 ### 25 JAN 2024
 - Fixed `deleteNode` method to delete when a node has two children, and correctly links nodes together if the node to delete is the root node.
 - Added `throw new Error` to the following methods: `insertNode`/`find`/`deleteNode`/`height`/`depth`.
