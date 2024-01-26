@@ -31,16 +31,17 @@
 
 ### JavaScript
 
-| Live Preview                                                                                           |                                                                                       Repository |
-| ------------------------------------------------------------------------------------------------------ | -----------------------------------------------------------------------------------------------: |
-| [Library](https://mikeycos.github.io/theOdinProject/javaScript/projects/library/)                      |         [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/library) |
-| [Tic Tac Toe](https://mikeycos.github.io/theOdinProject/javaScript/projects/tic-tac-toe/)              |     [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/tic-tac-toe) |
-| [Restaurant Page](https://mikeycos.github.io/theOdinProject/javaScript/projects/restaurant-page/dist/) | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/restaurant-page) |
-| [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/projects/todo-list/dist/)             |       [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/todo-list) |
-| [Weather App](https://mikeycos.github.io/theOdinProject/javaScript/projects/weather-app/dist/)         |     [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/weather-app) |
-| [Merge Sort](https://mikeycos.github.io/theOdinProject/javaScript/projects/merge-sort/dist/)           |      [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/merge-sort) |
-| [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked-lists/dist/)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/linked-lists) |
-| [Hash Map](https://mikeycos.github.io/theOdinProject/javaScript/projects/hash-map/dist)                |        [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/hash-map) |
+| Live Preview                                                                                                  |                                                                                         Repository |
+| ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------: |
+| [Library](https://mikeycos.github.io/theOdinProject/javaScript/projects/library/)                             |           [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/library) |
+| [Tic Tac Toe](https://mikeycos.github.io/theOdinProject/javaScript/projects/tic-tac-toe/)                     |       [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/tic-tac-toe) |
+| [Restaurant Page](https://mikeycos.github.io/theOdinProject/javaScript/projects/restaurant-page/dist/)        |   [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/restaurant-page) |
+| [Todo List](https://mikeycos.github.io/theOdinProject/javaScript/projects/todo-list/dist/)                    |         [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/todo-list) |
+| [Weather App](https://mikeycos.github.io/theOdinProject/javaScript/projects/weather-app/dist/)                |       [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/weather-app) |
+| [Merge Sort](https://mikeycos.github.io/theOdinProject/javaScript/projects/merge-sort/dist/)                  |        [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/merge-sort) |
+| [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked-lists/dist/)              |      [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/linked-lists) |
+| [Hash Map](https://mikeycos.github.io/theOdinProject/javaScript/projects/hash-map/dist)                       |          [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/hash-map) |
+| [Binary Search Trees](https://mikeycos.github.io/theOdinProject/javaScript/projects/binary-search-trees/dist) | [Repo]https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/binary-search-trees |
 
 ---
 

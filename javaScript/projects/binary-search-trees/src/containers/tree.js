@@ -8,11 +8,7 @@ export default class Tree {
     this.root = this.buildTree(arr);
   }
 
-  #setRoot = (node) => {
-    this.root = node;
-  };
-
-  prettyPrint = (node, prefix = '', isLeft = true) => {
+  prettyPrint = (node = this.root, prefix = '', isLeft = true) => {
     if (node === null) {
       return;
     }
@@ -66,6 +62,7 @@ export default class Tree {
 
   insertNode = (value, node = this.root) => {
     // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
+    if (value === undefined) throw new Error('Argument undefined');
     let newNode = node;
     if (node === null) {
       newNode = new Node(value);
@@ -111,6 +108,7 @@ export default class Tree {
 
   find = (value, node = this.root) => {
     // Accepts a value and returns the node with the given value.
+    if (value === undefined) throw new Error('Argument undefined');
     let nextNode = node;
     if (nextNode === null) return null;
     if (nextNode.data === value) return nextNode;
@@ -141,6 +139,8 @@ export default class Tree {
   deleteNode = (value) => {
     // Implementation of these methods should traverse the tree and manipulate the nodes and their connections.
     // There will be several cases for delete, such as when a node has children or not.
+    console.log(value);
+    if (value === undefined) throw new Error('Argument undefined');
     const targetNode = this.find(value);
     if (targetNode) {
       const { leftNode } = targetNode;
@@ -155,22 +155,38 @@ export default class Tree {
           successor = successor.leftNode;
         }
 
+        const successorRightNode = successor.rightNode;
         const parentSuccessor = this.#predecessor(successor.data);
-        successor.leftNode = leftNode;
-        console.log(successor);
-
-        if (parentSuccessor.data !== value) {
-          const tmp = successor.rightNode;
-          parentSuccessor.leftNode = !tmp ? null : tmp;
-          successor.rightNode = parentSuccessor;
+        parentSuccessor.leftNode = null;
+        console.log(parentSuccessor);
+        if (!successor.leftNode && successor.rightNode) {
+          console.log(`!successor.leftNode && successor.rightNode`);
+          if (parentSuccessor.data === value) {
+            // if parentSuccessor is the targetNode
+            successor.rightNode = successorRightNode;
+          } else {
+            parentSuccessor.leftNode = successorRightNode;
+            successor.rightNode = rightNode;
+          }
         }
 
+        if (!successor.leftNode && !successor.rightNode) {
+          console.log(`!successor.leftNode && !successor.rightNode`);
+          successor.rightNode = parentSuccessor.data === value ? null : rightNode;
+          // successor.rightNode = null;
+        }
+
+        successor.leftNode = leftNode;
+        console.log(parentNode);
+        console.log(successor);
+
         if (parentNode.rightNode && parentNode.rightNode.data === value) {
+          console.log(`parentNode.rightNode && parentNode.rightNode.data === value`);
           parentNode.rightNode = successor;
         } else if (parentNode.leftNode && parentNode.leftNode.data === value) {
+          console.log(`parentNode.leftNode && parentNode.leftNode.data === value`);
           parentNode.leftNode = successor;
         } else {
-          console.log(rightNode);
           this.root = successor;
         }
       } else if (leftNode || rightNode) {
@@ -179,7 +195,7 @@ export default class Tree {
           parentNode.rightNode = !leftNode ? rightNode : leftNode;
         if (parentNode.leftNode && parentNode.leftNode.data === value)
           parentNode.leftNode = !rightNode ? leftNode : rightNode;
-        if (this.root.data === value) this.root = rightNode;
+        if (this.root.data === value) this.root = !rightNode ? leftNode : rightNode;
       } else {
         // leaf node, no children
         if (parentNode.rightNode && parentNode.rightNode.data === value)
@@ -187,6 +203,8 @@ export default class Tree {
         if (parentNode.leftNode && parentNode.leftNode.data === value) parentNode.leftNode = null;
         if (this.root.data === value) this.root = null;
       }
+    } else {
+      throw new Error('Value does not exist in tree.');
     }
     this.prettyPrint(this.root);
   };
@@ -291,6 +309,7 @@ export default class Tree {
     // Accepts a node and returns its height.
     // Height is defined as the number of edges in the longest path from a given node to a leaf node.
     if (node === null) return -1;
+    if (!(node instanceof Node)) return new Error('Incorrect parameter type.');
 
     const leftNodeHeight = this.height(node.leftNode);
     const rightNodeHeight = this.height(node.rightNode);
@@ -301,7 +320,9 @@ export default class Tree {
   depth = (node, nextNode = this.root) => {
     // Accepts a node and returns its depth.
     // Depth is defined as the number of edges in the path from a given node to the tree’s root node.
+    if (node === null || node === undefined) return new Error('Invalid parameter.');
     if (nextNode.data === node.data) return 0;
+    if (!(node instanceof Node)) return new Error('Incorrect parameter type.');
     let depthNum = 0;
     if (node.data < nextNode.data) depthNum = this.depth(node, nextNode.leftNode) + 1;
     if (node.data > nextNode.data) depthNum = this.depth(node, nextNode.rightNode) + 1;
@@ -328,7 +349,9 @@ export default class Tree {
   rebalance = () => {
     // Rebalances an unbalanced tree.
     // You’ll want to use a traversal method to provide a new array to the buildTree function.
-    const sortedArray = this.inOrder();
-    this.root = this.buildTree(sortedArray);
+    if (!this.isBalanced()) {
+      const sortedArray = this.inOrder();
+      this.root = this.buildTree(sortedArray);
+    }
   };
 }
