@@ -1,38 +1,40 @@
 # Readme
 ---
-## Live preview: [Project Name](https://mikeycos.github.io/)
+## Live preview: [Knights Travails](https://mikeycos.github.io/theOdinProject/javaScript/projects/knights-travails/dist/)
 ---
 ### Ideas
 1. Placeholder
 ---
 ### Notes
-* Use this as a template repository.
-* This is a starter package for initializing vanilla JS/CSS projects.
-* This includes webpack ESLint and Prettier.
-* ESLint `env` set as folllows:
-    ```
-    "browser": true,
-    "commonjs": true,
-    "es2021": true
-    ```
-* Commands `npm run build`, `npm run start`, and `npm run server` will work.
+* Lorem ipsum
 ---
 ### Instructions
-1. Use this as a template from GitHub as a...
-    * New GitHub repository:
-        1. Go to [module-webpack-starter](https://github.com/mikeyCos/module-webpack-starter).
-        2. Click on the button `Use this template`.
-        3. Click on `Create a new repository`.
-    * Subfolder in an existing GitHub repository:
-        1. In the CLI, run `git subtree add -P <prefix> <repo> <rev>` (e.g. `git subtree add -P new/repo/name_this git@github.com:username/reponame.git HEAD`).
-        * For example, the existing repository is `theOdinProject/javaScript/projects/`, navigate to `theOdinProject/`, then, in the CLI, run `git subtree add -P git subtree add -P javaScript/projects/merge-sort git@github.com:mikeyCos/module-webpack-starter.git main`.
-2. Use `npm install` in terminal.
-3. Update `live preview` section in `README.md` as needed.
-4. Update plugin title in `webpack.config.js` as needed.
-5. Update `.prettier.json` as needed; [Prettier Options](https://prettier.io/docs/en/options.html).
-6. Update `.eslintrc.json` as needed; [ESLint Options](https://eslint.org/docs/latest/rules/).
-7. Set VSCode's `Editor: Default Formatter` to `Prettier - Code formatter`.
-8. Uninstall `webpack-dev-server` as needed with `npm uninstall webpack-dev-server`.
-    * Remove `devServer` from `webpack.config.js`.
-    * Remove `"start"` script from `package.json`.
-    * Remove `server.js`.
+* Lorem ipsum
+---
+
+7 [0, 7], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7], [7, 7]
+6 [0, 6], [1, 6], [2, 6], [3, 6], [4, 6], [5, 6], [6, 6], [7, 6]
+5 [0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [6, 5], [7, 5]
+4 [0, 4], [1, 4], [2, 4], [3, 4], [4, 4], [5, 4], [6, 4], [7, 4]
+3 [0, 3], [1, 3], [2, 3], [3, 3], [4, 3], [5, 3], [6, 3], [7, 3]
+2 [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2], [7, 2]
+1 [0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1]
+0 [0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0]
+    0       1       2       3       4       5       6       7 
+
+[
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, K, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+]
+
+K => arr[5][2] => 2, 2
+arr[5], is the row => x
+
+<!-- knightMoves([0,0],[7,7]) == [[0,0],[2,1],[4,2],[6,3],[4,4],[6,5],[7,7]] -->
+
