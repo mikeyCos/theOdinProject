@@ -1,3 +1,5 @@
+import LinkedList from './linked-list/linked-list';
+import Tree from './binary-search-tree/binary-search-tree';
 /*
 Its basic move is two steps forward and one step to the side
 or one step forward and two steps to the side. It can face any direction.
@@ -63,36 +65,64 @@ const moveHorizontally = (xStart, count, direction) => {
   return x;
 };
 
-const knightMoves = (start, end) => {
-  // shows the shortest possible way to get from one square to another
-  // by outputting all squares the knight will stop on along the way.
-  checkArguments(start, end);
-  let x = start[0];
-  let y = start[1];
-
-  const possibleMoves = [];
+const generatePossibleMoves = (startX, startY, endX, endY, possibleMoves) => {
+  // generates all legal moves for a knight
+  // how to get all possible moves from [startX, startY] to [endX, endY]?
+  // ignore already visited squares?
+  // recursive function?
+  console.log(possibleMoves);
+  if (startX === endX && startY === endY) return possibleMoves;
+  const moves = [];
 
   for (let i = 0; i < 2; i += 1) {
     // vertical moves
+    // moves 2 squares up/down
     const vertDir = i % 2 !== 0;
     for (let j = 0; j < 2; j += 1) {
       const horDir = j % 2 === 0;
-      const move = [moveHorizontally(x, 1, horDir), moveVertically(y, 2, vertDir)];
-      if (move[0] && move[1]) possibleMoves.push(move);
+      const move = [moveHorizontally(startX, 1, horDir), moveVertically(startY, 2, vertDir)];
+      if (move.every((element) => element !== null)) moves.push(move);
     }
   }
 
   for (let i = 0; i < 2; i += 1) {
     // horizontal moves
+    // moves 2 squares right/left
     const horDir = i % 2 !== 0;
     for (let j = 0; j < 2; j += 1) {
       const vertDir = j % 2 === 0;
-      const move = [moveHorizontally(x, 2, horDir), moveVertically(y, 1, vertDir)];
-      if (move[0] && move[1]) possibleMoves.push(move);
+      const move = [moveHorizontally(startX, 2, horDir), moveVertically(startY, 1, vertDir)];
+      if (move.every((element) => element !== null)) moves.push(move);
     }
   }
 
-  console.table(possibleMoves);
+  // moves.map((item) => generatePossibleMoves(item[0], item[1], endX, endY, moves));
+
+  return moves;
+};
+
+const knightMoves = (start, end) => {
+  // shows the shortest possible way to get from one square to another
+  // by outputting all squares the knight will stop on along the way.
+  checkArguments(start, end);
+  const startX = start[0];
+  const startY = start[1];
+  const endX = end[0];
+  const endY = end[1];
+
+  // what data structure or combination to use?
+  let possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
+  console.log(possibleMoves);
+  possibleMoves = possibleMoves.map((item) => {
+    const foo = new LinkedList();
+    foo.append(start);
+    foo.append(item);
+    // generatePossibleMoves(item[0], item[1]);
+    return foo;
+  });
+
+  possibleMoves.forEach((item) => console.log(item.find(start)));
+  console.log(possibleMoves);
 };
 
 export default knightMoves;

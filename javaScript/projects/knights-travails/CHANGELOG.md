@@ -1,7 +1,9 @@
 # Changelog
 ---
 ### 30 JAN 2024
-- 
+- Added more brainstorming comments.
+- Created `binary-search-tree` and `linked-list` subdirectories.
+- Imported `LinkedList` and `Tree` into the `knight_travails` module.
 ---
 ### 29 JAN 2024
 - Added more brainstorming comments.
