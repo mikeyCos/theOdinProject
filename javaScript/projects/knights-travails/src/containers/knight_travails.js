@@ -25,7 +25,7 @@ Output what that full path looks like, e.g.:
     [4,3]
 */
 const checkArguments = (start, end) => {
-  // need to check if arguments are array types
+  //  need to check if arguments are array types
   const err = new Error();
   if (!start && !end) {
     err.message = 'Undefined arguments.';
@@ -38,91 +38,102 @@ const checkArguments = (start, end) => {
   if (err.message) throw err;
 };
 
-const moveVertically = (yStart, count, direction) => {
-  // what if knight goes off the board?
-  // knight can move 1 or 2 squares up or down
-  // count defines how many squares the knight will move vertically
-  // direction defines which direction the knight will move, up or down
-  let y = yStart;
+const move = (start, count, direction) => {
+  //  what if knight goes off the board?
+  //  knight can move 1 or 2 squares left/up or right/down
+  //  count defines how many squares the knight will move horizontally/vertically
+  //  direction defines which direction the knight will move, left/up or right/down
+  let u = start;
   for (let i = 0; i < count; i += 1) {
-    y = direction ? (y += 1) : (y -= 1);
+    u = direction ? (u += 1) : (u -= 1);
   }
-
-  if (y < 0 || y > 7) return null;
-  return y;
+  if (u < 0 || u > 7) return null;
+  return u;
 };
 
-const moveHorizontally = (xStart, count, direction) => {
-  // what if knight goes off the board?
-  // knight can move 1 or 2 squares left or right
-  // count defines how many squares the knight will move horizontally
-  // direction defines which direction the knight will move, left or right
-  let x = xStart;
-  for (let i = 0; i < count; i += 1) {
-    x = direction ? (x += 1) : (x -= 1);
-  }
-  if (x < 0 || x > 7) return null;
-  return x;
-};
+let memo = [];
 
-const generatePossibleMoves = (startX, startY, endX, endY, possibleMoves) => {
-  // generates all legal moves for a knight
-  // how to get all possible moves from [startX, startY] to [endX, endY]?
-  // ignore already visited squares?
-  // recursive function?
-  console.log(possibleMoves);
-  if (startX === endX && startY === endY) return possibleMoves;
-  const moves = [];
+const generatePossibleMoves = (startX, startY, endX, endY) => {
+  //   generates all legal moves for a knight
+  //   how to get all possible moves from [startX, startY] to [endX, endY]?
+  //   ignore already visited squares?
+  //   recursive function?
+  console.log(`startX: ${startX}, startY: ${startY}`);
+  console.log(`endX: ${endX}, endY: ${endY}`);
+
+  // if (
+  //   (startX === endX && startY === endY) ||
+  //   (startX === null && startY === null) ||
+  //   (startX === undefined && startY === undefined)
+  // )
+  //   return [];
+  // console.log(memo.find((item) => item[0] === startX && item[1] === startY));
+  if (memo.find((item) => item[0] === startX && item[1] === startY)) return [];
+  let moves = [];
 
   for (let i = 0; i < 2; i += 1) {
-    // vertical moves
-    // moves 2 squares up/down
-    const vertDir = i % 2 !== 0;
+    //  vertical and horizontal moves
+    //  moves 1-2 squares left/up or right/down
     for (let j = 0; j < 2; j += 1) {
-      const horDir = j % 2 === 0;
-      const move = [moveHorizontally(startX, 1, horDir), moveVertically(startY, 2, vertDir)];
-      if (move.every((element) => element !== null)) moves.push(move);
+      const vertDir = i % 2 !== 0; // true => up, false => down
+      const horDir = j % 2 === 0; // true => right, false => left
+      const newMoveV = [move(startX, 1, horDir), move(startY, 2, vertDir)];
+      const newMoveH = [move(startX, 2, horDir), move(startY, 1, vertDir)];
+      if (newMoveV.every((element) => element !== null)) {
+        moves.push(newMoveV);
+        memo.push(newMoveV);
+      }
+      if (newMoveH.every((element) => element !== null)) {
+        moves.push(newMoveH);
+        memo.push(newMoveH);
+      }
     }
   }
-
-  for (let i = 0; i < 2; i += 1) {
-    // horizontal moves
-    // moves 2 squares right/left
-    const horDir = i % 2 !== 0;
-    for (let j = 0; j < 2; j += 1) {
-      const vertDir = j % 2 === 0;
-      const move = [moveHorizontally(startX, 2, horDir), moveVertically(startY, 1, vertDir)];
-      if (move.every((element) => element !== null)) moves.push(move);
-    }
-  }
-
-  // moves.map((item) => generatePossibleMoves(item[0], item[1], endX, endY, moves));
-
+  console.log(moves);
+  moves = moves.concat(moves.map((item) => generatePossibleMoves(item[0], item[1], endX, endY)));
   return moves;
 };
 
 const knightMoves = (start, end) => {
-  // shows the shortest possible way to get from one square to another
-  // by outputting all squares the knight will stop on along the way.
-  checkArguments(start, end);
+  //  shows the shortest possible way to get from one square to another
+  //  by outputting all squares the knight will stop on along the way.
   const startX = start[0];
   const startY = start[1];
   const endX = end[0];
   const endY = end[1];
 
-  // what data structure or combination to use?
-  let possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
-  console.log(possibleMoves);
-  possibleMoves = possibleMoves.map((item) => {
-    const foo = new LinkedList();
-    foo.append(start);
-    foo.append(item);
-    // generatePossibleMoves(item[0], item[1]);
-    return foo;
-  });
+  //  All possible moves need to be generated from the starting location
+  //  Board size = 8 x 8
+  //  Knight MUST stay on the board
+  //    KnightLocation at [-1,2] is off the board
+  //    KnightLocation <= [7, 7] && KnightLocation >= [0, 0]
+  //  Start is a knight's original location
+  //    The starting location will be the root node for a data structure
+  //  End is a knight's final location
+  //    The location the knight needs to get to from the starting location
+  //  Generate an array possible moves from the starting location
+  //    At most, there are 8 possible moves from a starting location
+  //    At least, there are 2 possible moves from a starting location
+  //  The generated possible moves are now new starting locations
+  //    Recursively generate all possible from subsequent moves
+  //    But until when?
+  //    What is the base case?
 
-  possibleMoves.forEach((item) => console.log(item.find(start)));
+  const possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
   console.log(possibleMoves);
+
+  // possibleMoves = possibleMoves.map((item) => {
+  //   const foo = generatePossibleMoves(item[0], item[1], endX, endY);
+  //   return foo;
+  // });
+  // console.log(possibleMoves);
+
+  possibleMoves.forEach((item) => console.log(item));
+  // possibleMoves = possibleMoves.map((item) => {
+  //   const foo = generatePossibleMoves(item[0], item[1], endX, endY);
+  //   return foo;
+  // });
+  // console.log(possibleMoves);
 };
 
 export default knightMoves;

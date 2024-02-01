@@ -1,5 +1,10 @@
 # Changelog
 ---
+### 31 JAN 2024
+- Added more brainstorming comments.
+- Attempted to convert `generatePossibleMoves` function into a recursive function.
+- AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH.
+---
 ### 30 JAN 2024
 - Added more brainstorming comments.
 - Created `binary-search-tree` and `linked-list` subdirectories.
