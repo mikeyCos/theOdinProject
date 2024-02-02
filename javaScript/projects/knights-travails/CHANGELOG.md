@@ -1,5 +1,13 @@
 # Changelog
 ---
+### 02 FEB 2024
+- 
+---
+### 01 FEB 2024
+- Added more brainstorming comments.
+- The `generatePossibleMoves` function will exceed the maximum call stack size.
+- The `generatePossibleMoves` function utilizes memoization of possible moves of a starting point; if a starting point exists, it's possible moves have already been generated.
+---
 ### 31 JAN 2024
 - Added more brainstorming comments.
 - Attempted to convert `generatePossibleMoves` function into a recursive function.

@@ -59,16 +59,18 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
   //   ignore already visited squares?
   //   recursive function?
   console.log(`startX: ${startX}, startY: ${startY}`);
-  console.log(`endX: ${endX}, endY: ${endY}`);
 
-  // if (
-  //   (startX === endX && startY === endY) ||
-  //   (startX === null && startY === null) ||
-  //   (startX === undefined && startY === undefined)
-  // )
+  // create a node for startX-startY?
+  // with a possibleMoves property?
+  // console.log(memo.find((item) => item.startX === startX && item.startY === startY));
+  if (memo.find((item) => item.startX === startX && item.startY === startY)) return [];
+  const obj = { startX, startY };
+  // if (startX === endX && startY === endY) return [];
+  // if ((startX === null && startY === null) || (startX === undefined && startY === undefined))
   //   return [];
-  // console.log(memo.find((item) => item[0] === startX && item[1] === startY));
-  if (memo.find((item) => item[0] === startX && item[1] === startY)) return [];
+  // console.table(memo);
+  // if (memo.find((item) => item[0] === startX && item[1] === startY)) return possibleMoves;
+
   let moves = [];
 
   for (let i = 0; i < 2; i += 1) {
@@ -79,18 +81,55 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
       const horDir = j % 2 === 0; // true => right, false => left
       const newMoveV = [move(startX, 1, horDir), move(startY, 2, vertDir)];
       const newMoveH = [move(startX, 2, horDir), move(startY, 1, vertDir)];
+      // if newMoveV or newMoveH exists in memo
+      //  do not push it into moves
+      // const testA = memo.find((item) => item[0] === newMoveV[0] && item[1] === newMoveV[1]);
+      // const testB = memo.find((item) => item[0] === newMoveH[0] && item[1] === newMoveH[1]);
+
       if (newMoveV.every((element) => element !== null)) {
         moves.push(newMoveV);
-        memo.push(newMoveV);
       }
       if (newMoveH.every((element) => element !== null)) {
         moves.push(newMoveH);
-        memo.push(newMoveH);
       }
     }
   }
+
   console.log(moves);
-  moves = moves.concat(moves.map((item) => generatePossibleMoves(item[0], item[1], endX, endY)));
+  obj.possible_moves = moves;
+  memo.push(obj);
+  console.log(obj);
+  // need to generate possible moves for each possible move
+  moves.forEach((item) => {
+    generatePossibleMoves(item[0], item[1], endX, endY);
+  });
+  /*
+  knightMoves([3, 3],[0, 0])
+  0: [3, 3] => [[4, 1], [5, 2], [2, 1], [1, 2], [4, 5], [5, 4], [2, 5], [1, 4]]
+  1: [4, 1] => [[6, 0], [2, 0], [5, 3], [6, 2], [3, 3], [2, 2]]
+    0: [6, 0] => [[7, 2], [5, 2], [4, 1]]
+      0: [7, 2] => [[6, 0], [5, 1], [6, 4], [5, 3]]
+        0: [6, 0] => []
+        1: [5, 1] => [[7, 0], [3, 0], [6, 3], [7, 2], [4, 3], [3, 2]]
+          0: [7, 0] => [[6, 2], [5, 1]]
+            0: [6, 2] => [[7, 0], [5, 0], [4, 1], [7, 4], [5, 4], [4, 3]]
+            1: [5, 0] => ...
+    1: [4, 1] => ...
+    2: [6, 5] => ...
+    3: [4, 5] => ...
+    4: [3, 4] => ...
+    5: [3, 2] => ...
+    6: [7, 4] => ...
+    7: [7, 2] => ...
+  2: [5, 2] => ...
+  3: [2, 1] => ...
+  4: [1, 2] => ...
+  5: [4, 5] => ...
+  6: [5, 4] => ...
+  7: [2, 5] => ...
+  8: [1, 4] => ...
+  */
+  memo = [];
   return moves;
 };
 
