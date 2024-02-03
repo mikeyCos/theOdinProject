@@ -1,7 +1,31 @@
 # Changelog
 ---
 ### 02 FEB 2024
-- 
+- The `generatePossibleMoves` recursive function appears to construct an object with `start` and `possibleMoves` properties.
+For example:
+```
+knightMoves([3,3],[0,0])
+const possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
+```
+will currently return:
+```
+{
+  start: [3, 3]
+  possibleMoves: [
+    {start: [4, 1], possibleMoves: Array(6)},
+    {start: [5, 2], possibleMoves: Array(8)},
+    {start: [2, 1], possibleMoves: Array(6)},
+    {start: [1, 2], possibleMoves: Array(6)},
+    {start: [4, 5], possibleMoves: Array(8)},
+    {start: [5, 4], possibleMoves: Array(8)},
+    {start: [2, 5], possibleMoves: Array(8)}, 
+    {start: [1, 4], possibleMoves: Array(6)}
+  ]
+}
+```
+- The `possibleMoves` object property is an array of possible moves of the `start` object property.
+- Applied divide and conquer algorithm to recursively generate half of the subsequent possible moves.
+- Noticed `possibleMoves` object property appears to never end.
 ---
 ### 01 FEB 2024
 - Added more brainstorming comments.

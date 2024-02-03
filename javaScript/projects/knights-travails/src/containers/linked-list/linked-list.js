@@ -7,9 +7,9 @@ export default class LinkedList {
 
   #size = 0;
 
-  append(value) {
+  append(value, possibleMoves) {
     // adds a new node containing value to the end of the list
-    const node = new Node(value);
+    const node = new Node(value, possibleMoves);
     if (this.#size === 0) {
       this.#head = node;
     } else {

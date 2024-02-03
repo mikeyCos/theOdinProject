@@ -51,28 +51,28 @@ const move = (start, count, direction) => {
   return u;
 };
 
-let memo = [];
-
+const memo = [];
+// let moo = [];
 const generatePossibleMoves = (startX, startY, endX, endY) => {
   //   generates all legal moves for a knight
   //   how to get all possible moves from [startX, startY] to [endX, endY]?
   //   ignore already visited squares?
   //   recursive function?
-  console.log(`startX: ${startX}, startY: ${startY}`);
+  // console.log(`startX: ${startX}, startY: ${startY}`);
 
   // create a node for startX-startY?
   // with a possibleMoves property?
-  // console.log(memo.find((item) => item.startX === startX && item.startY === startY));
-  if (memo.find((item) => item.startX === startX && item.startY === startY)) return [];
-  const obj = { startX, startY };
-  // if (startX === endX && startY === endY) return [];
-  // if ((startX === null && startY === null) || (startX === undefined && startY === undefined))
-  //   return [];
-  // console.table(memo);
-  // if (memo.find((item) => item[0] === startX && item[1] === startY)) return possibleMoves;
+  if (startX === endX && startY === endY) {
+    console.log('startX === endX && startY === endY');
+    // return { end: [endX, endY] };
+  }
 
-  let moves = [];
+  if (memo.find((item) => item.start[0] === startX && item.start[1] === startY))
+    return memo.find((item) => item.start[0] === startX && item.start[1] === startY);
 
+  const obj = { start: [startX, startY] };
+  const moves = [];
+  // let linkedMoves = [];
   for (let i = 0; i < 2; i += 1) {
     //  vertical and horizontal moves
     //  moves 1-2 squares left/up or right/down
@@ -87,22 +87,43 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
       // const testB = memo.find((item) => item[0] === newMoveH[0] && item[1] === newMoveH[1]);
 
       if (newMoveV.every((element) => element !== null)) {
-        moves.push(newMoveV);
+        // const linkedListChild = new LinkedList();
+        // linkedListChild.append(newMoveV);
+        // linkedMoves.push(linkedListChild);
+        const objMove = { start: newMoveV };
+        moves.push(objMove);
       }
       if (newMoveH.every((element) => element !== null)) {
-        moves.push(newMoveH);
+        // const linkedListChild = new LinkedList();
+        // linkedListChild.append(newMoveH);
+        // linkedMoves.push(linkedListChild);
+        const objMove = { start: newMoveH };
+        moves.push(objMove);
       }
     }
   }
 
-  console.log(moves);
-  obj.possible_moves = moves;
+  // const linkedList = new LinkedList();
+  // linkedList.append([startX, startY], linkedMoves);
+  // console.log(moves);
+  // console.log(obj);
+  const midpoint = Math.floor(moves.length / 2);
+  let movesLeftHalf = moves.slice(0, midpoint);
+  let movesRightHalf = moves.slice(midpoint);
+
   memo.push(obj);
-  console.log(obj);
+
+  movesLeftHalf = movesLeftHalf.map((item) =>
+    generatePossibleMoves(item.start[0], item.start[1], endX, endY),
+  );
+
+  movesRightHalf = movesRightHalf.map((item) =>
+    generatePossibleMoves(item.start[0], item.start[1], endX, endY),
+  );
+
+  obj.possibleMoves = movesLeftHalf.concat(movesRightHalf);
+
   // need to generate possible moves for each possible move
-  moves.forEach((item) => {
-    generatePossibleMoves(item[0], item[1], endX, endY);
-  });
   /*
   knightMoves([3, 3],[0, 0])
   0: [3, 3] => [[4, 1], [5, 2], [2, 1], [1, 2], [4, 5], [5, 4], [2, 5], [1, 4]]
@@ -129,8 +150,10 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
   7: [2, 5] => ...
   8: [1, 4] => ...
   */
-  memo = [];
-  return moves;
+  // memo = [];
+  // console.log(obj);
+  // console.log(memo);
+  return obj;
 };
 
 const knightMoves = (start, end) => {
@@ -161,13 +184,16 @@ const knightMoves = (start, end) => {
   const possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
   console.log(possibleMoves);
 
+  // const tree = new Tree(possibleMoves.possibleMoves);
+  // console.log(tree);
+
   // possibleMoves = possibleMoves.map((item) => {
   //   const foo = generatePossibleMoves(item[0], item[1], endX, endY);
   //   return foo;
   // });
   // console.log(possibleMoves);
 
-  possibleMoves.forEach((item) => console.log(item));
+  // possibleMoves.forEach((item) => console.log(item));
   // possibleMoves = possibleMoves.map((item) => {
   //   const foo = generatePossibleMoves(item[0], item[1], endX, endY);
   //   return foo;
