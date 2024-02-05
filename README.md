@@ -42,6 +42,7 @@
 | [Linked Lists](https://mikeycos.github.io/theOdinProject/javaScript/projects/linked-lists/dist/)              |        [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/linked-lists) |
 | [Hash Map](https://mikeycos.github.io/theOdinProject/javaScript/projects/hash-map/dist)                       |            [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/hash-map) |
 | [Binary Search Trees](https://mikeycos.github.io/theOdinProject/javaScript/projects/binary-search-trees/dist) | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/binary-search-trees) |
+| [Knights Travails](https://mikeycos.github.io/theOdinProject/javaScript/projects/knights-travails/dist)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/knights-travails) |
 
 ---
 
