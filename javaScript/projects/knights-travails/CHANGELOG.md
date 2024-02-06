@@ -1,5 +1,9 @@
 # Changelog
 ---
+### 05 FEB 2024
+- Created `knights_travails` Git branch.
+- 
+---
 ### 02 FEB 2024
 - The `generatePossibleMoves` recursive function appears to construct an object with `start` and `possibleMoves` properties.
 For example:
