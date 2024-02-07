@@ -1,8 +1,11 @@
 # Changelog
 ---
+### 06 FEB 2024
+- Attempting to implement breadth-first-search for the object `generatePossibleMoves` returns.
+---
 ### 05 FEB 2024
 - Created `knights_travails` Git branch.
-- 
+- Added more brainstorming comments.
 ---
 ### 02 FEB 2024
 - The `generatePossibleMoves` recursive function appears to construct an object with `start` and `possibleMoves` properties.

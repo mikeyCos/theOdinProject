@@ -77,33 +77,6 @@ export default class Tree {
     }
 
     return newNode;
-    // iterative approach
-    // const newNode = new Node(value);
-    // if (this.root === null) {
-    //   this.#setRoot(newNode);
-    // } else {
-    //   let node = this.root;
-    //   while (node) {
-    //     if (node.data < value) {
-    //       // go right
-    //       if (node.rightNode === null) {
-    //         node.rightNode = newNode;
-    //       } else {
-    //         node = node.rightNode;
-    //       }
-    //     } else if (node.data > value) {
-    //       // go left
-    //       if (node.leftNode === null) {
-    //         node.leftNode = newNode;
-    //       } else {
-    //         node = node.leftNode;
-    //       }
-    //     } else {
-    //       // duplicate found
-    //       break;
-    //     }
-    //   }
-    // }
   };
 
   find = (value, node = this.root) => {

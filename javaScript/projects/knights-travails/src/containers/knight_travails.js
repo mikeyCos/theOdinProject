@@ -52,15 +52,12 @@ const move = (start, count, direction) => {
 };
 
 const memo = [];
-// let moo = [];
+let moo = [];
 const generatePossibleMoves = (startX, startY, endX, endY) => {
   //  By finding those first-level children each time
   //  The children of a given node cannot be a node that has already been visited
   //  Eliminates a lot of edge duplication.
   //  generates all legal moves for a knight
-  //  how to get all possible moves from [startX, startY] to [endX, endY]?
-  //  ignore already visited squares?
-  //  recursive function?
   // console.log(`startX: ${startX}, startY: ${startY}`);
 
   // create a node for startX-startY?
@@ -125,7 +122,6 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
   );
 
   obj.possibleMoves = movesLeftHalf.concat(movesRightHalf);
-
   return obj;
 };
 
@@ -154,42 +150,35 @@ const knightMoves = (start, end) => {
   //    Ignore already generated move
 
   const possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
+
+  const queueMoves = [possibleMoves];
+  const queue = [];
+  const visited = [];
+  const startNode = { value: start, previous: null, distance: 0 };
+  queue.push(startNode);
+  while (queue.length > 0) {
+    const foo = queueMoves.shift();
+    const dequeue = queue.shift();
+    visited.push(dequeue);
+    console.log(dequeue);
+    if (dequeue.value[0] === endX && dequeue.value[1] === endY) {
+      // if dequeue's value equals end return dequeue
+      console.log(dequeue);
+      break;
+    }
+
+    foo.possibleMoves.forEach((item) => {
+      // const newNode = { value: item.start, previous: dequeue, distance: dequeue.distance + 1 };
+      // queue.push(newNode);
+      // queueMoves.push(item);
+      console.log(item);
+    });
+  }
   console.log(possibleMoves);
-
-  // const tree = new Tree(possibleMoves.possibleMoves);
-  // console.log(tree);
-
-  // possibleMoves = possibleMoves.map((item) => {
-  //   const foo = generatePossibleMoves(item[0], item[1], endX, endY);
-  //   return foo;
-  // });
-  // console.log(possibleMoves);
-
-  // possibleMoves.forEach((item) => console.log(item));
-  // possibleMoves = possibleMoves.map((item) => {
-  //   const foo = generatePossibleMoves(item[0], item[1], endX, endY);
-  //   return foo;
-  // });
-  // console.log(possibleMoves);
 };
 
 export default knightMoves;
 
-const adjacencyMatrix = [
-  /*
-  [0, 1, 2, 3, 4, 5, 6, 7] */
-  [0, 0, 0, 0, 0, 0, 1, 0], // 7
-  [0, 0, 0, 0, 0, 1, 0, 1], // 6
-  [0, 0, 0, 0, 1, 0, 1, 0], // 5
-  [0, 0, 0, 1, 0, 1, 0, 0], // 4
-  [0, 0, 1, 0, 1, 0, 0, 0], // 3
-  [0, 1, 0, 1, 0, 0, 0, 0], // 2
-  [1, 0, 1, 0, 0, 0, 0, 0], // 1
-  [0, 1, 0, 0, 0, 0, 0, 0], // 0
-];
-
-const adjacencyList = [[1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 6], [5, 7], [6]];
-// knightMoves([0,0],[7,7]) == [[0,0],[2,1],[4,2],[6,3],[4,4],[6,5],[7,7]]
 /*
 
 knights legal moves
