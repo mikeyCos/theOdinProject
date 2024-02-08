@@ -32,7 +32,7 @@ const memo = [];
 const generatePossibleMoves = (startX, startY, endX, endY) => {
   //  generates all legal moves for a knight
   if (startX === endX && startY === endY) {
-    console.log('startX === endX && startY === endY');
+    // console.log('startX === endX && startY === endY');
     // return { end: [endX, endY] };
   }
 
@@ -102,6 +102,7 @@ const findShortestPath = (root, endX, endY) => {
     if (!queue.some((obj) => obj.depth === dequeue.depth) && depth > 0) {
       // if there are no more items in the queue with dequeue's depth
       // and depth is greater than 0
+      console.log(dequeue);
       return shortestPaths;
     }
 
