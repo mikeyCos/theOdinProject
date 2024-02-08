@@ -1,7 +1,18 @@
 # Changelog
 ---
+### 08 FEB 2024
+- 
+---
+### 07 FEB 2024
+- Created `findShortestPath` function that performs breadth-first search to find the ending square.
+- Created `printPath` function to print the path generated from `findShortestPath` function.
+- Deleted `linked-list` and `binary-search-tree` modules.
+- Re-added a `linked-list` module to print out a shortest path.
+- Altered `findShortestPath` function to return an array of shortest paths.
+---
 ### 06 FEB 2024
 - Attempting to implement breadth-first-search for the object `generatePossibleMoves` returns.
+- A node-like object is created to traverse an object and store previous positions.
 ---
 ### 05 FEB 2024
 - Created `knights_travails` Git branch.

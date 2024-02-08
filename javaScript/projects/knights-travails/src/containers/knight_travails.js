@@ -1,29 +1,6 @@
+import Node from './node';
 import LinkedList from './linked-list/linked-list';
-import Tree from './binary-search-tree/binary-search-tree';
-/*
-Its basic move is two steps forward and one step to the side
-or one step forward and two steps to the side. It can face any direction.
 
-You can think of the board as having 2-dimensional coordinates.
-Your function would therefore look like:
-knightMoves([0,0],[1,2]) == [[0,0],[1,2]]
-
-1. Think about the rules of the board and knight, and make sure to follow them.
-2. For every square there is a number of possible moves,
-choose a data structure that will allow you to work with them.
-Don’t allow any moves to go off the board.
-3. Decide which search algorithm is best to use for this case.
-Hint: one of them could be a potentially infinite series.
-4. Use the chosen search algorithm to find the shortest path between 
-the starting square (or node) and the ending square.
-Output what that full path looks like, e.g.:
-> knightMoves([3,3],[4,3])
-  => You made it in 3 moves!  Here's your path:
-    [3,3]
-    [4,5]
-    [2,4]
-    [4,3]
-*/
 const checkArguments = (start, end) => {
   //  need to check if arguments are array types
   const err = new Error();
@@ -38,7 +15,7 @@ const checkArguments = (start, end) => {
   if (err.message) throw err;
 };
 
-const move = (start, count, direction) => {
+const moveKnight = (start, count, direction) => {
   //  what if knight goes off the board?
   //  knight can move 1 or 2 squares left/up or right/down
   //  count defines how many squares the knight will move horizontally/vertically
@@ -52,16 +29,8 @@ const move = (start, count, direction) => {
 };
 
 const memo = [];
-let moo = [];
 const generatePossibleMoves = (startX, startY, endX, endY) => {
-  //  By finding those first-level children each time
-  //  The children of a given node cannot be a node that has already been visited
-  //  Eliminates a lot of edge duplication.
   //  generates all legal moves for a knight
-  // console.log(`startX: ${startX}, startY: ${startY}`);
-
-  // create a node for startX-startY?
-  // with a possibleMoves property?
   if (startX === endX && startY === endY) {
     console.log('startX === endX && startY === endY');
     // return { end: [endX, endY] };
@@ -72,41 +41,28 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
 
   const obj = { start: [startX, startY] };
   const moves = [];
-  // let linkedMoves = [];
+
   for (let i = 0; i < 2; i += 1) {
     //  vertical and horizontal moves
     //  moves 1-2 squares left/up or right/down
     for (let j = 0; j < 2; j += 1) {
       const vertDir = i % 2 !== 0; // true => up, false => down
       const horDir = j % 2 === 0; // true => right, false => left
-      const newMoveV = [move(startX, 1, horDir), move(startY, 2, vertDir)];
-      const newMoveH = [move(startX, 2, horDir), move(startY, 1, vertDir)];
-      // if newMoveV or newMoveH exists in memo
-      //  do not push it into moves
-      // const testA = memo.find((item) => item[0] === newMoveV[0] && item[1] === newMoveV[1]);
-      // const testB = memo.find((item) => item[0] === newMoveH[0] && item[1] === newMoveH[1]);
+      const newMoveV = [moveKnight(startX, 1, horDir), moveKnight(startY, 2, vertDir)];
+      const newMoveH = [moveKnight(startX, 2, horDir), moveKnight(startY, 1, vertDir)];
 
       if (newMoveV.every((element) => element !== null)) {
-        // const linkedListChild = new LinkedList();
-        // linkedListChild.append(newMoveV);
-        // linkedMoves.push(linkedListChild);
         const objMove = { start: newMoveV };
         moves.push(objMove);
       }
+
       if (newMoveH.every((element) => element !== null)) {
-        // const linkedListChild = new LinkedList();
-        // linkedListChild.append(newMoveH);
-        // linkedMoves.push(linkedListChild);
         const objMove = { start: newMoveH };
         moves.push(objMove);
       }
     }
   }
 
-  // const linkedList = new LinkedList();
-  // linkedList.append([startX, startY], linkedMoves);
-  // console.log(moves);
-  // console.log(obj);
   const midpoint = Math.floor(moves.length / 2);
   let movesLeftHalf = moves.slice(0, midpoint);
   let movesRightHalf = moves.slice(midpoint);
@@ -125,68 +81,90 @@ const generatePossibleMoves = (startX, startY, endX, endY) => {
   return obj;
 };
 
+const findShortestPath = (root, endX, endY) => {
+  // performs BFS to find object with it's value equal to endX/Y
+  const shortestPaths = [];
+  const queue = [];
+  const visited = [];
+  const startNode = new Node(root.start, 0, root.possibleMoves, null);
+  let depth = 0;
+  queue.push(startNode);
+  while (queue.length > 0) {
+    const dequeue = queue.shift();
+
+    visited.push(dequeue);
+    if (dequeue.value[0] === endX && dequeue.value[1] === endY) {
+      // if dequeue's value equals end push dequeue into an array
+      shortestPaths.push(dequeue);
+      depth = dequeue.depth;
+    }
+
+    if (!queue.some((obj) => obj.depth === dequeue.depth) && depth > 0) {
+      // if there are no more items in the queue with dequeue's depth
+      // and depth is greater than 0
+      return shortestPaths;
+    }
+
+    dequeue.possibleMoves.forEach((item) => {
+      // check if node has been visited
+      if (
+        !visited.some((obj) => obj.value[0] === item.start[0] && obj.value[1] === item.start[1])
+      ) {
+        const newNode = new Node(item.start, dequeue.depth + 1, item.possibleMoves, dequeue);
+        queue.push(newNode);
+      }
+    });
+  }
+
+  // no shortest path
+  return null;
+};
+
+const printPath = (paths) => {
+  /*
+  => You made it in 3 moves!  Here's your path:
+  [3,3]
+  [4,5]
+  [2,4]
+  [4,3]
+  */
+  const phrase =
+    paths.length === 1 ? `is only ${paths.length} permutation` : `are ${paths.length} permutations`;
+
+  console.log(`There ${phrase}.`);
+  if (paths) {
+    paths.forEach((path) => {
+      const numMoves = path.depth;
+      // const coordinates = []; // per project spec
+      const linkedList = new LinkedList();
+      let node = path;
+      while (node) {
+        linkedList.prepend(node.value);
+        // coordinates.unshift(node.value); // per project spec
+        node = node.previous;
+      }
+
+      console.log(`=> You made it in ${numMoves} moves! Here is the shortest path:`);
+      console.log(linkedList.toString());
+      // coordinates.forEach((coordinate) => console.log(`[${coordinate}]`)); // per project spec
+    });
+  }
+};
+
 const knightMoves = (start, end) => {
-  //  shows the shortest possible way to get from one square to another
-  //  by outputting all squares the knight will stop on along the way.
   const startX = start[0];
   const startY = start[1];
   const endX = end[0];
   const endY = end[1];
-
-  //  All possible moves need to be generated from the starting location
-  //  Board size = 8 x 8
-  //  Knight MUST stay on the board
-  //    KnightLocation at [-1,2] is off the board
-  //    KnightLocation <= [7, 7] && KnightLocation >= [0, 0]
-  //  Start is a knight's original location
-  //    The starting location will be the root node for a data structure
-  //  End is a knight's final location
-  //    The location the knight needs to get to from the starting location
-  //  Generate an array possible moves from the starting location
-  //    At most, there are 8 possible moves from a starting location
-  //    At least, there are 2 possible moves from a starting location
-  //  The generated possible moves are now new starting locations
-  //    Recursively generate all possible from subsequent moves
-  //    Ignore already generated move
-
-  const possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
-
-  const queueMoves = [possibleMoves];
-  const queue = [];
-  const visited = [];
-  const startNode = { value: start, previous: null, distance: 0 };
-  queue.push(startNode);
-  while (queue.length > 0) {
-    const foo = queueMoves.shift();
-    const dequeue = queue.shift();
-    visited.push(dequeue);
-    console.log(dequeue);
-    if (dequeue.value[0] === endX && dequeue.value[1] === endY) {
-      // if dequeue's value equals end return dequeue
-      console.log(dequeue);
-      break;
-    }
-
-    foo.possibleMoves.forEach((item) => {
-      // const newNode = { value: item.start, previous: dequeue, distance: dequeue.distance + 1 };
-      // queue.push(newNode);
-      // queueMoves.push(item);
-      console.log(item);
-    });
+  if (startX === endX && startY === endY) {
+    console.log(
+      'The starting and ending squares have the same coordinates. Use a different start or end.',
+    );
+  } else {
+    const possibleMoves = generatePossibleMoves(startX, startY, endX, endY);
+    const shortestPath = findShortestPath(possibleMoves, endX, endY);
+    printPath(shortestPath);
   }
-  console.log(possibleMoves);
 };
 
 export default knightMoves;
-
-/*
-
-knights legal moves
-**O   O**     O   O  
-O       O   O**   **O
-
-O*    *O    O      O
- *    *     *      *
- O    O     *O    O*
-
-*/

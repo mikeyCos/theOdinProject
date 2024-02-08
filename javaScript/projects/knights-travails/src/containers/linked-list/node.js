@@ -1,7 +1,6 @@
 export default class Node {
-  constructor(value, moves, next) {
-    this.start = !value ? null : value;
-    this.possibleMoves = !moves ? null : moves;
+  constructor(value, next) {
+    this.value = !value ? null : value;
     this.next = !next ? null : next;
   }
 }

@@ -7,9 +7,9 @@ export default class LinkedList {
 
   #size = 0;
 
-  append(value, possibleMoves) {
+  append(value) {
     // adds a new node containing value to the end of the list
-    const node = new Node(value, possibleMoves);
+    const node = new Node(value);
     if (this.#size === 0) {
       this.#head = node;
     } else {
@@ -87,7 +87,7 @@ export default class LinkedList {
     let node = this.#head;
     let index = 0;
     while (node) {
-      if (node.value.every((item, i) => item === query[i])) {
+      if (node.value === query) {
         return index;
       }
 
@@ -104,11 +104,11 @@ export default class LinkedList {
     let node = this.#head;
     let string = node ? '' : null;
     while (node) {
-      string += `( ${node.value} ) -> `;
       if (!node.next) {
-        string += `null`;
-        break;
+        string += `[${node.value}]`;
+        return string;
       }
+      string += `[${node.value}] -> `;
       node = node.next;
     }
     return string;
