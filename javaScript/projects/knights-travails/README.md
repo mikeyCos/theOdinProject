@@ -20,7 +20,7 @@ Hello world,
 <summary>My prompt</summary>
 
 ```js
-  Can I use breadth first search on this object?
+// Can I use breadth first search on this object?
 { possibleMoves
 : [{ possibleMoves: [{…}, {…}, {…}, {…}, {…}, {…}],
 start: [4, 1] },
@@ -105,6 +105,7 @@ Looking back at the object, it somewhat does resemble a tree of sort because it 
 
 <details>
 <summary>Tree-like object</summary>
+
 ```js
 { 
   possibleMoves: [
@@ -138,15 +139,14 @@ Looking back at the object, it somewhat does resemble a tree of sort because it 
   },
   {
     possibleMoves: [{…}, {…}, {…}, {…}, {…}, {…}],
-    start:  [1, 4]
+    start: [1, 4]
   },
   ],
-  start:  [3, 3]
+  start: [3, 3]
 }
 ```
 </details>
 <br/>
-
 It was smooth sailing once I was able to move forward and apply BFS. In my BFS function, `findShortestPath`, the shortest path(s) are pushed into an array, the depth of the shortest path is recorded and used as a base case. If the queue no longer has nodes with the same value as the recorded depth, then `shortestPaths` is returned.
 
 I created `printPath` function to iterate the array returned from the `findShortestPath` function. A linked list object is created at the start of each iteration and prepends each node of a path. The linked list method `.toString()` is used to log the path as such, `[3,3] -> [5,4] -> [4,6] -> [2,7]`.
