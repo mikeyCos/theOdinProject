@@ -12,14 +12,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Module Webpack Starter',
+      title: 'Test Driven Development',
     }),
   ],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    publicPath: '/',
   },
   module: {
     rules: [
@@ -40,4 +39,4 @@ module.exports = {
   optimization: {
     runtimeChunk: 'single',
   },
-}
+};
