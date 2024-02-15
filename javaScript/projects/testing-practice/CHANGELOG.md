@@ -1,7 +1,8 @@
 # Changelog
 ---
 ### 15 FEB 2024
-- 
+- Created `generateCipherbet` function to generate a cipher alphabet based on `key` and `alphabet` parameters.
+- The `casearCipher` function now returns 'encrypted' text.
 ---
 ### 14 FEB 2024
 - Implemented `calculator` with methods: `add`/`subtract`/`multiply`/`divide`.
