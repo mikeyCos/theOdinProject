@@ -1,8 +1,16 @@
 # Changelog
 ---
+### 15 FEB 2024
+- 
+---
+### 14 FEB 2024
+- Implemented `calculator` with methods: `add`/`subtract`/`multiply`/`divide`.
+- Initialized `caesarCipher.test` and `caesarCipher` modules.
+---
 ### 13 FEB 2024
 - Initial commit for `testing-practice`.
 - Installed `babel-jest`/`babel/preset-env`/`babel/core`/`jest`.
+- Implemented `capitalize` and `reverseString` modules.
 ---
 ### 14 JAN 2024
 - Reformatted `CHANGELOG.md`.

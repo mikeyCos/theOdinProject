@@ -1,0 +1,7 @@
+{
+  "editor.wordBasedSuggestions": "currentDocument",
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.quickSuggestions": {
+    "other": "off"
+  }
+}
