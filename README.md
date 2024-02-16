@@ -2,6 +2,12 @@
 
 ---
 
+## Notes
+
+- All projects starting from Battleship and forward will have their own repository.
+
+---
+
 ## Quick Navigation
 
 - [Foundations](https://github.com/mikeyCos/theOdinProject/tree/main/foundations)
@@ -43,6 +49,7 @@
 | [Hash Map](https://mikeycos.github.io/theOdinProject/javaScript/projects/hash-map/dist)                       |            [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/hash-map) |
 | [Binary Search Trees](https://mikeycos.github.io/theOdinProject/javaScript/projects/binary-search-trees/dist) | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/binary-search-trees) |
 | [Knights Travails](https://mikeycos.github.io/theOdinProject/javaScript/projects/knights-travails/dist)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/knights-travails) |
+| [Testing Practice](https://mikeycos.github.io/theOdinProject/javaScript/projects/testing-practice/dist)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/testing-practice) |
 
 ---
 

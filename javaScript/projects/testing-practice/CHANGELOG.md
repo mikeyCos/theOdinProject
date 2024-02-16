@@ -1,11 +1,15 @@
 # Changelog
 ---
+### 16 FEB 2024
+- 
+---
 ### 15 FEB 2024
 - Created `generateCipherbet` function to generate a cipher alphabet based on `key` and `alphabet` parameters.
 - Created `generateAlphabet` function to generate an alphabet including or excluding punctuations and/or numbers.
 - The `caesarCipher` function now returns 'encrypted' text.
 - Created `analyzeArray.test` and `analyzeArray` modules.
-- Implemented `analyzeArray` factory function that returns an object with properties: `average`/`min`/`max`/`length`
+- Implemented `analyzeArray` factory function that returns an object with properties: `average`/`min`/`max`/`length`.
+- Merged `caesarCipher-numbers` branch with `main`.
 ---
 ### 14 FEB 2024
 - Implemented `calculator` with methods: `add`/`subtract`/`multiply`/`divide`.
