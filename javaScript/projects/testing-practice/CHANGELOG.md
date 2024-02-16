@@ -2,6 +2,7 @@
 ---
 ### 15 FEB 2024
 - Created `generateCipherbet` function to generate a cipher alphabet based on `key` and `alphabet` parameters.
+- Created `generateAlphabet` function to generate an alphabet including or excluding punctuations and/or numbers.
 - The `casearCipher` function now returns 'encrypted' text.
 ---
 ### 14 FEB 2024

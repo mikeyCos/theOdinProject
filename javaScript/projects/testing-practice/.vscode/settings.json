@@ -3,5 +3,6 @@
   "editor.acceptSuggestionOnEnter": "on",
   "editor.quickSuggestions": {
     "other": "off"
-  }
+  },
+  "editor.inlineSuggest.showToolbar": "always"
 }
