@@ -52,12 +52,8 @@ describe(`Testing calculator.add()`, () => {
     expect(() => calculator.add('a', 20)).toThrow(Error);
   });
 
-  test(`calculator.add('$', 9) = Not a number`, () => {
-    expect(() => calculator.add('$', 20)).toThrow(Error);
-  });
-
-  test(`calculator.add('$', 9) = Not a number`, () => {
-    expect(() => calculator.add('$', 20)).toThrow(Error);
+  test(`calculator.add(9, '$') = Not a number`, () => {
+    expect(() => calculator.add(9, '$')).toThrow(Error);
   });
 });
 

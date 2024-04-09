@@ -1,0 +1,47 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100svh;
+  background-color: lightseagreen;
+}
+
+.paragraph > p {
+  animation-name: slideInLeft;
+  animation-duration: 500ms;
+  animation-iteration-count: 5;
+  animation-direction: alternate;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    font-size: 2rem;
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%);
+  }
+
+  50% {
+    font-size: 2rem;
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}

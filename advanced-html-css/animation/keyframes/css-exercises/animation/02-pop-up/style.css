@@ -3,6 +3,11 @@
   margin: 0;
 }
 
+:root {
+  --opacity-duration: 500ms;
+  --transform-duration: 150ms;
+}
+
 body {
   overflow: hidden;
 }
@@ -32,16 +37,22 @@ button {
   border: 1px solid black;
   border-radius: 10px;
   position: fixed;
-  top: 50%;
+  top: -50%;
   left: 50%;
   transform-origin: center;
   transform: translate(-50%, -50%);
   pointer-events: none;
   opacity: 0%;
   text-align: center;
+  /* Solution */
+  transition-property: top, opacity;
+  transition-duration: calc(var(--transform-duration) + 150ms),
+    var(--opacity-duration);
+  transition-timing-function: ease-in;
 }
+
 .popup-modal p {
-  margin-bottom: 24px
+  margin-bottom: 24px;
 }
 
 .backdrop {
@@ -50,14 +61,23 @@ button {
   inset: 0;
   background: #000;
   opacity: 0%;
+  /* Solution */
+  transition: opacity 250ms ease-in;
 }
 
 .popup-modal.show {
   opacity: 100%;
+  top: 50%;
   pointer-events: all;
+  /* Solution */
+  transition-property: top, opacity;
+  transition-duration: var(--transform-duration),
+    calc(var(--opacity-duration) - 250ms);
+  transition-timing-function: ease-out;
 }
 
 .backdrop.show {
   opacity: 30%;
+  /* Solution */
+  transition: opacity 500ms ease-out;
 }
-

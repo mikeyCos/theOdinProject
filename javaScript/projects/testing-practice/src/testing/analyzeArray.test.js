@@ -107,3 +107,25 @@ describe(`Testing analyzeArray.max`, () => {
     expect(object_yar.max).toBe(256);
   });
 });
+
+describe(`Testing analyzeArray.length`, () => {
+  test(`object_foo.length = 6`, () => {
+    expect(object_foo.length).toBe(6);
+  });
+
+  test(`object_bar.length = 8`, () => {
+    expect(object_bar.length).toBe(8);
+  });
+
+  // test(`object_qar.length =`, () => {
+  //   expect(object_qar.length).toBe();
+  // });
+
+  test(`object_gar.length = 4`, () => {
+    expect(object_gar.length).toBe(4);
+  });
+
+  test(`object_yar.length = 1`, () => {
+    expect(object_yar.length).toBe(1);
+  });
+});
