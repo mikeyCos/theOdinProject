@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>Responsive Images</title>
+  </head>
+  <body>
+    <main class="main">
+      <section class="mountains">
+        <picture>
+          <img
+            src="./garrett-parker-DlkF4-dbCOU-unsplash.jpg"
+            alt="Mountain and river"
+          />
+        </picture>
+
+        <picture>
+          <img
+            src="./jerry-zhang-Y8lCoTRgHPE-unsplash.jpg"
+            alt="Distant mountain range"
+          />
+        </picture>
+
+        <picture>
+          <source
+            media="(max-width: 640px)"
+            srcset="./daniela-kokina-hOhlYhAiizc-unsplash-640-960.jpg"
+          />
+          <source
+            media="(min-width: 641)"
+            srcset="./daniela-kokina-hOhlYhAiizc-unsplash-1920-2880.jpg"
+          />
+          <img
+            src="./daniela-kokina-hOhlYhAiizc-unsplash-1920-2880.jpg"
+            alt="Mountain with flowers in foreground"
+          />
+          <!-- <img
+            alt="Mountain with flowers in foreground"
+            srcset="
+              ./daniela-kokina-hOhlYhAiizc-unsplash-640-960.jpg    640w,
+              ./daniela-kokina-hOhlYhAiizc-unsplash-1920-2880.jpg 1920w
+            "
+            sizes="
+            (max-width: 640px) calc(100vw - 2rem),
+            (max-width: 1920px) calc(100vw - 6rem),
+            calc(100vw - 3rem - 250px)
+            "
+          /> -->
+        </picture>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  min-height: 100svh;
+  background-color: lightcoral;
+}
+
+.box {
+  background: sandybrown;
+  border: 8px solid saddlebrown;
+  margin: 0 auto;
+  padding: 32px;
+  font-size: 32px;
+  /* width: 600px; */
+  max-width: 600px;
+}
+
+.min_height > :first-child {
+  background: hotpink;
+  padding: 32px;
+  font-size: 32px;
+  margin: 0 auto;
+  max-width: 600px;
+  /* height: 300px; */
+  min-height: 300px;
+}
