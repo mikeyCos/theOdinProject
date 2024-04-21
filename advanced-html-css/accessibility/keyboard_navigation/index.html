@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>Keyboard Navigation</title>
+  </head>
+  <body>
+    <main>
+      <section class="inorder focusable">
+        <h2>Semantic HTML</h2>
+        <p>
+          All elements are semantic HTML elements and are focusable in order.
+        </p>
+        <pre>
+          <code>
+            &lt;div class="buttons"&gt;
+              &lt;button&gt;1&lt;/button&gt;
+              &lt;button&gt;2&lt;/button&gt;
+              &lt;button&gt;3&lt;/button&gt;
+            &lt;/div&gt;
+          </code>
+        </pre>
+
+        <div class="buttons">
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+        </div>
+      </section>
+
+      <section class="inorder focusable">
+        <h2>Semantic and non-semantic HTML</h2>
+        <p>
+          There is only 1 semantic HTML element, 2 non-semantic HTML elements,
+          and are all focusable in order.
+        </p>
+        <pre>
+          <code>
+            &lt;div class="buttons"&gt;
+              &lt;button&gt;1&lt;/button&gt;
+              &lt;div tabindex="0"&gt;2&lt;/div&gt;
+              &lt;div tabindex="0"&gt;3&lt;/div&gt;
+            &lt;/div&gt;
+          </code>
+        </pre>
+
+        <div class="buttons">
+          <button>1</button>
+          <div tabindex="0">2</div>
+          <div tabindex="0">3</div>
+        </div>
+      </section>
+
+      <section class="notinorder focusable">
+        <h2>Semantic and non-semantic HTML</h2>
+        <p>
+          There is only 1 semantic HTML element, 2 non-semantic HTML elements,
+          and are all focusable not in order.
+        </p>
+        <pre>
+          <code>
+            &lt;div class="buttons"&gt;
+              &lt;button&gt;1&lt;/button&gt;
+              &lt;div tabindex="5"&gt;2&lt;/div&gt;
+              &lt;div tabindex="0"&gt;3&lt;/div&gt;
+            &lt;/div&gt;
+          </code>
+        </pre>
+
+        <div class="buttons">
+          <button>1</button>
+          <div tabindex="5">2</div>
+          <div tabindex="0">3</div>
+        </div>
+      </section>
+
+      <section class="notinorder focusable">
+        <h2>Semantic and non-semantic HTML</h2>
+        <p>
+          There is only 1 non-focusable semantic HTML element, and 2 focusable
+          non-semantic HTML elements,
+        </p>
+        <pre>
+          <code>
+            &lt;div class="buttons"&gt;
+              &lt;button tabindex="-1"&gt;1&lt;/button&gt;
+              &lt;div tabindex="0"&gt;2&lt;/div&gt;
+              &lt;div tabindex="0"&gt;3&lt;/div&gt;
+            &lt;/div&gt;
+          </code>
+        </pre>
+
+        <div class="buttons">
+          <button tabindex="-1">1</button>
+          <div tabindex="0">2</div>
+          <div tabindex="0">3</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

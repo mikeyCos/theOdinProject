@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WAI Aria</title>
+  </head>
+  <body>
+    <nav aria-label="main navigation"></nav>
+    <main>
+      <section>
+        <p>A screen reader announces, “Close menu, button”.</p>
+        <button type="button" aria-label="Close menu">X</button>
+      </section>
+
+      <section>
+        <p>A screen reader announces, “Shirts, shop now, button”.</p>
+        <h2 id="label">Shirts</h2>
+        <button type="button" id="shop-btn" aria-labelledby="label shop-btn">
+          Shop Now
+        </button>
+      </section>
+
+      <section>
+        <!-- Clicking the <label> element gives focus to the input element -->
+        <label for="name">Name:</label>
+        <input id="name" type="text" />
+
+        <!-- Clicking the <div> element won't give focus to the input element -->
+        <div id="label">Name:</div>
+        <input type="text" aria-labelledby="label" />
+      </section>
+
+      <section>
+        <p>
+          When the &lt;input/&gt; element receives focus, a screen reader would
+          announce, “Password, edit protected, password must be at least ten
+          characters long.”
+        </p>
+        <label
+          >Password:
+          <input type="password" aria-describedby="password-requirements" />
+        </label>
+
+        <!-- Meaningful text + ARIA! -->
+        <span id="password-requirements"
+          >Password must be at least 10 characters long.</span
+        >
+      </section>
+
+      <section>
+        <!-- Example 1 -->
+        <button type="button">
+          <span class="material-icons">add</span>
+          Add Book
+        </button>
+
+        <!-- Example 2 -->
+        <!-- The span element is hidden on the accessibility tree but still visible to sighted users -->
+        <button type="button">
+          <span class="material-icons" aria-hidden="true">add</span>
+          Add Book
+        </button>
+      </section>
+    </main>
+  </body>
+</html>
