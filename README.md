@@ -13,6 +13,8 @@
 - [Foundations](https://github.com/mikeyCos/theOdinProject/tree/main/foundations)
 - [Intermediate HTML and CSS](https://github.com/mikeyCos/theOdinProject/tree/main/intermediate-html-and-css)
 - [JavaScript](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript)
+- [Advanced HMTL and CSS](https://github.com/mikeyCos/theOdinProject/tree/main/advanced-html-css)
+- [React](https://github.com/mikeyCos/theOdinProject/tree/main/react)
 
 ---
 
@@ -50,6 +52,19 @@
 | [Binary Search Trees](https://mikeycos.github.io/theOdinProject/javaScript/projects/binary-search-trees/dist) | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/binary-search-trees) |
 | [Knights Travails](https://mikeycos.github.io/theOdinProject/javaScript/projects/knights-travails/dist)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/knights-travails) |
 | [Testing Practice](https://mikeycos.github.io/theOdinProject/javaScript/projects/testing-practice/dist)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/testing-practice) |
+| [Battleship](https://mikeycos.github.io/battleship/)                                                          |                                                       [Repo](https://github.com/mikeyCos/battleship) |
+
+### Advanced HTML and CSS
+
+| Live Preview                                     |                                   Repository |
+| ------------------------------------------------ | -------------------------------------------: |
+| [Homepage](https://mikeycos.github.io/homepage/) | [Repo](https://github.com/mikeyCos/homepage) |
+
+### React
+
+| Live Preview                               |                          Repository |
+| ------------------------------------------ | ----------------------------------: |
+| [Placeholder](https://github.com/mikeyCos) | [Repo](https://github.com/mikeyCos) |
 
 ---
 
