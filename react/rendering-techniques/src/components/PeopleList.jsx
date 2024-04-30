@@ -1,28 +1,28 @@
 const people = [
   {
     id: 0,
-    name: "Malcolm",
-    profession: "lawyer",
+    name: 'Malcolm',
+    profession: 'lawyer',
   },
   {
     id: 1,
-    name: "Reese",
-    profession: "welder",
+    name: 'Reese',
+    profession: 'welder',
   },
   {
     id: 2,
-    name: "Dewey",
-    profession: "street performer",
+    name: 'Dewey',
+    profession: 'street performer',
   },
   {
     id: 3,
-    name: "Francis",
-    profession: "farmer",
+    name: 'Francis',
+    profession: 'farmer',
   },
   {
     id: 4,
-    name: "Hal",
-    profession: "accountant",
+    name: 'Hal',
+    profession: 'accountant',
   },
 ];
 
@@ -30,7 +30,7 @@ function ListItem({ name, profession }) {
   return (
     <li>
       <p>
-        <b>{name}:</b> {" is a " + profession}
+        <b>{name}:</b> {' is a ' + profession}
       </p>
     </li>
   );
@@ -38,10 +38,10 @@ function ListItem({ name, profession }) {
   //   return <li>{props.person.name}</li>;
 }
 
-function List(props) {
+function List({ people }) {
   return (
     <ul>
-      {props.people.map((person) => {
+      {people.map((person) => {
         // return <ListItem key={person.id} person={person}
         return <ListItem key={person.id} {...person} />;
       })}

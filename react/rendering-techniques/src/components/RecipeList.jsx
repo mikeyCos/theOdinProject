@@ -1,4 +1,4 @@
-import { recipes } from "../data/data.recipes";
+import { recipes } from '../data/data.recipes';
 
 function IngredientsListItem({ ingredient }) {
   return <li>{ingredient}</li>;

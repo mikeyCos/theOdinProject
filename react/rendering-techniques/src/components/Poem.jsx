@@ -1,10 +1,10 @@
-import { Fragment } from "react";
+import { Fragment } from 'react';
 
 const poem = {
   lines: [
-    "I write, erase, rewrite",
-    "Erase again, and then",
-    "A poppy blooms.",
+    'I write, erase, rewrite',
+    'Erase again, and then',
+    'A poppy blooms.',
   ],
 };
 
