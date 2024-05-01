@@ -4,21 +4,23 @@ import InboxLetter from "./InboxLetter";
 import "../styles/inboxClient.css";
 
 export default function InboxClient() {
-  //   const [selection, setSelection] = useState([]);
+  // const [selection, setSelection] = useState([]);
   const [selection, setSelection] = useState({});
 
   // TODO: allow multiple selection
-  //   const selectedCount = selection.length;
+  // const selectedCount = selection.length;
   const selectedCount = Object.keys(selection).length;
 
   function handleToggle(toggledId) {
     // TODO: allow multiple selection
-    // const isSelected = selection.find((id) => id === toggledId);
-    // const index = selection.indexOf(isSelected);
-    // if (index > -1) selection.splice(index, 1);
-    // const newSelection =
-    //   index > -1 ? [...selection] : [...selection, toggledId];
+    // const isInSelection = selection.includes(toggledId);
+    // const index = selection.indexOf(toggledId);
+    // if (isInSelection) selection.splice(index, 1);
+    // const newSelection = isInSelection
+    //   ? [...selection]
+    //   : [...selection, toggledId];
     // setSelection(newSelection);
+
     const inSelection = Object.hasOwn(selection, toggledId);
     if (inSelection) delete selection[toggledId];
     const newSelection = inSelection
@@ -37,7 +39,7 @@ export default function InboxClient() {
             letter={letter}
             isSelected={
               // TODO: allow multiple selection
-              //   selection.includes(letter.id)
+              // selection.includes(letter.id)
               //   selection.some((id) => id === letter.id)
               selection[letter.id] === letter.id
             }

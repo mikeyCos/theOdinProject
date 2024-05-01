@@ -1,0 +1,8 @@
+.person {
+  border: 2px solid lightgrey;
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

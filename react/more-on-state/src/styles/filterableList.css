@@ -1,9 +1,5 @@
-.travel_plan {
+.filterable_list {
   border: 2px solid lightgrey;
   padding: 2rem;
   margin-top: 2rem;
-}
-
-.travel_plan > ul {
-  list-style: none;
 }

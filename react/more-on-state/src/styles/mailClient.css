@@ -1,4 +1,6 @@
 .mail {
+  border: 2px solid lightgrey;
+  padding: 2rem;
   margin-top: 2rem;
 }
 

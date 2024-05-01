@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/trafficLight.css";
 
 export default function TrafficLight() {
   const [walk, setWalk] = useState(true);
@@ -9,7 +10,7 @@ export default function TrafficLight() {
   }
 
   return (
-    <>
+    <div className="traffic_light">
       <button onClick={handleClick}>Change to {walk ? "Stop" : "Walk"}</button>
       <h1
         style={{
@@ -18,6 +19,6 @@ export default function TrafficLight() {
       >
         {walk ? "Walk" : "Stop"}
       </h1>
-    </>
+    </div>
   );
 }
