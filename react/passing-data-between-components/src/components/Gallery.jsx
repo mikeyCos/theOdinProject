@@ -1,8 +1,8 @@
-import { individuals } from '../data/data.gallery';
-import getImageURL from '../utilities/getImageURL';
+import { individuals } from "../data/data.gallery";
+import getImageURL from "../utilities/getImageURL";
 
 function Avatar({ alt, url, imageSize = 70 }) {
-  const thumbnailSize = imageSize < 90 ? 's' : 'b';
+  const thumbnailSize = imageSize < 90 ? "s" : "b";
   return (
     <img
       className="avatar"
@@ -26,7 +26,7 @@ function Profile({ person }) {
           {person.specialization}
         </li>
         <li>
-          <b>Awards: {person.awards.length}</b> ({person.awards.join(', ')})
+          <b>Awards: {person.awards.length}</b> ({person.awards.join(", ")})
         </li>
         <li>
           <b>Discovered: </b>
@@ -38,6 +38,7 @@ function Profile({ person }) {
 }
 
 function People({ people }) {
+  if (!people || people.length === 0) return <div>No people listed</div>;
   return (
     <>
       {people.map((person) => {

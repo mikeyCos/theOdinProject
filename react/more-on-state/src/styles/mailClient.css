@@ -1,0 +1,16 @@
+.mail {
+  margin-top: 2rem;
+}
+
+.mail > ul {
+  list-style: none;
+  font-size: 2rem;
+}
+
+.mail > ul > .highlighted {
+  background-color: lightblue;
+}
+
+.mail button {
+  padding: 0.5rem;
+}

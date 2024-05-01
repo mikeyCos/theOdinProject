@@ -1,0 +1,7 @@
+.travel_plan {
+  margin-top: 2rem;
+}
+
+.travel_plan > ul {
+  list-style: none;
+}
