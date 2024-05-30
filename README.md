@@ -30,12 +30,16 @@
 | [Etch-a-Sketch](https://mikeycos.github.io/theOdinProject/foundations/etch-a-sketch/index.html)             |       [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/etch-a-sketch) |
 | [Calculator](https://mikeycos.github.io/theOdinProject/foundations/calculator/index.html)                   |          [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/foundations/calculator) |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Intermediate HTML and CSS
 
 | Live Preview                                                                                                     |                                                                                                      Repository |
 | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------: |
 | [Sign-up Form](https://mikeycos.github.io/theOdinProject/intermediate-html-and-css/projects/sign-up-form/)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/intermediate-html-and-css/projects/sign-up-form) |
 | [Admin Dashboard](https://mikeycos.github.io/theOdinProject/intermediate-html-and-css/projects/admin-dashboard/) | [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/intermediate-html-and-css/projects/admin-dashboard) |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### JavaScript
 
@@ -54,17 +58,24 @@
 | [Testing Practice](https://mikeycos.github.io/theOdinProject/javaScript/projects/testing-practice/dist)       |    [Repo](https://github.com/mikeyCos/theOdinProject/tree/main/javaScript/projects/testing-practice) |
 | [Battleship](https://mikeycos.github.io/battleship/)                                                          |                                                       [Repo](https://github.com/mikeyCos/battleship) |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Advanced HTML and CSS
 
 | Live Preview                                     |                                   Repository |
 | ------------------------------------------------ | -------------------------------------------: |
 | [Homepage](https://mikeycos.github.io/homepage/) | [Repo](https://github.com/mikeyCos/homepage) |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### React
 
-| Live Preview                               |                          Repository |
-| ------------------------------------------ | ----------------------------------: |
-| [Placeholder](https://github.com/mikeyCos) | [Repo](https://github.com/mikeyCos) |
+| Live Preview                                                  |                                         Repository |
+| ------------------------------------------------------------- | -------------------------------------------------: |
+| [CV Application](https://cvapplication-mikeycos.netlify.app/) | [Repo](https://github.com/mikeyCos/cv-application) |
+| [Memory Card](https://cvapplication-mikeycos.netlify.app/)    | [Repo](https://github.com/mikeyCos/cv-application) |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
