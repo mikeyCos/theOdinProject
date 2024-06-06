@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 # [The Odin Project](https://www.theodinproject.com/)
 
 ---
@@ -73,7 +75,7 @@
 | Live Preview                                                  |                                         Repository |
 | ------------------------------------------------------------- | -------------------------------------------------: |
 | [CV Application](https://cvapplication-mikeycos.netlify.app/) | [Repo](https://github.com/mikeyCos/cv-application) |
-| [Memory Card](https://cvapplication-mikeycos.netlify.app/)    | [Repo](https://github.com/mikeyCos/cv-application) |
+| [Memory Card](memorycard-mikeycos.netlify.app/)               |    [Repo](https://github.com/mikeyCos/memory-card) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

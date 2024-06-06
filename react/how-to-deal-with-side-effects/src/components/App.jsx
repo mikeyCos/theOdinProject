@@ -7,6 +7,7 @@ import TodoList from "./TodoList";
 import TodoListAgain from "./TodoListAgain";
 import ContactManager from "./ContactManager";
 import MessageForm from "./MessageForm";
+import InputChanges from "./InputChanges";
 import "../styles/App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <TodoListAgain />
       <ContactManager />
       <MessageForm />
+      <InputChanges />
     </>
   );
 }
