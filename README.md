@@ -75,7 +75,7 @@
 | Live Preview                                                  |                                         Repository |
 | ------------------------------------------------------------- | -------------------------------------------------: |
 | [CV Application](https://cvapplication-mikeycos.netlify.app/) | [Repo](https://github.com/mikeyCos/cv-application) |
-| [Memory Card](memorycard-mikeycos.netlify.app/)               |    [Repo](https://github.com/mikeyCos/memory-card) |
+| [Memory Card](https://memorycard-mikeycos.netlify.app/)       |    [Repo](https://github.com/mikeyCos/memory-card) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

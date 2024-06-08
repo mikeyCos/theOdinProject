@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChangeHeading component > Renders correct ChangeHeading 1`] = `
+<div>
+  <section
+    id="change-heading"
+  >
+    <h1>
+      Magnificent Monkeys
+    </h1>
+    <button
+      type="button"
+    >
+      Change heading
+    </button>
+  </section>
+</div>
+`;
+
+exports[`ChangeHeading component > renders correct ChangeHeading 1`] = `
+<div>
+  <section
+    id="change-heading"
+  >
+    <h1>
+      Magnificent Monkeys
+    </h1>
+    <button
+      type="button"
+    >
+      Change heading
+    </button>
+  </section>
+</div>
+`;
