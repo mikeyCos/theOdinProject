@@ -7,6 +7,9 @@ const Profiles = () => {
         <li>
           <Link to="/profile/popeye">Popeye</Link>
         </li>
+        <li>
+          <Link to="/profile/spinach">Spinach</Link>
+        </li>
       </ul>
     </section>
   );

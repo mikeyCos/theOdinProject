@@ -6,9 +6,7 @@ const BasicLayout = () => {
   return (
     <>
       <Header />
-      <Main>
-        <Outlet />
-      </Main>
+      <Main>{/* <Outlet /> */}</Main>
     </>
   );
 };

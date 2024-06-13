@@ -48,16 +48,3 @@ const App = () => {
 };
 
 export default App;
-
-/*
-<body>
-  <div id="root">
-    <header>
-      <nav></nav>
-    </header>
-    <main>
-      <section id="home"></section>
-    </main>
-  </div>
-</body>
-*/
