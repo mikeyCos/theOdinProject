@@ -76,6 +76,14 @@
 | ------------------------------------------------------------- | -------------------------------------------------: |
 | [CV Application](https://cvapplication-mikeycos.netlify.app/) | [Repo](https://github.com/mikeyCos/cv-application) |
 | [Memory Card](https://memorycard-mikeycos.netlify.app/)       |    [Repo](https://github.com/mikeyCos/memory-card) |
+| [Shopping Cart](https://shoppingcart-mikeycos.netlify.app/)   |  [Repo](https://github.com/mikeyCos/shopping-cart) |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### NodeJS
+
+| Live Preview | Repository |
+| ------------ | ---------: |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

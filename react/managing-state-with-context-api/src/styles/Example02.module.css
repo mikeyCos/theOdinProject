@@ -1,0 +1,15 @@
+.panel-light {
+  composes: panel-light from "./Example00.module.css";
+}
+
+.panel-dark {
+  composes: panel-dark from "./Example00.module.css";
+}
+
+.button-light {
+  composes: button-light from "./Example00.module.css";
+}
+
+.button-dark {
+  composes: button-dark from "./Example00.module.css";
+}
