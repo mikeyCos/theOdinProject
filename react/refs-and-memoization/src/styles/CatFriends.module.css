@@ -1,0 +1,20 @@
+.next-btn {
+  position: fixed;
+  z-index: 999;
+}
+
+.cat-imgs {
+  list-style: none;
+  display: flex;
+}
+
+.cat-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.active {
+  opacity: 1;
+}
