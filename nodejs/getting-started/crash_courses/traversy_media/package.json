@@ -1,0 +1,19 @@
+{
+  "name": "traversy_media",
+  "version": "1.0.0",
+  "description": "NodeJS Crash Course Traversy Media",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "author": "MikeyCos",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
