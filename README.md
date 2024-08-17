@@ -82,8 +82,10 @@
 
 ### NodeJS
 
-| Live Preview | Repository |
-| ------------ | ---------: |
+| Live Preview                                                                      |                                                   Repository |
+| --------------------------------------------------------------------------------- | -----------------------------------------------------------: |
+| [Basic Informational Site](https://replit.com/@mikeyCos/basic-informational-site) | [Repo](https://github.com/mikeyCos/basic-informational-site) |
+| [Mini Message Board](https://mini-message-board-mikey-cos.fly.dev/)               |       [Repo](https://github.com/mikeyCos/mini-message-board) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
