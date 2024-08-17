@@ -10,6 +10,6 @@ usersRouter.get("/:userID/update", usersController.usersUpdateGet);
 usersRouter.post("/:userID/update", usersController.usersUpdatePost);
 usersRouter.post("/:userID/delete", usersController.usersDeletePost);
 usersRouter.get("/search", usersController.usersSearchGet);
-usersRouter.post("/search", usersController.usersSearchPost);
+// usersRouter.post("/search", usersController.usersSearchPost);
 
 module.exports = usersRouter;

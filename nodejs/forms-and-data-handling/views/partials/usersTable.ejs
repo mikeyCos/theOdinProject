@@ -1,0 +1,15 @@
+<table>
+  <caption>Users</caption>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">NAME</th>
+    <th scope="col">EMAIL</th>
+    <th scope="col">AGE</th>
+    <th scope="col">BIO</th>
+    <th scope="col">UPDATE</th>
+    <th scope="col">DELETE</th>
+  </tr>
+  <% users.forEach((user) => { %>
+    <%- include('userTableRow', { user }) %>
+  <% }) %>
+</table>

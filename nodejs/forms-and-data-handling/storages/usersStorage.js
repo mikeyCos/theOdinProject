@@ -27,18 +27,19 @@ class UsersStorage {
   }
 
   filterUsers(searchQuery) {
-    console.log(searchQuery);
+    console.log("this.storage", this.storage);
+    console.log("line 30, searchQuery", searchQuery);
     return Object.values(this.storage).filter((user) => {
-      const userName = `${user.firstName} ${user.lastName}`;
-      const { name, email } = searchQuery;
-      return (
-        (name !== 0 && userName.includes(name)) ||
-        (email !== 0 && userName.email === email)
-      );
+      return Object.entries(user).some(([key, value]) => {
+        // return searchQuery[key] && searchQuery[key] === value;
+        return (
+          searchQuery[key] &&
+          searchQuery[key].localeCompare(value, undefined, {
+            sensitivity: "accent",
+          }) === 0
+        );
+      });
     });
-    // Object.values(this.storage).filter((key, value) => {
-    //   searchKey = key
-    // })
   }
 }
 

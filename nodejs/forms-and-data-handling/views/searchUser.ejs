@@ -6,22 +6,28 @@
   <title><%= title %></title>
 </head>
 <body>
-  <form action="/search" method="post">
+  <%- include('partials/errors.ejs') %>
+  <form action="/search" method="get">
     <ul>
       <li>
         <label for="name">Name</label>
-        <input name="name" type="text" id="name">
+        <input name="name" type="text" id="name" value="<%= locals.searchQuery ? searchQuery.name: '' %>">
       </li>
       <li>
         <label for="email">Email</label>
-        <input name="email" type="email" id="email">
+        <input name="email" type="email" id="email" value="<%= locals.searchQuery ? searchQuery.email: '' %>">
       </li>
     </ul>
     <button type="submit">Search</button>
   </form>
 
-  <% if (locals.searchResults && locals.searchResults.length > 0) { %>
-
+  <% if (locals.searchResults) { %>
+    <% if (searchResults.length > 0) { %>
+      <%- include('partials/usersTable.ejs', { users: searchResults }) %>
+    <% } else { %>
+      <p>No user(s) found.</p>
+    <% } %>
   <% } %>
+  <a href="/">Back to home</a>
 </body>
 </html>

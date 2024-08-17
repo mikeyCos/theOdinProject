@@ -9,54 +9,7 @@
   <h1><%= title %></h1>
     <% if (locals.users.length > 0) { %>
       <a href="/search">Search user</a>
-      <table>
-        <caption>Users</caption>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">NAME</th>
-          <th scope="col">EMAIL</th>
-          <th scope="col">AGE</th>
-          <th scope="col">BIO</th>
-          <th scope="col">UPDATE</th>
-          <th scope="col">DELETE</th>
-        </tr>
-        <% users.forEach((user) => { %>
-          <tr>
-            <th>
-              <%= user.id %>
-            </th>
-            <td>
-              <%= user.firstName %> <%= user.lastName %>
-            </td>
-            <td>
-              <%= user.email %>
-            </td>
-            <td>
-              <% if(user.age) { %>
-                <%= user.age %>
-              <% } else { %>
-                &nbsp;
-              <% } %>
-            </td>
-            <td>
-              <% if(user.bio) { %>
-                <%= user.bio %>
-              <% } else { %>
-                &nbsp;
-              <% } %>
-            </td>
-            <td>
-              <a href="/<%= user.id %>/update">Update user</a>
-            </td>
-            <td>
-              <form action="/<%= user.id %>/delete" method="post" style="display: inline;">
-                <button type="submit" onclick="return confirm('Are you sure you want to delete <%= user.firstName %> <%= user.lastName %>?');">Delete</button>
-              </form>
-            </td>
-          </tr>
-
-        <% }) %>
-      </table>
+      <%- include('partials/usersTable.ejs') %>
     <% } else { %>
       <p>Users list is empty.</p>
     <% } %>
