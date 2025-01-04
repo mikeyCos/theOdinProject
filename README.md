@@ -86,6 +86,7 @@
 | --------------------------------------------------------------------------------- | -----------------------------------------------------------: |
 | [Basic Informational Site](https://replit.com/@mikeyCos/basic-informational-site) | [Repo](https://github.com/mikeyCos/basic-informational-site) |
 | [Mini Message Board](https://mini-message-board-mikey-cos.fly.dev/)               |       [Repo](https://github.com/mikeyCos/mini-message-board) |
+| [Inventory Application](https://inventory-application-mikey-cos.fly.dev/)         |    [Repo](https://github.com/mikeyCos/inventory-application) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

@@ -1,0 +1,10 @@
+<form action="/" method="get">
+  <ul>
+    <li>
+      <label for="search">Search (by username)</label>
+      <input type="search" name="search" id="search" value="<%= locals.search ? search : '' %>">
+    </li>
+  </ul>
+
+  <button type="submit">Search</button>
+</form>

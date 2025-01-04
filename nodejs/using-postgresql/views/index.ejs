@@ -9,6 +9,29 @@
   <%- include('./partials/header.ejs') %>
   <main>
     <h1><%= title %></h1>
+    <%- include('./partials/search.ejs') %>
+    <% if(locals.users && users.length > 0) { %>
+      <table>
+        <caption>Users</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">USERNAME</th>
+          </tr>
+        </thead>
+        <% users.forEach((user) => { %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.username %></td>
+          </tr>
+        <% }) %>
+      </table>
+      <form action="/delete" method="post">
+        <button type="submit">Delete ALL users</button>
+      </form>
+    <% } else { %>
+      <p>Users database is empty.</p>
+    <% } %>
   </main>
 </body>
 </html>

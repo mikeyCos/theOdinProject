@@ -1,13 +1,12 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const path = require("path");
 const indexRouter = require("./routes/indexRouter.js");
+const env = require("./utils/environment");
 
-dotenv.config();
-
-const PORT = process.env.PORT || 9999;
+const PORT = env.port || 9999;
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
