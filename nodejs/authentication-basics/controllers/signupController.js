@@ -1,4 +1,5 @@
 const { createUser } = require("../db/queries");
+const bcrypt = require("bcryptjs");
 
 const signupController = {
   getSignup: (req, res) => {
@@ -11,7 +12,12 @@ const signupController = {
   postSignup: async (req, res, next) => {
     console.log("postSignup running...");
     try {
-      createUser(req.body);
+      const { username, password } = req.body;
+      bcrypt.hash(password, 10, async (err, hashedPassword) => {
+        if (err) throw new Error(err);
+        await createUser({ username, password: hashedPassword });
+      });
+
       res.redirect("/");
     } catch (err) {
       return next(err);
