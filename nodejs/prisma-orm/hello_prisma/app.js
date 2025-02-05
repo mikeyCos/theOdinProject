@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const main = async () => {
+  // Write data in database
   /* await prisma.user.create({
     data: {
       name: "Alice",
@@ -26,8 +27,8 @@ const main = async () => {
   });
 
   console.dir(allUsers, { depth: null }); */
-
-  /* const post = await prisma.post.update({
+  // Update post
+  /*  const post = await prisma.post.update({
     where: { id: 1 },
     data: { published: true },
   });
