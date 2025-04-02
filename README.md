@@ -89,7 +89,8 @@
 | [Mini Message Board](https://mini-message-board-mikey-cos.fly.dev/)                                              |                                                          [Repo](https://github.com/mikeyCos/mini-message-board) |
 | [Inventory Application](https://inventory-application-mikey-cos.fly.dev/)                                        |                                                       [Repo](https://github.com/mikeyCos/inventory-application) |
 | [Members Only](https://members-only-mikey-cos.fly.dev/)                                                          |                                                                [Repo](https://github.com/mikeyCos/members-only) |
-| [File Uploader](#)                                                                                               |                                                               [Repo](https://github.com/mikeyCos/file-uploader) |
+| [File Uploader](https://file-uploader-mikey-cos.fly.dev/)                                                        |                                                               [Repo](https://github.com/mikeyCos/file-uploader) |
+| [Blog API](#)                                                                                                    |                                                               [Repo](https://github.com/mikeyCos/blog-api)      |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
